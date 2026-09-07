@@ -84,6 +84,7 @@ CROPS = {   # (file, box in 3x coords, bias_top for over-tall crops)
  's4a'   : ('14.png',   (0, 690, 675, 2400),  0.28),
  's4b'   : ('16.png',   (0, 630, 783, 1410),  0.5),
  's5'    : ('9.png',    (0,1080, 903, 2760),  0.5),
+ 's5b'   : ('9.png',    (0,1380, 903, 3270),  0.5),
  's6mini': ('1.png',    (0, 180, 675,  810),  0.5),
 }
 
@@ -171,30 +172,72 @@ def vo_duration():
     m = re.search(r'Duration: (\d+):(\d+):([\d.]+)', r.stderr)
     return int(m.group(1))*3600 + int(m.group(2))*60 + float(m.group(3))
 
+def vo_sentence_gaps():
+    """silence gaps between VO sentences -> [(start,end),...] in VO time"""
+    r = subprocess.run(['ffmpeg','-i',VO,'-af',
+        'silencedetect=noise=-38dB:d=0.22','-f','null','-'],
+        capture_output=True, text=True)
+    sil, cur = [], None
+    for line in r.stderr.splitlines():
+        m = re.search(r'silence_start: ([\d.]+)', line)
+        if m: cur = float(m.group(1))
+        m = re.search(r'silence_end: ([\d.]+)', line)
+        if m and cur is not None:
+            sil.append((cur, float(m.group(1)))); cur = None
+    return sil
+
+def rms_db(path):
+    r = subprocess.run(['ffmpeg','-i',path,'-af','volumedetect','-f','null','-'],
+                       capture_output=True, text=True)
+    m = re.search(r'mean_volume: ([-\d.]+) dB', r.stderr)
+    return float(m.group(1)) if m else -20.0
+
+def largest_internal_gap(gaps, a, b):
+    """largest VO pause strictly inside (a,b) video-time window -> cut point"""
+    best = None
+    for gs, ge in gaps:
+        mid = (gs+ge)/2 + VO_DELAY
+        if a + 0.45 < mid < b - 0.55:
+            if best is None or (ge-gs) > best[1]:
+                best = (mid, ge-gs)
+    return best[0] if best else None
+
 def build_timeline():
+    """Scene cut points locked to the real pauses in the voiceover."""
     D = vo_duration()
-    # sentence windows as fractions of VO (by word count)
-    fr = [0.113, 0.306, 0.516, 0.645, 0.774, 0.855, 1.0]
-    b = [0.0]
-    b += [VO_DELAY + fr[0]*D]                       # s1 | s2
-    b += [VO_DELAY + fr[1]*D]                       # s2 | s3a
-    mid3 = VO_DELAY + lerp(fr[1], fr[2], 0.55)*D    # s3a | s3b
-    b += [mid3, VO_DELAY + fr[2]*D]                 # s3b | s4a
-    mid4 = VO_DELAY + lerp(fr[2], fr[3], 0.62)*D    # s4a | s4b
-    b += [mid4, VO_DELAY + fr[3]*D]                 # s4b | s5
-    b += [VO_DELAY + fr[4]*D]                       # s5 | brand
-    b += [VO_DELAY + fr[5]*D]                       # brand | cta
+    # fallback: proportional sentence ends (by word count)
+    fr = [0.113, 0.306, 0.516, 0.645, 0.774, 0.855]
+    ends = [VO_DELAY + x*D for x in fr]
+    gaps = [g for g in vo_sentence_gaps() if g[0] > 0.6]
+    used = set()
+    for k, exp in enumerate(ends):
+        best, bestd = None, 1e9
+        for gi, (gs, ge) in enumerate(gaps):
+            if gi in used: continue
+            mid = (gs+ge)/2 + VO_DELAY
+            dd = abs(mid-exp)
+            if dd < bestd: bestd, best = dd, (gi, mid)
+        if best is not None and bestd < 0.12*D:
+            used.add(best[0]); ends[k] = best[1]
+    e1,e2,e3,e4,e5,e6 = ends
+    m3 = e2 + (e3-e2)*0.55      # s3a | s3b (inside sentence 3)
+    m4 = e3 + (e4-e3)*0.62      # s4a | s4b (inside sentence 4)
+    sp2 = largest_internal_gap(gaps, e1, e2) or (e1 + 0.38*(e2-e1))   # split long mood scene
+    sp5 = largest_internal_gap(gaps, e4, e5) or (e4 + 0.78*(e5-e4))   # split report scene
+    b = [0.0, e1, sp2, e2, m3, e3, m4, e4, sp5, e5, e6]
     T = VO_DELAY + D + TAIL
     return b, T
 
 SCENES = [
  dict(key='s1',  pill='شروعِ هر روز',        head='هر روز، یک سؤال ساده',      sub='حالِ امروزت رو ثبت کن'),
- dict(key='s2',  pill='ثبتِ حال روزانه',     head='۵ شاخص، فقط ۱۰ ثانیه',      sub='انرژی، خلق، تمرکز، خواب، استرس'),
+ dict(key='s2',  pill='ثبتِ حال روزانه',     head='۵ شاخص، فقط ۱۰ ثانیه',      sub='انرژی، حال، تمرکز، خواب، استرس'),
+ dict(key='s1',  pill='ثبتِ حال روزانه',     head='۵ شاخص، فقط ۱۰ ثانیه',      sub='از حالِ صبح تا خوابِ شب'),
  dict(key='s3a', pill='کتابخانه‌ی جوما',      head='۱۰۷ فعالیت آماده',          sub='در ۸ دسته‌ی تخصصی'),
  dict(key='s3b', pill='از ورزش تا روابط',    head='هدف: روز، هفته، ماه',       sub='دقیق، شمسی، قابل اندازه‌گیری'),
  dict(key='s4a', pill='تمرین‌های درمانی',    head='قدم‌به‌قدم، مثل جلسه',      sub='طرحواره‌درمانی، زوج‌درمانی، ACT'),
  dict(key='s4b', pill='آموزشِ همراه',        head='نه نصیحت؛ تمرینِ واقعی',    sub='همان یکی که این هفته تکان دادت'),
  dict(key='s5',  pill='گزارش هوشمند',        head='داده‌های تو، حرفِ دلِ تو',  sub='آخر ماه، خودت رو ببین'),
+ dict(key='s5b', pill='گزارش هوشمند',        head='داده‌های تو، حرفِ دلِ تو',  sub='برنامه، دوره‌ها، گزارش‌ها'),
  dict(kind='brand'),
  dict(kind='cta'),
 ]
@@ -326,8 +369,69 @@ def render(i, local, dur, t_global, T):
         paste_a(fr, STRIP, (W//2-STRIP.width//2, 1852), alpha=215)
     return fr.convert('RGB')
 
+def gen_music(T, bounds, path):
+    """Energetic synth bed: warm pad + pluck arpeggio + soft kick/hat,
+    arranged around the scene structure (intro / build / full / break / finale)."""
+    import numpy as np, wave
+    SR = 44100
+    n = int((T+0.6)*SR)
+    L = np.zeros(n); R = np.zeros(n)
+    BPM = 104.0; beat = 60.0/BPM; bar = beat*4
+    b1, b2, brand, cta = bounds[1], bounds[2], bounds[7], bounds[8]
+    rng = np.random.default_rng(7)
+    def add(sig, at, g=1.0, ch='both'):
+        i = int(at*SR); j = min(n, i+len(sig))
+        if i >= n: return
+        s = sig[:j-i]*g
+        if ch in ('both','L'): L[i:j] += s
+        if ch in ('both','R'): R[i:j] += s
+    def fm(m): return 440.0*2**((m-69)/12.0)
+    chords = [[60,64,67],[55,59,62],[57,60,64],[53,57,60]]   # C  G  Am  F
+    bassn  = [48,43,45,41]
+    kl = int(0.16*SR); kt = np.arange(kl)/SR
+    KICK = np.sin(2*np.pi*np.cumsum(120*np.exp(-kt*26)+46)/SR)*np.exp(-kt*20)
+    hl = int(0.05*SR)
+    HAT = rng.standard_normal(hl)*np.exp(-np.arange(hl)/SR*90)
+    HAT = np.diff(HAT, prepend=0.0)
+    def pluck(f, dur=0.22):
+        m = int(dur*SR); t2 = np.arange(m)/SR
+        return (np.sin(2*np.pi*f*t2)+0.4*np.sin(4*np.pi*f*t2))*np.exp(-t2*15)
+    def padch(ch, dur):
+        m = int(dur*SR); t2 = np.arange(m)/SR
+        env = np.minimum(1.0, t2/0.45)*np.clip((dur-t2)/0.35, 0, 1)
+        out = np.zeros(m)
+        for note in ch:
+            f = fm(note)
+            out += np.sin(2*np.pi*f*t2)+np.sin(2*np.pi*f*1.004*t2)
+        return out*env/(2.2*len(ch))
+    for bi in range(int(T/bar)+2):
+        t0 = bi*bar
+        if t0 >= T: break
+        ch = chords[bi % 4]
+        add(padch(ch, bar*0.99), t0, g=0.17)
+        if t0 >= b1-0.01:                                  # bass from scene 2
+            for k in (0,2):
+                m = int(beat*0.95*SR); t2 = np.arange(m)/SR
+                add(np.sin(2*np.pi*fm(bassn[bi%4])*t2)*np.exp(-t2*5), t0+k*beat, g=0.20)
+        energ = (b2-0.01 <= t0 < brand-0.01) or (t0 >= cta-0.01)
+        if energ:                                          # kick + hats in energetic sections
+            for k in range(4):
+                add(KICK, t0+k*beat, g=0.30)
+                add(HAT, t0+k*beat+beat/2, g=0.085, ch=('L' if k % 2 else 'R'))
+        if t0 >= b1-0.01:                                  # arpeggio
+            seq = [0,1,2,1,0,2,1,2]
+            for k in range(8):
+                if energ or k % 2 == 0:
+                    note = ch[seq[k] % 3] + (12 if (energ and k % 4 == 3) else 0)
+                    add(pluck(fm(note)), t0+k*beat/2, g=0.10, ch=('L' if k % 2 else 'R'))
+    st = np.stack([L, R])
+    st /= max(1e-9, np.abs(st).max()/0.85)
+    w = wave.open(path, 'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
+    w.writeframes((st.T*32767).astype('<i2').tobytes()); w.close()
+
 def build_video():
     os.makedirs(FRAMES, exist_ok=True)
+    for f in os.listdir(FRAMES): os.remove(f'{FRAMES}/{f}')
     bounds, T = build_timeline()
     N = round(T*FPS)
     print(f'VO-driven timeline: T={T:.2f}s, {N} frames, bounds={[round(b,2) for b in bounds]}')
@@ -349,11 +453,19 @@ def build_video():
             fr = render(i, local, dur, t, T)
         fr.save(f'{FRAMES}/f{n:05d}.jpg', quality=93)
         if n % 150 == 0: print(f'  frame {n}/{N}')
-    print('encoding...')
+    print('generating music bed + encoding...')
+    gen_music(T, bounds, f'{OUT}/music.wav')
+    mgain = round(rms_db(VO) - rms_db(f'{OUT}/music.wav') - 9.0, 1)  # music ~9dB under VO
+    fc = ('[1:a]adelay=350:all=1,aformat=channel_layouts=stereo,apad,asplit=2[vo1][vo2];'
+          f'[2:a]volume={mgain}dB[mus];'
+          '[mus][vo1]sidechaincompress=threshold=0.05:ratio=5:attack=30:release=420[duck];'
+          '[duck][vo2]amix=inputs=2:duration=first:normalize=0,'
+          'lowpass=17000,loudnorm=I=-14:TP=-1.3:LRA=9[aout]')
     subprocess.run(['ffmpeg','-y','-framerate',str(FPS),'-i',f'{FRAMES}/f%05d.jpg',
-        '-i',VO,'-af','adelay=350:all=1,apad','-t',f'{T:.3f}',
+        '-i',VO,'-i',f'{OUT}/music.wav','-filter_complex',fc,
+        '-map','0:v','-map','[aout]','-t',f'{T:.3f}',
         '-c:v','libx264','-preset','medium','-crf','19','-pix_fmt','yuv420p',
-        '-r',str(FPS),'-c:a','aac','-b:a','160k','-movflags','+faststart',
+        '-r',str(FPS),'-c:a','aac','-b:a','192k','-movflags','+faststart',
         f'{OUT}/joma-reel.mp4'], check=True, capture_output=True)
     # cover from CTA scene
     bounds2,_ = build_timeline()
