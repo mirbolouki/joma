@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>جوما — v7 شیشهٔ شفاف</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDF4EC;
+  --bg-img:radial-gradient(ellipse 60% 40% at 85% -5%,rgba(255,183,197,.35),transparent),
+    radial-gradient(ellipse 55% 38% at 5% 12%,rgba(196,181,253,.32),transparent),
+    radial-gradient(ellipse 70% 45% at 50% 108%,rgba(255,214,165,.40),transparent),
+    linear-gradient(170deg,#FFF9F3,#FDEFE4);
+  --card:#FFFFFF; --card2:#FFF9F4; --line:rgba(139,111,208,.13);
+  --t1:#3A3248; --t2:#9B92A8;
+  --pri:#7C5CD6; --pri2:#E560A3; --pri-soft:#F1EAFE; --pri-dark:#6344B8;
+  --grad:linear-gradient(135deg,#7C5CD6,#E560A3);
+  --grad-soft:linear-gradient(135deg,#F1EAFE,#FDE8F2);
+  --ok:#34B378; --ok-soft:#E3F7EC; --warn:#F59E2D; --warn-soft:#FEF3E0;
+  --blur:0px; --sh:0 6px 22px rgba(124,92,214,.09); --sh2:0 14px 34px rgba(229,96,163,.18);
+  --r-lg:28px; --r-md:20px; --r-sm:14px;
+  --side:rgba(255,255,255,.85);
+  --hero-grad:linear-gradient(135deg,#F1EAFE,#FDE8F2 55%,#FFF3E4);
+}
+/* ═══ 🪟 شیشهٔ شفاف واقعی ═══ */
+html[data-theme="joma-glass"]{
+  --bg:#BFE0F2;
+  --bg-img:
+    radial-gradient(circle 300px at 15% 18%, rgba(255,255,255,.60), transparent 70%),
+    radial-gradient(circle 270px at 87% 12%, rgba(255,200,90,.60), transparent 70%),
+    radial-gradient(circle 380px at 78% 82%, rgba(150,125,235,.45), transparent 70%),
+    radial-gradient(circle 430px at 18% 92%, rgba(40,190,180,.50), transparent 70%),
+    radial-gradient(circle 220px at 55% 48%, rgba(255,135,180,.40), transparent 70%),
+    linear-gradient(175deg,#E2F3FF,#BFE0F2 55%,#A9D6EC);
+  --card:rgba(255,255,255,.32); --card2:rgba(255,255,255,.22); --line:rgba(255,255,255,.85);
+  --t1:#1C3247; --t2:#4E6B82;
+  --pri:#1FA8B8; --pri2:#34C98E; --pri-soft:rgba(31,168,184,.16); --pri-dark:#137E8C;
+  --grad:linear-gradient(135deg,#1FA8B8,#34C98E);
+  --grad-soft:linear-gradient(135deg,rgba(31,168,184,.18),rgba(52,201,142,.18));
+  --ok:#1E9963; --ok-soft:rgba(43,174,113,.18);
+  --blur:14px; --sh:0 10px 34px rgba(25,105,145,.20); --sh2:0 18px 46px rgba(25,140,160,.28);
+  --side:rgba(255,255,255,.30);
+  --hero-grad:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.18));
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Vazirmatn,Tahoma;background:var(--bg-img),var(--bg);background-attachment:fixed;
+  color:var(--t1);min-height:100vh;transition:background .5s}
+button{font-family:inherit;cursor:pointer}
+.pup{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.float{display:inline-block;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes wig{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.wiggle{display:inline-block;animation:wig 1s ease-in-out infinite}
+@keyframes pop{0%{transform:translateY(24px) scale(.92);opacity:0}100%{transform:none;opacity:1}}
+.popin{animation:pop .5s cubic-bezier(.2,.9,.3,1.2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);
+  box-shadow:var(--sh);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));
+  padding:20px;transition:box-shadow .25s,transform .25s}
+.card.hov:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+/* 🪟 قواعد شیشهٔ شفاف: گرادینت شیب‌دار + لبهٔ نورانی + اشباع رنگ پشت شیشه */
+html[data-theme="joma-glass"] .card{
+  background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.10));
+  border:1.5px solid rgba(255,255,255,.85);
+  box-shadow:0 12px 36px rgba(22,100,140,.22),
+    inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.25);
+  backdrop-filter:blur(14px) saturate(1.6);
+  -webkit-backdrop-filter:blur(14px) saturate(1.6);
+}
+html[data-theme="joma-glass"] .side{
+  background:linear-gradient(160deg,rgba(255,255,255,.40),rgba(255,255,255,.12));
+  border-left:1.5px solid rgba(255,255,255,.8);
+  backdrop-filter:blur(14px) saturate(1.6);-webkit-backdrop-filter:blur(14px) saturate(1.6);
+}
+html[data-theme="joma-glass"] .btn{background:rgba(255,255,255,.38);border-color:rgba(255,255,255,.85);
+  backdrop-filter:blur(10px) saturate(1.4);-webkit-backdrop-filter:blur(10px) saturate(1.4)}
+html[data-theme="joma-glass"] .num,html[data-theme="joma-glass"] textarea{
+  background:rgba(255,255,255,.34);border-color:rgba(255,255,255,.85)}
+html[data-theme="joma-glass"] .say .bub{background:linear-gradient(160deg,rgba(255,255,255,.48),rgba(255,255,255,.18));
+  border-color:rgba(255,255,255,.85);backdrop-filter:blur(12px) saturate(1.5)}
+html[data-theme="joma-glass"] .say.gold .bub{background:linear-gradient(135deg,rgba(255,225,150,.45),rgba(255,175,195,.30))}
+html[data-theme="joma-glass"] .opt,html[data-theme="joma-glass"] .p3,
+html[data-theme="joma-glass"] .mood-b,html[data-theme="joma-glass"] .radio-row{
+  background:rgba(255,255,255,.30);border-color:rgba(255,255,255,.8)}
+html[data-theme="joma-glass"] .need{background:rgba(255,255,255,.32);border-color:rgba(255,255,255,.75)}
+html[data-theme="joma-glass"] .toast{background:rgba(255,255,255,.48);border-color:rgba(255,255,255,.9);
+  backdrop-filter:blur(16px) saturate(1.6)}
+html[data-theme="joma-glass"] .insight-pop{
+  background:linear-gradient(linear,rgba(255,255,255,.45),rgba(255,255,255,.45));
+  background:linear-gradient(rgba(255,255,255,.46),rgba(255,255,255,.30)) padding-box,var(--grad) border-box;
+  backdrop-filter:blur(14px) saturate(1.5);-webkit-backdrop-filter:blur(14px) saturate(1.5)}
+@supports not (backdrop-filter:blur(1px)){
+  html[data-theme="joma-glass"] .card,html[data-theme="joma-glass"] .side,
+  html[data-theme="joma-glass"] .say .bub{background:rgba(255,255,255,.93)}}
+.btn{border:none;border-radius:var(--r-sm);padding:11px 20px;font-size:13.5px;font-weight:700;
+  background:var(--card);color:var(--t1);border:1.5px solid var(--line);transition:.2s}
+.btn.pri{background:var(--grad);color:#fff;border:none;box-shadow:0 6px 18px rgba(124,92,214,.30)}
+.btn.pri:hover{filter:brightness(1.08)}.btn:active{transform:scale(.96)}
+.badge{display:inline-block;background:var(--grad-soft);color:var(--pri);font-size:11px;
+  font-weight:800;padding:4px 12px;border-radius:99px}
+.muted{color:var(--t2);font-size:12.5px}
+.gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.say{display:flex;gap:10px;align-items:flex-end;margin:6px 0}
+.say .bub{background:var(--card);border:1.5px solid var(--line);border-radius:20px 6px 20px 20px;
+  padding:13px 16px;box-shadow:var(--sh);font-size:12.8px;line-height:2;flex:1;backdrop-filter:blur(var(--blur))}
+.say .bub b{color:var(--pri)}
+.say.gold .bub{background:linear-gradient(135deg,#FFF3DC,#FFE9EF);border-color:transparent}
+.insight-pop{border:2px solid transparent;background:
+ linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;
+ border-radius:var(--r-md);padding:16px;display:flex;gap:12px;align-items:flex-start;
+ box-shadow:var(--sh2);margin-bottom:16px}
+.insight-pop .tag{font-size:10px;font-weight:800;color:var(--pri);letter-spacing:.3px}
+.land{max-width:1050px;margin:0 auto;padding:24px 20px 60px}
+.land-nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 30px}
+.logo{display:flex;gap:10px;align-items:center}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;padding:20px 0 50px}
+.hero h1{font-size:44px;font-weight:900;line-height:1.6}
+.hero p{line-height:2.1;color:var(--t2);margin:14px 0 22px;font-size:14.5px}
+.center{text-align:center}
+.app{display:flex;min-height:100vh}
+.side{width:252px;flex-shrink:0;background:var(--side);border-left:1px solid var(--line);
+  padding:20px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;
+  overflow-y:auto;backdrop-filter:blur(var(--blur))}
+.side .cap{font-size:10.5px;color:var(--t2);margin:14px 10px 6px;font-weight:800}
+.nav-i{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);
+  font-size:13px;color:var(--t2);font-weight:600;border:none;background:none;width:100%;text-align:right;transition:.15s}
+.nav-i:hover{background:var(--grad-soft)}
+.nav-i.on{background:var(--grad);color:#fff;font-weight:800;box-shadow:0 5px 14px rgba(124,92,214,.28)}
+.nav-i .n{margin-right:auto;background:#fff;color:var(--pri);font-size:10px;min-width:18px;
+  height:18px;border-radius:9px;display:grid;place-items:center;padding:0 5px;font-weight:800}
+.nav-i:not(.on) .n{background:var(--grad);color:#fff}
+.main{flex:1;padding:26px 30px 60px;max-width:1000px}
+.crumb{font-size:11.5px;color:var(--t2);margin-bottom:18px}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}
+.g21{grid-template-columns:2fr 1fr}.g12{grid-template-columns:1fr 2fr}
+.act-row{display:flex;align-items:center;gap:14px;padding:15px 4px;border-bottom:1px solid var(--line)}
+.act-row:last-child{border:none}
+.act-ic{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:21px;flex-shrink:0}
+.act-row .inf{flex:1}.act-row .t{font-size:13.5px;font-weight:700}
+.num{width:110px;padding:10px;border:1.5px solid var(--line);border-radius:var(--r-sm);
+  font-family:inherit;font-size:14px;text-align:center;background:var(--card2);color:var(--t1)}
+.num:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-soft)}
+.st{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:99px;white-space:nowrap}
+.st.ok{background:var(--ok-soft);color:var(--ok)}.st.wait{background:var(--warn-soft);color:var(--warn)}
+.chk{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:none;color:#fff;font-size:13px;flex-shrink:0;transition:.2s}
+.chk.on{background:var(--grad);border:none}
+.tabs{display:flex;gap:24px;border-bottom:1.5px solid var(--line);margin-bottom:20px}
+.tab{background:none;border:none;padding:11px 4px;font-size:13.5px;color:var(--t2);font-weight:700;
+  border-bottom:3px solid transparent;margin-bottom:-1.5px}
+.tab.on{color:var(--pri);border-image:var(--grad) 1}
+textarea{width:100%;min-height:100px;padding:14px;border:1.5px solid var(--line);
+  border-radius:var(--r-md);font-family:inherit;font-size:13px;background:var(--card2);
+  color:var(--t1);resize:vertical;line-height:2}
+.donut{position:relative;width:150px;margin:0 auto}
+.donut .lbl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.donut .lbl b{font-size:26px}
+.wiz{max-width:620px;margin:0 auto}
+.wiz-bar{display:flex;gap:7px;margin:18px 0 26px}
+.wiz-bar i{flex:1;height:7px;border-radius:99px;background:var(--line);transition:.3s}
+.wiz-bar i.on{background:var(--grad)}
+.wiz-q{font-size:21px;font-weight:900;margin:6px 0 2px}
+.opts{display:flex;gap:10px;margin:22px 0 8px}
+.opt{flex:1;padding:16px 4px 13px;border-radius:var(--r-md);border:2px solid var(--line);
+  background:var(--card);transition:.18s;display:flex;flex-direction:column;align-items:center;gap:8px}
+.opt:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.opt.on{border-color:var(--pri);background:var(--grad-soft)}
+.opt .em{font-size:34px;line-height:1}
+.opt .lb{font-size:11.5px;font-weight:800;color:var(--t2)}
+.path3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.p3{display:flex;gap:12px;align-items:center;padding:15px;border-radius:var(--r-md);
+  border:1.5px solid var(--line);background:var(--card);cursor:pointer;transition:.18s}
+.p3:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.p3 .no{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  font-weight:900;font-size:15px;flex-shrink:0;background:var(--grad-soft);color:var(--pri)}
+.p3.done .no{background:var(--grad);color:#fff}
+.p3 .tt{font-size:13px;font-weight:800}
+.pet-stage{position:relative;height:190px;border-radius:var(--r-md);overflow:hidden;
+  background:linear-gradient(180deg,#BFE6F7 0%,#E8F6DF 70%,#D9EDC8 100%);
+  display:grid;place-items:center;cursor:pointer}
+html[data-theme="joma-glass"] .pet-stage{background:linear-gradient(180deg,rgba(168,220,245,.55),rgba(223,242,216,.55) 70%,rgba(205,232,190,.55))}
+.needs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.need{display:flex;gap:9px;align-items:center;padding:9px 11px;border-radius:12px;
+  background:var(--card2);border:1px solid var(--line)}
+.need .bar{flex:1;height:8px;border-radius:99px;background:rgba(0,0,0,.08);overflow:hidden}
+.need .bar i{display:block;height:100%;border-radius:99px;transition:width .6s}
+.need .nl{font-size:10.5px;font-weight:800;color:var(--t2);white-space:nowrap}
+.mood-b{width:84px;padding:14px 0;border-radius:var(--r-md);border:1.5px solid var(--line);
+  background:var(--card);font-size:12px;color:var(--t2);transition:.2s}
+.sw{position:fixed;bottom:22px;left:22px;z-index:90;border:none;padding:13px 20px;border-radius:99px;
+  color:#fff;background:var(--grad);font-size:13px;font-weight:800;box-shadow:0 10px 26px rgba(124,92,214,.4)}
+.toast{position:fixed;bottom:26px;right:50%;transform:translateX(50%) translateY(90px);z-index:99;
+  background:var(--card);color:var(--t1);border:1.5px solid var(--line);padding:10px 20px 10px 24px;
+  border-radius:99px;font-size:13px;font-weight:700;opacity:0;transition:.35s;display:flex;gap:10px;
+  align-items:center;box-shadow:var(--sh2);backdrop-filter:blur(20px)}
+.toast.show{transform:translateX(50%);opacity:1}
+.radio-row{display:flex;gap:12px;align-items:center;padding:14px;border:1.5px solid var(--line);
+  border-radius:var(--r-md);cursor:pointer;margin-bottom:10px}
+.radio-row.on{border-color:var(--pri);background:var(--grad-soft)}
+.lib{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.hero,.g4,.g2,.g21,.g12,.path3,.lib{grid-template-columns:1fr}
+  .side{display:none}.main{padding:18px}.opts{flex-wrap:wrap}.opt{min-width:100px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<button class="sw" id="sw" onclick="J.toggleTheme()">✨ تم شیشه‌ای</button>
+<div class="toast" id="toast"></div>
+
+<script>
+const FA='۰۱۲۳۴۵۶۷۸۹', fa=n=>String(n).replace(/\d/g,d=>FA[d]);
+function owl(s=64,mood='happy',acc=''){
+ const eyes=mood==='wink'
+  ?`<g class="pup"><circle cx="44" cy="52" r="8" fill="#2A2118"/><circle cx="47" cy="49" r="2.6" fill="#fff"/></g>
+    <path d="M68 52 q8 7 16 0" stroke="#2A2118" stroke-width="3.5" fill="none" stroke-linecap="round"/>`
+  :`<g class="pup"><circle cx="44" cy="52" r="8" fill="#2A2118"/><circle cx="47" cy="49" r="2.6" fill="#fff"/>
+    <circle cx="76" cy="52" r="8" fill="#2A2118"/><circle cx="79" cy="49" r="2.6" fill="#fff"/></g>`;
+ const wings=mood==='cheer'
+  ?`<ellipse cx="15" cy="46" rx="9" ry="20" fill="#2E4A8F" transform="rotate(-38 15 46)"/>
+    <ellipse cx="105" cy="46" rx="9" ry="20" fill="#2E4A8F" transform="rotate(38 105 46)"/>`
+  :`<ellipse cx="24" cy="74" rx="9" ry="20" fill="#2E4A8F" transform="rotate(14 24 74)"/>
+    <ellipse cx="96" cy="74" rx="9" ry="20" fill="#2E4A8F" transform="rotate(-14 96 74)"/>`;
+ return `<svg width="${s}" height="${s}" viewBox="0 0 122 122" style="flex-shrink:0">
+  <path d="M32 22 Q27 6 42 13 Q37 19 39 26 Z" fill="#2E4A8F"/>
+  <path d="M88 22 Q93 6 78 13 Q83 19 81 26 Z" fill="#2E4A8F"/>${wings}
+  <path d="M60 13 C89 13 101 38 101 66 C101 93 85 109 60 109 C35 109 19 93 19 66 C19 38 31 13 60 13 Z" fill="#3B5BA5"/>
+  <ellipse cx="60" cy="84" rx="24" ry="21" fill="#F2C14E"/>
+  <circle cx="44" cy="52" r="17" fill="#FFF6E8"/><circle cx="76" cy="52" r="17" fill="#FFF6E8"/>${eyes}
+  <circle cx="44" cy="52" r="15" fill="none" stroke="#D9A441" stroke-width="3.2"/>
+  <circle cx="76" cy="52" r="15" fill="none" stroke="#D9A441" stroke-width="3.2"/>
+  <path d="M59 50 L61 50" stroke="#D9A441" stroke-width="3.2"/>
+  <path d="M60 62 L67 69 L60 76 L53 69 Z" fill="#E8912D"/>
+  <path d="M48 109 l-3 6 M53 109 l0 6 M67 109 l0 6 M72 109 l3 6" stroke="#E8912D" stroke-width="3" stroke-linecap="round"/>
+  ${acc?`<circle cx="99" cy="97" r="17" fill="#FFF6E8" stroke="#F2C14E" stroke-width="2.5"/>
+   <text x="99" y="104" font-size="18" text-anchor="middle">${acc}</text>`:''}</svg>`}
+const say=(t,m='happy',c='')=>`<div class="say ${c}">${owl(52,m)}<div class="bub">${t}</div></div>`;
+function chick(s,stage,mood='ok'){
+ if(stage==='egg')return `<svg width="${s}" height="${s}" viewBox="0 0 100 100">
+  <ellipse cx="50" cy="88" rx="26" ry="7" fill="rgba(0,0,0,.10)"/>
+  <path d="M50 18 C68 18 78 42 78 60 C78 78 66 88 50 88 C34 88 22 78 22 60 C22 42 32 18 50 18Z"
+   fill="#FFF4E0" stroke="#EBD9BC" stroke-width="2"/>
+  <circle cx="42" cy="45" r="3" fill="#F2E2C8"/><circle cx="58" cy="60" r="4" fill="#F2E2C8"/></svg>`;
+ if(stage==='crack')return `<svg width="${s}" height="${s}" viewBox="0 0 100 100" class="wiggle">
+  <ellipse cx="50" cy="88" rx="26" ry="7" fill="rgba(0,0,0,.10)"/>
+  <path d="M50 18 C68 18 78 42 78 60 C78 78 66 88 50 88 C34 88 22 78 22 60 C22 42 32 18 50 18Z"
+   fill="#FFF4E0" stroke="#EBD9BC" stroke-width="2"/>
+  <path d="M38 40 l7 6 -5 6 8 5 -4 7" fill="none" stroke="#C9A96A" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M62 35 l-5 7 6 4" fill="none" stroke="#C9A96A" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+ const eye=mood==='sad'
+  ?`<path d="M38 46 q4 -4 8 0" stroke="#2A2118" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M56 46 q4 -4 8 0" stroke="#2A2118" stroke-width="3" fill="none" stroke-linecap="round"/>`
+  :`<g class="pup"><circle cx="42" cy="46" r="5" fill="#2A2118"/><circle cx="44" cy="44" r="1.6" fill="#fff"/>
+    <circle cx="60" cy="46" r="5" fill="#2A2118"/><circle cx="62" cy="44" r="1.6" fill="#fff"/></g>`;
+ const extra=mood==='happy'
+  ?`<path d="M20 30 l4 4 M28 22 l2 5 M78 26 l-4 4" stroke="#F5A32D" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="79" y="24" font-size="13">🎵</text>`:'';
+ return `<svg width="${s}" height="${s}" viewBox="0 0 100 100" class="${mood==='happy'?'wiggle':''}">
+  <ellipse cx="50" cy="90" rx="24" ry="6" fill="rgba(0,0,0,.10)"/>
+  <ellipse cx="50" cy="62" rx="27" ry="26" fill="#FFD84D"/>
+  <ellipse cx="50" cy="72" rx="16" ry="12" fill="#FFEDA8"/>
+  <ellipse cx="27" cy="62" rx="7" ry="12" fill="#F5C22B" transform="rotate(16 27 62)"/>
+  <ellipse cx="73" cy="62" rx="7" ry="12" fill="#F5C22B" transform="rotate(-16 73 62)"/>
+  <circle cx="51" cy="38" r="19" fill="#FFD84D"/>
+  <path d="M42 20 q3 -7 7 -1 q4 -6 7 1" fill="none" stroke="#F5A32D" stroke-width="3" stroke-linecap="round"/>
+  ${eye}<path d="M51 50 L56 55 L51 59 L46 55 Z" fill="#F58E2D"/>
+  <path d="M42 88 l-2 6 M46 89 l0 6 M56 89 l0 6 M60 88 l2 6" stroke="#F58E2D" stroke-width="2.6" stroke-linecap="round"/>
+  ${extra}</svg>`}
+function batt(l){const cs=['#F4716D','#F59E2D','#EDB93B','#8BC34A','#34B378'];let c='';
+ for(let i=0;i<5;i++)c+=`<rect x="${7+i*11}" y="9" width="8" height="18" rx="2" fill="${i<l?cs[l-1]:'rgba(0,0,0,.08)'}"/>`;
+ return `<svg width="72" height="38" viewBox="0 0 72 38">
+ <rect x="2" y="4" width="62" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".45"/>
+ <rect x="66" y="13" width="5" height="10" rx="2" fill="currentColor" opacity=".45"/>${c}</svg>`}
+function targ(l){const cs=['#F4716D','#F59E2D','#EDB93B','#8BC34A','#34B378'];let r='';
+ for(let i=0;i<5;i++)r+=`<circle cx="19" cy="19" r="${17-i*3.2}" fill="none" stroke="${i<l?cs[l-1]:'rgba(0,0,0,.10)'}" stroke-width="2.6"/>`;
+ return `<svg width="46" height="46" viewBox="0 0 38 38">${r}</svg>`}
+const VIS={overall:v=>`<span class="em">${['😖','😕','😐','🙂','🤩'][v-1]}</span>`,
+ energy:v=>`<span style="color:var(--t2)">${batt(v)}</span>`,focus:v=>targ(v),
+ sleep:v=>`<span class="em">${['🌑','🌘','🌗','🌖','🌕'][v-1]}</span>`,
+ stress:v=>`<span class="em">${['☀️','🌤️','⛅','🌧️','⛈️'][v-1]}</span>`};
+const CLR={sleep:['#8B7CF0','linear-gradient(135deg,#EDE9FF,#DCD4FF)'],
+ water:['#38B6E3','linear-gradient(135deg,#DFF4FE,#C8EBFB)'],
+ walk:['#3BC47A','linear-gradient(135deg,#E0F8EA,#C9F2DB)'],
+ nophone:['#F4716D','linear-gradient(135deg,#FFE9E6,#FFD8D4)'],
+ med:['#B279E8','linear-gradient(135deg,#F3E8FF,#E7D4FC)'],
+ sleeptime:['#F5A32D','linear-gradient(135deg,#FFF1DC,#FFE4BD)'],
+ read:['#EDB93B','linear-gradient(135deg,#FFF6DE,#FDEBBB)'],
+ fruit:['#F0608A','linear-gradient(135deg,#FFE7EF,#FFD3E1)']};
+const cOf=id=>CLR[id]||CLR.sleep, icHtml=a=>`<div class="act-ic" style="background:${cOf(a.id)[1]}">${a.i}</div>`;
+const DEF={hi:0,todayTab:'daily',wizStep:0,moodSaved:0,daySaved:0,seeds:42,streak:12,
+ pet:{stage:'egg',prog:0,name:'',water:70,food:55,bath:40,nest:65,lastTick:Date.now()},
+ insights:[],lastEngine:0,
+ acts:{daily:[
+  {id:'sleep',n:'خواب کافی',i:'🌙',tg:8,u:'ساعت',v:7.5,d:1},
+  {id:'water',n:'نوشیدن آب',i:'💧',tg:8,u:'لیوان',v:5,d:0},
+  {id:'walk',n:'پیاده‌روی',i:'🚶',tg:20,u:'دقیقه',v:0,d:0},
+  {id:'nophone',n:'زمان بدون موبایل',i:'📵',tg:60,u:'دقیقه',v:45,d:1},
+  {id:'med',n:'مدیتیشن',i:'🧘',tg:15,u:'دقیقه',v:20,d:1},
+  {id:'sleeptime',n:'ساعت خواب منظم',i:'⏰',tg:1,u:'بار',v:0,d:0}],
+ weekly:[{id:'read',n:'مطالعه',i:'📚',tg:60,u:'دقیقه',v:45,d:0}],
+ monthly:[{id:'fruit',n:'مصرف میوه',i:'🍎',tg:4,u:'بار',v:3,d:0}]},
+ mood:{overall:0,energy:0,focus:0,sleep:0,stress:0,note:''},
+ history:[
+  {dow:6,sleep:8,walk:1,med:1,mood:4,focus:4},{dow:0,sleep:6,walk:0,med:0,mood:3,focus:2},
+  {dow:1,sleep:7,walk:1,med:1,mood:4,focus:4},{dow:2,sleep:8,walk:1,med:0,mood:4,focus:3},
+  {dow:3,sleep:5,walk:0,med:0,mood:2,focus:2},{dow:4,sleep:8,walk:1,med:1,mood:5,focus:5},
+  {dow:5,sleep:7,walk:0,med:1,mood:4,focus:4},{dow:6,sleep:8,walk:1,med:1,mood:5,focus:4},
+  {dow:0,sleep:6,walk:0,med:0,mood:3,focus:3},{dow:1,sleep:7,walk:1,med:1,mood:4,focus:4},
+  {dow:2,sleep:8,walk:1,med:1,mood:4,focus:5},{dow:3,sleep:5,walk:0,med:0,mood:2,focus:2},
+  {dow:4,sleep:9,walk:1,med:1,mood:5,focus:5},{dow:5,sleep:7,walk:1,med:0,mood:4,focus:3}]};
+let S;try{S=JSON.parse(localStorage.getItem('joma_demo7'))||null}catch(e){S=null}
+if(!S||!S.pet)S=JSON.parse(JSON.stringify(DEF));
+const save=()=>{try{localStorage.setItem('joma_demo7',JSON.stringify(S))}catch(e){}};
+const DOW=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+const ENGINE=[
+ {id:'bestday',fn:h=>{const m={};h.forEach(d=>{(m[d.dow]=m[d.dow]||[]).push(d.mood)});
+  let best=-1,bv=0;for(const k in m){const a=m[k].reduce((x,y)=>x+y)/m[k].length;if(a>bv){bv=a;best=k}}
+  return bv>=4?{t:'امروز یک چیز جالب فهمیدم: تو '+DOW[best]+'‌ها حالت بهتر است! انگار این روز، روزِ توست 🌟',ctx:'home'}:null}},
+ {id:'sleepwalk',fn:h=>{const g=h.filter(d=>d.sleep>=8),b=h.filter(d=>d.sleep<7);
+  if(!g.length||!b.length)return null;
+  const gw=g.filter(d=>d.walk).length/g.length,bw=b.filter(d=>d.walk).length/b.length;
+  return gw-bw>=.3?{t:'یک چیز باحال کشف کردم: وقتی خوب می‌خوابی، پیاده‌روی‌ات را هم کامل انجام می‌دهی! خواب، سوخت حرکتِ توست 🌙🚶',ctx:'today'}:null}},
+ {id:'medfocus',fn:h=>{const m=h.filter(d=>d.med),n=h.filter(d=>!d.med);
+  if(!m.length||!n.length)return null;
+  const mf=m.reduce((x,d)=>x+d.focus,0)/m.length,nf=n.reduce((x,d)=>x+d.focus,0)/n.length;
+  return mf-nf>=.8?{t:'به داده‌هایت نگاه کردم: در روزهای مدیتیشن، تمرکزت حدود '+fa(Math.round((mf-nf)*20))+'٪ بالاتر است. ذهنِ آرام، ذهنِ دقیق است 🧘🎯',ctx:'mood'}:null}},
+ {id:'hardday',fn:h=>{const m={};h.forEach(d=>{(m[d.dow]=m[d.dow]||[]).push(d.mood)});
+  let worst=-1,wv=9;for(const k in m){const a=m[k].reduce((x,y)=>x+y)/m[k].length;if(a<wv){wv=a;worst=k}}
+  return wv<=2.5?{t:DOW[worst]+'‌ها برایت کمی سخت‌ترند. اشکالی ندارد — شاید برای آن روز، برنامهٔ سبک‌تری بچینیم؟ 🤍',ctx:'home'}:null}},
+ {id:'sleepmood',fn:h=>{const g=h.filter(d=>d.sleep>=8),b=h.filter(d=>d.sleep<7);
+  if(g.length<2||b.length<2)return null;
+  const gm=g.reduce((x,d)=>x+d.mood,0)/g.length,bm=b.reduce((x,d)=>x+d.mood,0)/b.length;
+  return gm-bm>=1?{t:'الگوی قشنگی پیدا کردم: شب‌هایی که ۸ ساعت می‌خوابی، فردایش حالت به‌وضوح بهتر است. خواب، بهترین دوست توست 🌕💗',ctx:'mood'}:null}},
+ {id:'streak',fn:()=>S.streak>=10?{t:fa(S.streak)+' روز پیوسته آمدی! می‌دانستی فقط ۸٪ آدم‌ها به این پیوستگی می‌رسند؟ به خودت افتخار کن 🔥',ctx:'home'}:null},
+ {id:'weekup',fn:h=>{const w1=h.slice(0,7),w2=h.slice(7);
+  const a1=w1.reduce((x,d)=>x+d.mood,0)/w1.length,a2=w2.reduce((x,d)=>x+d.mood,0)/w2.length;
+  return a2-a1>=.4?{t:'مقایسه کردم: این هفته حالِ کلی‌ات از هفتهٔ قبل بهتر بوده. مسیر درست همین است — آرام و رو به بالا 📈✨',ctx:'reports'}:null}},
+ {id:'walkmood',fn:h=>{const w=h.filter(d=>d.walk),n=h.filter(d=>!d.walk);
+  if(!w.length||!n.length)return null;
+  const wm=w.reduce((x,d)=>x+d.mood,0)/w.length,nm=n.reduce((x,d)=>x+d.mood,0)/n.length;
+  return wm-nm>=.8?{t:'روزهایی که پیاده‌روی می‌کنی، حالت بهتر است — انگار قدم‌هایت، حالت را هم راه می‌برند 🚶💚',ctx:'today'}:null}}];
+function runEngine(){const today=new Date().toDateString();
+ if(S.lastEngine===today)return;S.lastEngine=today;
+ ENGINE.forEach(r=>{try{const res=r.fn(S.history);
+  if(res&&!S.insights.some(i=>i.id===r.id))
+   S.insights.push({id:r.id,t:res.t,ctx:res.ctx,seen:0,date:new Date().toLocaleDateString('fa-IR')})}catch(e){}});
+ save()}
+function pickInsight(ctx){const c=S.insights.find(i=>!i.seen&&i.ctx===ctx)||S.insights.find(i=>!i.seen);
+ if(c){c.seen=1;save();return c}return null}
+const insightCard=ins=>!ins?'':`<div class="insight-pop popin">
+ <span class="float">${owl(56,'wink')}</span>
+ <div style="flex:1"><div class="tag">💡 کشفِ تازهٔ جوما · ${ins.date}</div>
+ <p style="font-size:13.2px;line-height:2.1;margin-top:4px">${ins.t}</p>
+ <button class="btn" style="padding:5px 14px;font-size:11.5px;margin-top:6px"
+  onclick="location.hash='#/journal'">📔 دفترچهٔ جوما ›</button></div></div>`;
+function petTick(){const p=S.pet;if(p.stage!=='chick')return;
+ const hrs=(Date.now()-p.lastTick)/36e5;
+ if(hrs>0.02){const dec=Math.min(35,hrs*1.6);
+  p.water=Math.max(5,p.water-dec);p.food=Math.max(5,p.food-dec);
+  p.bath=Math.max(5,p.bath-dec*.7);p.nest=Math.max(5,p.nest-dec*.5);
+  p.lastTick=Date.now();save()}}
+function petMood(){const p=S.pet,avg=(p.water+p.food+p.bath+p.nest)/4;
+ return avg>=65?'happy':avg>=35?'ok':'sad'}
+function feedPet(kind,amt,msg){const p=S.pet;
+ if(p.stage!=='chick'){p.prog++;
+  if(p.stage==='egg'&&p.prog>=3){p.stage='crack';toast('🥚 تخم ترک خورد! چیزی داخلش تکان می‌خورد...')}
+  else if(p.stage==='crack'&&p.prog>=7){p.stage='chick';confetti();
+   setTimeout(()=>toast('🐣 جوجه‌ات به دنیا آمد! حالا مراقبش باش'),500)}
+  else toast('🥚 تخم گرم‌تر شد (+۱ به تولد)');save();return}
+ p[kind]=Math.min(100,p[kind]+amt);save();if(msg)toast(msg)}
+const WIZ=[
+ {k:'overall',t:'حال کلی',q:'در مجموع، امروز چه حسی داری؟',ls:['خیلی بد','کمی بد','معمولی','خوب','عالی'],say:'هر حسی که داری، جایش اینجاست. 💗'},
+ {k:'energy',t:'انرژی',q:'باتری امروزت چقدر پر بود؟',ls:['خالی','کم','نصفه','خوب','پُر'],say:'انرژی با استراحت و حرکت پر می‌شود. 🔋'},
+ {k:'focus',t:'تمرکز',q:'چقدر توانستی حواست را جمع کنی؟',ls:['پراکنده','سخت','متوسط','خوب','در هدف!'],say:'هر حلقه یک قدم به مرکز نزدیک‌تر. 🎯'},
+ {k:'sleep',t:'کیفیت خواب',q:'دیشب چقدر خوب خوابیدی؟',ls:['خیلی بد','بد','متوسط','خوب','کامل'],say:'خواب خوب مثل ماه کامل است. 🌕'},
+ {k:'stress',t:'استرس',q:'هوای درونت امروز چطور بود؟',ls:['آفتابی','کمی ابر','ابری','بارانی','طوفانی'],say:'هر هوایی گذری است؛ حتی طوفان. ⛅'}];
+const donePct=l=>Math.round(l.filter(a=>a.d).length/l.length*100);
+function confetti(){const cs=['#7C5CD6','#E560A3','#F5A32D','#34C98E','#38B6E3','#FFD84D'];
+ for(let i=0;i<55;i++){const d=document.createElement('div');
+ d.style.cssText=`position:fixed;z-index:999;top:-14px;left:${Math.random()*100}vw;width:${6+Math.random()*7}px;height:${8+Math.random()*9}px;background:${cs[i%6]};border-radius:${Math.random()>.5?'50%':'3px'};pointer-events:none`;
+ document.body.appendChild(d);
+ d.animate([{transform:'translateY(0)',opacity:1},
+  {transform:`translateY(${innerHeight+50}px) rotate(${500+Math.random()*400}deg)`,opacity:.85}],
+  {duration:2300+Math.random()*1900,easing:'cubic-bezier(.2,.6,.4,1)'}).onfinish=()=>d.remove()}}
+function donut(p,size=150,st=13){const r=(size-st)/2,c=2*Math.PI*r,id='gd'+size+Math.round(p);
+ return `<svg width="${size}" height="${size}" style="transform:rotate(-90deg)">
+ <defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+ <stop offset="0" stop-color="var(--pri)"/><stop offset="1" stop-color="var(--pri2)"/></linearGradient></defs>
+ <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--pri-soft)" stroke-width="${st}"/>
+ <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#${id})" stroke-width="${st}"
+ stroke-linecap="round" stroke-dasharray="${c*p/100} ${c}"/></svg>`}
+function toast(m){const t=document.getElementById('toast');
+ t.innerHTML=owl(34,'wink')+`<span>${m}</span>`;t.classList.add('show');
+ clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2600)}
+function petCard(compact){const p=S.pet;petTick();
+ let stageEl,cap;
+ if(p.stage==='egg'){stageEl=chick(compact?90:120,'egg');
+  cap=`<b>🥚 یک تخم به تو سپرده شد!</b><p class="muted" style="margin-top:4px">با هر ثبت، گرمش می‌کنی. ${fa(3-p.prog<0?0:3-p.prog)} ثبت تا اولین ترک...</p>`}
+ else if(p.stage==='crack'){stageEl=chick(compact?90:120,'crack');
+  cap=`<b>🐣 دارد به دنیا می‌آید!</b><p class="muted" style="margin-top:4px">${fa(Math.max(0,7-p.prog))} ثبت دیگر تا تولد...</p>`}
+ else{const m=petMood();stageEl=chick(compact?90:120,'chick',m);
+  const mtxt={happy:'سرحال و آوازخوان است 🎵',ok:'خوب است، ولی منتظر توست',sad:'دلش برایت تنگ شده... 🥺'};
+  cap=`<b>🐤 ${p.name||'جوجهٔ تو'}</b> <span class="muted">— ${mtxt[m]}</span>`}
+ const needs=p.stage==='chick'?`<div class="needs">
+  ${[['water','💧 ظرف آب','#38B6E3'],['food','🌾 ظرف دونه','#EDB93B'],
+     ['bath','🛁 آب‌تنی','#8B7CF0'],['nest','🏠 لانه','#3BC47A']].map(([k,l,c])=>
+  `<div class="need"><span class="nl">${l}</span><div class="bar"><i style="width:${p[k]}%;background:${c}"></i></div></div>`).join('')}</div>
+  <p class="muted" style="margin-top:8px">💡 ثبت آب→ظرف آب · هر ثبت→دونه · ثبت حال→آب‌تنی · روز کامل→لانهٔ تمیز</p>`:'';
+ return `<div class="card hov"><div class="pet-stage" onclick="J.petPat()" title="نوازشش کن!">
+  <span class="float">${stageEl}</span></div>
+  <div style="margin-top:12px">${cap}</div>${needs}</div>`}
+const LOGO=sz=>`<div class="logo">${owl(sz)}<div><b style="font-size:${sz>42?19:17}px">جوما</b>
+ <div class="muted">برنامه. اجرا. فهم.</div></div></div>`;
+function greet(){const h=new Date().getHours();
+ return h<5?['شب بخیر','🌙']:h<11?['صبح بخیر','☀️']:h<15?['ظهر بخیر','🌤️']:h<19?['عصر بخیر','🌇']:['شب بخیر','🌙']}
+const V={};
+V.landing=()=>`<div class="land">
+ <div class="land-nav">${LOGO(46)}
+  <button class="btn pri" onclick="location.hash='#/dashboard'">دیدن پنل نمونه</button></div>
+ <div class="hero"><div>
+  <span class="badge">● فضایی برای رشد، با ریتم خودت</span>
+  <h1>قدم‌های کوچک،<br><span class="gtext">حالِ بهتر.</span></h1>
+  <p>برنامه‌ات را بچین، هر روز ثبت کن، حالت را بشناس — و یک جوجهٔ کوچک را بزرگ کن! 🐣</p>
+  <button class="btn pri" onclick="location.hash='#/dashboard'">← مسیر من از اینجا شروع می‌شود</button>
+  ${say('سلام! من <b>جوما</b>م 🦉 هر روز داده‌هایت را می‌خوانم و چیزهای جالبی درباره‌ات کشف می‌کنم!','cheer')}</div>
+  <div>${petCard(1)}</div></div>
+ <div class="center" style="padding:40px 0">
+  <span class="float">${owl(90,'cheer')}</span>
+  <h1 style="font-size:30px;margin:10px 0 20px">از یک <span class="gtext">قدم کوچک</span> شروع کن.</h1>
+  <button class="btn pri" style="padding:15px 34px" onclick="location.hash='#/dashboard'">← جوما را تجربه کن</button></div></div>`;
+const NAV=[['dashboard','🏠','خانهٔ من'],['today','✅','کارهای امروز'],['mood','💗','حال من'],
+ ['pet','🐣','جوجهٔ من'],['journal','📔','دفترچهٔ جوما'],['reports','📈','گزارش پیشرفت'],
+ ['plan','📋','برنامهٔ من'],['settings','⚙️','تنظیمات']];
+function shell(page,inner,title){const pend=S.acts.daily.filter(a=>!a.d).length,
+ fresh=S.insights.filter(i=>!i.seen).length;
+ return `<div class="app"><aside class="side">
+  <div style="padding:4px 8px 10px">${LOGO(44)}</div>
+  <div class="card" style="padding:10px 14px;display:flex;justify-content:space-around;background:var(--grad-soft)">
+   <span style="font-size:12.5px">🔥 <b>${fa(S.streak)}</b></span>
+   <span style="font-size:12.5px">🪶 <b>${fa(S.seeds)}</b></span>
+   <span style="font-size:12.5px">${S.pet.stage==='chick'?'🐤':'🥚'}</span></div>
+  <div class="cap">مسیر من</div>
+  ${NAV.slice(0,6).map(([h,i,n])=>`<button class="nav-i ${page===h?'on':''}" onclick="location.hash='#/${h}'">
+   <span>${i}</span>${n}${h==='today'&&pend?`<span class="n">${fa(pend)}</span>`:''}
+   ${h==='journal'&&fresh?`<span class="n">${fa(fresh)}</span>`:''}</button>`).join('')}
+  <div class="cap">بیشتر</div>
+  ${NAV.slice(6).map(([h,i,n])=>`<button class="nav-i ${page===h?'on':''}" onclick="location.hash='#/${h}'"><span>${i}</span>${n}</button>`).join('')}
+  <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center">
+   <div class="act-ic" style="width:38px;height:38px;background:var(--grad);color:#fff;font-size:15px;border-radius:50%">س</div>
+   <div><b style="font-size:13px">سارا نمونه</b><div class="muted">پروفایل</div></div></div></aside>
+ <main class="main"><div class="crumb">پنل کاربری &lsaquo; ${title}
+  <span class="badge" style="float:left">نسخهٔ نمایشی</span></div>${inner}</main></div>`}
+V.dashboard=()=>{const p=donePct(S.acts.daily),[gt,gi]=greet(),ins=pickInsight('home');
+ return shell('dashboard',`
+ ${!S.hi?`<div class="card popin" style="margin-bottom:16px;border:2px solid var(--pri)">
+  <div class="say" style="margin:0">${owl(64,'cheer')}<div class="bub">
+  <b>سلام سارا! من جوما هستم 🦉</b><br>سه قدم روزانه‌ات را انجام بده، جوجه‌ات را بزرگ کن،
+  و من کشف‌هایم را در <b>دفترچهٔ جوما 📔</b> برایت می‌نویسم!
+  <div style="margin-top:8px"><button class="btn pri" style="padding:7px 18px;font-size:12px" onclick="J.hi()">فهمیدم 👍</button></div></div></div></div>`:''}
+ ${insightCard(ins)}
+ <div style="display:flex;gap:16px;align-items:center;margin-bottom:4px">
+  <span class="float">${owl(62,p===100?'cheer':'happy')}</span>
+  <div><span class="badge">${gi} ${gt} · 📅 شنبه، ۲۱ شهریور</span>
+   <h1 style="font-size:24px;margin:8px 0 2px">سلام سارا، <span class="gtext">خوش برگشتی.</span></h1>
+   <p class="muted">امروز هم قدمی کوچک؛ جوجه‌ات منتظر است 🐣</p></div></div>
+ <p class="muted" style="margin:12px 0 10px">مسیر امروزت:</p>
+ <div class="path3">
+  <div class="p3 ${S.daySaved?'done':''}" onclick="location.hash='#/today'">
+   <div class="no">${S.daySaved?'✓':'۱'}</div><div><div class="tt">ثبت کارهای امروز</div>
+   <div class="muted">${S.daySaved?'انجام شد!':fa(S.acts.daily.filter(a=>!a.d).length)+' قدم مانده'}</div></div></div>
+  <div class="p3 ${S.moodSaved?'done':''}" onclick="location.hash='#/mood'">
+   <div class="no">${S.moodSaved?'✓':'۲'}</div><div><div class="tt">ثبت حال امروز</div>
+   <div class="muted">${S.moodSaved?'ثبت شد 💗':'۵ سوال تصویری'}</div></div></div>
+  <div class="p3" onclick="location.hash='#/pet'">
+   <div class="no">۳</div><div><div class="tt">سر زدن به جوجه</div>
+   <div class="muted">${S.pet.stage==='chick'?'مراقبت روزانه 🐤':'گرم نگهش دار 🥚'}</div></div></div></div>
+ <div class="grid g21" style="margin-top:14px">
+  <div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:6px">
+   <b>قدم‌های امروز</b><button class="btn" style="padding:5px 12px;font-size:11.5px" onclick="location.hash='#/today'">همه ›</button></div>
+   ${S.acts.daily.map((a,i)=>`<div class="act-row">${icHtml(a)}
+   <div class="inf"><div class="t">${a.n}</div><div class="muted">${fa(a.tg)} ${a.u}</div></div>
+   <button class="chk ${a.d?'on':''}" onclick="J.check(${i})">${a.d?'✓':''}</button></div>`).join('')}</div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+   ${petCard(1)}
+   <div class="card" style="background:linear-gradient(135deg,rgba(255,240,200,.55),rgba(255,225,235,.45))">
+    <b>📔 آخرین کشف جوما</b>
+    <p class="muted" style="margin-top:6px;line-height:2">${S.insights.length?S.insights[S.insights.length-1].t.slice(0,80)+'...':'هنوز داده کافی ندارم!'}</p>
+    <button class="btn" style="padding:5px 14px;font-size:11.5px;margin-top:6px" onclick="location.hash='#/journal'">دفترچه ›</button></div></div></div>`,'خانهٔ من')};
+V.today=()=>{const tab=S.todayTab,list=S.acts[tab],p=donePct(S.acts.daily),
+ tabT={daily:'روزانه',weekly:'هفتگی',monthly:'ماهانه'},ins=pickInsight('today');
+ return shell('today',`
+ ${insightCard(ins)}
+ <h1 style="font-size:22px">کارهای امروز</h1>
+ <p class="muted" style="margin:4px 0 16px">هر ثبت = 🪶 + دونه برای جوجه‌ات 🌾</p>
+ <div class="tabs">${Object.keys(tabT).map(k=>`<button class="tab ${tab===k?'on':''}"
+  onclick="J.setTab('${k}')">${tabT[k]} · ${fa(S.acts[k].length)}</button>`).join('')}</div>
+ <div class="grid g12">
+  <div style="display:flex;flex-direction:column;gap:14px">
+   <div class="card center"><b>مرور روز</b>
+    <div class="donut" style="margin:14px auto">${donut(p,140)}<div class="lbl"><b>${fa(p)}٪</b></div></div></div>
+   ${say('مقدار واقعی را بنویس؛ <b>کم هم حساب می‌شود.</b>','wink','gold')}</div>
+  <div class="card">
+   ${list.map((a,i)=>`<div class="act-row">${icHtml(a)}
+    <div class="inf"><div class="t">${a.n}</div><div class="muted">هدف: ${fa(a.tg)} ${a.u}</div></div>
+    <input class="num" type="number" min="0" step="0.5" value="${a.v}" onchange="J.setVal('${tab}',${i},this.value)">
+    <span class="st ${a.d?'ok':'wait'}">${a.d?'✓':'⏳'}</span></div>`).join('')}
+   <div style="display:flex;gap:10px;margin-top:16px">
+    <button class="btn pri" onclick="J.saveDay()">✓ ذخیرهٔ ثبت‌ها</button>
+    <button class="btn" onclick="location.hash='#/mood'">قدم بعد: حال من ←</button></div></div></div>`,'کارهای امروز')};
+V.mood=()=>{const st=S.wizStep;let body='';
+ if(st<5){const w=WIZ[st],val=S.mood[w.k];
+  body=`<div class="card" style="padding:28px">
+   <div style="display:flex;justify-content:space-between">
+    <span class="badge">قدم ${fa(st+1)} از ۶ · ${w.t}</span>
+    ${st>0?`<button class="btn" style="padding:5px 14px;font-size:12px" onclick="J.wback()">→ قبلی</button>`:''}</div>
+   <div class="wiz-bar">${[0,1,2,3,4,5].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div>
+   <div class="wiz-q">${w.q}</div>
+   <div class="opts">${[1,2,3,4,5].map(v=>`<button class="opt ${val===v?'on':''}"
+    onclick="J.wpick('${w.k}',${v})">${VIS[w.k](v)}<span class="lb">${w.ls[v-1]}</span></button>`).join('')}</div>
+   ${say(w.say,'wink')}</div>`}
+ else if(st===5){
+  body=`<div class="card" style="padding:28px">
+   <span class="badge">قدم ۶ از ۶</span>
+   <div class="wiz-bar">${[0,1,2,3,4,5].map(()=>'<i class="on"></i>').join('')}</div>
+   <div class="wiz-q">اگر دوست داری، امروز را در یک جمله ثبت کن.</div>
+   <p class="muted" style="margin:6px 0 14px">✍️ <i>«کلمات، ردپای حالِ تو در زمان‌اند.»</i></p>
+   <textarea id="wnote" placeholder="مثلاً: امروز آرام‌تر بودم...">${S.mood.note||''}</textarea>
+   <div style="display:flex;justify-content:space-between;margin-top:16px">
+    <button class="btn" onclick="J.wback()">→ قبلی</button>
+    <div style="display:flex;gap:10px"><button class="btn" onclick="J.wfinish(0)">رد شدن</button>
+    <button class="btn pri" onclick="J.wfinish(1)">✓ ثبت و پایان</button></div></div></div>`}
+ else{const ins=pickInsight('mood');
+  body=`${insightCard(ins)}<div class="center" style="padding:8px 0 16px">
+   <span class="float">${owl(90,'cheer')}</span>
+   <h2 style="font-size:22px;margin:10px 0 4px">ثبت شد! 🎉 جوجه‌ات آب‌تنی کرد 🛁</h2>
+   <p class="muted">هر روزی که خودت را می‌بینی، یک قدم به شناخت بهتر نزدیک‌تری.</p>
+   <div style="display:flex;gap:10px;margin-top:16px;justify-content:center">
+    <button class="btn" onclick="J.wredo()">✏️ ویرایش</button>
+    <button class="btn pri" onclick="location.hash='#/pet'">دیدن جوجه 🐣</button></div></div>`}
+ return shell('mood',`<div class="wiz">
+  <h1 style="font-size:22px;text-align:center">امروز، <span class="gtext">حال تو</span> مهم است.</h1>
+  <p class="muted" style="text-align:center;margin:4px 0 10px">بدون قضاوت، فقط توجه.</p>${body}</div>`,'حال من')};
+V.pet=()=>{const p=S.pet;
+ return shell('pet',`
+ <h1 style="font-size:22px">جوجهٔ من ${p.stage==='chick'?'🐤':'🥚'}</h1>
+ <p class="muted" style="margin:4px 0 16px">${p.stage==='chick'?'مراقبتش با ثبت‌های واقعی توست!':'با ثبت‌های منظمت گرمش کن تا به دنیا بیاید.'}</p>
+ <div class="grid g21">
+  <div>${petCard(0)}
+   ${p.stage==='chick'&&!p.name?`<div class="card" style="margin-top:14px">
+    <b>اسمش را چه بگذاریم؟</b>
+    <div style="display:flex;gap:10px;margin-top:10px">
+     <input class="num" style="flex:1;width:auto;text-align:right" id="pname" placeholder="مثلاً: پوپک">
+     <button class="btn pri" onclick="J.petName()">ثبت اسم</button></div></div>`:''}</div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+   <div class="card"><b>راهنمای مراقبت 🤍</b>
+    ${[['💧','ثبت «نوشیدن آب» → ظرف آبش پر می‌شود'],
+       ['🌾','هر فعالیت ثبت‌شده → دونه می‌ریزی'],
+       ['🛁','ثبت حال روزانه → آب‌تنی می‌کند'],
+       ['🏠','روز کامل → لانه‌اش نو می‌شود'],
+       ['🫳','روی جوجه کلیک کن → نوازشش کن!']].map(([i,t])=>
+    `<div class="act-row" style="padding:10px 4px"><span style="font-size:19px">${i}</span>
+     <span style="font-size:12.5px">${t}</span></div>`).join('')}</div>
+   ${say(p.stage==='chick'?'اگر چند روز نیایی، دلش تنگ می‌شود... ولی هیچ‌وقت نمی‌میرد. اینجا کسی تنبیه نمی‌شود 🤍':'صدای ضربان کوچکی از داخل تخم می‌آید... 🥚💓','wink','gold')}</div></div>`,'جوجهٔ من')};
+V.journal=()=>{S.insights.forEach(i=>i.seen=1);save();
+ return shell('journal',`
+ <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px">
+  <span class="float">${owl(64,'wink')}</span>
+  <div><h1 style="font-size:22px">دفترچهٔ جوما 📔</h1>
+  <p class="muted">هر روز داده‌هایت را می‌خوانم و کشف‌هایم را اینجا می‌نویسم.</p></div></div>
+ ${S.insights.length?S.insights.slice().reverse().map(i=>`
+  <div class="card hov" style="margin-bottom:12px;display:flex;gap:12px;align-items:flex-start">
+   ${owl(46,'wink')}<div><div class="muted" style="font-size:10.5px">💡 ${i.date}</div>
+   <p style="font-size:13.2px;line-height:2.1;margin-top:4px">${i.t}</p></div></div>`).join('')
+ :`<div class="card center" style="padding:40px">${chick(80,'egg')}
+   <p class="muted" style="margin-top:12px">هنوز کشفی ندارم — چند روز ثبت کن!</p></div>`}
+ <div class="card" style="margin-top:8px;background:var(--grad-soft)">
+  <b>🔬 موتور بینش چطور کار می‌کند؟</b>
+  <p class="muted" style="margin-top:6px;line-height:2.1">هر شب داده‌هایت را با ${fa(8)} الگوی تحلیلی بررسی می‌کنم:
+  روزهای بهتر هفته، رابطهٔ خواب و ورزش، اثر مدیتیشن بر تمرکز و... هرچه بیشتر ثبت کنی، دقیق‌تر می‌شوم.</p></div>`,'دفترچهٔ جوما')};
+V.reports=()=>{const ins=pickInsight('reports');
+ return shell('reports',`${insightCard(ins)}
+ <h1 style="font-size:22px">گزارش پیشرفت</h1>
+ <div class="card" style="margin:14px 0;background:var(--grad);color:#fff;display:flex;gap:16px;align-items:center">
+  <span class="float">${owl(70,'cheer')}</span>
+  <div><b style="font-size:16px">📖 قصهٔ هفتهٔ تو</b>
+  <p style="margin-top:6px;font-size:13px;line-height:2.1;opacity:.95">این هفته ۵ روز فعال بودی، بهترین روزت سه‌شنبه بود 🌟
+  و جوجه‌ات ${S.pet.stage==='chick'?'حسابی سرحال است':'در راه است'}. هفتهٔ بعد فقط یک قدم بیشتر؟</p></div></div>
+ <div class="grid g4">
+  ${[['📈','پیشرفت ماه','۸۲٪'],['🔥','زنجیره',fa(S.streak)+' روز'],['🪶','پرها',fa(S.seeds)],
+     ['💡','کشف‌های جوما',fa(S.insights.length)]].map(([i,t,v])=>
+  `<div class="card hov center"><div style="font-size:26px">${i}</div>
+   <div class="muted" style="margin:4px 0">${t}</div><b style="font-size:20px">${v}</b></div>`).join('')}</div>`,'گزارش پیشرفت')};
+V.plan=()=>{const rows=(t,l)=>l.map((a,i)=>`<div class="act-row">${icHtml(a)}
+ <div class="inf"><div class="t">${a.n}</div><div class="muted">${fa(a.tg)} ${a.u}</div></div>
+ <button class="btn" style="padding:6px 14px;font-size:12px" onclick="J.remove('${t}',${i})">حذف</button></div>`).join('');
+ return shell('plan',`<h1 style="font-size:22px">برنامهٔ من</h1>
+ <div class="card" style="margin-top:14px"><b>روزانه</b>${rows('daily',S.acts.daily)}</div>`,'برنامهٔ من')};
+V.settings=()=>{const th=document.documentElement.getAttribute('data-theme')==='joma-glass'?'glass':'classic';
+ return shell('settings',`<h1 style="font-size:22px">تنظیمات</h1>
+ <div class="grid g2" style="margin-top:14px"><div class="card"><b>🎨 ظاهر برنامه</b>
+  <div class="radio-row ${th==='classic'?'on':''}" style="margin-top:12px" onclick="J.setTheme('classic')">
+   <span style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#FDF4EC 40%,#7C5CD6 40%,#E560A3)"></span>
+   <b style="font-size:13.5px">کلاسیک رنگی</b></div>
+  <div class="radio-row ${th==='glass'?'on':''}" onclick="J.setTheme('glass')">
+   <span style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,.75) 40%,#1FA8B8 40%,#34C98E);border:1.5px solid #fff"></span>
+   <b style="font-size:13.5px">🪟 شیشهٔ شفاف</b></div></div>
+ <div class="card"><b>👤 پروفایل</b>
+  <div class="act-row"><div class="inf"><div class="t">بازنشانی دمو</div></div>
+   <button class="btn" onclick="J.reset()">بازنشانی</button></div></div></div>`,'تنظیمات')};
+const J={
+ hi(){S.hi=1;save();render()},
+ check(i){const a=S.acts.daily[i];a.d=a.d?0:1;
+  if(a.d){if(!a.v)a.v=a.tg;S.seeds+=5;
+   feedPet('food',15);if(a.id==='water')feedPet('water',30,'💧 ظرف آب جوجه پر شد!');
+   else toast('+۵ 🪶 و 🌾 دونه برای جوجه!')}
+  save();render();
+  if(donePct(S.acts.daily)===100){confetti();feedPet('nest',40);
+   setTimeout(()=>toast('روز کامل! لانهٔ جوجه نو شد 🏠✨'),400)}},
+ setTab(t){S.todayTab=t;save();render()},
+ setVal(t,i,v){const a=S.acts[t][i];const was=a.d;a.v=+v||0;a.d=a.v>0?1:0;
+  if(a.d&&!was){S.seeds+=5;feedPet('food',12);if(a.id==='water')feedPet('water',25)}
+  save();render()},
+ saveDay(){S.daySaved=1;save();render();toast('ثبت شد ✓ قدم ۲: حال امروزت 💗')},
+ wpick(k,v){S.mood[k]=v;save();render();
+  setTimeout(()=>{if(S.wizStep<5){S.wizStep++;save();render()}},380)},
+ wback(){if(S.wizStep>0){S.wizStep--;save();render()}},
+ wfinish(w){if(w){const el=document.getElementById('wnote');if(el)S.mood.note=el.value}
+  S.wizStep=6;S.moodSaved=1;S.seeds+=10;feedPet('bath',45);save();render();confetti()},
+ wredo(){S.wizStep=0;save();render()},
+ petPat(){if(S.pet.stage==='chick'){toast(['جوجه ذوق کرد! 🎵','چشم‌هایش برق زد ✨','جیک جیک! یعنی دوستت دارد 💛'][Math.floor(Math.random()*3)])}
+  else toast('تخم را گرم کردی 🥚💓')},
+ petName(){const el=document.getElementById('pname');
+  if(el&&el.value.trim()){S.pet.name=el.value.trim();save();render();
+  confetti();toast('اسمش شد: '+S.pet.name+' 🐤💛')}},
+ remove(t,i){S.acts[t].splice(i,1);save();render()},
+ reset(){S=JSON.parse(JSON.stringify(DEF));save();render();toast('بازنشانی شد')},
+ setTheme(t){const g=t==='glass';
+  if(g)document.documentElement.setAttribute('data-theme','joma-glass');
+  else document.documentElement.removeAttribute('data-theme');
+  try{localStorage.setItem('joma_theme_preference',g?'joma-glass':'classic')}catch(e){}
+  document.getElementById('sw').textContent=g?'🎨 تم کلاسیک':'✨ تم شیشه‌ای';render()},
+ toggleTheme(){J.setTheme(document.documentElement.getAttribute('data-theme')==='joma-glass'?'classic':'glass')}};
+function render(){const h=(location.hash||'#/').replace('#/','').split('?')[0]||'landing';
+ document.getElementById('root').innerHTML=(V[h]||V.landing)();window.scrollTo(0,0)}
+window.addEventListener('hashchange',render);
+try{if(localStorage.getItem('joma_theme_preference')==='joma-glass')J.setTheme('glass')}catch(e){}
+runEngine();render();
+</script>
+</body>
+</html>
