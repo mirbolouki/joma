@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="classic">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جوما — دموی کامل | قدم‌های کوچک، حال بهتر</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root{
+  --bg-layer:
+    radial-gradient(42% 34% at 88% -6%, #FFE4D2 0%, rgba(255,228,210,0) 62%),
+    radial-gradient(38% 30% at -6% 26%, #DDF3E6 0%, rgba(221,243,230,0) 60%),
+    radial-gradient(40% 34% at 106% 58%, #E9E4FC 0%, rgba(233,228,252,0) 60%),
+    radial-gradient(36% 30% at 12% 98%, #FFF3D2 0%, rgba(255,243,210,0) 60%),
+    linear-gradient(180deg,#FDFEFB 0%,#F3F8F0 100%);
+  --card:#ffffff; --card-brd:#EAEFE6;
+  --ink:#14382E; --ink-2:#5C7A6C; --ink-3:#8FA79B;
+  --brand:#0FA678; --brand2:#2FBF8F; --brand-ink:#0A7E5B;
+  --brand-soft:#D6F4E6; --brand-softer:#EDFAF3;
+  --gold:#F0B23A; --gold-soft:#FFF0C9; --gold-ink:#8F6A12;
+  --rose:#EE6D95; --rose-soft:#FFE3EC; --rose-ink:#B24763;
+  --lav:#8B7CF6; --lav-soft:#EBE7FE; --lav-ink:#5F4FC0;
+  --sky:#3FA3DC; --sky-soft:#DDF0FC; --sky-ink:#2277A8;
+  --coral:#F2784B; --coral-soft:#FFE5DA; --coral-ink:#C25327;
+  --indigo:#6D7BE0; --indigo-soft:#E7E9FD; --indigo-ink:#4B58B8;
+  --ok:#12905F;
+  --ring-track:#E4EBE1; --grid:rgba(20,56,46,.10);
+  --c1:#0FA678; --c2:#EE6D95; --c3:#F0B23A;
+  --grad1:#0FA678; --grad2:#4EA8DE;
+  --hm0:#EAF2EA; --hm1:#BEE8CD; --hm2:#7FD3A2; --hm3:#46B87F; --hm4:#1F9663;
+  --r-sm:10px; --r:16px; --r-lg:22px;
+  --shadow:0 2px 10px rgba(20,60,45,.06),0 18px 44px -24px rgba(20,60,45,.3);
+  --side-bg:#FCFDF9; --topbar-bg:rgba(255,255,255,.9); --toast-bg:#14382E;
+  --owl-a:#5E93C8; --owl-b:#3F6FA0; --owl-cream:#F6EBD9; --owl-gold:#E8B64A;
+  --owl-beak:#F0A63C; --owl-ink:#2E3A48; --owl-rose:#E07898;
+}
+/* ====== شیشه‌ی شفاف: کارت‌ها ۳۸٪ + بلور پشت هر کارت ====== */
+[data-theme="joma"]{
+  --bg-layer:
+    radial-gradient(46% 40% at 90% -8%, #FFD28A 0%, rgba(255,210,138,0) 62%),
+    radial-gradient(42% 36% at -8% 30%, #B0E9C4 0%, rgba(176,233,196,0) 60%),
+    radial-gradient(44% 38% at 108% 62%, #B9D7FB 0%, rgba(185,215,251,0) 60%),
+    radial-gradient(38% 32% at 8% 100%, #FFD6BC 0%, rgba(255,214,188,0) 60%),
+    linear-gradient(160deg,#FBE7C0 0%,#CDEAD6 45%,#C6DFF9 100%);
+  --card:rgba(255,255,255,.38); --card-brd:rgba(255,255,255,.75);
+  --ink:#31465C; --ink-2:#6E8095; --ink-3:#94A4B6;
+  --brand:#3E7FC1; --brand2:#5FA1DE; --brand-ink:#2F669F;
+  --brand-soft:rgba(214,233,250,.55); --brand-softer:rgba(233,243,252,.45);
+  --gold:#EFB63F; --gold-soft:rgba(255,238,196,.55); --gold-ink:#8F660E;
+  --rose:#E77FA0; --rose-soft:rgba(251,226,235,.55); --rose-ink:#A94F6D;
+  --lav:#8F7BE8; --lav-soft:rgba(234,230,252,.55); --lav-ink:#5E4CBE;
+  --sky:#4EA0D8; --sky-soft:rgba(222,239,251,.55); --sky-ink:#2A76A8;
+  --coral:#EE7E52; --coral-soft:rgba(255,229,216,.55); --coral-ink:#BC5327;
+  --indigo:#7B87E8; --indigo-soft:rgba(231,233,252,.55); --indigo-ink:#5663C6;
+  --ok:#1E9068;
+  --ring-track:rgba(255,255,255,.75); --grid:rgba(49,70,92,.12);
+  --c1:#8F7BE8; --c2:#4EA0D8; --c3:#EFB63F;
+  --grad1:#3E7FC1; --grad2:#8F7BE8;
+  --hm0:rgba(233,238,244,.7); --hm1:rgba(196,224,248,.8); --hm2:rgba(143,196,234,.85); --hm3:rgba(91,163,218,.9); --hm4:#2F7FBF;
+  --r-sm:12px; --r:18px; --r-lg:24px;
+  --shadow:inset 0 1px 0 rgba(255,255,255,.65),0 2px 8px rgba(45,75,110,.06),0 18px 44px -24px rgba(45,75,110,.3);
+  --side-bg:rgba(255,255,255,.42); --topbar-bg:rgba(255,255,255,.45); --toast-bg:#31465C;
+  --owl-a:#6FA8DC; --owl-b:#4A7FB5; --owl-cream:#FBF3E4; --owl-gold:#F2CC6B;
+  --owl-beak:#F5B04C; --owl-ink:#33475C; --owl-rose:#E88AA6;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;color:var(--ink);min-height:100vh;transition:color .25s}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--bg-layer)}
+button,input,select,textarea{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+.ic{width:20px;height:20px;flex:none}
+.num{font-feature-settings:"ss01"}
+.grad{background:linear-gradient(90deg,var(--grad1),var(--grad2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);box-shadow:var(--shadow);
+  transition:background-color .25s,border-color .25s,box-shadow .25s,border-radius .25s}
+.kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--brand-ink)}
+.kicker::before{content:"";width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,var(--grad1),var(--grad2))}
+.tiny{font-size:11px;color:var(--ink-3);line-height:1.9}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--brand-ink);
+  background:var(--brand-soft);border-radius:999px;padding:4px 12px}
+.chip{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;transition:background-color .25s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:var(--r);
+  font-size:13.5px;font-weight:700;transition:all .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 8px 18px -8px rgba(20,90,70,.55)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.soft{background:var(--brand-soft);color:var(--brand-ink)}
+.btn.ghost{background:var(--card);border:1px solid var(--card-brd);color:var(--ink)}
+.btn.sm{padding:8px 14px;font-size:12.5px;border-radius:var(--r-sm)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--brand-ink)}
+.link:hover{opacity:.85}
+.mascot{display:inline-block;flex:none;width:66px;height:66px}
+.mascot svg{width:100%;height:100%;display:block}
+.mascot.sm{width:46px;height:46px}
+.mascot.lg{width:100px;height:100px}
+.mascot.xl{width:112px;height:112px}
+.joma-msg{display:flex;align-items:center;gap:10px;margin:6px 0}
+.joma-msg .bubble{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;
+  box-shadow:var(--shadow);padding:9px 14px;font-size:12.5px;font-weight:600;line-height:1.9}
+.joma-msg .who{font-size:9.5px;font-weight:800;color:var(--brand-ink);letter-spacing:.3px;margin-bottom:2px}
+.pins{columns:3;column-gap:14px;margin-top:26px;text-align:right}
+.pin{break-inside:avoid;margin-bottom:14px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.pin:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 18px 40px -16px rgba(20,60,45,.4)}
+.pin .art{display:grid;place-items:center;height:158px}
+.pin .cap{padding:12px 14px 14px}
+.pin .cap b{font-size:13px;display:block;margin-bottom:4px}
+.p1{background:linear-gradient(150deg,#FFE0D1,#FFC9D8)}.p2{background:linear-gradient(150deg,#D6EDFF,#C5E4F8)}
+.p3{background:linear-gradient(150deg,#E9E0FF,#D9CCFA)}.p4{background:linear-gradient(150deg,#DCF5EA,#C6EEDD)}
+.p5{background:linear-gradient(150deg,#DFF2FF,#C6E8FB)}.p6{background:linear-gradient(150deg,#FFF0C7,#FFE2A8)}
+.p7{background:linear-gradient(150deg,#FFE2EC,#FFCFE1)}.p8{background:linear-gradient(150deg,#DFF5EF,#C9EFE4)}
+.switcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:300;display:flex;gap:4px;padding:5px;
+  border-radius:999px;background:var(--topbar-bg);border:1px solid var(--card-brd);box-shadow:0 8px 24px -10px rgba(20,50,40,.35)}
+.switcher button{padding:7px 16px;border-radius:999px;font-size:12px;font-weight:700;color:var(--ink-2);transition:all .2s}
+.switcher button.on{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.view{display:none}.view.on{display:block}
+.page{display:none;animation:fadeUp .3s ease}.page.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.lnav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:20px;padding:12px clamp(16px,4vw,48px);
+  background:var(--topbar-bg);border-bottom:1px solid var(--card-brd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-tile{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+  display:grid;place-items:center;flex:none;box-shadow:0 6px 14px -6px rgba(20,90,70,.5)}
+.logo-tile svg{width:25px;height:25px}
+.logo b{font-size:16.5px;display:block;line-height:1.2}
+.logo small{display:block;font-size:10px;color:var(--ink-3);font-weight:400}
+.lnav nav{display:flex;gap:4px;margin-inline:auto}
+.lnav nav a{font-size:13px;font-weight:600;color:var(--ink-2);padding:8px 13px;border-radius:999px}
+.lnav nav a:hover{background:var(--brand-soft);color:var(--brand-ink)}
+.land{max-width:1150px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,64px);align-items:center;padding:clamp(40px,7vw,84px) 0 40px}
+.hero h1{font-size:clamp(30px,4.6vw,52px);font-weight:900;line-height:1.35;margin:14px 0 16px}
+.hero p{font-size:14.5px;color:var(--ink-2);line-height:2.1;max-width:520px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 14px}
+.trust{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}
+.trust .ic{width:15px;height:15px;color:var(--ok)}
+.phone{position:relative;max-width:380px;margin-inline:auto;width:100%}
+.phone .inner{padding:18px;display:flex;flex-direction:column;gap:12px}
+.mini-row{display:flex;align-items:center;gap:10px}
+.mini-stat{background:var(--brand-softer);border-radius:var(--r-sm);padding:12px;display:flex;gap:14px;align-items:center;transition:background-color .25s}
+.ring-s{width:74px;height:74px;position:relative;flex:none}
+.ring-s svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-s .rt{fill:none;stroke:var(--ring-track);stroke-width:8}
+.ring-s .rp{fill:none;stroke:var(--brand);stroke-width:8;stroke-linecap:round;stroke-dasharray:207.3;stroke-dashoffset:calc(207.3 - 207.3*var(--p)/100)}
+.ring-s b{position:absolute;inset:0;display:grid;place-items:center;font-size:15px}
+.act-row{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px dashed var(--card-brd)}
+.act-row:last-of-type{border-bottom:none}
+.tick{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--brand);color:#fff}
+.tick.idle{background:transparent;border:1.6px dashed var(--ink-3);color:transparent}
+.float-chip{position:absolute;bottom:-16px;left:-14px;display:flex;align-items:center;gap:9px;background:var(--card);
+  border:1px solid var(--card-brd);border-radius:14px;box-shadow:var(--shadow);padding:10px 14px;font-size:11.5px;font-weight:700}
+.float-chip .chip{width:32px;height:32px;border-radius:9px;background:var(--gold-soft);color:var(--gold-ink)}
+.strip{display:flex;justify-content:center;gap:clamp(20px,5vw,60px);flex-wrap:wrap;padding:26px 0;border-block:1px solid var(--card-brd);margin:16px 0}
+.strip .st{text-align:center}
+.strip b{font-size:22px;font-weight:900}
+.strip span{display:block;font-size:11px;color:var(--ink-3);margin-top:4px}
+.feat3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:8px 0}
+.feat3 .f{display:flex;align-items:center;justify-content:center;gap:10px;font-size:12.5px;font-weight:700;color:var(--ink-2);padding:12px}
+.feat3 .f:nth-child(1) .ic{color:var(--sky)}
+.feat3 .f:nth-child(2) .ic{color:var(--rose)}
+.feat3 .f:nth-child(3) .ic{color:var(--gold)}
+.how{padding:clamp(36px,6vw,64px) 0 8px;text-align:center}
+.how h2,.pinsh h2{font-size:clamp(24px,3.4vw,36px);font-weight:900;margin:12px 0 10px}
+.how .sub,.pinsh .sub{color:var(--ink-2);font-size:13.5px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px;text-align:right}
+.cards3 .c{position:relative;padding:22px}
+.cards3 .c .n{position:absolute;top:16px;left:18px;font-size:12px;font-weight:800;color:var(--ink-3)}
+.cards3 h3{font-size:15px;font-weight:800;margin:12px 0 8px}
+.cards3 p{font-size:12px;color:var(--ink-2);line-height:2}
+.calm{margin:clamp(30px,5vw,56px) 0}
+.calm .split{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.calm .txt{padding:clamp(22px,4vw,44px);display:flex;flex-direction:column;justify-content:center;gap:14px}
+.calm h2{font-size:clamp(22px,3vw,32px);font-weight:900;line-height:1.6}
+.calm .txt p{font-size:13px;color:var(--ink-2);line-height:2.1}
+.checkin{padding:clamp(22px,4vw,40px);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;
+  background:linear-gradient(160deg,var(--brand-soft),var(--sky-soft));border-inline-start:1px solid var(--card-brd);transition:background .25s}
+.checkin h3{font-size:17px;font-weight:800}
+.opts{display:flex;gap:10px}
+.opt{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--ink-2);
+  background:var(--card);border:1.5px solid var(--card-brd);border-radius:14px;padding:14px 18px;transition:all .2s;min-width:86px}
+.opt .em{font-size:22px;line-height:1;padding:5px 12px;border-radius:10px;background:var(--brand-softer)}
+.opt:nth-child(2) .em{background:var(--gold-soft)}
+.opt:nth-child(3) .em{background:var(--rose-soft)}
+.opt:hover{transform:translateY(-2px)}
+.opt.sel{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-ink)}
+.cta{text-align:center;padding:clamp(40px,7vw,72px) 0}
+.cta h2{font-size:clamp(26px,4vw,40px);font-weight:900;margin:12px 0 24px}
+.lfoot{border-top:1px solid var(--card-brd);padding:30px 0 40px}
+.lfoot .row{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.lfoot .links{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lfoot .links a{font-size:12.5px;color:var(--ink-2);padding:7px 12px;border-radius:999px}
+.lfoot .links a:hover{background:var(--brand-soft);color:var(--brand-ink)}
+.demo-pill{font-size:10.5px;font-weight:700;color:var(--gold-ink);background:var(--gold-soft);border-radius:999px;padding:5px 11px}
+.lfoot .fine{margin-top:22px;font-size:11px;color:var(--ink-3);text-align:left}
+.app{display:grid;grid-template-columns:252px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--side-bg);border-inline-start:1px solid var(--card-brd);
+  padding:20px 16px;display:flex;flex-direction:column;gap:4px;transition:background-color .25s}
+.side .logo{padding:2px 4px 14px}
+.dura{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--brand-softer);
+  border-radius:var(--r-sm);padding:11px 12px;margin-bottom:14px}
+.dura b{font-size:12.5px;display:block}
+.dura small{font-size:10px;color:var(--ink-3)}
+.lvl{display:flex;align-items:center;gap:10px;background:var(--brand-softer);border-radius:12px;padding:10px 12px;margin-bottom:14px}
+.lvl .em{font-size:20px}
+.lvl b{font-size:12px;display:block}
+.lvl small{font-size:9.5px;color:var(--ink-3);display:block;margin-bottom:5px}
+.lvl>div{flex:1;min-width:0}
+.xpbar{background:rgba(255,255,255,.5);border-radius:999px;height:7px;overflow:hidden}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--grad1),var(--grad2));border-radius:999px;transition:width .6s}
+.slabel{font-size:10.5px;font-weight:700;color:var(--ink-3);padding:10px 10px 6px}
+.nitem{display:flex;align-items:center;gap:11px;width:100%;text-align:right;font-size:13px;font-weight:600;color:var(--ink-2);
+  padding:10px 12px;border-radius:11px;border-inline-start:3px solid transparent;transition:all .18s;position:relative}
+.nitem .ic{width:18px;height:18px;color:var(--ink-3)}
+.nitem:hover{background:var(--brand-softer);color:var(--ink)}
+.nitem.on{background:var(--brand-soft);color:var(--brand-ink);font-weight:800;border-inline-start-color:var(--brand)}
+.nitem.on .ic{color:var(--brand-ink)}
+.nitem .cnt{position:absolute;left:10px;font-size:10px;font-weight:800;background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px}
+.spacer{flex:1}
+.sprof{display:flex;align-items:center;gap:10px;padding:12px 10px;border-top:1px solid var(--card-brd);margin-top:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--gold-soft);color:var(--gold-ink);display:grid;
+  place-items:center;font-weight:800;font-size:14px;flex:none}
+.sprof b{font-size:12.5px;display:block}
+.sprof small{font-size:10px;color:var(--ink-3)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;gap:12px;padding:12px clamp(16px,3vw,32px);
+  background:var(--topbar-bg);border-bottom:1px solid var(--card-brd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.crumbs{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.crumbs b{color:var(--ink);font-weight:700}
+.topbar .end{margin-inline-start:auto;display:flex;align-items:center;gap:10px}
+.bell{position:relative;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--card);
+  border:1px solid var(--card-brd);color:var(--ink-2)}
+.bell i{position:absolute;top:8px;left:9px;width:7px;height:7px;border-radius:50%;background:var(--rose)}
+.content{padding:clamp(18px,3vw,32px);max-width:1060px;width:100%;margin:0 auto}
+.pagehead{margin-bottom:16px}
+.pagehead .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.pagehead h1{font-size:clamp(20px,2.6vw,27px);font-weight:900;margin:6px 0}
+.pagehead .sub{font-size:13px;color:var(--ink-2)}
+.datechip{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink-2);
+  background:var(--card);border:1px solid var(--card-brd);border-radius:999px;padding:8px 14px}
+.datechip .ic{width:15px;height:15px;color:var(--brand)}
+.ring-l{position:relative;width:150px;height:150px;flex:none}
+.ring-l svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-l .rt{fill:none;stroke:var(--ring-track);stroke-width:11}
+.ring-l .rp{fill:none;stroke:var(--brand);stroke-width:11;stroke-linecap:round;stroke-dasharray:339.3;stroke-dashoffset:calc(339.3 - 339.3*var(--p)/100);transition:stroke-dashoffset .6s}
+.ring-l .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring-l .lbl b{font-size:26px;font-weight:900}
+.ring-l .lbl span{font-size:10px;color:var(--ink-3)}
+.grid-progress{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:14px}
+.pcard{padding:22px;display:flex;align-items:center;gap:20px}
+.pcard .tx{display:flex;flex-direction:column;gap:8px}
+.pcard h3{font-size:16px;font-weight:800}
+.pcard p{font-size:12.5px;color:var(--ink-2);line-height:2}
+.moodq{padding:22px;display:flex;flex-direction:column;gap:12px}
+.moodq h3{font-size:14.5px;font-weight:800}
+.moodq .opts .opt{padding:11px 14px;min-width:74px}
+.stat4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.scard{padding:16px;display:flex;flex-direction:column;gap:9px}
+.scard .top{display:flex;align-items:center;justify-content:space-between}
+.scard .lbl{font-size:11.5px;color:var(--ink-2);font-weight:600}
+.scard .v{font-size:23px;font-weight:900}
+.scard .v small{font-size:13px;font-weight:700;color:var(--ink-3)}
+.grid-dash{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:14px}
+.steps,.panelcard{padding:20px}
+.steps .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.steps h3,.panelcard h3{font-size:14.5px;font-weight:800}
+.srow{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px dashed var(--card-brd)}
+.srow:last-of-type{border-bottom:none}
+.srow .chip{width:36px;height:36px;border-radius:10px}
+.srow b{font-size:13px;display:block}
+.srow small{font-size:10.5px;color:var(--ink-3)}
+.srow .st{margin-inline-start:auto;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700}
+.srow .st.done{color:var(--ok)}
+.srow .st.wait{color:var(--ink-3)}
+.srow .st .ic{width:17px;height:17px}
+.journey{padding:20px}
+.journey .head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.journey .bigv{display:flex;align-items:baseline;gap:6px}
+.journey .bigv b{font-size:30px;font-weight:900}
+.journey .bigv span{font-size:12px;color:var(--ink-2)}
+.spark{width:100%;height:auto;display:block;margin:6px 0}
+.gl{stroke:var(--grid);stroke-dasharray:3 5;stroke-width:1}
+.ax{fill:var(--ink-3);font-size:10px;font-family:inherit}
+.goal{padding:18px 20px;background:var(--gold-soft);border-color:transparent;display:flex;gap:14px;align-items:flex-start}
+.goal .chip{background:rgba(255,255,255,.55);color:var(--gold-ink)}
+.goal b{font-size:13px;display:block;margin-bottom:4px}
+.goal p{font-size:11.5px;color:var(--ink-2);line-height:1.9;margin-bottom:8px}
+.stk{padding:16px 20px}
+.stk-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.stk-head b{font-size:15px;font-weight:900}
+.sdots{display:flex;gap:8px;margin-top:10px}
+.sdots .d{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9px;color:var(--ink-3)}
+.sdots .d i{width:18px;height:18px;border-radius:50%;background:var(--ring-track)}
+.sdots .d.f i{background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.today-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:14px;align-items:start}
+.tside{display:flex;flex-direction:column;gap:14px}
+.trow{display:grid;grid-template-columns:1.35fr .95fr .8fr 20px;gap:12px;align-items:center;padding:13px 2px;border-bottom:1px dashed var(--card-brd)}
+.trow:last-of-type{border-bottom:none}
+.trow .act{display:flex;align-items:center;gap:10px}
+.trow .act .chip{width:36px;height:36px;border-radius:10px}
+.trow b{font-size:12.5px;display:block}
+.trow small{font-size:10px;color:var(--ink-3)}
+.inp{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r-sm);padding:9px 12px;font-size:12.5px;font-weight:700;width:100%;transition:border-color .2s}
+.inp:focus{outline:none;border-color:var(--brand)}
+.tst{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;border-radius:999px;padding:5px 10px}
+.tst.done{color:var(--ok);background:var(--brand-soft)}
+.tst.wait{color:var(--ink-3);background:var(--brand-softer)}
+.trow .ic.chev{width:16px;height:16px;color:var(--ink-3)}
+.thead{display:grid;grid-template-columns:1.35fr .95fr .8fr 20px;gap:12px;font-size:10.5px;color:var(--ink-3);font-weight:600;padding:0 2px 10px;border-bottom:1px solid var(--card-brd)}
+.tfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--card-brd);border-radius:999px;padding:4px;width:max-content;margin-bottom:14px}
+.tabs button{padding:8px 18px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--ink-2);transition:all .2s}
+.tabs button.on{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.tabs button sup{font-size:9px;margin-inline-start:3px;opacity:.8}
+.daynav{display:flex;align-items:center;gap:10px}
+.daynav .dbtn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--card-brd);color:var(--ink-2)}
+.tip{padding:16px 18px;background:var(--brand-softer);border-color:transparent;display:flex;gap:12px;align-items:center;transition:background-color .25s}
+.tip b{font-size:12.5px;display:block;margin-bottom:3px}
+.tip p{font-size:11px;color:var(--ink-2);line-height:1.9}
+.golink{display:flex;align-items:center;justify-content:space-between;padding:15px 18px}
+.golink b{font-size:13px}
+.doneb{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,var(--gold-soft),var(--rose-soft));border-color:transparent}
+.doneb b{font-size:13px;display:block}
+.wiz{padding:22px;max-width:880px;margin:0 auto}
+.wiz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wdots{display:flex;gap:12px;flex-wrap:wrap}
+.wdot{display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--ink-3);font-size:9.5px;font-weight:700;min-width:46px;transition:opacity .2s;background:none}
+.wdot i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+  background:var(--brand-softer);border:2px solid var(--card-brd);transition:all .25s}
+.wdot.done i{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-ink)}
+.wdot.on i{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;color:#fff;
+  box-shadow:0 6px 14px -6px rgba(20,90,70,.5);transform:scale(1.08)}
+.wcount{font-size:11px;font-weight:800;color:var(--ink-3);background:var(--brand-softer);border-radius:999px;padding:6px 13px}
+.wstep{display:none;animation:fadeUp .3s ease}
+.wstep.on{display:block}
+.wstage{display:grid;grid-template-columns:1fr 1.05fr;gap:22px;align-items:center;padding:6px 2px}
+.wvisual{display:grid;place-items:center;min-height:200px;border-radius:var(--r-lg);padding:20px;transition:background .25s}
+.hbox{display:grid;place-items:center;transition:opacity .3s}
+.hbox.ghost{opacity:.45}
+.hbox .big{font-size:64px;line-height:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))}
+.hbox .whero{width:170px;height:auto}
+.wq h2{font-size:20px;font-weight:900;margin:4px 0 6px}
+.wq>p{font-size:12.5px;color:var(--ink-2);line-height:2}
+.wopts{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}
+.wopt{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:700;color:var(--ink-2);
+  background:var(--card);border:1.5px solid var(--card-brd);border-radius:14px;padding:11px 4px;transition:all .18s}
+.wopt .wo{height:26px;display:grid;place-items:center}
+.wopt .wo svg{width:42px;height:25px}
+.wopt .wo.em{font-size:21px}
+.wopt:hover{transform:translateY(-2px)}
+.wopt.sel{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-ink);box-shadow:0 6px 16px -8px rgba(20,90,70,.4)}
+.wnav{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+.wnav .joma-msg{margin:0;flex:1;min-width:230px}
+.wnav .joma-msg .bubble{padding:8px 13px;font-size:12px}
+.wnav .btns{display:flex;gap:8px}
+.btn.pulse{animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(20,140,100,.4)}60%{box-shadow:0 0 0 12px rgba(20,140,100,0)}}
+.wsum{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.chip-sum{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--card-brd);
+  border-radius:999px;padding:7px 13px;font-size:11px;font-weight:700;color:var(--ink-2);transition:all .18s}
+.chip-sum b{color:var(--ink)}
+.chip-sum:hover{border-color:var(--brand);transform:translateY(-1px)}
+.wnote{margin-top:14px;padding:14px 18px;border-radius:var(--r);
+  background:linear-gradient(150deg,var(--gold-soft),var(--rose-soft));font-size:12.5px;font-weight:700;line-height:2}
+.wsave{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
+textarea.inp{min-height:96px;resize:vertical;line-height:2;font-weight:500}
+.rings4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;margin-top:6px}
+.mring{position:relative;width:64px;height:64px;margin:0 auto}
+.mring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.mring .rt{fill:none;stroke:var(--ring-track);stroke-width:6}
+.mring .rp{fill:none;stroke-width:6;stroke-linecap:round;stroke-dasharray:163.4;stroke-dashoffset:calc(163.4 - 163.4*var(--p)/100)}
+.mring b{position:absolute;inset:0;display:grid;place-items:center;font-size:11.5px;font-weight:900}
+.mring-cap{font-size:10px;color:var(--ink-2);margin-top:6px;font-weight:700}
+.mbars{display:flex;align-items:flex-end;gap:5px;height:74px;margin-top:12px}
+.mbars i{flex:1;border-radius:5px 5px 2px 2px;opacity:.92}
+.chips2{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pchip{font-size:11px;font-weight:700;border-radius:999px;padding:6px 13px}
+.rep-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.rep2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.badge{font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--card);border:1px solid var(--card-brd)}
+.l1{stroke:var(--c1)}.l2{stroke:var(--c2)}
+.s1{stop-color:var(--c1)}.s2{stop-color:var(--c2)}
+.hm-head{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:10px;color:var(--ink-3);margin-bottom:6px}
+.hm{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.hm i{display:block;height:20px;border-radius:6px}
+.hm .lv0{background:var(--hm0)}.hm .lv1{background:var(--hm1)}.hm .lv2{background:var(--hm2)}
+.hm .lv3{background:var(--hm3)}.hm .lv4{background:var(--hm4)}
+.empty{padding:60px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.empty b{font-size:15px}
+.empty p{font-size:12px;color:var(--ink-2);max-width:340px;line-height:2}
+.tabbar{display:none}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);z-index:600;background:var(--toast-bg);
+  color:#fff;font-size:12.5px;font-weight:700;padding:8px 20px 8px 10px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:all .3s;box-shadow:0 10px 30px -10px rgba(0,0,0,.35);display:flex;align-items:center;gap:9px;max-width:min(480px,90vw)}
+.toast svg{width:28px;height:28px;flex:none}
+.toast #toast-em{font-size:20px;flex:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.ob-wrap{position:fixed;inset:0;z-index:500;display:grid;place-items:center;background:rgba(15,35,30,.45);padding:20px;backdrop-filter:blur(3px)}
+.ob-card{max-width:400px;width:100%;padding:26px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.ob-card h3{font-size:17px;font-weight:900}
+.ob-step{display:flex;align-items:center;gap:12px;width:100%;text-align:right;background:var(--brand-softer);border-radius:12px;padding:10px 12px;transition:background-color .25s}
+.ob-step b{font-size:12.5px;display:block}
+.ob-step small{font-size:10.5px;color:var(--ink-2);line-height:1.8}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:700}
+.breath-wrap{position:fixed;inset:0;z-index:520;display:grid;place-items:center;background:rgba(15,35,30,.5);padding:20px;backdrop-filter:blur(3px)}
+.breath{max-width:340px;width:100%;padding:28px 22px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.bcircle{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px;
+  background:radial-gradient(circle at 35% 30%,var(--brand2),var(--brand));box-shadow:0 14px 40px -14px rgba(20,120,90,.6);transform:scale(1)}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+.bdg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--brand-softer);transition:all .3s}
+.bdg .em{font-size:24px;filter:grayscale(1);opacity:.4;transition:filter .4s,opacity .4s}
+.bdg b{font-size:9.5px;color:var(--ink-3);font-weight:800;line-height:1.6}
+.bdg.on{background:linear-gradient(150deg,var(--gold-soft),var(--brand-soft));box-shadow:var(--shadow)}
+.bdg.on .em{filter:none;opacity:1}
+.bdg.on b{color:var(--ink)}
+.wglasses{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:12px}
+.wg{aspect-ratio:2/3;border-radius:8px 8px 12px 12px;border:2px solid var(--card-brd);background:var(--card);
+  position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s}
+.wg i{position:absolute;inset:auto 0 0 0;height:0;background:linear-gradient(180deg,var(--sky),var(--sky-soft));transition:height .35s}
+.wg.f{border-color:var(--sky)}
+.wg.f i{height:80%}
+.wg:hover{transform:translateY(-2px)}
+@keyframes pop{40%{transform:scale(1.3)}}
+.pop{animation:pop .4s}
+@keyframes floaty{50%{transform:translateY(-7px)}}
+.floaty{animation:floaty 3.2s ease-in-out infinite}
+.pet-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.pet-stage{width:118px;height:128px;flex:none;display:grid;place-items:center;cursor:pointer;user-select:none;
+  background:linear-gradient(160deg,var(--lav-soft),var(--sky-soft));border-radius:18px;transition:transform .25s}
+.pet-stage:hover{transform:translateY(-4px)}
+.pet-stage svg{width:82px;height:92px}
+.pet-care{flex:1;min-width:220px;display:flex;flex-direction:column;gap:9px}
+.pmeter{display:flex;align-items:center;gap:9px}
+.pmeter .pe{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:15px;
+  background:var(--brand-softer);flex:none}
+.pmeter .pl{flex:1;min-width:0}
+.pmeter .pl b{font-size:11px;display:block;line-height:1.5}
+.pmeter .pl small{font-size:9px;color:var(--ink-3);line-height:1.5}
+.psegs{display:flex;gap:4px;flex:none}
+.psegs i{width:20px;height:9px;border-radius:99px;background:var(--ring-track);transition:background .35s}
+.psegs i.on{background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+.crack{opacity:0;transition:opacity .5s}
+.crack.show{opacity:1}
+@keyframes wiggle{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.wiggle{animation:wiggle .5s}
+.insight-item{display:flex;gap:10px;padding:11px 12px;border-radius:12px;background:var(--brand-softer);
+  margin-top:8px;align-items:flex-start;transition:background .3s}
+.insight-item .ie{font-size:20px;flex:none;line-height:1.4}
+.insight-item b{font-size:12px;display:block}
+.insight-item p{font-size:11px;color:var(--ink-2);line-height:1.9;margin-top:2px}
+.insight-item.new{background:linear-gradient(150deg,var(--gold-soft),var(--brand-soft));box-shadow:var(--shadow)}
+.insight-item.locked{opacity:.5;background:var(--card)}
+.insight-item.locked .ie{filter:grayscale(1)}
+/* ====== بلور شیشه روی همه‌ی کارت‌ها (فقط تم شیشه‌ای) ====== */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  [data-theme="joma"] .card{
+    backdrop-filter:blur(20px) saturate(1.5);
+    -webkit-backdrop-filter:blur(20px) saturate(1.5)}
+  [data-theme="joma"] .side,[data-theme="joma"] .topbar,[data-theme="joma"] .lnav,
+  [data-theme="joma"] .switcher,[data-theme="joma"] .tabbar{
+    backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4)}
+}
+/* ورودی‌ها و مودال‌ها کمی مات‌تر تا خوانا بمانند */
+[data-theme="joma"] .inp{background:rgba(255,255,255,.55)}
+[data-theme="joma"] .ob-card,[data-theme="joma"] .breath{background:rgba(255,255,255,.85)}
+@media (prefers-reduced-transparency:reduce){
+  [data-theme="joma"] .side,[data-theme="joma"] .topbar,[data-theme="joma"] .lnav,[data-theme="joma"] .switcher,[data-theme="joma"] .tabbar{background:#EEF4FA}
+  [data-theme="joma"] .card{backdrop-filter:none;-webkit-backdrop-filter:none;background:#F6FAFD}
+}
+@media (max-width:1020px){
+  .stat4,.rep-chips{grid-template-columns:repeat(2,1fr)}
+  .cards3,.feat3{grid-template-columns:1fr}
+  .hero,.calm .split{grid-template-columns:1fr}
+  .checkin{border-inline-start:none;border-top:1px solid var(--card-brd)}
+  .pins{columns:2}
+  .badges{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  .tabbar{display:flex;position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+    width:min(430px,calc(100% - 24px));z-index:150;background:var(--topbar-bg);border:1px solid var(--card-brd);
+    border-radius:20px;box-shadow:0 10px 30px -12px rgba(20,50,40,.35);padding:8px 6px;justify-content:space-around}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--ink-3);padding:5px 10px;border-radius:12px}
+  .tabbar a.on{color:var(--brand-ink);font-weight:800;background:var(--brand-soft)}
+  .content{padding-bottom:110px}
+  .grid-progress,.grid-dash,.today-grid,.rep2{grid-template-columns:1fr}
+  .trow,.thead{grid-template-columns:1.2fr .9fr .75fr 16px;gap:8px}
+  .wstage{grid-template-columns:1fr}
+  .wvisual{min-height:150px}
+  .hbox .big{font-size:52px}.hbox .whero{width:140px}
+  .wopts{grid-template-columns:repeat(3,1fr)}
+  .lnav nav{display:none}
+  .pins{columns:1}
+  .badges{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="owl-core" viewBox="0 0 120 120">
+    <path d="M27 25C29 15 35 8 44 5c-2 7-2 13 1 19Z" fill="var(--owl-b)"/>
+    <path d="M93 25c-2-10-8-17-17-20 2 7 2 13-1 19Z" fill="var(--owl-b)"/>
+    <path d="M60 12c27 0 41 20 41 49 0 30-16 46-41 46S19 91 19 61c0-29 14-49 41-49Z" fill="var(--owl-a)"/>
+    <ellipse cx="60" cy="75" rx="27" ry="25" fill="var(--owl-cream)"/>
+    <ellipse cx="37" cy="63" rx="5" ry="3" fill="var(--owl-beak)" opacity=".35"/>
+    <ellipse cx="83" cy="63" rx="5" ry="3" fill="var(--owl-beak)" opacity=".35"/>
+    <circle cx="45" cy="50" r="10.5" fill="var(--owl-ink)"/><circle cx="75" cy="50" r="10.5" fill="var(--owl-ink)"/>
+    <circle cx="48.5" cy="46.5" r="3.5" fill="#fff"/><circle cx="78.5" cy="46.5" r="3.5" fill="#fff"/>
+    <circle cx="42.5" cy="53.5" r="1.6" fill="#fff" opacity=".8"/><circle cx="72.5" cy="53.5" r="1.6" fill="#fff" opacity=".8"/>
+    <path d="M31 47 21 42M89 47l10-5" stroke="var(--owl-gold)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="45" cy="50" r="14" fill="none" stroke="var(--owl-gold)" stroke-width="3"/>
+    <circle cx="75" cy="50" r="14" fill="none" stroke="var(--owl-gold)" stroke-width="3"/>
+    <path d="M58.5 44Q60 41.5 61.5 44" fill="none" stroke="var(--owl-gold)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M53.5 63Q60 60.5 66.5 63 63.5 70.5 60 71.5 56.5 70.5 53.5 63Z" fill="var(--owl-beak)"/>
+    <path d="M45 106.5q5 7 10 0M65 106.5q5 7 10 0" fill="none" stroke="var(--owl-beak)" stroke-width="3.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="owl" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-hi" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M95 52c10-10 13-23 7.5-32-7 5-13 17-14.5 29Z" fill="var(--owl-b)"/>
+    <path transform="translate(106 13)" d="M0-5 1.3-1.3 5 0 1.3 1.3 0 5-1.3 1.3-5 0-1.3-1.3Z" fill="var(--owl-gold)"/>
+    <circle cx="93" cy="7" r="2" fill="var(--owl-cream)"/>
+  </symbol>
+  <symbol id="owl-cheer" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M25 52C15 42 12 29 17.5 20c7 5 13 17 14.5 29Z" fill="var(--owl-b)"/>
+    <path d="M95 52c10-10 13-23 7.5-32-7 5-13 17-14.5 29Z" fill="var(--owl-b)"/>
+    <circle cx="18" cy="12" r="2.5" fill="var(--owl-rose)"/><circle cx="60" cy="6" r="2.5" fill="var(--owl-gold)"/>
+    <circle cx="102" cy="12" r="2.5" fill="#7CB9E8"/><circle cx="8" cy="30" r="2" fill="#7CB9E8"/><circle cx="112" cy="30" r="2" fill="var(--owl-rose)"/>
+  </symbol>
+  <symbol id="owl-think" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M50 70q10-7 20 0-7 9-17 7Z" fill="var(--owl-b)"/>
+    <circle cx="91" cy="32" r="6" fill="var(--owl-cream)" stroke="var(--owl-b)" stroke-width="1.5"/>
+    <circle cx="101" cy="17" r="9.5" fill="var(--owl-cream)" stroke="var(--owl-b)" stroke-width="1.5"/>
+    <circle cx="101" cy="17" r="3.5" fill="var(--owl-gold)"/>
+  </symbol>
+  <symbol id="owl-read" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M60 78c-8-6-20-8-30-6v24c10-2 22 0 30 6Z" fill="#fff" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M60 78c8-6 20-8 30-6v24c-10-2-22 0-30 6Z" fill="#fff" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M60 78v24" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M36 80h16M36 86h16M68 80h16M68 86h16" stroke="#C9C2B2" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="31" cy="83" r="5.5" fill="var(--owl-b)"/><circle cx="89" cy="83" r="5.5" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-moon" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <circle cx="45" cy="50" r="11.5" fill="var(--owl-cream)"/><circle cx="75" cy="50" r="11.5" fill="var(--owl-cream)"/>
+    <path d="M36.5 50q8.5 7.5 17 0M66.5 50q8.5 7.5 17 0" fill="none" stroke="var(--owl-ink)" stroke-width="3" stroke-linecap="round"/>
+    <text x="94" y="32" font-size="13" font-weight="800" fill="var(--owl-b)" font-family="inherit">z</text>
+    <text x="102" y="20" font-size="9" font-weight="800" fill="var(--owl-b)" font-family="inherit">z</text>
+  </symbol>
+  <symbol id="owl-lotus" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <circle cx="45" cy="50" r="11.5" fill="var(--owl-cream)"/><circle cx="75" cy="50" r="11.5" fill="var(--owl-cream)"/>
+    <path d="M36.5 50q8.5 7.5 17 0M66.5 50q8.5 7.5 17 0" fill="none" stroke="var(--owl-ink)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M34 85q26 12 52 0" fill="none" stroke="var(--owl-b)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M95 22c-2-2.6-6-1.6-6 1.6 0 2.2 3 4 6 6 3-2 6-3.8 6-6 0-3.2-4-4.2-6-1.6Z" fill="var(--owl-rose)"/>
+  </symbol>
+  <symbol id="owl-fit" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M26 27q34-17 68 0-2.5 8-5 8-30-15-58 0-2.5 0-5-8Z" fill="var(--owl-rose)"/>
+    <path d="M22 40q3 4 0 7-3-3 0-7Z" fill="#7CB9E8"/>
+    <rect x="38" y="87" width="44" height="6" rx="3" fill="var(--owl-ink)"/>
+    <rect x="30" y="80" width="8" height="20" rx="3" fill="var(--owl-gold)"/>
+    <rect x="82" y="80" width="8" height="20" rx="3" fill="var(--owl-gold)"/>
+    <ellipse cx="46" cy="90" rx="5" ry="4" fill="var(--owl-b)"/><ellipse cx="74" cy="90" rx="5" ry="4" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-water" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M13.4 71 25.6 71 24.3 88 14.7 88Z" fill="#7CB9E8" opacity=".85"/>
+    <path d="M12 62 27 62 24.5 90 14.5 90Z" fill="none" stroke="var(--owl-b)" stroke-width="2"/>
+    <circle cx="18" cy="76" r="1.2" fill="#fff"/><circle cx="21" cy="81" r="1" fill="#fff"/>
+  </symbol>
+  <symbol id="owl-logo" viewBox="0 0 24 24">
+    <circle cx="12" cy="13" r="9" fill="var(--owl-a)"/>
+    <path d="M5.5 8.5 7 3.5l3.5 3.5Z" fill="var(--owl-b)"/><path d="M18.5 8.5 17 3.5 13.5 7Z" fill="var(--owl-b)"/>
+    <path d="M4.4 11.4 2.6 10.4M19.6 11.4l1.8-1" stroke="var(--owl-gold)" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="8.7" cy="12" r="3.2" fill="none" stroke="var(--owl-gold)" stroke-width="1.7"/>
+    <circle cx="15.3" cy="12" r="3.2" fill="none" stroke="var(--owl-gold)" stroke-width="1.7"/>
+    <path d="M11.6 10.8Q12 10.2 12.4 10.8" fill="none" stroke="var(--owl-gold)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="8.7" cy="12" r="1.7" fill="var(--owl-ink)"/><circle cx="15.3" cy="12" r="1.7" fill="var(--owl-ink)"/>
+    <circle cx="9.3" cy="11.4" r=".55" fill="#fff"/><circle cx="15.9" cy="11.4" r=".55" fill="#fff"/>
+    <path d="M10.7 14.8h2.6L12 16.6Z" fill="var(--owl-beak)"/>
+  </symbol>
+  <symbol id="i-arr-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-checkc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-9.3-9.3C1.5 8 3.6 4.9 6.9 4.9c2 0 3.6 1.1 4.4 2.7.8-1.6 2.4-2.7 4.4-2.7 3.3 0 5.4 3.1 4.2 6.3-1.8 4.6-7.9 9.3-7.9 9.3Z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20v-7M12 20V5M19 20v-10"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 5.5-5.5 3.5 3.5L21 6"/><path d="M15 6h6v6"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-1.5-1.4-3.8-2-6.5-2v14c2.7 0 5 .6 6.5 2 1.5-1.4 3.8-2 6.5-2V4c-2.7 0-5 .6-6.5 2Z"/><path d="M12 6v14"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4 10 4.5L12 13 2 8.5 12 4Z"/><path d="M6.5 10.5V15c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19.5c.9-3 3-4.5 5.5-4.5s4.6 1.5 5.5 4.5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M16.5 15.2c2.1.2 3.6 1.5 4.2 3.8"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2A2.5 2.5 0 0 1 14.5 10c0 1.6-2.4 2-2.4 3.4"/><circle cx="12" cy="16.8" r=".4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9Z"/><path d="M10 19.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.7 12 3.5 12 3.5Z"/></symbol>
+  <symbol id="i-phoneoff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2M4 4l16 16"/></symbol>
+  <symbol id="i-lotus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="2.6"/><path d="M12 10.5c-2.8 0-5 2.2-5 5.5M12 10.5c2.8 0 5 2.2 5 5.5M4.5 19.5c4.8 1.8 10.2 1.8 15 0"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.5" r="1.8"/><path d="M12.5 21v-4.5l-2.5-3 .8-5 2.2 3.5 3 1.5M9 21l1-3.5M10.8 8.5 8 10l-1 3"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8.5c-1-.8-2.4-1.1-3.7-.6-2.4.9-3.3 3.8-2.2 6.6 1 2.6 3 4.5 4.7 4 .4-.1.8-.3 1.2-.3s.8.2 1.2.3c1.7.5 3.7-1.4 4.7-4 1.1-2.8.2-5.7-2.2-6.6-1.3-.5-2.7-.2-3.7.6Z"/><path d="M12 8.5c0-2 .8-3.5 2.5-4.5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5V3h6v1.5"/><path d="m9 13 2.2 2.2L15.5 11"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 18.5 9.5 8 20H4v-4L14.5 5.5Z"/><path d="m13 7 4 4"/></symbol>
+</defs>
+</svg>
+
+<div class="switcher" role="group" aria-label="انتخاب تم">
+  <button data-t="classic" class="on">کلاسیک</button>
+  <button data-t="joma">شیشه‌ای ✨</button>
+</div>
+
+<!-- ============================ لندینگ ============================ -->
+<div id="view-landing" class="view on">
+  <header class="lnav">
+    <div class="logo"><div class="logo-tile"><svg><use href="#owl-logo"/></svg></div><div><b>جوما</b><small>برنامه‌ای، اجرا فهم</small></div></div>
+    <nav><a href="#how">چطور کار می‌کند</a><a href="#pins">دنیای جوما</a><a href="#calm">امکانات</a><a href="#cta">شروع</a></nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn ghost sm" onclick="go('app','home')">ورود</button>
+      <button class="btn primary sm" onclick="go('app','home')">شروع رایگان</button>
+    </div>
+  </header>
+  <main class="land">
+    <section class="hero">
+      <div>
+        <span class="pill">● فضایی برای رشد، با ریتم خودت</span>
+        <h1>قدم‌های کوچک،<br><span class="grad">حال بهتر.</span></h1>
+        <p>از برنامه‌ای که با زندگی‌ات شروع می‌شود، نه برعکس. فعالیت‌هایت را انتخاب کن، به حال خودت توجه کن و مسیرت را ببین — بدون فشار، بدون قضاوت.</p>
+        <div class="hero-cta">
+          <button class="btn primary" onclick="go('app','home')">مسیر من از اینجا شروع می‌شود <svg class="ic" style="width:17px;height:17px"><use href="#i-arr-l"/></svg></button>
+          <button class="btn ghost" onclick="go('app','reports')">دیدن پلن نمونه</button>
+        </div>
+        <div class="trust"><svg class="ic"><use href="#i-check"/></svg> برنامه شخصی · ثبت روزانه · گزارش روشن</div>
+        <div class="joma-msg" style="margin-top:16px">
+          <span class="mascot sm floaty" aria-hidden="true"><svg><use href="#owl-hi"/></svg></span>
+          <div class="bubble"><div class="who">جوما</div>سلام! من جغد راهنمای تو‌ام؛ یک تخم هم برایت دارم که با قدم‌هایت جوانه می‌زند 🥚</div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="card inner">
+          <div class="mini-row" style="justify-content:space-between">
+            <div class="logo" style="gap:8px"><div class="logo-tile" style="width:32px;height:32px;border-radius:10px"><svg style="width:21px;height:21px"><use href="#owl-logo"/></svg></div><div><b style="font-size:13.5px">جوما</b><small style="font-size:9px">برنامه‌ای، اجرا فهم</small></div></div>
+            <span class="pill" style="font-size:10px">یک روز در جوما</span>
+          </div>
+          <div class="tiny">شنبه، ۳ شهریور</div>
+          <div class="mini-row">
+            <span class="chip" style="background:var(--gold-soft);overflow:visible"><svg style="width:30px;height:30px"><use href="#owl-hi"/></svg></span>
+            <b style="font-size:15px">سلام سارا، روزت چطور است؟</b>
+          </div>
+          <div class="mini-stat">
+            <div class="ring-s"><svg viewBox="0 0 80 80"><circle class="rt" cx="40" cy="40" r="33"/><circle class="rp" cx="40" cy="40" r="33" style="--p:82"/></svg><b class="num">۸۲٪</b></div>
+            <div><b style="font-size:12.5px">این ماه، پیوسته‌تر از قبل.</b><div class="tiny">هر قدم حساب می‌شود.</div><div class="tiny num">۲ فعالیت امروز ثبت کرده‌ای.</div></div>
+          </div>
+          <div>
+            <div class="act-row"><span class="chip" style="background:var(--indigo-soft);width:32px;height:32px;border-radius:9px"><svg style="width:26px;height:26px"><use href="#owl-moon"/></svg></span><div style="flex:1"><b style="font-size:12px">خواب کافی</b><div class="tiny">۸ ساعت · روزانه</div></div><span class="tick"><svg class="ic" style="width:13px;height:13px"><use href="#i-check"/></svg></span></div>
+            <div class="act-row"><span class="chip" style="background:var(--lav-soft);width:32px;height:32px;border-radius:9px"><svg style="width:26px;height:26px"><use href="#owl-lotus"/></svg></span><div style="flex:1"><b style="font-size:12px">مدیتیشن</b><div class="tiny">۱۵ دقیقه · روزانه</div></div><span class="tick"><svg class="ic" style="width:13px;height:13px"><use href="#i-check"/></svg></span></div>
+            <div class="act-row"><span class="chip" style="background:var(--coral-soft);width:32px;height:32px;border-radius:9px"><svg style="width:26px;height:26px"><use href="#owl-fit"/></svg></span><div style="flex:1"><b style="font-size:12px">پیاده‌روی</b><div class="tiny">۲۰ دقیقه · روزانه</div></div><span class="tick idle"><svg class="ic" style="width:13px;height:13px"><use href="#i-check"/></svg></span></div>
+          </div>
+          <button class="link" onclick="go('app','today')">رفتن به کارهای امروز <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+        </div>
+        <div class="float-chip"><span class="chip"><svg class="ic" style="width:16px;height:16px"><use href="#i-trend"/></svg></span><span class="num">۱۴ واحد رشد<br><span style="font-weight:500;color:var(--ink-3)">نسبت به ماه گذشته</span></span></div>
+      </div>
+    </section>
+    <div class="strip">
+      <div class="st"><b class="num" style="color:var(--brand-ink)">۳۲۲+</b><span>عضوِ پیوسته در ثبت روزانه</span></div>
+      <div class="st"><b class="num" style="color:var(--gold-ink)">۱۰۶+</b><span>هزار قدم ثبت‌شده از شروع جوما</span></div>
+      <div class="st"><b class="num" style="color:var(--rose-ink)">۹۱٪</b><span>ادامه‌ی دوره پس از ماه اول</span></div>
+    </div>
+    <div class="feat3">
+      <div class="card f"><svg class="ic"><use href="#i-compass"/></svg> مسیر روشن، شروع ساده</div>
+      <div class="card f"><svg class="ic"><use href="#i-heart"/></svg> توجه به حال و فعالیت، کنار هم</div>
+      <div class="card f"><svg class="ic"><use href="#i-chart"/></svg> گزارش‌هایی که معنا دارند</div>
+    </div>
+    <section class="how" id="how">
+      <span class="kicker">چطور کار می‌کند؟</span>
+      <h2>رشد قرار نیست پیچیده باشد.</h2>
+      <p class="sub">سه قدم ساده، برای روزهای آگاهانه‌تر.</p>
+      <div class="cards3">
+        <div class="card c"><span class="n num">۰۱</span><span class="mascot"><svg><use href="#owl-think"/></svg></span><h3>برنامه‌ای برای خودت بساز</h3><p>از کتابخانه‌ی فعالیت‌ها انتخاب کن و هدفی تعیین کن که با وقت و شرایطت هماهنگ باشد.</p></div>
+        <div class="card c"><span class="n num">۰۲</span><span class="mascot"><svg><use href="#owl-hi"/></svg></span><h3>هر روز، یک قدم کوچک</h3><p>آنچه انجام داده‌ای و حالی که داشته‌ای را ثبت کن؛ چند دقیقه برای توجه به خودت.</p></div>
+        <div class="card c"><span class="n num">۰۳</span><span class="mascot"><svg><use href="#owl-cheer"/></svg></span><h3>مسیرت را بهتر بشناس</h3><p>با گزارش‌های روشن ببین چطور پیوسته‌تر شده‌ای و دوره‌ی بعد را آگاهانه‌تر شروع کن.</p></div>
+      </div>
+    </section>
+    <section class="how pinsh" id="pins" style="padding-bottom:0">
+      <span class="kicker">دنیای جوما</span>
+      <h2>یک جغد، صد حال خوب.</h2>
+      <p class="sub">جغد ما هر کاری بکند، تو هم می‌توانی هم‌قدمش شوی.</p>
+      <div class="pins">
+        <div class="card pin"><div class="art p1"><span class="mascot xl"><svg><use href="#owl-fit"/></svg></span></div><div class="cap"><b>ورزش با جوما</b><div class="tiny">حتی ده دقیقه هم، یک قدم واقعی است.</div></div></div>
+        <div class="card pin"><div class="art p2"><span class="mascot xl"><svg><use href="#owl-read"/></svg></span></div><div class="cap"><b>لحظه‌ی مطالعه</b><div class="tiny">ده صفحه‌ی آرام، برای ذهنِ شلوغ.</div></div></div>
+        <div class="card pin"><div class="art p3"><span class="mascot xl"><svg><use href="#owl-lotus"/></svg></span></div><div class="cap"><b>مدیتیشن آرام</b><div class="tiny">نفسی عمیق؛ همین، شروع است.</div></div></div>
+        <div class="card pin"><div class="art p4"><span class="mascot xl"><svg><use href="#owl-moon"/></svg></span></div><div class="cap"><b>خوابِ مرتب</b><div class="tiny">جغدها شب‌ها بیدارند؛ تو نه! بخواب.</div></div></div>
+        <div class="card pin"><div class="art p5"><span class="mascot xl"><svg><use href="#owl-water"/></svg></span></div><div class="cap"><b>آبِ کافی</b><div class="tiny">لیوان بعدی، همین حالا.</div></div></div>
+        <div class="card pin"><div class="art p6"><span class="mascot xl"><svg><use href="#owl-cheer"/></svg></span></div><div class="cap"><b>جشن پیشرفت</b><div class="tiny">هر ثبت، یک دسته‌گل کوچک از جوما.</div></div></div>
+        <div class="card pin"><div class="art p7"><span class="mascot xl"><svg><use href="#owl-think"/></svg></span></div><div class="cap"><b>نکته‌ی روز</b><div class="tiny">هر روز یک ایده‌ی کوچک برای بهتر زندگی‌کردن.</div></div></div>
+        <div class="card pin"><div class="art p8"><span class="mascot xl"><svg><use href="#owl"/></svg></span></div><div class="cap"><b>همراه همیشگی</b><div class="tiny">روز خوب یا بد؛ جوما هست.</div></div></div>
+      </div>
+    </section>
+    <section class="calm" id="calm">
+      <div class="card split">
+        <div class="txt">
+          <span class="kicker">فراتر از یک فهرست کار</span>
+          <h2>هم کارهایت مهم‌اند،<br>هم حالی که داری.</h2>
+          <p>خواب، انرژی، تمرکز و حال روزانه را در کنار فعالیت‌ها ببین؛ جوما کمک می‌کند تصویر روشن‌تری از روزهایت داشته باشی.</p>
+          <button class="link" onclick="go('app','mood')">تجربه‌ی ثبت حال <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+        </div>
+        <div class="checkin">
+          <span class="kicker" style="color:var(--brand-ink)">یک لحظه برای خودت</span>
+          <h3>امروز چه حسی داری؟</h3>
+          <div class="opts" id="land-mood">
+            <button class="opt"><span class="em">🙂</span>خوبم</button>
+            <button class="opt"><span class="em">😐</span>معمولی‌ام</button>
+            <button class="opt"><span class="em">🙁</span>خوب نیستم</button>
+          </div>
+          <div class="tiny">همه‌ی روزها شبیه هم نیستند؛ همین‌طور همه‌ی احساس‌ها.</div>
+        </div>
+      </div>
+    </section>
+    <section class="cta" id="cta">
+      <span class="kicker" style="justify-content:center">لازم نیست از همان اول همه‌چیز کامل باشد.</span>
+      <h2>از یک <span class="grad">قدم کوچک</span> شروع کن.</h2>
+      <button class="btn primary" onclick="go('app','home')">جوما را تجربه کن <svg class="ic" style="width:17px;height:17px"><use href="#i-arr-l"/></svg></button>
+    </section>
+    <footer class="lfoot">
+      <div class="row">
+        <div class="logo"><div class="logo-tile"><svg><use href="#owl-logo"/></svg></div><div><b>جوما</b><small>برنامه‌ای، اجرا فهم</small></div></div>
+        <div class="links">
+          <a href="#">درباره جوما</a><a href="#" onclick="go('app','home');return false">ورود به جوما</a>
+          <a href="#" onclick="go('app','reports');return false">مشاهده پلن نمونه</a><span class="demo-pill">نسخه نمایشی</span>
+        </div>
+      </div>
+      <div class="fine">برای برنامه‌ریزی آگاهانه و شفافیت بهتر روزهایت.</div>
+    </footer>
+  </main>
+</div>
+
+<!-- ============================ اپ ============================ -->
+<div id="view-app" class="view">
+  <div class="app">
+    <aside class="side">
+      <div class="logo"><div class="logo-tile"><svg><use href="#owl-logo"/></svg></div><div><b>جوما</b><small>برنامه‌ای، اجرا فهم</small></div></div>
+      <div class="dura"><div><small>دوره فعال</small><b class="num">شهریور ۱۴۰۵</b></div><span class="pill" style="font-size:10px;padding:3px 10px">فعال</span></div>
+      <div class="lvl">
+        <span class="em" id="lvl-em">🥚</span>
+        <div><b id="lvl-name">جوجهٔ جغد</b><small id="lvl-xp">۰ امتیاز</small><div class="xpbar"><i id="lvl-fill"></i></div></div>
+      </div>
+      <div class="slabel">مسیر من</div>
+      <button class="nitem on" data-page="home"><svg class="ic"><use href="#i-compass"/></svg>خانه من</button>
+      <button class="nitem" data-page="today"><svg class="ic"><use href="#i-checkc"/></svg>کارهای امروز<span class="cnt num" id="today-cnt">۳</span></button>
+      <button class="nitem" data-page="mood"><svg class="ic"><use href="#i-heart"/></svg>حال من</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-list"/></svg>برنامه من</button>
+      <button class="nitem" data-page="reports"><svg class="ic"><use href="#i-chart"/></svg>گزارش پیشرفت</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-compass"/></svg>کشف و تمرین‌ها</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-book"/></svg>کتابچه فعالیت‌ها</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-grad"/></svg>یادگیر</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-users"/></svg>هممسیر</button>
+      <div class="slabel">راهنما</div>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-help"/></svg>راهنما و پشتیبانی</button>
+      <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-info"/></svg>درباره جوما</button>
+      <div class="spacer"></div>
+      <div class="sprof"><span class="avatar">س</span><div><b>سارا نمونه</b><small>پروفایل و تنظیمات</small></div><svg class="ic" style="width:16px;height:16px;margin-inline-start:auto;color:var(--ink-3)"><use href="#i-gear"/></svg></div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <div class="crumbs">پلن کاری <svg class="ic" style="width:13px;height:13px"><use href="#i-chev-l"/></svg> <b id="crumb">خانه من</b></div>
+        <div class="end"><span class="demo-pill">نسخه نمایشی</span>
+          <button class="bell" aria-label="اعلان‌ها"><svg class="ic" style="width:17px;height:17px"><use href="#i-bell"/></svg><i></i></button>
+          <span class="avatar" style="width:34px;height:34px;font-size:13px">س</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- خانه من -->
+        <section class="page on" id="page-home">
+          <div class="pagehead">
+            <span class="kicker">خانه من</span>
+            <div class="row1">
+              <div><h1 id="greet-h1">سلام سارا، خوش برگشتی.</h1><div class="sub">امروز هم می‌توانی با یک قدم کوچک شروع کنی.</div></div>
+              <span class="datechip"><svg class="ic"><use href="#i-cal"/></svg><span class="num">شنبه، ۲۱ شهریور ۱۴۰۵</span></span>
+            </div>
+          </div>
+          <div class="joma-msg" style="margin-bottom:14px">
+            <span class="mascot sm" id="home-owl" aria-hidden="true" style="cursor:pointer" title="قشنگ‌نگاهم کن!"><svg><use href="#owl-hi"/></svg></span>
+            <div class="bubble"><div class="who">جوما</div>سه قدم از امروز را ثبت کرده‌ای؛ تخمم هم منتظر مراقبت توست 🥚</div>
+          </div>
+          <div class="grid-progress">
+            <div class="card pcard">
+              <div class="tx">
+                <b style="font-size:13px;color:var(--ink-2)">امروز، روی همین چند قدم تمرکز کن</b>
+                <h3 class="num">سه قدم از امروز را ثبت کرده‌ای.</h3>
+                <p class="num">۳ فعالیت از برنامه‌ی امروز ثبت شده است.<br>برای ادامه‌ی روز، از یک قدم ساده شروع کن.</p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn primary sm" onclick="go('app','today')">ادامه‌ی کارهای امروز <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+                  <button class="btn soft sm" onclick="go('app','mood')">ثبت حال امروز</button>
+                </div>
+              </div>
+              <div class="ring-l" style="margin-inline-start:auto"><svg viewBox="0 0 128 128"><circle class="rt" cx="64" cy="64" r="54"/><circle class="rp" cx="64" cy="64" r="54" style="--p:55"/></svg><div class="lbl"><b class="num">۵۵٪</b><span>قدم دیگر مانده</span></div></div>
+            </div>
+            <div class="card moodq">
+              <h3>حالت چطور است؟</h3>
+              <div class="tiny">چند لحظه مکث کن و به حال خودت توجه کن.</div>
+              <div class="opts" id="dash-mood">
+                <button class="opt"><span class="em">🙂</span>خوبم</button>
+                <button class="opt"><span class="em">😐</span>معمولی</button>
+                <button class="opt"><span class="em">🙁</span>خوب نیستم</button>
+              </div>
+              <button class="link" onclick="go('app','mood')">ثبت کامل حال (۵ قدم تصویری) <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+            </div>
+          </div>
+          <div class="stat4">
+            <div class="card scard"><div class="top"><span class="lbl">پیشرفت این ماه</span><span class="chip" style="background:var(--brand-soft);color:var(--brand-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-trend"/></svg></span></div><div class="v num" style="color:var(--brand-ink)">۸۲٪</div><div class="tiny num">۱۴ واحد رشد نسبت به مرداد</div></div>
+            <div class="card scard"><div class="top"><span class="lbl">روزهای همراهی</span><span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-cal"/></svg></span></div><div class="v num" style="color:var(--gold-ink)">۲۰</div><div class="tiny num">در ۶۵٪ روزهای این ماه ثبت داشته‌ای</div></div>
+            <div class="card scard"><div class="top"><span class="lbl">فعالیت‌های برنامه</span><span class="chip" style="background:var(--lav-soft);color:var(--lav-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-list"/></svg></span></div><div class="v num" style="color:var(--lav-ink)">۸</div><div class="tiny num">۶ روزانه، ۱ هفتگی، ۱ ماهانه</div></div>
+            <div class="card scard"><div class="top"><span class="lbl">میانگین حال این هفته</span><span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-heart"/></svg></span></div><div class="v num" style="color:var(--rose-ink)">۴٫۱ <small>از ۵</small></div><div class="tiny">خوب و نزدیک به هفته‌ی قبل</div></div>
+          </div>
+          <div class="grid-dash">
+            <div class="stack">
+              <div class="card steps">
+                <div class="head"><h3>قدم‌های امروز</h3><button class="link" onclick="go('app','today')">دیدن همه <svg class="ic" style="width:15px;height:15px"><use href="#i-chev-l"/></svg></button></div>
+                <div class="srow"><span class="chip" style="background:var(--indigo-soft)"><svg style="width:27px;height:27px"><use href="#owl-moon"/></svg></span><div><b>خواب کافی</b><small class="num">۸ ساعت · روزانه</small></div><span class="st done"><svg class="ic"><use href="#i-checkc"/></svg>ثبت شده</span></div>
+                <div class="srow"><span class="chip" style="background:var(--sky-soft)"><svg style="width:27px;height:27px"><use href="#owl-water"/></svg></span><div><b>نوشیدن آب</b><small class="num">۸ لیوان · روزانه</small></div><span class="st wait"><svg class="ic"><use href="#i-clock"/></svg>در انتظار</span></div>
+                <div class="srow"><span class="chip" style="background:var(--coral-soft)"><svg style="width:27px;height:27px"><use href="#owl-fit"/></svg></span><div><b>پیاده‌روی</b><small class="num">۳۰ دقیقه · روزانه</small></div><span class="st wait"><svg class="ic"><use href="#i-clock"/></svg>در انتظار</span></div>
+                <div class="srow"><span class="chip" style="background:var(--brand-soft)"><svg class="ic" style="width:17px;height:17px"><use href="#i-phoneoff"/></svg></span><div><b>زمان بدون موبایل</b><small class="num">۶۰ دقیقه · روزانه</small></div><span class="st done"><svg class="ic"><use href="#i-checkc"/></svg>ثبت شده</span></div>
+                <div class="srow"><span class="chip" style="background:var(--lav-soft)"><svg style="width:27px;height:27px"><use href="#owl-lotus"/></svg></span><div><b>مدیتیشن</b><small class="num">۱۵ دقیقه · روزانه</small></div><span class="st done"><svg class="ic"><use href="#i-checkc"/></svg>ثبت شده</span></div>
+                <div class="srow"><span class="chip" style="background:var(--indigo-soft)"><svg style="width:27px;height:27px"><use href="#owl-moon"/></svg></span><div><b>ساعت خواب منظم</b><small class="num">۱ بار · روزانه</small></div><span class="st wait"><svg class="ic"><use href="#i-clock"/></svg>در انتظار</span></div>
+              </div>
+            </div>
+            <div class="stack">
+              <div class="card stk">
+                <div class="stk-head"><b id="pet-title">تخم جوما 🥚</b><span class="tiny" id="pet-sub">با مراقبت، به دنیا می‌آید</span></div>
+                <div class="pet-row">
+                  <div class="pet-stage" id="pet-stage" title="بغلش کن!">
+                    <svg viewBox="0 0 86 96" id="pet-svg">
+                      <ellipse cx="43" cy="54" rx="29" ry="35" fill="#FFF7EA" stroke="#E5D5B4" stroke-width="2.5"/>
+                      <ellipse cx="32" cy="42" rx="6" ry="10" fill="#fff" opacity=".8" transform="rotate(-22 32 42)"/>
+                      <g class="crack" id="pet-cracks">
+                        <path d="M30 60l6-5 4 6 6-4 5 5 6-4" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M40 74l5-4 4 5" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="pet-care">
+                    <div class="pmeter"><span class="pe">🌾</span><div class="pl"><b>ظرف دونه</b><small>با ثبت کارهای روزانه پر می‌شود</small></div><div class="psegs" data-pk="seed"><i></i><i></i><i></i></div></div>
+                    <div class="pmeter"><span class="pe">💧</span><div class="pl"><b>ظرف آب</b><small>با لیوان‌های آبِ تو</small></div><div class="psegs" data-pk="water"><i></i><i></i><i></i></div></div>
+                    <div class="pmeter"><span class="pe">🏠</span><div class="pl"><b>خونه‌ی تمیز</b><small>با ثبت حال ۵ قدمی</small></div><div class="psegs" data-pk="home"><i></i><i></i><i></i></div></div>
+                    <div class="pmeter"><span class="pe">🛁</span><div class="pl"><b>وقت حمام</b><small>با ذخیره‌ی ثبت‌ها و تمرین نفس</small></div><div class="psegs" data-pk="bath"><i></i><i></i><i></i></div></div>
+                  </div>
+                </div>
+                <div class="tiny" id="pet-note" style="margin-top:10px">هر قدمِ تو، یک دونه برای این تخم کوچولوست 🌱</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;flex-wrap:wrap;gap:8px">
+                  <span class="tiny num" id="pet-prog"></span>
+                  <button class="link" id="pet-reset" style="font-size:10px;opacity:.7">بازنشانی دموی تخم</button>
+                </div>
+              </div>
+              <div class="card journey">
+                <div class="head"><span class="pill" style="font-size:10px">شهریور</span><h3>مسیر این ماه</h3></div>
+                <div class="bigv"><b class="num grad">۸۲٪</b><span class="num">۶۸ واحد بیشتر از ماه قبل</span></div>
+                <svg class="spark" viewBox="0 0 480 120" role="img" aria-label="نمودار روند ماه">
+                  <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop class="s1" offset="0" stop-opacity=".3"/><stop class="s1" offset="1" stop-opacity="0"/></linearGradient></defs>
+                  <g class="gl"><line x1="0" y1="30" x2="480" y2="30"/><line x1="0" y1="65" x2="480" y2="65"/><line x1="0" y1="100" x2="480" y2="100"/></g>
+                  <path fill="url(#gA)" d="M0,88 C18,84 32,74 50,76 S82,88 100,84 S132,60 150,62 S184,74 202,68 S236,46 254,50 S288,62 306,54 S340,36 358,40 S392,48 410,42 S442,28 460,30 L480,28 L480,120 L0,120 Z"/>
+                  <path fill="none" class="l1" stroke-width="2.5" stroke-linecap="round" d="M0,88 C18,84 32,74 50,76 S82,88 100,84 S132,60 150,62 S184,74 202,68 S236,46 254,50 S288,62 306,54 S340,36 358,40 S392,48 410,42 S442,28 460,30 L480,28"/>
+                  <circle r="4" fill="var(--c1)" cx="460" cy="30"/>
+                  <text class="ax" x="462" y="114" text-anchor="end">ابتدای ماه</text>
+                  <text class="ax" x="18" y="114">امروز</text>
+                </svg>
+                <button class="link" onclick="go('app','reports')">گزارش کامل پیشرفت <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+              </div>
+              <div class="card stk">
+                <div class="stk-head"><b class="num">۵ از ۷ روز</b><span class="tiny">پیوستگی این هفته 🔥</span></div>
+                <div class="sdots" id="sdots"></div>
+                <div class="tiny num" style="margin-top:10px">۵ روز پشت‌سرهم ثبت کرده‌ای؛ ۲ روز مانده تا هفته‌ی کامل 🌱</div>
+              </div>
+              <div class="card stk">
+                <div class="stk-head"><b class="num" id="wcount">۰ از ۸</b><span class="tiny">آبِ امروز — روی لیوان‌ها بزن!</span></div>
+                <div class="wglasses" id="wglasses"></div>
+              </div>
+              <div class="card stk">
+                <div class="stk-head"><b>جمله‌ی امروز جوما</b><span class="mascot sm" style="width:34px;height:34px"><svg><use href="#owl-think"/></svg></span></div>
+                <p id="qotd" style="font-size:13px;font-weight:700;line-height:2.2;margin-top:8px"></p>
+                <button class="link" id="breath-open" style="margin-top:6px"><svg class="ic" style="width:16px;height:16px"><use href="#i-lotus"/></svg>یک دقیقه نفس با جوما</button>
+              </div>
+              <div class="card stk">
+                <div class="stk-head"><b>دفترچه‌ی بینش‌های جوما</b><span class="tiny num" id="in-count"></span></div>
+                <div id="insight-list"></div>
+                <div class="tiny" style="margin-top:8px">جوما هر روز ثبت‌هایت را می‌خواند و نکته‌های تازه همین‌جا می‌آید. با کلیک روی هر بینش، دوباره می‌شنوی‌اش.</div>
+              </div>
+              <div class="card goal">
+                <span class="chip"><svg class="ic"><use href="#i-book"/></svg></span>
+                <div><small class="kicker" style="color:var(--gold-ink)">یک نکته برای ادامه مسیر</small>
+                <b>هدف‌های کوچک، ادامه‌ی آسان‌تر</b>
+                <p>هدفی انتخاب کن که در یک روز معمولی هم جا داشته باشد.</p>
+                <span class="link"><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg> ۳ دقیقه مطالعه</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tiny" style="text-align:center;margin-top:26px">قدم‌های کوچک تو، بخشی از یک تغییر بزرگ‌ترند. · <a href="#" id="ob-again" style="color:var(--brand-ink);font-weight:700">دوباره آشنایی با جوما</a></div>
+        </section>
+
+        <!-- کارهای امروز -->
+        <section class="page" id="page-today">
+          <div class="pagehead">
+            <span class="kicker">پلن کاری</span>
+            <div class="row1">
+              <div><h1>کارهای امروز</h1><div class="sub">یک مرور کوتاه؛ امروز برای خودت چه کردی؟</div></div>
+              <div class="daynav">
+                <button class="dbtn" id="d-prev" aria-label="روز قبل"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-r"/></svg></button>
+                <span class="datechip num" id="d-label">شنبه، ۲۱ شهریور ۱۴۰۵</span>
+                <button class="dbtn" id="d-next" aria-label="روز بعد"><svg class="ic" style="width:16px;height:16px"><use href="#i-chev-l"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="tabs" id="ttabs">
+            <button class="on" data-tab="daily">روزانه<sup class="num">۶</sup></button>
+            <button data-tab="weekly">هفتگی<sup class="num">۳</sup></button>
+            <button data-tab="monthly">ماهانه<sup class="num">۲</sup></button>
+          </div>
+          <div class="today-grid">
+            <div class="tside">
+              <div class="card panelcard" style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+                <h3>مرور روز</h3>
+                <div class="ring-l"><svg viewBox="0 0 128 128"><circle class="rt" cx="64" cy="64" r="54"/><circle class="rp" id="t-ring" cx="64" cy="64" r="54" style="--p:50"/></svg><div class="lbl"><b class="num" id="t-pct">۵۰٪</b><span>ثبت‌های روزانه</span></div></div>
+                <div style="display:flex;gap:18px;justify-content:center;font-size:11.5px;color:var(--ink-2)">
+                  <span>ثبت شده: <b class="num" id="t-done">۳</b></span><span>در انتظار: <b class="num" id="t-wait">۳</b></span>
+                </div>
+              </div>
+              <div class="card tip">
+                <span class="mascot sm" aria-hidden="true"><svg><use href="#owl-think"/></svg></span>
+                <div><b>جوما: کم هم حساب می‌شود.</b><p>مقدار واقعی را بنویس، حتی اگر به هدف امروز نرسیده‌ای.</p></div>
+              </div>
+              <button class="card golink" onclick="go('app','mood')" style="width:100%"><b style="display:flex;align-items:center;gap:9px"><svg class="ic" style="color:var(--rose)"><use href="#i-heart"/></svg>حالا حال خودت را ثبت کن</b><svg class="ic" style="width:16px;height:16px;color:var(--ink-3)"><use href="#i-arr-l"/></svg></button>
+            </div>
+            <div class="stack">
+              <div class="card doneb" id="done-banner" hidden>
+                <span class="mascot sm" aria-hidden="true"><svg><use href="#owl-cheer"/></svg></span>
+                <div><b id="done-t1">همه را ثبت کردی!</b><div class="tiny">جوما به تو افتخار می‌کند 🦉</div></div>
+              </div>
+              <div class="card panelcard tabpane on" data-pane="daily">
+                <div class="chart-head"><h3>فعالیت‌های روزانه</h3><span class="pill num">۶ فعالیت</span></div>
+                <div class="tiny" style="margin-bottom:14px">برنامه‌ی امروز: ۳ فعالیت ثبت شده، ۳ فعالیت در انتظار ثبت</div>
+                <div class="thead"><span>فعالیت و هدف</span><span>مقدار انجام‌شده</span><span>وضعیت</span><span></span></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--indigo-soft);color:var(--indigo-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-moon"/></svg></span><div><b>خواب کافی</b><small class="num">هدف: ۸ ساعت · روزانه</small></div></div><input class="inp num" value="۷٫۵" inputmode="decimal"><button class="tst done" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--sky-soft);color:var(--sky-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-drop"/></svg></span><div><b>نوشیدن آب</b><small class="num">هدف: ۸ لیوان · روزانه</small></div></div><input class="inp num" value="۵" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--coral-soft);color:var(--coral-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-walk"/></svg></span><div><b>پیاده‌روی</b><small class="num">هدف: ۳۰ دقیقه · روزانه</small></div></div><input class="inp num" value="۰" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--brand-soft);color:var(--brand-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-phoneoff"/></svg></span><div><b>زمان بدون موبایل</b><small class="num">هدف: ۶۰ دقیقه · روزانه</small></div></div><input class="inp num" value="۴۵" inputmode="numeric"><button class="tst done" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--lav-soft);color:var(--lav-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-lotus"/></svg></span><div><b>مدیتیشن</b><small class="num">هدف: ۱۵ دقیقه · روزانه</small></div></div><input class="inp num" value="۲۰" inputmode="numeric"><button class="tst done" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--indigo-soft);color:var(--indigo-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-moon"/></svg></span><div><b>ساعت خواب منظم</b><small class="num">هدف: ۱ بار · روزانه</small></div></div><select class="inp"><option>انجام شد</option><option selected>انجام نشده</option></select><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="tfoot"><span class="tiny">با ریتم خودت ادامه بده.</span><button class="btn primary sm" data-save><svg class="ic" style="width:15px;height:15px"><use href="#i-save"/></svg>ذخیره ثبت‌ها</button></div>
+              </div>
+              <div class="card panelcard tabpane" data-pane="weekly" hidden>
+                <div class="chart-head"><h3>فعالیت‌های هفتگی</h3><span class="pill num">۳ فعالیت</span></div>
+                <div class="tiny" style="margin-bottom:14px">بازه‌ی این هفته: ۱۵ تا ۲۱ شهریور</div>
+                <div class="thead"><span>فعالیت و هدف</span><span>مقدار انجام‌شده</span><span>وضعیت</span><span></span></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-book"/></svg></span><div><b>مطالعه</b><small class="num">هدف: ۶۰ دقیقه · هفتگی</small></div></div><input class="inp num" value="۴۵" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-users"/></svg></span><div><b>تماس با خانواده</b><small class="num">هدف: ۳ بار · هفتگی</small></div></div><input class="inp num" value="۲" inputmode="numeric"><button class="tst done" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--sky-soft);color:var(--sky-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-edit"/></svg></span><div><b>مرور هفته</b><small class="num">هدف: ۱ بار · هفتگی</small></div></div><input class="inp num" value="۰" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="tfoot"><span class="tiny">هفته‌ات را با مهربانی ببین.</span><button class="btn primary sm" data-save><svg class="ic" style="width:15px;height:15px"><use href="#i-save"/></svg>ذخیره ثبت‌ها</button></div>
+              </div>
+              <div class="card panelcard tabpane" data-pane="monthly" hidden>
+                <div class="chart-head"><h3>فعالیت‌های ماهانه</h3><span class="pill num">۲ فعالیت</span></div>
+                <div class="tiny" style="margin-bottom:14px">بازه‌ی این ماه: ۱ تا ۳۱ شهریور</div>
+                <div class="thead"><span>فعالیت و هدف</span><span>مقدار انجام‌شده</span><span>وضعیت</span><span></span></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-apple"/></svg></span><div><b>مصرف میوه</b><small class="num">هدف: ۴ بار · ماهانه</small></div></div><input class="inp num" value="۳" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="trow"><div class="act"><span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-target"/></svg></span><div><b>بازبینی اهداف ماه</b><small class="num">هدف: ۱ بار · ماهانه</small></div></div><input class="inp num" value="۰" inputmode="numeric"><button class="tst wait" data-toggle><svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار</button><svg class="ic chev"><use href="#i-chev-l"/></svg></div>
+                <div class="tfoot"><span class="tiny">قدم‌های ماهانه هم می‌ارزند.</span><button class="btn primary sm" data-save><svg class="ic" style="width:15px;height:15px"><use href="#i-save"/></svg>ذخیره ثبت‌ها</button></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- حال من -->
+        <section class="page" id="page-mood">
+          <div class="pagehead">
+            <span class="kicker">حال من</span>
+            <div class="row1">
+              <div><h1>امروز، حال تو مهم است.</h1><div class="sub">۵ قدم کوتاه با تصویر؛ کمتر از یک دقیقه. پاسخ درست وجود ندارد.</div></div>
+              <span class="datechip"><svg class="ic"><use href="#i-cal"/></svg><span class="num">شنبه، ۲۱ شهریور ۱۴۰۵</span></span>
+            </div>
+          </div>
+          <div class="card wiz">
+            <div class="wiz-top">
+              <div class="wdots" id="wdots">
+                <button class="wdot on" data-w="1"><i class="num">۱</i><span>حال</span></button>
+                <button class="wdot" data-w="2"><i class="num">۲</i><span>انرژی</span></button>
+                <button class="wdot" data-w="3"><i class="num">۳</i><span>تمرکز</span></button>
+                <button class="wdot" data-w="4"><i class="num">۴</i><span>خواب</span></button>
+                <button class="wdot" data-w="5"><i class="num">۵</i><span>استرس</span></button>
+              </div>
+              <span class="wcount" id="w-count">قدم ۱ از ۵</span>
+            </div>
+            <div class="wstep on" data-step="1" data-type="mood">
+              <div class="wstage">
+                <div class="wvisual" style="background:var(--rose-soft)"><div class="hbox ghost" data-hbox></div></div>
+                <div class="wq"><h2>امروز چه حسی داری؟</h2><p>اول از همه، حال کلی‌ات. نزدیک‌ترین چهره را انتخاب کن.</p>
+                  <div class="wopts">
+                    <button class="wopt" data-l="1"><span class="wo em" data-wo></span>خیلی بد</button>
+                    <button class="wopt" data-l="2"><span class="wo em" data-wo></span>خوب نیستم</button>
+                    <button class="wopt" data-l="3"><span class="wo em" data-wo></span>معمولی</button>
+                    <button class="wopt" data-l="4"><span class="wo em" data-wo></span>خوب</button>
+                    <button class="wopt" data-l="5"><span class="wo em" data-wo></span>عالی</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wstep" data-step="2" data-type="energy">
+              <div class="wstage">
+                <div class="wvisual" style="background:var(--gold-soft)"><div class="hbox ghost" data-hbox></div></div>
+                <div class="wq"><h2>باتری امروزت چقدر شارژ دارد؟</h2><p>انرژی‌ای که برای کارهای روز داری را نشان بده.</p>
+                  <div class="wopts">
+                    <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی کم</button>
+                    <button class="wopt" data-l="2"><span class="wo" data-wo></span>کم</button>
+                    <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                    <button class="wopt" data-l="4"><span class="wo" data-wo></span>زیاد</button>
+                    <button class="wopt" data-l="5"><span class="wo" data-wo></span>پُر</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wstep" data-step="3" data-type="focus">
+              <div class="wstage">
+                <div class="wvisual" style="background:var(--sky-soft)"><div class="hbox ghost" data-hbox></div></div>
+                <div class="wq"><h2>تمرکزت چطور بود؟</h2><p>جمع‌کردن حواست روی کارها امروز چقدر آسان بود؟</p>
+                  <div class="wopts">
+                    <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی سخت</button>
+                    <button class="wopt" data-l="2"><span class="wo" data-wo></span>سخت</button>
+                    <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                    <button class="wopt" data-l="4"><span class="wo" data-wo></span>آسان</button>
+                    <button class="wopt" data-l="5"><span class="wo" data-wo></span>خیلی آسان</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wstep" data-step="4" data-type="sleep">
+              <div class="wstage">
+                <div class="wvisual" style="background:var(--indigo-soft)"><div class="hbox ghost" data-hbox></div></div>
+                <div class="wq"><h2>خواب دیشب چطور بود؟</h2><p>بعد از بیدار شدن، چقدر احساس استراحت کردی؟ ستاره‌ها خودشان می‌گویند.</p>
+                  <div class="wopts">
+                    <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی ضعیف</button>
+                    <button class="wopt" data-l="2"><span class="wo" data-wo></span>ضعیف</button>
+                    <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                    <button class="wopt" data-l="4"><span class="wo" data-wo></span>خوب</button>
+                    <button class="wopt" data-l="5"><span class="wo" data-wo></span>عالی</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wstep" data-step="5" data-type="stress">
+              <div class="wstage">
+                <div class="wvisual" style="background:var(--coral-soft)"><div class="hbox ghost" data-hbox></div></div>
+                <div class="wq"><h2>بادکنک استرست چقدر پف کرده؟</h2><p>در طول امروز، چقدر احساس فشار و تشویش کردی؟</p>
+                  <div class="wopts">
+                    <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی کم</button>
+                    <button class="wopt" data-l="2"><span class="wo" data-wo></span>کم</button>
+                    <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                    <button class="wopt" data-l="4"><span class="wo" data-wo></span>زیاد</button>
+                    <button class="wopt" data-l="5"><span class="wo" data-wo></span>خیلی زیاد</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wstep" data-step="6">
+              <div style="max-width:640px;margin:0 auto;text-align:center">
+                <span class="mascot lg floaty" aria-hidden="true"><svg><use href="#owl-cheer"/></svg></span>
+                <h2 style="font-size:20px;font-weight:900;margin:8px 0 4px">همه آماده است! یک نگاه بینداز.</h2>
+                <p class="tiny" style="font-size:12px">روی هر چیپ کلیک کن تا اصلاحش کنی.</p>
+                <div class="wsum" id="wsum" style="justify-content:center"></div>
+                <div class="wnote">
+                  اگر دوست داری، امروز را با یک جمله ثبت کن — حتی کوتاه.<br>
+                  <span class="grad" style="font-weight:900">جمله‌های کوچکِ امروز، آینه‌ی مسیرِ فردای تو هستند.</span>
+                </div>
+                <textarea class="inp" id="w-note" style="margin-top:12px;text-align:right" placeholder="مثلاً: امروز با یک قدم کوچک شروع کردم و همین برایم کافی بود..."></textarea>
+                <div class="wsave">
+                  <span class="tiny">نوشتن جمله اجباری نیست؛ ثبت حال کافی است. 🤍</span>
+                  <button class="btn primary" id="w-save"><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg>ثبت حال امروز</button>
+                </div>
+              </div>
+            </div>
+            <div class="wnav">
+              <span class="mascot sm" aria-hidden="true"><svg id="w-owl"><use href="#owl-think"/></svg></span>
+              <div class="joma-msg" style="flex:1">
+                <div class="bubble"><div class="who">جوما</div><span id="w-bubble">اول حالت را برایم بگو؛ بعد برویم قدم بعدی 🙂</span></div>
+              </div>
+              <div class="btns">
+                <button class="btn ghost" id="w-prev"><svg class="ic" style="width:15px;height:15px"><use href="#i-chev-r"/></svg>قبلی</button>
+                <button class="btn primary" id="w-next" disabled>بعدی<svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- گزارش پیشرفت -->
+        <section class="page" id="page-reports">
+          <div class="pagehead">
+            <span class="kicker">پلن کاری</span>
+            <div class="row1"><div><h1>گزارش پیشرفت</h1><div class="sub">تصویر روشن از مسیرت؛ بدون قضاوت، فقط داده.</div></div></div>
+          </div>
+          <div class="rep-chips">
+            <div class="card scard"><div class="top"><span class="lbl">پیوستگی این ماه</span><span class="chip" style="background:var(--brand-soft);color:var(--brand-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-trend"/></svg></span></div><div class="v num" style="color:var(--brand-ink)">۸۲٪</div></div>
+            <div class="card scard"><div class="top"><span class="lbl">روزهای همراهی</span><span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-cal"/></svg></span></div><div class="v num" style="color:var(--gold-ink)">۲۰ <small>روز</small></div></div>
+            <div class="card scard"><div class="top"><span class="lbl">میانگین حال هفته</span><span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-heart"/></svg></span></div><div class="v num" style="color:var(--rose-ink)">۴٫۱ <small>از ۵</small></div></div>
+          </div>
+          <div class="rep2">
+            <div class="card panelcard">
+              <div class="chart-head"><b style="font-size:14px;font-weight:800">روند کلی وضعیت</b><span class="badge"><span style="color:var(--ok);font-weight:800">↗</span> رشد مثبت</span></div>
+              <svg class="spark" viewBox="0 0 600 250" role="img" aria-label="روند سه‌ماهه">
+                <defs>
+                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop class="s1" offset="0" stop-opacity=".3"/><stop class="s1" offset="1" stop-opacity="0"/></linearGradient>
+                  <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop class="s2" offset="0" stop-opacity=".25"/><stop class="s2" offset="1" stop-opacity="0"/></linearGradient>
+                </defs>
+                <g class="gl"><line x1="0" y1="55" x2="600" y2="55"/><line x1="0" y1="110" x2="600" y2="110"/><line x1="0" y1="165" x2="600" y2="165"/></g>
+                <path fill="url(#g1)" d="M0,195 C28,190 47,175 75,175 S122,187 150,185 S197,135 225,137 S272,149 300,145 S347,95 375,97 S422,109 450,105 S497,55 525,57 S572,45 600,43 L600,205 L0,205 Z"/>
+                <path fill="url(#g2)" d="M0,218 C28,213 47,202 75,203 S122,212 150,198 S197,164 225,170 S272,182 300,166 S347,134 375,140 S422,152 450,126 S497,104 525,110 S572,90 600,84 L600,205 L0,205 Z"/>
+                <path fill="none" class="l1" stroke-width="2.5" stroke-linecap="round" d="M0,195 C28,190 47,175 75,175 S122,187 150,185 S197,135 225,137 S272,149 300,145 S347,95 375,97 S422,109 450,105 S497,55 525,57 S572,45 600,43"/>
+                <path fill="none" class="l2" stroke-width="2.5" stroke-linecap="round" d="M0,218 C28,213 47,202 75,203 S122,212 150,198 S197,164 225,170 S272,182 300,166 S347,134 375,140 S422,152 450,126 S497,104 525,110 S572,90 600,84"/>
+                <text class="ax" x="60" y="228" text-anchor="middle">فروردین</text><text class="ax" x="180" y="228" text-anchor="middle">اردیبهشت</text><text class="ax" x="300" y="228" text-anchor="middle">خرداد</text><text class="ax" x="420" y="228" text-anchor="middle">تیر</text><text class="ax" x="540" y="228" text-anchor="middle">مرداد</text>
+              </svg>
+              <div class="tiny">حال کلی · انرژی · پیوستگی ثبت‌ها</div>
+            </div>
+            <div class="card panelcard">
+              <div class="chart-head"><b style="font-size:14px;font-weight:800">تقویم ۳۰ روز گذشته</b><span class="tiny">کم ← پررنگ ← زیاد</span></div>
+              <div class="hm-head"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+              <div class="hm" id="hm"></div>
+              <div class="joma-msg" style="margin-top:12px">
+                <span class="mascot sm" aria-hidden="true"><svg><use href="#owl-read"/></svg></span>
+                <div class="bubble"><div class="who">جوما</div>پررنگ‌ها روزهای پرثبت تو هستند؛ به خودت افتخار کن.</div>
+              </div>
+            </div>
+          </div>
+          <div class="rep2" style="margin-top:14px">
+            <div class="card panelcard">
+              <div class="chart-head"><b style="font-size:14px;font-weight:800">کارنامه‌ی این هفته</b><span class="pill num">میانگین ۷ روز</span></div>
+              <div class="rings4">
+                <div><div class="mring" style="--p:85"><svg viewBox="0 0 60 60"><circle class="rt" cx="30" cy="30" r="26"/><circle class="rp" cx="30" cy="30" r="26" style="stroke:var(--sky)"/></svg><b class="num">۸۵٪</b></div><div class="mring-cap">تمرکز</div></div>
+                <div><div class="mring" style="--p:73"><svg viewBox="0 0 60 60"><circle class="rt" cx="30" cy="30" r="26"/><circle class="rp" cx="30" cy="30" r="26" style="stroke:var(--gold)"/></svg><b class="num">۷۳٪</b></div><div class="mring-cap">انرژی</div></div>
+                <div><div class="mring" style="--p:66"><svg viewBox="0 0 60 60"><circle class="rt" cx="30" cy="30" r="26"/><circle class="rp" cx="30" cy="30" r="26" style="stroke:var(--lav)"/></svg><b class="num">۶۶٪</b></div><div class="mring-cap">خودتنظیمی</div></div>
+                <div><div class="mring" style="--p:78"><svg viewBox="0 0 60 60"><circle class="rt" cx="30" cy="30" r="26"/><circle class="rp" cx="30" cy="30" r="26" style="stroke:var(--brand)"/></svg><b class="num">۷۸٪</b></div><div class="mring-cap">بهره‌وری</div></div>
+              </div>
+            </div>
+            <div class="card panelcard">
+              <div class="chart-head"><b style="font-size:14px;font-weight:800">الگوی فعالیت و رفتارها</b><span class="tiny">بر اساس ثبت‌های تو</span></div>
+              <div class="mbars" id="mbars"></div>
+              <div class="chips2">
+                <span class="pchip" style="background:var(--brand-soft);color:var(--brand-ink)">کار شانه‌ای</span>
+                <span class="pchip" style="background:var(--lav-soft);color:var(--lav-ink)">خودمراقبتی</span>
+                <span class="pchip" style="background:var(--coral-soft);color:var(--coral-ink)">تأخیر</span>
+                <span class="pchip" style="background:var(--sky-soft);color:var(--sky-ink)">ورزش</span>
+                <span class="pchip" style="background:var(--gold-soft);color:var(--gold-ink)">مطالعه</span>
+                <span class="pchip" style="background:var(--rose-soft);color:var(--rose-ink)">خانواده</span>
+              </div>
+              <div class="tiny" style="margin-top:10px">رنگ هر ستون = دسته‌ی فعالیت؛ بلندتر یعنی بیشتر.</div>
+            </div>
+          </div>
+          <div class="card panelcard" style="margin-top:14px">
+            <div class="chart-head"><b style="font-size:14px;font-weight:800">نشان‌های جوما</b><span class="tiny">با هر قدم، یک نشان جدید</span></div>
+            <div class="badges" id="badges"></div>
+          </div>
+        </section>
+
+        <section class="page" id="page-ph">
+          <div class="card empty">
+            <span class="mascot lg" aria-hidden="true"><svg><use href="#owl-think"/></svg></span>
+            <b id="ph-title">این بخش</b>
+            <p>در این دمو ساده‌سازی شده تا تمرکز روی تجربه‌ی اصلی باشد. ساختار و سبک بصری همین‌جا آماده‌ی گسترش است.</p>
+            <button class="btn soft sm" onclick="go('app','home')">بازگشت به خانه من</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="ناوبری اصلی">
+    <a href="#" class="on" data-mpage="home"><svg class="ic"><use href="#i-compass"/></svg>خانه</a>
+    <a href="#" data-mpage="today"><svg class="ic"><use href="#i-checkc"/></svg>امروز</a>
+    <a href="#" data-mpage="mood"><svg class="ic"><use href="#i-heart"/></svg>حال</a>
+    <a href="#" data-mpage="reports"><svg class="ic"><use href="#i-chart"/></svg>گزارش</a>
+  </nav>
+</div>
+
+<!-- خوش‌آمد -->
+<div class="ob-wrap" id="onboard" hidden>
+  <div class="card ob-card">
+    <span class="mascot lg" aria-hidden="true"><svg><use href="#owl-hi"/></svg></span>
+    <h3>سلام! من جوما‌ام، جغد راهنمای تو 🦉</h3>
+    <div class="tiny">فقط سه چیز کوچک، همین! (و یک تخم که مال توست 🥚)</div>
+    <div class="ob-step"><span class="mascot sm"><svg><use href="#owl-think"/></svg></span><div><b>۱. برنامه‌ات را می‌سازی</b><small>فعالیت‌هایی که دوست داری را انتخاب می‌کنی.</small></div></div>
+    <div class="ob-step"><span class="mascot sm"><svg><use href="#owl-hi"/></svg></span><div><b>۲. هر روز ثبت می‌کنی</b><small>قدم‌هایت و حالت را در چند ثانیه ثبت می‌کنی.</small></div></div>
+    <div class="ob-step"><span class="mascot sm"><svg><use href="#owl-cheer"/></svg></span><div><b>۳. مسیرت را می‌بینی</b><small>جوما پیشرفتت را قشنگ و ساده نشان می‌دهد.</small></div></div>
+    <button class="btn primary" id="ob-done" style="width:100%">بریم شروع کنیم 🌱</button>
+  </div>
+</div>
+
+<!-- تمرین نفس -->
+<div class="breath-wrap" id="breath" hidden>
+  <div class="card breath">
+    <span class="mascot sm" aria-hidden="true"><svg id="b-owl"><use href="#owl-lotus"/></svg></span>
+    <h3 style="font-size:16px;font-weight:900">یک دقیقه نفس با جوما</h3>
+    <div class="bcircle" id="bcircle">آماده‌ای؟</div>
+    <p class="tiny" id="b-hint">روی «شروع» بزن و همراه دایره نفس بکش: دم… نگه… بازدم.</p>
+    <div style="display:flex;gap:8px">
+      <button class="btn primary sm" id="b-start">شروع</button>
+      <button class="btn ghost sm" id="b-close">بستن</button>
+    </div>
+  </div>
+</div>
+
+<!-- جشن -->
+<div class="ob-wrap" id="party" hidden>
+  <div class="card ob-card">
+    <span class="mascot xl floaty" aria-hidden="true"><svg><use href="#owl-cheer"/></svg></span>
+    <h3 id="party-t">روزِ کامل شد! 🎉</h3>
+    <p class="tiny" id="party-m">همه‌ی کارهای امروز ثبت شد؛ جوما به تو افتخار می‌کند.</p>
+    <b class="num grad" id="party-xp" style="font-size:22px"></b>
+    <button class="btn primary" id="party-ok" style="width:100%">چه عالی!</button>
+  </div>
+</div>
+
+<canvas id="confetti"></canvas>
+<div class="toast" id="toast"><svg aria-hidden="true" id="toast-owl"><use href="#owl-cheer"/></svg><span id="toast-em" hidden></span><span id="toast-txt">ثبت شد ✓</span></div>
+
+<script>
+var $=function(s){return document.querySelector(s)}, $$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var root=document.documentElement;
+function fa(n){return String(n).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
+/* ---------- تم ---------- */
+var TKEY='joma-demo-theme';
+function applyTheme(t){root.setAttribute('data-theme',t);$$('.switcher button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t)})}
+$$('.switcher button').forEach(function(b){b.addEventListener('click',function(){
+  applyTheme(b.dataset.t);try{localStorage.setItem(TKEY,b.dataset.t)}catch(e){}
+  toast(b.dataset.t==='joma'?'شیشه‌ات شفاف شد؛ پشتش را ببین! ✨':'برگشتیم خانه 💚');
+})});
+try{var st=localStorage.getItem(TKEY);if(st)applyTheme(st)}catch(e){}
+addEventListener('keydown',function(e){
+  if(e.key.toLowerCase()==='t'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
+    var n=root.getAttribute('data-theme')==='joma'?'classic':'joma';applyTheme(n);try{localStorage.setItem(TKEY,n)}catch(e){}}
+});
+/* ---------- توست ---------- */
+var toastTimer;
+function toast(msg,em,long){
+  var t=$('#toast');
+  if(em){$('#toast-owl').hidden=true;$('#toast-em').hidden=false;$('#toast-em').textContent=em}
+  else{$('#toast-owl').hidden=false;$('#toast-em').hidden=true}
+  $('#toast-txt').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},long?4200:2200);
+}
+/* ---------- کانفتی ---------- */
+var cv=$('#confetti'),cx=cv.getContext('2d'),parts=[],rafC=null;
+function sizeCv(){cv.width=innerWidth;cv.height=innerHeight}
+addEventListener('resize',sizeCv);sizeCv();
+function confetti(n){
+  var cols=['#0FA678','#F0B23A','#EE6D95','#3FA3DC','#8B7CF6','#F2784B'];
+  for(var i=0;i<(n||120);i++)parts.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.3,r:4+Math.random()*5,c:cols[i%6],vy:2+Math.random()*3.5,vx:-1.5+Math.random()*3,rot:Math.random()*6.28,vr:-.12+Math.random()*.24});
+  if(!rafC)tickC();
+}
+function tickC(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(function(p){return p.y<cv.height+30});
+  parts.forEach(function(p){
+    p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy+=.02;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.62);cx.restore();
+  });
+  if(parts.length)rafC=requestAnimationFrame(tickC);
+  else{rafC=null;cx.clearRect(0,0,cv.width,cv.height)}
+}
+/* ---------- امتیاز و سطح ---------- */
+var xp=0;try{xp=parseInt(localStorage.getItem('joma-xp'))||0}catch(e){}
+var LV=[{m:0,n:'جوجهٔ جغد',e:'🥚'},{m:40,n:'بال‌گشوده',e:'🌱'},{m:100,n:'چشم‌تیزبین',e:'🔭'},{m:200,n:'نگهبان مهربان',e:'🛡️'},{m:350,n:'جغد حکیم',e:'👑'}];
+function addXP(n){
+  xp+=n;try{localStorage.setItem('joma-xp',String(xp))}catch(e){}
+  badgeState.first=true;renderBadges();renderXP();
+}
+function renderXP(){
+  var li=0;for(var i=0;i<LV.length;i++)if(xp>=LV[i].m)li=i;
+  var cur=LV[li],next=LV[li+1];
+  $('#lvl-em').textContent=cur.e;$('#lvl-name').textContent=cur.n;
+  var pct=next?Math.min(100,Math.round((xp-cur.m)/(next.m-cur.m)*100)):100;
+  $('#lvl-fill').style.width=pct+'%';
+  $('#lvl-xp').textContent=fa(xp)+' امتیاز'+(next?(' · تا «'+next.n+'» '+fa(next.m-xp)+' مانده'):' · بالاترین سطح!');
+}
+/* ---------- نشان‌ها ---------- */
+var badgeState={first:xp>0,water:false,streak:true,breath:false,mood:false,day:false,pet:false};
+var BADGES=[{k:'first',e:'🌱',t:'اولین قدم'},{k:'water',e:'💧',t:'آبِ کامل'},{k:'streak',e:'🔥',t:'۵ روز پیوسته'},{k:'breath',e:'🧘',t:'نفسی آرام'},{k:'mood',e:'🌟',t:'حالِ روشن'},{k:'day',e:'🏆',t:'روزِ کامل'},{k:'pet',e:'🐣',t:'به دنیا آمد'}];
+function renderBadges(){
+  var w=$('#badges');if(!w)return;
+  w.innerHTML=BADGES.map(function(b){return '<div class="bdg'+(badgeState[b.k]?' on':'')+'"><span class="em">'+b.e+'</span><b>'+b.t+'</b></div>'}).join('');
+}
+renderBadges();renderXP();
+/* ============================================================
+   موتور بینش جوما
+   ============================================================ */
+var IN_BANK={
+  day:{e:'📅',t:'روز خاص، حال خاص',dyn:true,x:function(){
+    var d=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'][(new Date().getDay()+1)%7];
+    return 'فهمیدم '+d+'ها حالت از بقیه‌ی روزها بهتره! کارهای مهم را برای '+d+' نگه دار.'}},
+  sleepsport:{e:'🌙',t:'خواب خوب، ورزش کامل',x:'وقتی خوابت خوبه، ورزش رو کامل‌تر انجام می‌دی. امشب زود بخواب تا فردا قدم‌هات بلندتر باشه!'},
+  water:{e:'💧',t:'آب یعنی تمرکز',x:'با هر لیوان آب، تمرکزت بالاتر رفته. بدنت تشکر می‌کند و ذهنت هم!'},
+  streak:{e:'🔥',t:'پیوستگی طلایی',x:'۵ روز پشت‌سرهم ثبت کرده‌ای؛ آدم‌های پیوسته به آرزوهایشان می‌رسند — و تو همین مسیری.'},
+  note:{e:'✍️',t:'قدرت جمله‌ها',x:'روزهایی که برای خودت جمله می‌نویسی، حالِ فردایت بهتره. قلمت را دست نگیر!'},
+  pet:{e:'🐣',t:'معجزه‌ی مراقبت',x:'من به دنیا آمدم چون تو مراقب بودی. هر ثبتِ تو، یک دونه برای من است!'}
+};
+var IN_LIST=[];try{IN_LIST=JSON.parse(localStorage.getItem('joma-insights')||'[]')}catch(e){}
+var inJustAdded=null;
+function discover(id,quiet){
+  var isNew=IN_LIST.indexOf(id)<0;
+  if(isNew){IN_LIST.unshift(id);try{localStorage.setItem('joma-insights',JSON.stringify(IN_LIST))}catch(e){}inJustAdded=id;renderInsights()}
+  if(!quiet&&isNew){
+    var it=IN_BANK[id],txt=it.dyn?it.x():it.x;
+    toast('بینش تازه: '+it.t+' — '+txt,it.e,true);
+  }
+}
+function renderInsights(){
+  var w=$('#insight-list');if(!w)return;
+  var html=IN_LIST.slice(0,5).map(function(id){
+    var it=IN_BANK[id],txt=it.dyn?it.x():it.x;
+    return '<div class="insight-item'+(id===inJustAdded?' new':'')+'" data-in="'+id+'" role="button" style="cursor:pointer"><span class="ie">'+it.e+'</span><div><b>'+it.t+'</b><p>«'+txt+'»</p></div></div>';
+  }).join('');
+  if(IN_LIST.length<IN_BANK.length){
+    html+='<div class="insight-item locked"><span class="ie">❔</span><div><b>یک بینش پنهان…</b><p>جوما دارد ثبت‌هایت را می‌خواند؛ به‌زودی کشفش می‌کند.</p></div></div>';
+  }
+  w.innerHTML=html;
+  $('#in-count').textContent=fa(IN_LIST.length)+' از '+fa(Object.keys(IN_BANK).length)+' بینش';
+  $$('#insight-list .insight-item[data-in]').forEach(function(el){
+    el.onclick=function(){discover(el.dataset.in)};
+  });
+  inJustAdded=null;
+}
+renderInsights();
+/* ============================================================
+   تخم و مراقبت از جوما
+   ============================================================ */
+var pet={seed:2,water:1,home:0,bath:0,hatched:false};
+try{var ps=JSON.parse(localStorage.getItem('joma-pet'));if(ps&&typeof ps==='object')pet=ps}catch(e){}
+function petSave(){try{localStorage.setItem('joma-pet',JSON.stringify(pet))}catch(e){}}
+function petTotal(){return pet.seed+pet.water+pet.home+pet.bath}
+function petArt(){
+  if(pet.hatched)return '<use href="#owl-hi"/>';
+  return '<ellipse cx="43" cy="54" rx="29" ry="35" fill="#FFF7EA" stroke="#E5D5B4" stroke-width="2.5"/><ellipse cx="32" cy="42" rx="6" ry="10" fill="#fff" opacity=".8" transform="rotate(-22 32 42)"/><g class="crack'+(petTotal()>=6?' show':'')+'" id="pet-cracks"><path d="M30 60l6-5 4 6 6-4 5 5 6-4" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/><path d="M40 74l5-4 4 5" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/></g>';
+}
+function renderPet(){
+  $$('.psegs').forEach(function(seg){
+    var k=seg.dataset.pk;
+    [].forEach.call(seg.children,function(i,ix){i.classList.toggle('on',ix<pet[k])});
+  });
+  $('#pet-svg').innerHTML=petArt();
+  var pct=Math.min(100,Math.round(petTotal()/12*100));
+  $('#pet-prog').textContent='مراقبت: '+fa(pct)+'٪';
+  if(pet.hatched){
+    $('#pet-title').textContent='جوجه‌ی جوما 🐣';
+    $('#pet-sub').textContent='هر روز از من مراقبت کن';
+    $('#pet-note').textContent=petTotal()>=12?'چه مراقبتی! حسابی خوشحالم 🎉':'دونه، آب، خونه‌ی تمیز و حمام؛ من با همین‌ها شادم!';
+  }else{
+    $('#pet-title').textContent='تخم جوما 🥚';
+    $('#pet-sub').textContent=petTotal()>=6?'دارد ترک می‌خورد! نزدیک است…':'با مراقبت، به دنیا می‌آید';
+    $('#pet-note').textContent=petTotal()>=6?'تخم می‌لرزد! ادامه بده، دارم می‌آیم… 🐣':'هر قدمِ تو، یک دونه برای این تخم کوچولوست 🌱';
+  }
+}
+function petBounce(){var s=$('#pet-stage');s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop')}
+function petGain(k,n){
+  if(pet[k]>=3)return;
+  pet[k]=Math.min(3,pet[k]+n);petSave();renderPet();petBounce();
+  if(!pet.hatched&&petTotal()>=12){
+    pet.hatched=true;petSave();renderPet();
+    badgeState.pet=true;renderBadges();addXP(20);confetti(180);
+    $('#party-t').textContent='تولد جوجه‌ی جوما! 🐣🎉';
+    $('#party-m').textContent='با مراقبت تو، تخم باز شد و جوجه‌ی کوچولو به دنیا آمد. از حالا هر روز باهات است!';
+    $('#party-xp').textContent='+۲۰ امتیاز پدرِ خوب!';
+    setTimeout(function(){$('#party').hidden=false},350);
+    setTimeout(function(){discover('pet')},1500);
+  }else if(pet.hatched&&petTotal()>=12){
+    pet.seed=pet.water=pet.home=pet.bath=0;petSave();renderPet();
+    addXP(5);confetti(70);
+    toast('مراقبتِ امروزِ من کامل شد! خوشحالم 🐣 +۵ امتیاز',null,true);
+  }
+}
+renderPet();
+$('#pet-stage').addEventListener('click',function(){
+  var s=$('#pet-stage');s.classList.remove('wiggle');void s.offsetWidth;s.classList.add('wiggle');
+  var F=pet.hatched
+    ?['قُر قُرِ خوشحالی! 🐣','بغلم کن!','دلم دونه می‌خواد 🌾','بهترین آدم دنیا تویی!','بال بال می‌زنم برایت!']
+    :['قُل‌قُل! چیزی داخلشم… 🥚','دارم رشد می‌کنم؛ فقط ثبت کن!','گرمت خوبه، ممنون 🤍','به زودی می‌بینمت!','کسی اینجا خواب است… یا نه؟'];
+  toast(F[Math.floor(Math.random()*F.length)]);
+});
+$('#pet-reset').addEventListener('click',function(){
+  pet={seed:0,water:0,home:0,bath:0,hatched:false};petSave();renderPet();
+  toast('دموی تخم ریست شد؛ از اول مراقبت کن 🥚');
+});
+/* ---------- خوش‌آمد ---------- */
+function obSeen(){try{return localStorage.getItem('joma-onboard')==='1'}catch(e){return false}}
+function showOB(){$('#onboard').hidden=false}
+function hideOB(){$('#onboard').hidden=true;try{localStorage.setItem('joma-onboard','1')}catch(e){}}
+$('#ob-done').onclick=hideOB;
+$('#ob-again').onclick=function(e){e.preventDefault();showOB()};
+/* ---------- ناوبری ---------- */
+var PAGES={home:'خانه من',today:'کارهای امروز',mood:'حال من',reports:'گزارش پیشرفت',ph:'بخش نمایشی'};
+var insightShown=false;
+function go(view,page){
+  $$('.view').forEach(function(v){v.classList.remove('on')});
+  $('#view-'+view).classList.add('on');
+  if(view==='app'&&page){
+    showPage(page);
+    if(!obSeen())setTimeout(showOB,450);
+    if(!insightShown){insightShown=true;setTimeout(function(){discover('day')},6500)}
+  }
+  scrollTo({top:0,behavior:'auto'});
+  try{history.replaceState(null,'','#'+(view==='landing'?'landing':page||'home'))}catch(e){}
+}
+function showPage(id){
+  if(!PAGES[id])id='ph';
+  $$('.page').forEach(function(p){p.classList.remove('on')});
+  $('#page-'+id).classList.add('on');
+  $('#crumb').textContent=PAGES[id];
+  if(id==='ph')$('#ph-title').textContent='این بخش در دمو نمایش داده نشده';
+  $$('.side .nitem').forEach(function(n){n.classList.toggle('on',n.dataset.page===id)});
+  $$('.tabbar a').forEach(function(a){a.classList.toggle('on',a.dataset.mpage===id)});
+  scrollTo({top:0,behavior:'auto'});
+}
+$$('.side .nitem').forEach(function(n){n.addEventListener('click',function(){go('app',n.dataset.page)})});
+$$('.tabbar a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();go('app',a.dataset.mpage)})});
+try{var h=(location.hash||'').replace('#','');
+  if(h==='home'||h==='today'||h==='mood'||h==='reports')go('app',h);
+}catch(e){}
+/* ---------- گروه‌های ساده ---------- */
+function bindGroup(sel,after){
+  $$(sel).forEach(function(g){g.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b||!g.contains(b))return;
+    [].forEach.call(g.children,function(c){c.classList.remove('sel')});
+    b.classList.add('sel');if(after)after(g,b);
+  })});
+}
+bindGroup('#land-mood',function(){toast('قشنگ بود! حال کامل را در «حال من» ثبت کن 🌱')});
+bindGroup('#dash-mood',function(){go('app','mood')});
+/* ---------- خوش‌آمد بر اساس ساعت ---------- */
+(function(){
+  var hr=new Date().getHours();
+  var g=hr<5?'شبت آرام':hr<12?'صبح‌ت بخیر':hr<17?'بعدازظهرت بخیر':hr<21?'عصرت بخیر':'شبت آرام';
+  var el=$('#greet-h1');if(el)el.textContent='سلام سارا، '+g+'.';
+})();
+/* ---------- جمله‌ی امروز ---------- */
+(function(){
+  var Q=['قدم کوچک امروز، مسیر بزرگ فرداست.','تو قرار نیست بی‌نقص باشی؛ قرار است ادامه بدهی.','آرام پیش برو؛ رشد، عجله نمی‌خواهد.','هر روزی که ثبت می‌کنی، یک ستاره به آسمانت اضافه می‌شود.','حالِ تو مهم‌تر از بهره‌وری توست.','فقط با دیروزِ خودت مقایسه کن.','استراحت هم بخشی از برنامه است، نه فاصله از آن.','قلبت را هم در فهرست کارهایت جا بده.','شجاعت یعنی دوباره شروع کردن؛ کوچک و بی‌سروصدا.','تو همین امروز هم در حال بهتر شدن هستی.'];
+  var el=$('#qotd');if(el)el.textContent='«'+Q[new Date().getDate()%Q.length]+'»';
+})();
+/* ---------- جغد بامزه ---------- */
+(function(){
+  var el=$('#home-owl');if(!el)return;
+  var FUN=['قه‌قهه! وقفه ممنوع 😄','بال زدم برایت! 🦉','جغدها هم گاهی کلیک می‌شوند!','این را از روز اول برایت نگه داشتم ;)','تخمم را هم بغل کن 🥚'];
+  el.addEventListener('click',function(){
+    el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
+    toast(FUN[Math.floor(Math.random()*FUN.length)]);
+  });
+})();
+/* ---------- لیوان‌های آب ---------- */
+var wfill=0;
+(function(){
+  var g=$('#wglasses');if(!g)return;
+  for(var i=0;i<8;i++){
+    (function(){
+      var d=document.createElement('div');d.className='wg';d.title='لیوان آب';d.innerHTML='<i></i>';
+      d.onclick=function(){
+        d.classList.toggle('f');d.classList.remove('pop');void d.offsetWidth;d.classList.add('pop');
+        wfill=$$('#wglasses .wg.f').length;
+        $('#wcount').textContent=fa(wfill)+' از ۸';
+        addXP(1);petGain('water',1);
+        if(wfill===8&&!badgeState.water){badgeState.water=true;renderBadges();confetti(90);toast('آبِ امروز کامل شد! 💧 عالی بودی');setTimeout(function(){discover('water')},1600)}
+      };
+      g.appendChild(d);
+    })();
+  }
+})();
+/* ---------- تمرین نفس ---------- */
+var bT=null,bRunning=false;
+function resetB(){
+  clearTimeout(bT);bRunning=false;
+  var el=$('#bcircle');el.style.transform='scale(1)';el.textContent='آماده‌ای؟';
+  $('#b-hint').textContent='روی «شروع» بزن و همراه دایره نفس بکش: دم… نگه… بازدم.';
+  $('#b-start').disabled=false;$('#b-start').textContent='شروع';
+  $('#b-owl').innerHTML='<use href="#owl-lotus"/>';
+}
+function breathe(){
+  if(bRunning)return;
+  bRunning=true;$('#b-start').disabled=true;$('#b-start').textContent='در جریان…';
+  var el=$('#bcircle'),hint=$('#b-hint');
+  var seq=[['دم…',1.35],['نگه دار…',1.35],['بازدم…',1]];
+  var i=0,cyc=0;el.style.transition='transform 4s ease-in-out';
+  function step(){
+    if(cyc>=5){
+      bRunning=false;el.textContent='تمام شد 🌿';el.style.transform='scale(1)';
+      hint.textContent='آفرین! آرام‌تر از قبل آمدی. +۳ امتیاز';
+      addXP(3);badgeState.breath=true;renderBadges();confetti(60);petGain('bath',3);
+      $('#b-owl').innerHTML='<use href="#owl-cheer"/>';
+      $('#b-start').disabled=false;$('#b-start').textContent='دوباره';
+      return;
+    }
+    var s=seq[i];el.textContent=s[0];el.style.transform='scale('+s[1]+')';
+    i++;if(i===3){i=0;cyc++;hint.textContent='دوره‌ی '+fa(cyc)+' از ۵'}
+    bT=setTimeout(step,4000);
+  }
+  setTimeout(step,300);
+}
+$('#breath-open').addEventListener('click',function(){resetB();$('#breath').hidden=false});
+$('#b-close').addEventListener('click',function(){$('#breath').hidden=true;resetB()});
+$('#b-start').addEventListener('click',breathe);
+/* ---------- جشن روز کامل ---------- */
+var partied=false;
+function party(){
+  if(partied)return;partied=true;
+  $('#party-t').textContent='روزِ کامل شد! 🎉';
+  $('#party-m').textContent='همه‌ی کارهای امروز ثبت شد؛ جوما به تو افتخار می‌کند.';
+  $('#party-xp').textContent='+۱۵ امتیاز برای تو';
+  badgeState.day=true;renderBadges();addXP(15);confetti(170);petGain('seed',2);
+  setTimeout(function(){$('#party').hidden=false},400);
+}
+$('#party-ok').addEventListener('click',function(){$('#party').hidden=true;setTimeout(function(){discover('streak')},900)});
+/* ============================================================
+   ویزارد ثبت حال
+   ============================================================ */
+var EMO5=['😖','🙁','😐','🙂','😄'];
+var WKEYS=['mood','energy','focus','sleep','stress'];
+var WLBL={
+  mood:['خیلی بد','خوب نیستم','معمولی','خوب','عالی'],
+  energy:['خیلی کم','کم','متوسط','زیاد','پُر'],
+  focus:['خیلی سخت','سخت','متوسط','آسان','خیلی آسان'],
+  sleep:['خیلی ضعیف','ضعیف','متوسط','خوب','عالی'],
+  stress:['خیلی کم','کم','متوسط','زیاد','خیلی زیاد']
+};
+var WNAME={mood:'حال کلی',energy:'انرژی',focus:'تمرکز',sleep:'خواب',stress:'استرس'};
+var WDEF=['اول حالت را برایم بگو؛ بعد برویم قدم بعدی 🙂','باتری‌ات را نشانم کن؛ قضاوتی در کار نیست.','حواست امروز چقدر سر جایش بود؟','خواب دیشب چطور بود؟ ستاره‌ها خودشان می‌گویند.','آخرین یکی! بادکنک استرست چقدر پف کرده؟','همه آماده است؛ اگر دوست داری یک جمله هم برای امروز بنویس.'];
+var WMSGS={
+  mood:['امروز سخت بوده؛ من همین‌جا کنارتم 🤍','ممنون که صادقی؛ همین توجه، خودش یک قدم است.','روزهای معمولی هم بخشی از مسیرند.','خوب است؛ همین توجه کوچک، روز را قشنگ‌تر می‌کند.','چه عالی! این حس خوب را ثبت کنیم تا یادت بماند 🌟'],
+  energy:['باتری کم است؛ امروز فقط یک قدم کوچک کافی است.','کمی انرژی داری؛ یک قدم سبک انتخاب کن.','متوسط و قابل‌اعتماد؛ همان‌قدر که لازم است.','شارژ خوبی داری؛ یک قدم محکم برمی‌داریم!','پُر و تمام! بزن بریم 🚀'],
+  focus:['ذهنت امروز شلوغ بوده؛ طبیعی است.','کمی سخت بوده؛ همین ثبتش ارزش دارد.','متوسط، مثل اکثر روزهای واقعی.','خوب بود! تمرکز، مهارتِ روزهای خوب است.','عالی! چه روزی برای ذهنت 🎯'],
+  sleep:['دیشب سخت گذشته؛ امشب زودتر بغل کنیم بالش را 🌙','کمی چرت‌مانند؛ اشکال ندارد.','یک خواب معمولی؛ بهتر از هیچ است.','خوابِ خوب، نصف انرژی فرداست.','چه خواب طلایی! بدنت از تو تشکر می‌کند ⭐'],
+  stress:['چه آرامش! عالی که فشاری حس نکردی.','کم و قابل‌مدیریت؛ خوب است.','متوسط؛ بخشی از زندگی است.','کمی فشار بوده؛ یک نفس عمیق هم خوب است.','فشار زیادی امروز؛ صحن را برای خودت نرم کن 🤍']
+};
+function heroSVG(t,l){
+  if(t==='energy'){
+    var cols=['var(--coral)','var(--coral)','var(--gold)','var(--sky)','var(--ok)'];
+    var w=[6,12,18,24,30][l-1]||0;
+    return '<svg viewBox="0 0 40 24"><rect x="1.5" y="3.5" width="32" height="17" rx="5" fill="none" stroke="var(--ink-3)" stroke-width="2"/><rect x="35.5" y="9" width="3.6" height="6" rx="1.5" fill="var(--ink-3)"/><rect x="4.5" y="6.5" width="'+w+'" height="11" rx="3" fill="'+cols[l-1]+'"/></svg>';
+  }
+  if(t==='sleep'){
+    var pos=[[24.5,7],[31,4.5],[35.5,10.5],[27,13.5],[33.5,17.5]],s='';
+    for(var i=0;i<l;i++)s+='<text x="'+pos[i][0]+'" y="'+pos[i][1]+'" font-size="7.5" fill="var(--gold)">★</text>';
+    return '<svg viewBox="0 0 40 24"><path d="M16.5 2.5a9.5 9.5 0 1 0 9 14.5A11 11 0 0 1 16.5 2.5Z" fill="var(--lav)"/>'+s+'</svg>';
+  }
+  if(t==='focus'){
+    var r=(1.5+l*1.5).toFixed(1);
+    return '<svg viewBox="0 0 40 24"><circle cx="20" cy="12" r="10" fill="none" stroke="var(--ring-track)" stroke-width="2"/><circle cx="20" cy="12" r="6.5" fill="none" stroke="var(--ring-track)" stroke-width="2"/><circle cx="20" cy="12" r="'+r+'" fill="var(--sky)"/><path d="M20 .8v3.4M20 19.8v3.4M8.8 12h3.4M27.8 12h3.4" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  }
+  if(t==='stress'){
+    var c2=['var(--sky)','var(--sky)','var(--gold)','var(--coral)','var(--rose)'];
+    var r2=(3.5+l*1.3).toFixed(1);
+    return '<svg viewBox="0 0 40 24"><circle cx="14" cy="11" r="'+r2+'" fill="'+c2[l-1]+'" opacity=".92"/><path d="M14 '+(11+ +r2).toFixed(1)+' q2.4 3 0 6" fill="none" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round"/>'+(l>=4?'<path d="M27 7q4-2.5 6.5.5M27 15q4 2.5 6.5-.5" stroke="var(--coral)" stroke-width="1.6" fill="none" stroke-linecap="round"/>':'')+'</svg>';
+  }
+  return '';
+}
+function renderHero(stepEl,t,l){
+  var box=stepEl.querySelector('[data-hbox]');
+  if(t==='mood')box.innerHTML='<span class="big">'+EMO5[l-1]+'</span>';
+  else box.innerHTML=heroSVG(t,l).replace('<svg ','<svg class="whero" ');
+}
+$$('.wstep[data-type]').forEach(function(stp){
+  var t=stp.dataset.type;
+  stp.querySelectorAll('.wopt').forEach(function(o){
+    var l=+o.dataset.l,wo=o.querySelector('[data-wo]');
+    if(t==='mood')wo.textContent=EMO5[l-1];
+    else wo.innerHTML=heroSVG(t,l);
+  });
+  renderHero(stp,t,3);
+});
+var wstep=1,ans={},mx=1;
+function refreshDots(){
+  $$('.wdot').forEach(function(d,i){
+    var k=i+1,cur=Math.min(wstep,5);
+    d.classList.toggle('on',k===cur);
+    d.classList.toggle('done',!!ans[WKEYS[i]]&&k!==cur);
+  });
+}
+function buildSummary(){
+  var html='';
+  WKEYS.forEach(function(k,i){
+    if(!ans[k])return;
+    html+='<button class="chip-sum" data-go="'+(i+1)+'"><b>'+WNAME[k]+':</b> '+WLBL[k][ans[k]-1]+' <span class="num" style="color:var(--ink-3)">'+fa(ans[k])+'/۵</span></button>';
+  });
+  $('#wsum').innerHTML=html;
+  $$('#wsum .chip-sum').forEach(function(c){c.onclick=function(){goW(+c.dataset.go)}});
+}
+function goW(n){
+  wstep=n;
+  $$('.wstep').forEach(function(s){s.classList.toggle('on',+s.dataset.step===n)});
+  refreshDots();
+  $('#w-count').textContent=n<=5?('قدم '+fa(n)+' از ۵'):'مرور نهایی';
+  $('#w-prev').disabled=(n===1);
+  var cur=$('.wstep[data-step="'+n+'"]'),t=cur?cur.dataset.type:null;
+  var rev=(n===6);
+  $('#w-next').hidden=rev;$('#w-prev').hidden=rev;
+  $('#w-bubble').textContent=(t&&ans[t])?WMSGS[t][ans[t]-1]:WDEF[n-1];
+  $('#w-next').disabled=rev?false:!(t&&ans[t]);
+  $('#w-next').classList.toggle('pulse',!rev&&!!(t&&ans[t]));
+  if(rev)buildSummary();
+  $('#w-owl').innerHTML='<use href="'+(rev?'#owl-cheer':(t&&ans[t]?'#owl-hi':'#owl-think'))+'"/>';
+}
+$$('.wdot').forEach(function(d){d.addEventListener('click',function(){
+  var k=+d.dataset.w;if(k<=Math.max(mx,wstep))goW(k);
+})});
+$('#w-prev').addEventListener('click',function(){goW(Math.max(1,wstep-1))});
+$('#w-next').addEventListener('click',function(){goW(Math.min(6,wstep+1))});
+$$('.wstep[data-type]').forEach(function(stp){
+  var t=stp.dataset.type;
+  stp.querySelectorAll('.wopt').forEach(function(o){
+    o.addEventListener('click',function(){
+      var first=!ans[t];
+      stp.querySelectorAll('.wopt').forEach(function(x){x.classList.remove('sel')});
+      o.classList.add('sel');
+      ans[t]=+o.dataset.l;
+      stp.querySelector('[data-hbox]').classList.remove('ghost');
+      renderHero(stp,t,ans[t]);
+      $('#w-bubble').textContent=WMSGS[t][ans[t]-1];
+      $('#w-owl').innerHTML='<use href="#owl-hi"/>';
+      refreshDots();
+      mx=Math.max(mx,+stp.dataset.step+1);
+      $('#w-next').disabled=false;$('#w-next').classList.add('pulse');
+      if(first&&+stp.dataset.step<5){
+        setTimeout(function(){
+          if(wstep===+stp.dataset.step&&ans[t]===+o.dataset.l)goW(+stp.dataset.step+1);
+        },950);
+      }
+    });
+  });
+});
+$('#w-save').addEventListener('click',function(){
+  var missing=WKEYS.filter(function(k){return !ans[k]});
+  if(missing.length){goW(1);toast('اول هر پنج قدم را کامل کن');return}
+  badgeState.mood=true;renderBadges();addXP(5);confetti(80);petGain('home',3);
+  var note=$('#w-note').value.trim();
+  toast(note?('ثبت شد ✓ جمله‌ی قشنگی بود! +۵ امتیاز'):'حال امروز ثبت شد ✓ +۵ امتیاز');
+  setTimeout(function(){discover(note?'note':'sleepsport')},2600);
+});
+goW(1);
+/* ---------- کارهای امروز ---------- */
+var activeTab='daily';
+$$('#ttabs button').forEach(function(b){b.addEventListener('click',function(){
+  activeTab=b.dataset.tab;
+  $$('#ttabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+  $$('.tabpane').forEach(function(p){p.hidden=p.dataset.pane!==activeTab});
+  recalc();
+})});
+function bindToggles(scope){
+  scope.querySelectorAll('[data-toggle]').forEach(function(btn){
+    btn.onclick=function(){
+      var done=btn.classList.contains('done');
+      btn.classList.toggle('done',!done);btn.classList.toggle('wait',done);
+      btn.innerHTML=!done?'<svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده':'<svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار';
+      var sel=btn.closest('.trow').querySelector('select');
+      if(sel&&!done)sel.selectedIndex=0;
+      if(!done)petGain('seed',1);
+      recalc();
+    };
+  });
+  scope.querySelectorAll('select').forEach(function(sel){
+    sel.onchange=function(){
+      var btn=sel.closest('.trow').querySelector('[data-toggle]');
+      var done=sel.selectedIndex===0;
+      btn.classList.toggle('done',done);btn.classList.toggle('wait',!done);
+      btn.innerHTML=done?'<svg class="ic" style="width:14px;height:14px"><use href="#i-checkc"/></svg>ثبت شده':'<svg class="ic" style="width:14px;height:14px"><use href="#i-clock"/></svg>در انتظار';
+      if(done)petGain('seed',1);
+      recalc();
+    };
+  });
+}
+$$('.tabpane').forEach(bindToggles);
+function recalc(){
+  var pane=document.querySelector('.tabpane[data-pane="'+activeTab+'"]');
+  var rows=pane.querySelectorAll('.trow'),done=0;
+  rows.forEach(function(r){if(r.querySelector('[data-toggle]').classList.contains('done'))done++});
+  var total=rows.length,pct=Math.round(done/total*100);
+  $('#t-ring').style.setProperty('--p',pct);
+  $('#t-pct').textContent=fa(pct)+'٪';
+  $('#t-done').textContent=fa(done);
+  $('#t-wait').textContent=fa(total-done);
+  if(activeTab==='daily')$('#today-cnt').textContent=fa(total-done);
+  var banner=$('#done-banner');
+  if(done===total&&total>0){
+    var names={daily:'همه‌ی کارهای روزانه‌ی امروز ثبت شد!',weekly:'هدف‌های هفتگی این هفته کامل شد!',monthly:'هدف‌های ماهانه هم کامل شد!'};
+    $('#done-t1').textContent=names[activeTab];banner.hidden=false;
+    if(activeTab==='daily')party();
+  }else banner.hidden=true;
+}
+$$('[data-save]').forEach(function(b){b.addEventListener('click',function(){
+  addXP(4);toast('ثبت‌ها ذخیره شد ✓ +۴ امتیاز');confetti(40);petGain('bath',1);
+})});
+recalc();
+var DAYS=['پنجشنبه، ۱۹ شهریور ۱۴۰۵','جمعه، ۲۰ شهریور ۱۴۰۵','شنبه، ۲۱ شهریور ۱۴۰۵','یکشنبه، ۲۲ شهریور ۱۴۰۵','دوشنبه، ۲۳ شهریور ۱۴۰۵'];
+var di=2;
+$('#d-prev').onclick=function(){di=Math.max(0,di-1);$('#d-label').textContent=DAYS[di];toast('رفتی به '+DAYS[di])};
+$('#d-next').onclick=function(){di=Math.min(DAYS.length-1,di+1);$('#d-label').textContent=DAYS[di];toast('رفتی به '+DAYS[di])};
+/* ---------- پیوستگی هفته ---------- */
+(function(){
+  var days=['ش','ی','د','س','چ','پ','ج'],w=$('#sdots');
+  for(var i=0;i<7;i++){
+    var d=document.createElement('div');
+    d.className='d'+(i<5?' f':'');
+    d.innerHTML='<i></i><span>'+days[i]+'</span>';
+    d.title=i<5?'ثبت شده':'هنوز نرسیده‌ایم';
+    w.appendChild(d);
+  }
+})();
+/* ---------- میله‌های الگو ---------- */
+(function(){
+  var hs=[55,38,72,48,64,82,44,68,58,75];
+  var cols=['var(--brand)','var(--sky)','var(--gold)','var(--rose)','var(--lav)','var(--coral)','var(--indigo)'];
+  var w=$('#mbars');
+  hs.forEach(function(h,i){
+    var b=document.createElement('i');
+    b.style.height=h+'%';b.style.background=cols[i%7];
+    w.appendChild(b);
+  });
+})();
+/* ---------- هیت‌مپ ---------- */
+(function(){
+  var lv=[2,3,1,4,2,0,1, 3,4,2,1,3,2,4, 1,2,3,4,2,1,0, 2,1,4,3,2,3,1, 4,3,2,1,2,4,3];
+  var hm=$('#hm');
+  lv.forEach(function(v,i){var c=document.createElement('i');c.className='lv'+v;c.title='روز '+(i+1);hm.appendChild(c)});
+})();
+</script>
+</body>
+</html>
