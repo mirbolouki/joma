@@ -1,0 +1,28 @@
+:root{
+  --bg-layer:
+    radial-gradient(42% 34% at 88% -6%, #FFE4D2 0%, rgba(255,228,210,0) 62%),
+    radial-gradient(38% 30% at -6% 26%, #DDF3E6 0%, rgba(221,243,230,0) 60%),
+    radial-gradient(40% 34% at 106% 58%, #E9E4FC 0%, rgba(233,228,252,0) 60%),
+    radial-gradient(36% 30% at 12% 98%, #FFF3D2 0%, rgba(255,243,210,0) 60%),
+    linear-gradient(180deg,#FDFEFB 0%,#F3F8F0 100%);
+  --card:#ffffff; --card-brd:#EAEFE6;
+  --ink:#14382E; --ink-2:#5C7A6C; --ink-3:#8FA79B;
+  --brand:#0FA678; --brand2:#2FBF8F; --brand-ink:#0A7E5B;
+  --brand-soft:#D6F4E6; --brand-softer:#EDFAF3;
+  --gold:#F0B23A; --gold-soft:#FFF0C9; --gold-ink:#8F6A12;
+  --rose:#EE6D95; --rose-soft:#FFE3EC; --rose-ink:#B24763;
+  --lav:#8B7CF6; --lav-soft:#EBE7FE; --lav-ink:#5F4FC0;
+  --sky:#3FA3DC; --sky-soft:#DDF0FC; --sky-ink:#2277A8;
+  --coral:#F2784B; --coral-soft:#FFE5DA; --coral-ink:#C25327;
+  --indigo:#6D7BE0; --indigo-soft:#E7E9FD; --indigo-ink:#4B58B8;
+  --ok:#12905F;
+  --ring-track:#E4EBE1; --grid:rgba(20,56,46,.10);
+  --c1:#0FA678; --c2:#EE6D95; --c3:#F0B23A;
+  --grad1:#0FA678; --grad2:#4EA8DE;
+  --hm0:#EAF2EA; --hm1:#BEE8CD; --hm2:#7FD3A2; --hm3:#46B87F; --hm4:#1F9663;
+  --r-sm:10px; --r:16px; --r-lg:22px;
+  --shadow:0 2px 10px rgba(20,60,45,.06),0 18px 44px -24px rgba(20,60,45,.3);
+  --side-bg:#FCFDF9; --topbar-bg:rgba(255,255,255,.9); --toast-bg:#14382E;
+  --owl-a:#5E93C8; --owl-b:#3F6FA0; --owl-cream:#F6EBD9; --owl-gold:#E8B64A;
+  --owl-beak:#F0A63C; --owl-ink:#2E3A48; --owl-rose:#E07898;
+}

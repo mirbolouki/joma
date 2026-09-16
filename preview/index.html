@@ -1,690 +1,1138 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="glass">
+<html lang="fa" dir="rtl" data-theme="classic">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>جوما — پیش‌نمایش طراحی v0.1</title>
-<link rel="stylesheet" href="../design/tokens.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>جوما — پیش‌نمایش ۲ (بر پایهٔ 7A و 7B)</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <style>
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    font-family:var(--font);
-    color:var(--ink);
-    background-image:var(--bg-grad);
-    background-attachment:fixed;
-    background-color:var(--bg);
-    line-height:var(--lh-body);
-    padding:24px 16px 64px;
-  }
-  .wrap{max-width:1280px;margin:0 auto}
+/* ═══════════ توکن‌های 7B — کلاسیک (عیناً از فایل خودت) ═══════════ */
+:root{
+  --bg-layer:
+    radial-gradient(42% 34% at 88% -6%, #FFE4D2 0%, rgba(255,228,210,0) 62%),
+    radial-gradient(38% 30% at -6% 26%, #DDF3E6 0%, rgba(221,243,230,0) 60%),
+    radial-gradient(40% 34% at 106% 58%, #E9E4FC 0%, rgba(233,228,252,0) 60%),
+    radial-gradient(36% 30% at 12% 98%, #FFF3D2 0%, rgba(255,243,210,0) 60%),
+    linear-gradient(180deg,#FDFEFB 0%,#F3F8F0 100%);
+  --card:#ffffff; --card-brd:#EAEFE6;
+  --ink:#14382E; --ink-2:#5C7A6C; --ink-3:#8FA79B;
+  --brand:#0FA678; --brand2:#2FBF8F; --brand-ink:#0A7E5B;
+  --brand-soft:#D6F4E6; --brand-softer:#EDFAF3;
+  --gold:#F0B23A; --gold-soft:#FFF0C9; --gold-ink:#8F6A12;
+  --rose:#EE6D95; --rose-soft:#FFE3EC; --rose-ink:#B24763;
+  --lav:#8B7CF6; --lav-soft:#EBE7FE; --lav-ink:#5F4FC0;
+  --sky:#3FA3DC; --sky-soft:#DDF0FC; --sky-ink:#2277A8;
+  --coral:#F2784B; --coral-soft:#FFE5DA; --coral-ink:#C25327;
+  --indigo:#6D7BE0; --indigo-soft:#E7E9FD; --indigo-ink:#4B58B8;
+  --ok:#12905F;
+  --ring-track:#E4EBE1; --grid:rgba(20,56,46,.10);
+  --grad1:#0FA678; --grad2:#4EA8DE;
+  --hm0:#EAF2EA; --hm1:#BEE8CD; --hm2:#7FD3A2; --hm3:#46B87F; --hm4:#1F9663;
+  --r-sm:10px; --r:16px; --r-lg:22px;
+  --shadow:0 2px 10px rgba(20,60,45,.06),0 18px 44px -24px rgba(20,60,45,.3);
+  --side-bg:#FCFDF9; --topbar-bg:rgba(255,255,255,.9); --toast-bg:#14382E;
+  --owl-a:#5E93C8; --owl-b:#3F6FA0; --owl-cream:#F6EBD9; --owl-gold:#E8B64A;
+  --owl-beak:#F0A63C; --owl-ink:#2E3A48; --owl-rose:#E07898;
+  --blur:0px; --glass-grad:none;
+}
+/* ═══════════ تم شیشه — رنگ‌ها از 7A، سطح و بلور از 7B ═══════════ */
+[data-theme="glass"]{
+  --bg-layer:
+    radial-gradient(circle 300px at 15% 18%, rgba(255,255,255,.60), transparent 70%),
+    radial-gradient(circle 270px at 87% 12%, rgba(255,200,90,.60), transparent 70%),
+    radial-gradient(circle 380px at 78% 82%, rgba(150,125,235,.45), transparent 70%),
+    radial-gradient(circle 430px at 18% 92%, rgba(40,190,180,.50), transparent 70%),
+    radial-gradient(circle 220px at 55% 48%, rgba(255,135,180,.40), transparent 70%),
+    linear-gradient(175deg,#E2F3FF,#BFE0F2 55%,#A9D6EC);
+  --card:rgba(255,255,255,.34); --card-brd:rgba(255,255,255,.85);
+  --ink:#1C3247; --ink-2:#41607C; --ink-3:#6E869C;
+  --brand:#137E8C; --brand2:#1FA8B8; --brand-ink:#0E6E7D;
+  --brand-soft:rgba(31,168,184,.20); --brand-softer:rgba(52,201,142,.14);
+  --gold:#D9A441; --gold-soft:rgba(255,225,150,.42); --gold-ink:#8A6414;
+  --rose:#D9698F; --rose-soft:rgba(255,190,212,.38); --rose-ink:#9E3F5F;
+  --lav:#7B6BE0; --lav-soft:rgba(200,190,250,.38); --lav-ink:#4E3FA8;
+  --sky:#2E8FC4; --sky-soft:rgba(180,225,250,.42); --sky-ink:#1B6A96;
+  --coral:#E06A40; --coral-soft:rgba(255,205,180,.42); --coral-ink:#A8451F;
+  --indigo:#5D6BD6; --indigo-soft:rgba(196,205,250,.42); --indigo-ink:#3E4AA6;
+  --ok:#0F8A5C;
+  --ring-track:rgba(255,255,255,.80); --grid:rgba(28,50,71,.12);
+  --grad1:#1FA8B8; --grad2:#34C98E;
+  --hm0:rgba(233,238,244,.7); --hm1:rgba(159,222,214,.85); --hm2:rgba(102,205,196,.9); --hm3:rgba(45,175,178,.95); --hm4:#137E8C;
+  --r-sm:12px; --r:18px; --r-lg:24px;
+  --shadow:0 12px 36px rgba(22,100,140,.20),
+           inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.25);
+  --side-bg:rgba(255,255,255,.32); --topbar-bg:rgba(255,255,255,.42); --toast-bg:#1C3247;
+  --owl-a:#6FA8DC; --owl-b:#4A7FB5; --owl-cream:#FBF3E4; --owl-gold:#F2CC6B;
+  --owl-beak:#F5B04C; --owl-ink:#33475C; --owl-rose:#E88AA6;
+  --blur:14px;
+  --glass-grad:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.10));
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);min-height:100vh;transition:color .3s}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--bg-layer);transition:background .4s}
+button,input,select,textarea{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+.ic{width:20px;height:20px;flex:none}
+.num{font-feature-settings:"ss01"}
 
-  /* ---------- سربرگ پیش‌نمایش ---------- */
-  .head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
-  h1{font-size:var(--fs-28);margin:0 0 6px;font-weight:700}
-  .sub{color:var(--ink-2);font-size:var(--fs-14);margin:0;max-width:62ch}
-  .toggle{display:flex;gap:6px;background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-pill);padding:4px;backdrop-filter:var(--blur)}
-  .toggle button{font-family:inherit;font-size:var(--fs-13);font-weight:600;border:0;background:transparent;color:var(--ink-2);padding:8px 16px;border-radius:var(--r-pill);cursor:pointer;min-height:36px}
-  .toggle button[aria-pressed="true"]{background:var(--brand);color:#fff}
+/* ── کارت: در تم شیشه گرادینت مایل + لبهٔ نورانی + بلور ── */
+.card{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);
+  box-shadow:var(--shadow);transition:background .3s,border-color .3s,border-radius .3s}
+[data-theme="glass"] .card{
+  background:var(--glass-grad);border:1.5px solid var(--card-brd);
+  backdrop-filter:blur(var(--blur)) saturate(1.6);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.6)}
+[data-theme="glass"] .side,[data-theme="glass"] .topbar{
+  background:linear-gradient(160deg,rgba(255,255,255,.40),rgba(255,255,255,.12));
+  backdrop-filter:blur(var(--blur)) saturate(1.6);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.6)}
+@supports not (backdrop-filter:blur(1px)){
+  [data-theme="glass"] .card,[data-theme="glass"] .side{background:rgba(255,255,255,.93)}}
 
-  .banner{margin:18px 0 28px;padding:12px 16px;border-radius:var(--r-16);background:var(--c-unsaved-bg);color:var(--c-unsaved-fg);font-size:var(--fs-13);font-weight:500;border:1px solid rgba(138,90,0,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;
+  border-radius:var(--r);font-size:13.5px;font-weight:700;transition:all .2s}
+.btn:hover{transform:translateY(-1px)} .btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  box-shadow:0 8px 18px -8px rgba(10,80,90,.55)}
+.btn.soft{background:var(--brand-soft);color:var(--brand-ink)}
+.btn.ghost{background:var(--card);border:1px solid var(--card-brd);color:var(--ink)}
+.btn.sm{padding:8px 14px;font-size:12.5px;border-radius:var(--r-sm)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
+  color:var(--brand-ink);background:var(--brand-soft);border-radius:999px;padding:4px 12px}
+.kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--brand-ink)}
+.kicker::before{content:"";width:9px;height:9px;border-radius:3px;
+  background:linear-gradient(135deg,var(--grad1),var(--grad2))}
+.tiny{font-size:11px;color:var(--ink-3);line-height:1.9}
+.muted{color:var(--ink-2);font-size:12.5px;line-height:1.9}
+.grad{background:linear-gradient(90deg,var(--grad1),var(--grad2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.chip{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.mascot{display:inline-block;flex:none;width:66px;height:66px}
+.mascot svg{width:100%;height:100%;display:block}
+.mascot.sm{width:46px;height:46px}.mascot.lg{width:100px;height:100px}.mascot.xl{width:112px;height:112px}
+@keyframes floaty{50%{transform:translateY(-7px)}} .floaty{animation:floaty 3.2s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}} .wiggle{animation:wig .9s ease-in-out infinite}
+@keyframes pop{40%{transform:scale(1.25)}} .pop{animation:pop .4s}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-  h2{font-size:var(--fs-22);margin:36px 0 14px;font-weight:700}
-  h3{font-size:var(--fs-16);margin:22px 0 10px;font-weight:600;color:var(--ink-2)}
+/* ── حباب گفتار جوما ── */
+.joma-msg{display:flex;align-items:center;gap:10px;margin:6px 0}
+.joma-msg .bubble{background:var(--card);border:1px solid var(--card-brd);border-radius:16px;
+  box-shadow:var(--shadow);padding:9px 14px;font-size:12.5px;font-weight:600;line-height:1.9;flex:1}
+.joma-msg .who{font-size:9.5px;font-weight:800;color:var(--brand-ink);letter-spacing:.3px;margin-bottom:2px}
+[data-theme="glass"] .joma-msg .bubble{background:linear-gradient(160deg,rgba(255,255,255,.48),rgba(255,255,255,.18));
+  backdrop-filter:blur(12px) saturate(1.5)}
 
-  /* ---------- پنل توکن ---------- */
-  .panel{background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-28);padding:20px;backdrop-filter:var(--blur);box-shadow:var(--sh-2)}
-  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
-  .sw{border-radius:var(--r-16);overflow:hidden;border:1px solid var(--hairline);background:var(--surface-2)}
-  .sw .box{height:56px}
-  .sw .meta{padding:8px 10px;font-size:var(--fs-12);color:var(--ink-2);line-height:1.6}
-  .sw .meta b{display:block;color:var(--ink);font-weight:600}
-  .chips-demo{display:flex;flex-wrap:wrap;gap:8px}
-  .type-demo p{margin:6px 0}
+/* ── پوسته ── */
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--side-bg);
+  border-inline-start:1px solid var(--card-brd);padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+.logo{display:flex;gap:10px;align-items:center;padding:2px 4px 14px}
+.logo-tile{width:40px;height:40px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;flex:none}
+.logo-tile svg{width:28px;height:28px}
+.logo b{font-size:15px;display:block;line-height:1.5}
+.logo small{font-size:9.5px;color:var(--ink-3)}
+.dura{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--brand-softer);
+  border-radius:var(--r-sm);padding:11px 12px;margin-bottom:12px}
+.dura b{font-size:12.5px;display:block}.dura small{font-size:10px;color:var(--ink-3)}
+.lvl{display:flex;align-items:center;gap:10px;background:var(--brand-softer);border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.lvl .em{font-size:20px}.lvl>div{flex:1;min-width:0}
+.lvl b{font-size:12px;display:block}.lvl small{font-size:9.5px;color:var(--ink-3);display:block;margin-bottom:5px}
+.xpbar{background:rgba(255,255,255,.55);border-radius:999px;height:7px;overflow:hidden}
+.xpbar i{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--grad1),var(--grad2));
+  border-radius:999px;transition:width .6s}
+.slabel{font-size:10.5px;font-weight:700;color:var(--ink-3);padding:10px 10px 6px}
+.nitem{display:flex;align-items:center;gap:11px;width:100%;text-align:right;font-size:13px;font-weight:600;
+  color:var(--ink-2);padding:10px 12px;border-radius:11px;border-inline-start:3px solid transparent;
+  transition:all .18s;position:relative}
+.nitem .ic{width:18px;height:18px;color:var(--ink-3)}
+.nitem:hover{background:var(--brand-softer);color:var(--ink)}
+.nitem.on{background:var(--brand-soft);color:var(--brand-ink);font-weight:800;border-inline-start-color:var(--brand)}
+.nitem.on .ic{color:var(--brand-ink)}
+.nitem .cnt{position:absolute;left:10px;font-size:10px;font-weight:800;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:999px;
+  min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px}
+.spacer{flex:1}
+.sprof{display:flex;align-items:center;gap:10px;padding:12px 10px;border-top:1px solid var(--card-brd);margin-top:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--gold-soft);color:var(--gold-ink);
+  display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+.sprof b{font-size:12.5px;display:block}.sprof small{font-size:10px;color:var(--ink-3)}
 
-  /* ---------- چیپ‌ها ---------- */
-  .chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:var(--r-pill);font-size:var(--fs-12);font-weight:600;white-space:nowrap}
-  .chip-none{background:var(--c-none-bg);color:var(--c-none-fg)}
-  .chip-draft{background:var(--c-draft-bg);color:var(--c-draft-fg)}
-  .chip-unsaved{background:var(--c-unsaved-bg);color:var(--c-unsaved-fg)}
-  .chip-pending{background:var(--c-pending-bg);color:var(--c-pending-fg)}
-  .chip-done{background:var(--c-done-bg);color:var(--c-done-fg)}
-  .chip-error{background:var(--c-error-bg);color:var(--c-error-fg)}
-  .chip-late{background:var(--c-late-bg);color:var(--c-late-fg)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 22px;background:var(--topbar-bg);border-bottom:1px solid var(--card-brd);backdrop-filter:blur(10px)}
+.crumbs{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.crumbs b{color:var(--ink)}
+.switcher{display:flex;gap:3px;padding:4px;border-radius:999px;background:var(--card);border:1px solid var(--card-brd)}
+.switcher button{padding:6px 14px;border-radius:999px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+.switcher button.on{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.content{padding:22px 22px 60px;max-width:1120px;width:100%}
+.page{display:none}.page.on{display:block}
+.pagehead{margin-bottom:16px}
+.pagehead h1{font-size:22px;font-weight:900;margin:6px 0 4px}
+.pagehead .sub{font-size:13px;color:var(--ink-2)}
+.row1{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.datechip{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--ink-2);
+  background:var(--card);border:1px solid var(--card-brd);border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:14px}
+.grid2e{display:grid;grid-template-columns:1fr 1.1fr;gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stack{display:flex;flex-direction:column;gap:14px}
 
-  /* ---------- قاب موبایل ---------- */
-  .phones{display:flex;flex-wrap:wrap;gap:26px;justify-content:center}
-  .phone-shell{display:flex;flex-direction:column;gap:10px;align-items:center}
-  .phone-label{font-size:var(--fs-13);font-weight:600;color:var(--ink-2)}
-  .phone{
-    width:360px;height:720px;border-radius:42px;padding:6px;
-    background:var(--surface-2);border:1px solid var(--stroke);
-    box-shadow:var(--sh-3);position:relative;overflow:hidden;
-  }
-  .screen{
-    width:100%;height:100%;border-radius:36px;overflow-y:auto;overflow-x:hidden;
-    background-image:var(--bg-grad);background-color:var(--bg);
-    padding-bottom:78px;position:relative;scrollbar-width:thin;
-  }
-  .screen::-webkit-scrollbar{width:0}
+/* ── کارت قدم بعدی ── */
+.pcard{display:flex;align-items:center;gap:18px;padding:20px}
+.pcard h3{font-size:17px;font-weight:900;margin:6px 0 6px}
+.ring-l{position:relative;width:118px;height:118px;flex:none}
+.ring-l svg{width:100%;height:100%;transform:rotate(-90deg)}
+.rt{fill:none;stroke:var(--ring-track);stroke-width:11}
+.rp{fill:none;stroke:url(#gradRing);stroke-width:11;stroke-linecap:round;
+  stroke-dasharray:calc(339*var(--p)/100) 339;transition:stroke-dasharray .7s}
+.ring-l .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring-l .lbl b{font-size:22px;font-weight:900} .ring-l .lbl span{font-size:9.5px;color:var(--ink-3)}
 
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 10px}
-  .who{display:flex;align-items:center;gap:10px}
-  .owl{
-    width:40px;height:40px;border-radius:var(--r-pill);flex:0 0 auto;
-    background:radial-gradient(circle at 35% 30%,#f6d98a,#c99a2e 55%,#1c3247 56%);
-    display:grid;place-items:center;font-size:20px;
-    box-shadow:0 3px 10px rgba(28,50,71,.18);
-  }
-  .who .hi{font-weight:700;font-size:var(--fs-16);line-height:1.4}
-  .who .sub2{font-size:var(--fs-12);color:var(--ink-3)}
+/* ── لیوان‌های آب (عیناً از 7B) ── */
+.wglasses{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:12px}
+.wg{aspect-ratio:2/3;border-radius:8px 8px 12px 12px;border:2px solid var(--card-brd);background:var(--card);
+  position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s}
+.wg i{position:absolute;inset:auto 0 0 0;height:0;background:linear-gradient(180deg,var(--sky),var(--sky-soft));transition:height .35s}
+.wg.f{border-color:var(--sky)} .wg.f i{height:80%}
+.wg:hover{transform:translateY(-2px)}
 
-  /* ---------- کارت ---------- */
-  .card{
-    background:var(--surface);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-    border:1px solid var(--stroke);border-radius:var(--r-20);
-    box-shadow:var(--sh-2);padding:16px;margin:0 14px 12px;
-  }
-  .card.tight{padding:12px}
-  .card.step{background:var(--surface-2);border-inline-start:4px solid var(--brand-2);box-shadow:var(--sh-3)}
-  .card.plain{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface-2)}
-  .card h4{margin:0 0 6px;font-size:var(--fs-16);font-weight:700;display:flex;align-items:center;gap:8px}
-  .card p{margin:0;font-size:var(--fs-13);color:var(--ink-2);line-height:1.8}
-  .muted{color:var(--ink-3);font-size:var(--fs-12)}
-  .row{display:flex;align-items:center;gap:10px}
-  .row.between{justify-content:space-between}
-  .stack{display:flex;flex-direction:column;gap:10px}
-  .sep{height:1px;background:var(--hairline);margin:12px 0}
+/* ── ردیف فعالیت ── */
+.act-row{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--card-brd)}
+.act-row:last-child{border-bottom:none}
+.act-row .inf{flex:1;min-width:0}
+.act-row .t{font-size:13px;font-weight:700}
+.act-row .s{font-size:10.5px;color:var(--ink-3);line-height:1.7}
+.st{font-size:10.5px;font-weight:800;padding:5px 11px;border-radius:999px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:5px}
+.st.done{background:var(--brand-soft);color:var(--brand-ink)}
+.st.wait{background:var(--gold-soft);color:var(--gold-ink)}
+.st.draft{background:var(--sky-soft);color:var(--sky-ink)}
+.inp{width:104px;padding:9px;border:1.5px solid var(--card-brd);border-radius:var(--r-sm);
+  font-size:13.5px;text-align:center;background:var(--card);color:var(--ink)}
+[data-theme="glass"] .inp{background:rgba(255,255,255,.5)}
+.inp:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
 
-  /* ---------- دکمه ---------- */
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    min-height:48px;padding:0 18px;border-radius:var(--r-16);
-    font-family:inherit;font-size:var(--fs-16);font-weight:600;
-    border:0;cursor:pointer;text-decoration:none;line-height:1;
-  }
-  .btn-sm{min-height:40px;font-size:var(--fs-13);padding:0 14px;border-radius:var(--r-12)}
-  .btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 16px rgba(14,110,125,.22)}
-  .btn-ghost{background:var(--brand-soft);color:var(--brand)}
-  .btn-quiet{background:transparent;color:var(--ink-3);font-weight:500}
-  .btn-block{width:100%}
-  .btn-outline{background:transparent;border:1.5px solid var(--hairline);color:var(--ink);font-weight:600}
+/* ── ویزارد حال ── */
+.wiz{padding:20px}
+.wiz-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wdots{display:flex;gap:6px;flex-wrap:wrap}
+.wdot{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;
+  font-size:11.5px;font-weight:700;color:var(--ink-3);background:var(--brand-softer);transition:all .2s}
+.wdot i{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+  font-size:10px;background:var(--card);color:var(--ink-3)}
+.wdot.on{background:var(--brand-soft);color:var(--brand-ink)}
+.wdot.on i{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.wdot.done i{background:var(--ok);color:#fff}
+.wcount{font-size:11.5px;font-weight:800;color:var(--brand-ink)}
+.wstep{display:none}.wstep.on{display:block}
+.wstage{display:grid;grid-template-columns:1fr 1.05fr;gap:22px;align-items:center;padding:6px 2px}
+.wvisual{display:grid;place-items:center;min-height:190px;border-radius:var(--r-lg);padding:20px;transition:background .25s}
+.hbox{display:grid;place-items:center;transition:opacity .3s}.hbox.ghost{opacity:.42}
+.hbox .big{font-size:62px;line-height:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))}
+.hbox .whero{width:168px;height:auto}
+.wq h2{font-size:19px;font-weight:900;margin:4px 0 6px}
+.wq p{font-size:12.5px;color:var(--ink-2);line-height:1.9}
+.wopts{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}
+.wopt{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:700;
+  color:var(--ink-2);background:var(--card);border:1.5px solid var(--card-brd);border-radius:14px;
+  padding:11px 4px;transition:all .18s}
+.wopt .wo{height:26px;display:grid;place-items:center}
+.wopt .wo svg{width:42px;height:25px}
+.wopt .wo.em{font-size:21px}
+.wopt:hover{transform:translateY(-2px)}
+.wopt.sel{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-ink);
+  box-shadow:0 6px 16px -8px rgba(20,90,70,.4)}
+.wnav{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+.wnav .joma-msg{margin:0;flex:1;min-width:230px}
+.wnav .joma-msg .bubble{padding:8px 13px;font-size:12px}
+.wnav .btns{display:flex;gap:8px}
+.wsum{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.chip-sum{font-size:11.5px;font-weight:700;color:var(--ink);background:var(--card);
+  border:1px solid var(--card-brd);border-radius:999px;padding:8px 14px;transition:all .2s}
+.chip-sum:hover{border-color:var(--brand);color:var(--brand-ink)}
+.wnote{background:var(--brand-softer);border-radius:var(--r);padding:14px;font-size:12px;
+  color:var(--ink-2);line-height:2;margin:14px 0 10px}
+textarea.inp{width:100%;text-align:right;min-height:88px;padding:13px;resize:vertical;line-height:2;display:block}
 
-  /* ---------- نوار پایین ---------- */
-  .nav{
-    position:absolute;bottom:0;left:0;right:0;height:70px;display:flex;
-    background:var(--surface-2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
-    border-top:1px solid var(--hairline);
-  }
-  .nav a{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    font-size:11px;color:var(--ink-3);text-decoration:none;font-weight:500;
-  }
-  .nav a .i{font-size:19px;line-height:1}
-  .nav a.active{color:var(--brand);font-weight:700}
+/* ── تخم و مراقبت ── */
+.pet-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.pet-stage{width:118px;height:128px;flex:none;display:grid;place-items:center;cursor:pointer;user-select:none;
+  background:linear-gradient(160deg,var(--lav-soft),var(--sky-soft));border-radius:18px;transition:transform .25s}
+.pet-stage:hover{transform:translateY(-4px)}
+.pet-stage svg{width:82px;height:92px}
+.pet-care{flex:1;min-width:210px;display:flex;flex-direction:column;gap:9px}
+.pmeter{display:flex;align-items:center;gap:9px}
+.pmeter .pe{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:15px;
+  background:var(--brand-softer);flex:none}
+.pmeter .pl{flex:1;min-width:0}
+.pmeter .pl b{font-size:11px;display:block;line-height:1.5}
+.pmeter .pl small{font-size:9px;color:var(--ink-3);line-height:1.5}
+.psegs{display:flex;gap:4px;flex:none}
+.psegs i{width:13px;height:13px;border-radius:4px;background:var(--ring-track);transition:background .3s}
+.psegs i.on{background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.crack{opacity:0;transition:opacity .4s}.crack.show{opacity:1}
+.stk-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 
-  /* ---------- ردیف فعالیت ---------- */
-  .act-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .sticker{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:var(--brand-soft);flex:0 0 auto}
-  .act-title{font-weight:600;font-size:var(--fs-16)}
-  .act-goal{font-size:var(--fs-12);color:var(--ink-3)}
-  .stepper{display:flex;align-items:center;gap:10px}
-  .rnd{
-    width:44px;height:44px;border-radius:var(--r-pill);border:1px solid var(--hairline);
-    background:var(--surface-2);color:var(--brand);font-size:22px;font-weight:600;
-    display:grid;place-items:center;cursor:pointer;font-family:inherit;line-height:1;
-  }
-  .val{font-size:var(--fs-22);font-weight:700;min-width:78px;text-align:center}
-  .val small{font-size:var(--fs-12);font-weight:500;color:var(--ink-3);display:block}
-  .quick{display:flex;gap:6px;flex-wrap:wrap}
-  .q{font-family:inherit;font-size:var(--fs-12);font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:7px 12px;cursor:pointer;min-height:34px}
+/* ── آمار ── */
+.scard{padding:14px}
+.scard .top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.scard .lbl{font-size:11px;color:var(--ink-2);font-weight:600}
+.scard .v{font-size:22px;font-weight:900;line-height:1.3}
+.scard .v small{font-size:11px;font-weight:600;color:var(--ink-3)}
+.scard .chip{width:32px;height:32px;border-radius:10px}
 
-  /* ---------- آب ---------- */
-  .water-row{display:flex;align-items:center;gap:16px}
-  .vessel{width:74px;height:104px;border-radius:14px 14px 22px 22px;border:3px solid var(--brand-2);position:relative;overflow:hidden;background:var(--surface-2);flex:0 0 auto}
-  .fill{position:absolute;inset:auto 0 0 0;height:83%;background:linear-gradient(180deg,rgba(31,168,184,.45),rgba(31,168,184,.85))}
-  .fill::before{content:"";position:absolute;top:-8px;left:-20%;right:-20%;height:16px;background:var(--surface-2);border-radius:50%;opacity:.55}
-  .level{font-size:var(--fs-22);font-weight:700}
-  .level small{display:block;font-size:var(--fs-12);font-weight:500;color:var(--ink-3)}
+/* ── نشان‌ها ── */
+.badges{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;text-align:center}
+.bdg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;
+  background:var(--brand-softer);transition:all .3s}
+.bdg .em{font-size:23px;filter:grayscale(1);opacity:.4;transition:filter .4s,opacity .4s}
+.bdg b{font-size:9.5px;color:var(--ink-3);font-weight:800;line-height:1.6}
+.bdg.on{background:linear-gradient(150deg,var(--gold-soft),var(--brand-soft));box-shadow:var(--shadow)}
+.bdg.on .em{filter:none;opacity:1}.bdg.on b{color:var(--ink)}
 
-  /* ---------- حال من ---------- */
-  .dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
-  .dot{width:8px;height:8px;border-radius:999px;background:var(--hairline)}
-  .dot.on{background:var(--brand);width:22px}
-  .mood-row{display:flex;gap:8px;justify-content:space-between}
-  .opt{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
-    padding:10px 4px;border-radius:var(--r-16);border:1.5px solid var(--hairline);
-    background:var(--surface-2);cursor:pointer;
-  }
-  .opt .e{font-size:26px;line-height:1}
-  .opt .l{font-size:var(--fs-12);color:var(--ink-2);text-align:center;font-weight:500}
-  .ends{display:flex;justify-content:space-between;font-size:var(--fs-12);color:var(--ink-3);margin-top:8px}
+/* ── هیت‌مپ ── */
+.hm-head{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 0 5px}
+.hm-head span{font-size:9.5px;color:var(--ink-3);text-align:center;font-weight:700}
+.hm{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.hm i{aspect-ratio:1;border-radius:7px;transition:transform .2s}
+.hm i:hover{transform:scale(1.12)}
 
-  /* ---------- کتابخانه ---------- */
-  .search{
-    display:flex;align-items:center;gap:8px;background:var(--surface-2);
-    border:1px solid var(--hairline);border-radius:var(--r-16);padding:0 14px;height:48px;font-size:var(--fs-14);color:var(--ink-3)
-  }
-  .fchip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--hairline);font-size:var(--fs-13);font-weight:600;color:var(--ink-2)}
-  .fchip.on{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
-  .code{font-size:10px;font-weight:600;color:var(--ink-3);letter-spacing:.5px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:6px;padding:2px 6px;font-family:ui-monospace,monospace}
+/* ── توست ── */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);z-index:600;
+  background:var(--toast-bg);color:#fff;font-size:12.5px;font-weight:700;padding:8px 20px 8px 10px;
+  border-radius:999px;opacity:0;pointer-events:none;transition:all .3s;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.35);display:flex;align-items:center;gap:9px}
+.toast svg{width:28px;height:28px;flex:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
 
-  /* ---------- گزارش ---------- */
-  .tabs{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{white-space:nowrap;font-size:var(--fs-13);font-weight:600;color:var(--ink-3);background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-pill);padding:8px 14px}
-  .tab.on{background:var(--brand);border-color:transparent;color:#fff}
-  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .tile{background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-16);padding:12px}
-  .tile .n{font-size:var(--fs-22);font-weight:700}
-  .tile .t{font-size:var(--fs-12);color:var(--ink-3);line-height:1.6}
-  .note{background:var(--brand-soft);border-radius:var(--r-16);padding:12px;font-size:var(--fs-13);color:var(--ink-2);border-inline-start:3px solid var(--brand-2)}
-
-  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:var(--fs-12);color:var(--ink-2)}
-  footer{margin-top:48px;color:var(--ink-3);font-size:var(--fs-12);text-align:center}
+.tabbar{display:none}
+@media (max-width:1020px){
+  .app{grid-template-columns:1fr}
+  .grid2,.grid2e,.grid4{grid-template-columns:1fr}
+  .side{display:none}
+  .content{padding:16px 14px 90px}
+  .badges{grid-template-columns:repeat(4,1fr)}
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:80;height:62px;
+    background:var(--topbar-bg);border-top:1px solid var(--card-brd);backdrop-filter:blur(12px)}
+  .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    font-size:10px;color:var(--ink-3);font-weight:600;text-decoration:none}
+  .tabbar a.on{color:var(--brand-ink);font-weight:800}
+  .tabbar .ic{width:19px;height:19px}
+  .wstage{grid-template-columns:1fr}
+  .wvisual{min-height:140px}
+  .wopts{grid-template-columns:repeat(3,1fr)}
+  .wglasses{grid-template-columns:repeat(4,1fr)}
+  .pcard{flex-direction:column;align-items:flex-start}
+  .ring-l{margin-inline-start:0!important}
+}
+.note-demo{background:var(--gold-soft);color:var(--gold-ink);border-radius:var(--r);padding:10px 14px;
+  font-size:11.5px;font-weight:700;line-height:1.9;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start}
 </style>
 </head>
 <body>
-<div class="wrap">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="owl-core" viewBox="0 0 120 120">
+    <path d="M27 25C29 15 35 8 44 5c-2 7-2 13 1 19Z" fill="var(--owl-b)"/>
+    <path d="M93 25c-2-10-8-17-17-20 2 7 2 13-1 19Z" fill="var(--owl-b)"/>
+    <path d="M60 12c27 0 41 20 41 49 0 30-16 46-41 46S19 91 19 61c0-29 14-49 41-49Z" fill="var(--owl-a)"/>
+    <ellipse cx="60" cy="75" rx="27" ry="25" fill="var(--owl-cream)"/>
+    <ellipse cx="37" cy="63" rx="5" ry="3" fill="var(--owl-beak)" opacity=".35"/>
+    <ellipse cx="83" cy="63" rx="5" ry="3" fill="var(--owl-beak)" opacity=".35"/>
+    <circle cx="45" cy="50" r="10.5" fill="var(--owl-ink)"/><circle cx="75" cy="50" r="10.5" fill="var(--owl-ink)"/>
+    <circle cx="48.5" cy="46.5" r="3.5" fill="#fff"/><circle cx="78.5" cy="46.5" r="3.5" fill="#fff"/>
+    <circle cx="42.5" cy="53.5" r="1.6" fill="#fff" opacity=".8"/><circle cx="72.5" cy="53.5" r="1.6" fill="#fff" opacity=".8"/>
+    <path d="M31 47 21 42M89 47l10-5" stroke="var(--owl-gold)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="45" cy="50" r="14" fill="none" stroke="var(--owl-gold)" stroke-width="3"/>
+    <circle cx="75" cy="50" r="14" fill="none" stroke="var(--owl-gold)" stroke-width="3"/>
+    <path d="M58.5 44Q60 41.5 61.5 44" fill="none" stroke="var(--owl-gold)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M53.5 63Q60 60.5 66.5 63 63.5 70.5 60 71.5 56.5 70.5 53.5 63Z" fill="var(--owl-beak)"/>
+    <path d="M45 106.5q5 7 10 0M65 106.5q5 7 10 0" fill="none" stroke="var(--owl-beak)" stroke-width="3.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="owl" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-hi" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M95 52c10-10 13-23 7.5-32-7 5-13 17-14.5 29Z" fill="var(--owl-b)"/>
+    <path transform="translate(106 13)" d="M0-5 1.3-1.3 5 0 1.3 1.3 0 5-1.3 1.3-5 0-1.3-1.3Z" fill="var(--owl-gold)"/>
+    <circle cx="93" cy="7" r="2" fill="var(--owl-cream)"/>
+  </symbol>
+  <symbol id="owl-cheer" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M25 52C15 42 12 29 17.5 20c7 5 13 17 14.5 29Z" fill="var(--owl-b)"/>
+    <path d="M95 52c10-10 13-23 7.5-32-7 5-13 17-14.5 29Z" fill="var(--owl-b)"/>
+    <circle cx="18" cy="12" r="2.5" fill="var(--owl-rose)"/><circle cx="60" cy="6" r="2.5" fill="var(--owl-gold)"/>
+    <circle cx="102" cy="12" r="2.5" fill="#7CB9E8"/><circle cx="8" cy="30" r="2" fill="#7CB9E8"/><circle cx="112" cy="30" r="2" fill="var(--owl-rose)"/>
+  </symbol>
+  <symbol id="owl-think" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M50 70q10-7 20 0-7 9-17 7Z" fill="var(--owl-b)"/>
+    <circle cx="91" cy="32" r="6" fill="var(--owl-cream)" stroke="var(--owl-b)" stroke-width="1.5"/>
+    <circle cx="101" cy="17" r="9.5" fill="var(--owl-cream)" stroke="var(--owl-b)" stroke-width="1.5"/>
+    <circle cx="101" cy="17" r="3.5" fill="var(--owl-gold)"/>
+  </symbol>
+  <symbol id="owl-read" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M60 78c-8-6-20-8-30-6v24c10-2 22 0 30 6Z" fill="#fff" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M60 78c8-6 20-8 30-6v24c-10-2-22 0-30 6Z" fill="#fff" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M60 78v24" stroke="#D8D2C4" stroke-width="1.5"/>
+    <path d="M36 80h16M36 86h16M68 80h16M68 86h16" stroke="#C9C2B2" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="31" cy="83" r="5.5" fill="var(--owl-b)"/><circle cx="89" cy="83" r="5.5" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-moon" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <circle cx="45" cy="50" r="11.5" fill="var(--owl-cream)"/><circle cx="75" cy="50" r="11.5" fill="var(--owl-cream)"/>
+    <path d="M36.5 50q8.5 7.5 17 0M66.5 50q8.5 7.5 17 0" fill="none" stroke="var(--owl-ink)" stroke-width="3" stroke-linecap="round"/>
+    <text x="94" y="32" font-size="13" font-weight="800" fill="var(--owl-b)" font-family="inherit">z</text>
+    <text x="102" y="20" font-size="9" font-weight="800" fill="var(--owl-b)" font-family="inherit">z</text>
+  </symbol>
+  <symbol id="owl-lotus" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <circle cx="45" cy="50" r="11.5" fill="var(--owl-cream)"/><circle cx="75" cy="50" r="11.5" fill="var(--owl-cream)"/>
+    <path d="M36.5 50q8.5 7.5 17 0M66.5 50q8.5 7.5 17 0" fill="none" stroke="var(--owl-ink)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M34 85q26 12 52 0" fill="none" stroke="var(--owl-b)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M95 22c-2-2.6-6-1.6-6 1.6 0 2.2 3 4 6 6 3-2 6-3.8 6-6 0-3.2-4-4.2-6-1.6Z" fill="var(--owl-rose)"/>
+  </symbol>
+  <symbol id="owl-fit" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M26 27q34-17 68 0-2.5 8-5 8-30-15-58 0-2.5 0-5-8Z" fill="var(--owl-rose)"/>
+    <path d="M22 40q3 4 0 7-3-3 0-7Z" fill="#7CB9E8"/>
+    <rect x="38" y="87" width="44" height="6" rx="3" fill="var(--owl-ink)"/>
+    <rect x="30" y="80" width="8" height="20" rx="3" fill="var(--owl-gold)"/>
+    <rect x="82" y="80" width="8" height="20" rx="3" fill="var(--owl-gold)"/>
+    <ellipse cx="46" cy="90" rx="5" ry="4" fill="var(--owl-b)"/><ellipse cx="74" cy="90" rx="5" ry="4" fill="var(--owl-b)"/>
+  </symbol>
+  <symbol id="owl-water" viewBox="0 0 120 120"><use href="#owl-core"/>
+    <path d="M21.5 52C11 61 9 77 16 89c6.5-4 11.5-16 12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M98.5 52C109 61 111 77 104 89c-6.5-4-11.5-16-12.5-29Z" fill="var(--owl-b)"/>
+    <path d="M13.4 71 25.6 71 24.3 88 14.7 88Z" fill="#7CB9E8" opacity=".85"/>
+    <path d="M12 62 27 62 24.5 90 14.5 90Z" fill="none" stroke="var(--owl-b)" stroke-width="2"/>
+    <circle cx="18" cy="76" r="1.2" fill="#fff"/><circle cx="21" cy="81" r="1" fill="#fff"/>
+  </symbol>
+  <symbol id="owl-logo" viewBox="0 0 24 24">
+    <circle cx="12" cy="13" r="9" fill="var(--owl-a)"/>
+    <path d="M5.5 8.5 7 3.5l3.5 3.5Z" fill="var(--owl-b)"/><path d="M18.5 8.5 17 3.5 13.5 7Z" fill="var(--owl-b)"/>
+    <path d="M4.4 11.4 2.6 10.4M19.6 11.4l1.8-1" stroke="var(--owl-gold)" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="8.7" cy="12" r="3.2" fill="none" stroke="var(--owl-gold)" stroke-width="1.7"/>
+    <circle cx="15.3" cy="12" r="3.2" fill="none" stroke="var(--owl-gold)" stroke-width="1.7"/>
+    <path d="M11.6 10.8Q12 10.2 12.4 10.8" fill="none" stroke="var(--owl-gold)" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="8.7" cy="12" r="1.7" fill="var(--owl-ink)"/><circle cx="15.3" cy="12" r="1.7" fill="var(--owl-ink)"/>
+    <circle cx="9.3" cy="11.4" r=".55" fill="#fff"/><circle cx="15.9" cy="11.4" r=".55" fill="#fff"/>
+    <path d="M10.7 14.8h2.6L12 16.6Z" fill="var(--owl-beak)"/>
+  </symbol>
+  <symbol id="i-arr-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-checkc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-4.9"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-9.3-9.3C1.5 8 3.6 4.9 6.9 4.9c2 0 3.6 1.1 4.4 2.7.8-1.6 2.4-2.7 4.4-2.7 3.3 0 5.4 3.1 4.2 6.3-1.8 4.6-7.9 9.3-7.9 9.3Z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20v-7M12 20V5M19 20v-10"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 5.5-5.5 3.5 3.5L21 6"/><path d="M15 6h6v6"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-1.5-1.4-3.8-2-6.5-2v14c2.7 0 5 .6 6.5 2 1.5-1.4 3.8-2 6.5-2V4c-2.7 0-5 .6-6.5 2Z"/><path d="M12 6v14"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4 10 4.5L12 13 2 8.5 12 4Z"/><path d="M6.5 10.5V15c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19.5c.9-3 3-4.5 5.5-4.5s4.6 1.5 5.5 4.5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M16.5 15.2c2.1.2 3.6 1.5 4.2 3.8"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2A2.5 2.5 0 0 1 14.5 10c0 1.6-2.4 2-2.4 3.4"/><circle cx="12" cy="16.8" r=".4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9Z"/><path d="M10 19.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.7 12 3.5 12 3.5Z"/></symbol>
+  <symbol id="i-phoneoff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2M4 4l16 16"/></symbol>
+  <symbol id="i-lotus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="2.6"/><path d="M12 10.5c-2.8 0-5 2.2-5 5.5M12 10.5c2.8 0 5 2.2 5 5.5M4.5 19.5c4.8 1.8 10.2 1.8 15 0"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.5" r="1.8"/><path d="M12.5 21v-4.5l-2.5-3 .8-5 2.2 3.5 3 1.5M9 21l1-3.5M10.8 8.5 8 10l-1 3"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8.5c-1-.8-2.4-1.1-3.7-.6-2.4.9-3.3 3.8-2.2 6.6 1 2.6 3 4.5 4.7 4 .4-.1.8-.3 1.2-.3s.8.2 1.2.3c1.7.5 3.7-1.4 4.7-4 1.1-2.8.2-5.7-2.2-6.6-1.3-.5-2.7-.2-3.7.6Z"/><path d="M12 8.5c0-2 .8-3.5 2.5-4.5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5V3h6v1.5"/><path d="m9 13 2.2 2.2L15.5 11"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 18.5 9.5 8 20H4v-4L14.5 5.5Z"/><path d="m13 7 4 4"/></symbol>
+</defs>
+</svg>
 
-  <div class="head">
-    <div>
-      <h1>جوما — پیش‌نمایش طراحی</h1>
-      <p class="sub">نسخهٔ ۰٫۱ · بر پایهٔ سند مادر و بازنویسی از صفر. این صفحه فقط <b>زبان بصری، سلسله‌مراتب و الگوهای رابط</b> را نشان می‌دهد؛ هیچ محاسبه‌ای در آن انجام نمی‌شود.</p>
+<div class="app">
+  <!-- ═════ سایدبار ═════ -->
+  <aside class="side">
+    <div class="logo">
+      <div class="logo-tile"><svg><use href="#owl-logo"/></svg></div>
+      <div><b>جوما</b><small>برنامه. اجرا. فهم.</small></div>
     </div>
-    <div class="toggle" role="group" aria-label="انتخاب تم">
-      <button id="t-glass" aria-pressed="true">شیشه‌ای</button>
-      <button id="t-classic" aria-pressed="false">کلاسیک</button>
+    <div class="dura"><div><small>دورهٔ فعال</small><b class="num">شهریور ۱۴۰۵</b></div>
+      <span class="pill" style="font-size:10px;padding:3px 10px">فعال</span></div>
+    <div class="lvl">
+      <span class="em">🥚</span>
+      <div><b>جوجهٔ جغد</b><small class="num">۳۵ امتیاز · تا «بال‌گشوده» ۵ مانده</small>
+        <div class="xpbar"><i style="width:62%"></i></div></div>
     </div>
-  </div>
+    <div class="slabel">مسیر من</div>
+    <button class="nitem on" data-page="home"><svg class="ic"><use href="#i-compass"/></svg>خانه</button>
+    <button class="nitem" data-page="today"><svg class="ic"><use href="#i-checkc"/></svg>کارهای امروز<span class="cnt num">۳</span></button>
+    <button class="nitem" data-page="mood"><svg class="ic"><use href="#i-heart"/></svg>حال من</button>
+    <button class="nitem" data-page="pet"><svg class="ic"><use href="#i-list"/></svg>آشیانه</button>
+    <button class="nitem" data-page="reports"><svg class="ic"><use href="#i-chart"/></svg>گزارش</button>
+    <div class="slabel">بیشتر</div>
+    <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-book"/></svg>کتابخانه</button>
+    <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-grad"/></svg>آموزش</button>
+    <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-users"/></svg>هم‌مسیر</button>
+    <button class="nitem" data-page="ph"><svg class="ic"><use href="#i-gear"/></svg>تنظیمات</button>
+    <div class="spacer"></div>
+    <div class="sprof"><span class="avatar">س</span><div><b>سارا نمونه</b><small>پروفایل</small></div></div>
+  </aside>
 
-  <div class="banner">
-    ⚠️ همهٔ اعداد، نام‌ها و وضعیت‌های این صفحه <b>دادهٔ نمونه و برچسب‌دار</b> هستند. مقادیر واقعی فقط از بک‌اند می‌آیند و در فرانت محاسبه نمی‌شوند.
-  </div>
-
-  <!-- ============ توکن‌ها ============ -->
-  <h2>۱) توکن‌ها</h2>
-  <div class="panel">
-    <h3>رنگ‌های پایه</h3>
-    <div class="swatches">
-      <div class="sw"><div class="box" style="background:var(--bg)"></div><div class="meta"><b>bg</b>زمینهٔ صفحه</div></div>
-      <div class="sw"><div class="box" style="background:var(--brand)"></div><div class="meta"><b>brand</b>متن و دکمهٔ اصلی — کنتراست ≥ ۴٫۵</div></div>
-      <div class="sw"><div class="box" style="background:var(--brand-2)"></div><div class="meta"><b>brand-2</b>تأکید گرافیکی، نه متن ریز</div></div>
-      <div class="sw"><div class="box" style="background:var(--accent)"></div><div class="meta"><b>accent</b>سبز مکمل</div></div>
-      <div class="sw"><div class="box" style="background:var(--ink)"></div><div class="meta"><b>ink</b>متن اصلی</div></div>
-      <div class="sw"><div class="box" style="background:var(--ink-3)"></div><div class="meta"><b>ink-3</b>متن ثانویه</div></div>
-    </div>
-
-    <h3>واژگان وضعیت — رنگ هرگز تنها نشانه نیست</h3>
-    <div class="chips-demo">
-      <span class="chip chip-none">ثبت نشده</span>
-      <span class="chip chip-draft">پیش‌نویس — قابل تغییر</span>
-      <span class="chip chip-unsaved">ذخیره نشد</span>
-      <span class="chip chip-pending">در انتظار قطعی‌شدن</span>
-      <span class="chip chip-done">ثبت قطعی شد</span>
-      <span class="chip chip-late">دیروز — با تأخیر</span>
-      <span class="chip chip-error">ثبت نهایی انجام نشد</span>
-    </div>
-
-    <h3>مقیاس متن</h3>
-    <div class="type-demo">
-      <p style="font-size:var(--fs-28);font-weight:700">تیتر صفحه — ۲۸</p>
-      <p style="font-size:var(--fs-18);font-weight:600">تیتر کارت — ۱۸</p>
-      <p style="font-size:var(--fs-16)">متن دکمه و رابط — ۱۶</p>
-      <p style="font-size:var(--fs-14);color:var(--ink-2)">متن توضیحی فارسی با ارتفاع خط ۱٫۹ برای خوانایی بلند — ۱۴</p>
-      <p style="font-size:var(--fs-12);color:var(--ink-3)">متن کمکی و برچسب — ۱۲ · نمونهٔ عدد: ۵ لیوان از ۶ لیوان</p>
-    </div>
-  </div>
-
-  <!-- ============ صفحه‌ها ============ -->
-  <h2>۲) صفحه‌های کلیدی</h2>
-  <div class="phones">
-
-    <!-- ===== خانه ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">خانهٔ من — یک قدم بعدی، نه چهار دکمهٔ هم‌وزن</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span>
-                <span class="hi">عصر بخیر، جواد</span>
-                <span class="sub2">سه‌شنبه ۱۶ شهریور ۱۴۰۵</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="card step">
-            <h4>امروز، دو کار مانده <span class="chip chip-none">نمونه</span></h4>
-            <p>یکی از کارها را ثبت کن؛ کمتر از یک دقیقه وقت می‌گیرد.</p>
-            <div class="row" style="margin-top:14px">
-              <a class="btn btn-primary" href="#">ادامهٔ امروز</a>
-              <a class="btn btn-quiet" href="#">بعداً</a>
-            </div>
-          </div>
-
-          <div class="card tight">
-            <div class="row between">
-              <span class="muted">حال امروز</span>
-              <span class="chip chip-none">ثبت نشده</span>
-            </div>
-            <div class="sep"></div>
-            <div class="row between">
-              <span class="muted">آب امروز</span>
-              <span class="chip chip-draft">پیش‌نویس ۵ از ۶ لیوان</span>
-            </div>
-            <div class="sep"></div>
-            <div class="row between">
-              <span class="muted">ثبت‌های امروز</span>
-              <span class="chip chip-done">۱ ثبت قطعی</span>
-            </div>
-          </div>
-
-          <div class="card tight stack">
-            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>برنامهٔ این دوره</span><span class="muted">‹</span></a>
-            <div class="sep" style="margin:0"></div>
-            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>کتابخانهٔ فعالیت‌ها</span><span class="muted">‹</span></a>
-            <div class="sep" style="margin:0"></div>
-            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>آموزش تمرین‌ها</span><span class="muted">‹</span></a>
-            <div class="sep" style="margin:0"></div>
-            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>گزارش‌ها</span><span class="muted">‹</span></a>
-          </div>
-
-          <div class="card">
-            <div class="row" style="margin-bottom:6px"><span class="chip chip-draft">از ثبت‌های تو</span></div>
-            <p>در ثبت‌های این بازه، روزهایی که خواب بهتری گزارش کرده‌ای، پیاده‌روی بیشتری هم ثبت شده است.</p>
-            <div class="row between" style="margin-top:10px">
-              <span class="muted">۲۱ جفت داده · این همراهی علت را نشان نمی‌دهد</span>
-              <a class="btn btn-sm btn-ghost" href="#">این برداشت از کجا آمد؟</a>
-            </div>
-          </div>
-        </div>
-
-        <nav class="nav">
-          <a class="active" href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
+  <div class="main">
+    <div class="topbar">
+      <div class="crumbs"><svg class="ic" style="width:14px;height:14px"><use href="#i-compass"/></svg>
+        <span id="crumb">خانه</span></div>
+      <div class="switcher">
+        <button id="t-classic" class="on">کلاسیک · 7B</button>
+        <button id="t-glass">شیشه · 7A</button>
       </div>
     </div>
 
-    <!-- ===== امروز ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">کارهای امروز — هدف و مقدار جدا، آب با پیش‌نویس</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span><span class="hi">کارهای امروز</span><span class="sub2">سه‌شنبه ۱۶ شهریور</span></span>
-            </div>
-          </div>
+    <div class="content">
+      <div class="note-demo">⚠️ <span>دادهٔ این صفحه نمایشی و مستقل از بک‌اند است؛ هیچ محاسبه‌ای اینجا انجام نمی‌شود. هدف، رسیدن به زبان بصری 7A و 7B است.</span></div>
 
-          <div class="tabs" style="padding-top:0">
-            <span class="tab on">امروز</span>
-            <span class="tab">دیروز <span class="chip chip-late" style="height:20px;padding:0 8px;margin-inline-start:4px">تأخیر</span></span>
+      <!-- ═════ خانه ═════ -->
+      <section class="page on" id="page-home">
+        <div class="pagehead">
+          <span class="kicker">خانهٔ من</span>
+          <div class="row1">
+            <div><h1>سلام سارا، خوش برگشتی.</h1>
+              <div class="sub">امروز هم می‌توانی با یک قدم کوچک شروع کنی.</div></div>
+            <span class="datechip"><svg class="ic" style="width:14px;height:14px"><use href="#i-cal"/></svg>
+              <span class="num">سه‌شنبه، ۱۶ شهریور ۱۴۰۵</span></span>
           </div>
+        </div>
 
-          <div class="card tight">
-            <div class="act-head">
-              <span class="sticker" aria-hidden="true">🚶</span>
-              <span style="flex:1">
-                <span class="act-title">پیاده‌روی</span>
-                <span class="act-goal">هدف این برنامه: ۳۰ دقیقه در روز</span>
-              </span>
-              <span class="chip chip-done">ثبت شد</span>
-            </div>
-            <div class="row between">
-              <div class="stepper">
-                <button class="rnd" aria-label="کاهش">−</button>
-                <span class="val">۳۰<small>دقیقه</small></span>
-                <button class="rnd" aria-label="افزایش">+</button>
+        <div class="joma-msg" style="margin-bottom:14px">
+          <span class="mascot sm floaty"><svg><use href="#owl-hi"/></svg></span>
+          <div class="bubble"><div class="who">جوما</div>سه قدم از امروز را ثبت کرده‌ای؛ تخمم هم منتظر مراقبت توست 🥚</div>
+        </div>
+
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="card pcard">
+            <div style="flex:1">
+              <b style="font-size:12.5px;color:var(--ink-2)">امروز، روی همین چند قدم تمرکز کن</b>
+              <h3><span class="num">سه</span> فعالیت دیگر مانده.</h3>
+              <p class="muted num">برای ادامهٔ روز، از یک قدم ساده شروع کن.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+                <button class="btn primary sm" data-go="today">ادامهٔ کارهای امروز
+                  <svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+                <button class="btn soft sm" data-go="mood">ثبت حال امروز</button>
               </div>
-              <div class="quick"><span class="q">۱۰</span><span class="q">۲۰</span><span class="q">۳۰</span></div>
+            </div>
+            <div class="ring-l" style="margin-inline-start:auto">
+              <svg viewBox="0 0 128 128"><circle class="rt" cx="64" cy="64" r="54"/>
+                <circle class="rp" cx="64" cy="64" r="54" style="--p:55"/></svg>
+              <div class="lbl"><b class="num">۵۵٪</b><span>قدم دیگر مانده</span></div>
             </div>
           </div>
 
-          <div class="card plain">
-            <div class="row between" style="margin-bottom:12px">
-              <b style="font-size:var(--fs-16)">آب امروز</b>
-              <span class="chip chip-draft">پیش‌نویس — قابل تغییر</span>
+          <div class="card" style="padding:18px">
+            <h3 style="font-size:16px;font-weight:900">حالت چطور است؟</h3>
+            <div class="tiny">چند لحظه مکث کن و به حال خودت توجه کن.</div>
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button class="wopt"><span class="wo em">🙂</span>خوبم</button>
+              <button class="wopt"><span class="wo em">😐</span>معمولی</button>
+              <button class="wopt"><span class="wo em">🙁</span>خوب نیستم</button>
             </div>
-            <div class="water-row">
-              <div class="vessel" role="img" aria-label="سطح آب: ۵ لیوان از ۶"><div class="fill"></div></div>
-              <div style="flex:1">
-                <span class="level">۵ از ۶ <small>لیوان · هدف این برنامه</small></span>
-                <div class="stepper" style="margin-top:10px">
-                  <button class="rnd" aria-label="یک لیوان کمتر">−</button>
-                  <button class="rnd" aria-label="یک لیوان بیشتر">+</button>
+            <button class="btn ghost sm" data-go="mood" style="margin-top:12px;width:100%">
+              ثبت کامل حال (۵ قدم تصویری)</button>
+          </div>
+        </div>
+
+        <div class="grid4" style="margin-bottom:14px">
+          <div class="card scard"><div class="top"><span class="lbl">پیشرفت این ماه</span>
+            <span class="chip" style="background:var(--brand-soft);color:var(--brand-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-trend"/></svg></span></div>
+            <div class="v num" style="color:var(--brand-ink)">۸۲٪</div>
+            <div class="tiny num">۱۴ واحد رشد نسبت به ماه قبل</div></div>
+          <div class="card scard"><div class="top"><span class="lbl">روزهای همراهی</span>
+            <span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-cal"/></svg></span></div>
+            <div class="v num" style="color:var(--gold-ink)">۲۰</div>
+            <div class="tiny num">در ۶۵٪ روزهای این ماه</div></div>
+          <div class="card scard"><div class="top"><span class="lbl">فعالیت‌های برنامه</span>
+            <span class="chip" style="background:var(--lav-soft);color:var(--lav-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-list"/></svg></span></div>
+            <div class="v num" style="color:var(--lav-ink)">۸</div>
+            <div class="tiny num">۶ روزانه، ۱ هفتگی، ۱ ماهانه</div></div>
+          <div class="card scard"><div class="top"><span class="lbl">میانگین حال هفته</span>
+            <span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-heart"/></svg></span></div>
+            <div class="v num" style="color:var(--rose-ink)">۴٫۱ <small>از ۵</small></div>
+            <div class="tiny">خوب و نزدیک به هفتهٔ قبل</div></div>
+        </div>
+
+        <div class="grid2">
+          <div class="card" style="padding:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <b style="font-size:14px">قدم‌های امروز</b>
+              <button class="btn ghost sm" data-go="today">دیدن همه</button>
+            </div>
+            <div class="act-row"><span class="chip" style="background:var(--indigo-soft)"><svg style="width:27px;height:27px"><use href="#owl-moon"/></svg></span>
+              <div class="inf"><div class="t">خواب کافی</div><div class="s num">۸ ساعت · روزانه · ثبت‌شده</div></div>
+              <span class="st done"><svg class="ic" style="width:13px;height:13px"><use href="#i-checkc"/></svg>ثبت شده</span></div>
+            <div class="act-row"><span class="chip" style="background:var(--sky-soft)"><svg style="width:27px;height:27px"><use href="#owl-water"/></svg></span>
+              <div class="inf"><div class="t">نوشیدن آب</div><div class="s num">۶ از ۸ لیوان · پیش‌نویس</div></div>
+              <span class="st draft">پیش‌نویس — قابل تغییر</span></div>
+            <div class="act-row"><span class="chip" style="background:var(--coral-soft)"><svg style="width:27px;height:27px"><use href="#owl-fit"/></svg></span>
+              <div class="inf"><div class="t">پیاده‌روی</div><div class="s num">هدف ۳۰ دقیقه · روزانه</div></div>
+              <span class="st wait">در انتظار</span></div>
+            <div class="act-row"><span class="chip" style="background:var(--lav-soft)"><svg style="width:27px;height:27px"><use href="#owl-lotus"/></svg></span>
+              <div class="inf"><div class="t">مدیتیشن</div><div class="s num">۱۵ دقیقه · روزانه · ثبت‌شده</div></div>
+              <span class="st done"><svg class="ic" style="width:13px;height:13px"><use href="#i-checkc"/></svg>ثبت شده</span></div>
+          </div>
+
+          <div class="stack">
+            <div class="card stk" style="padding:16px">
+              <div class="stk-head"><b style="font-size:14px">تخم جوما 🥚</b>
+                <span class="tiny num">مراقبت: ۶۷٪</span></div>
+              <div class="pet-row">
+                <div class="pet-stage" id="pet-stage" title="گرمش کن!">
+                  <svg viewBox="0 0 86 96" id="pet-svg">
+                    <ellipse cx="43" cy="54" rx="29" ry="35" fill="#FFF7EA" stroke="#E5D5B4" stroke-width="2.5"/>
+                    <ellipse cx="32" cy="42" rx="6" ry="10" fill="#fff" opacity=".8" transform="rotate(-22 32 42)"/>
+                    <g class="crack show">
+                      <path d="M30 60l6-5 4 6 6-4 5 5 6-4" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M40 74l5-4 4 5" fill="none" stroke="#C9B387" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                  </svg>
+                </div>
+                <div class="pet-care">
+                  <div class="pmeter"><span class="pe">🌾</span><div class="pl"><b>ظرف دونه</b><small>با ثبت کارهای روزانه پر می‌شود</small></div>
+                    <div class="psegs" data-pk="seed"><i class="on"></i><i class="on"></i><i></i></div></div>
+                  <div class="pmeter"><span class="pe">💧</span><div class="pl"><b>ظرف آب</b><small>با لیوان‌های آبِ تو</small></div>
+                    <div class="psegs" data-pk="water"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+                  <div class="pmeter"><span class="pe">🏠</span><div class="pl"><b>خونهٔ تمیز</b><small>با ثبت حال ۵ قدمی</small></div>
+                    <div class="psegs" data-pk="home"><i class="on"></i><i></i><i></i></div></div>
+                  <div class="pmeter"><span class="pe">🛁</span><div class="pl"><b>وقت حمام</b><small>با ذخیرهٔ ثبت‌ها و تمرین نفس</small></div>
+                    <div class="psegs" data-pk="bath"><i class="on"></i><i class="on"></i><i></i></div></div>
                 </div>
               </div>
+              <div class="tiny" style="margin-top:10px">تخم می‌لرزد! ادامه بده، دارم می‌آیم… 🐣</div>
             </div>
-            <p class="muted" style="margin-top:12px">تغییراتت ذخیره شده‌اند؛ تا پایان امروز قابل‌تغییرند و سپس خودکار قطعی می‌شوند.</p>
-            <div class="sep"></div>
-            <div class="row between">
-              <a class="btn btn-sm btn-outline" href="#">ثبت نهایی امروز</a>
-              <span class="muted">پیش‌نویس پاداش نمی‌سازد</span>
-            </div>
-          </div>
 
-          <div class="card tight">
-            <div class="act-head">
-              <span class="sticker" aria-hidden="true">📚</span>
-              <span style="flex:1">
-                <span class="act-title">مطالعه</span>
-                <span class="act-goal">هدف این برنامه: هر روز — انجام/انجام نشد</span>
-              </span>
-              <span class="chip chip-none">ثبت نشده</span>
-            </div>
-            <div class="row" style="gap:8px">
-              <a class="btn btn-ghost btn-block" href="#">انجام دادم</a>
-              <a class="btn btn-outline btn-block" href="#">انجام ندادم</a>
-            </div>
-            <p class="muted" style="margin-top:10px">اگر ثبت نکنی، «ثبت‌نشده» می‌ماند؛ این با «صفر» فرق دارد.</p>
-          </div>
-        </div>
-
-        <nav class="nav">
-          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a class="active" href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
-      </div>
-    </div>
-
-    <!-- ===== حال من ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">حال من — قدم‌به‌قدم، بدون انتخاب پیش‌فرض</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span><span class="hi">حال امروز</span><span class="sub2">قدم ۲ از ۵</span></span>
-            </div>
-            <a class="btn btn-sm btn-quiet" href="#">بعداً</a>
-          </div>
-
-          <div class="card">
-            <div class="dots" aria-hidden="true">
-              <span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <h4>انرژی امروزت چطور است؟</h4>
-            <p>گزینه‌ها از کم به زیاد مرتب شده‌اند. هر گزینه‌ای که واقعاً تجربه کرده‌ای، درست است.</p>
-            <div class="mood-row" style="margin-top:14px">
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😴</span><span class="l">خیلی کم</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙁</span><span class="l">کم</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😐</span><span class="l">متوسط</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙂</span><span class="l">زیاد</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">⚡</span><span class="l">خیلی زیاد</span></span>
-            </div>
-            <p class="muted" style="margin-top:10px">هنوز چیزی انتخاب نشده است.</p>
-            <div class="sep"></div>
-            <div class="row between">
-              <a class="btn btn-sm btn-outline" href="#">قبلی</a>
-              <a class="btn btn-sm btn-primary" href="#">بعدی</a>
-            </div>
-          </div>
-
-          <div class="card">
-            <h4>نمونهٔ گام ۵ — سطح استرس</h4>
-            <p>هر دو سر مقیاس برچسب دارد؛ نگاشت عددی از بک‌اند می‌آید و در فرانت حدس زده نمی‌شود.</p>
-            <div class="mood-row" style="margin-top:14px">
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😌</span><span class="l">۱</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙂</span><span class="l">۲</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😐</span><span class="l">۳</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😟</span><span class="l">۴</span></span>
-              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😣</span><span class="l">۵</span></span>
-            </div>
-            <div class="ends"><span>آرام</span><span>پرتنش</span></div>
-          </div>
-
-          <div class="card">
-            <h4>خواب دیشبت چطور بود؟</h4>
-            <p>کیفیت خواب شب قبل را در نظر بگیر؛ نه تعداد ساعت‌هایی که خوابیدی.</p>
-          </div>
-
-          <div class="card">
-            <h4>یادداشت امروز (اختیاری)</h4>
-            <p>اگر دوست داری، یک جمله از امروزت برای خودت نگه دار؛ کوتاه، واقعی و به زبان خودت.</p>
-            <div class="search" style="margin-top:12px;height:76px;align-items:flex-start;padding-top:12px">چیزی بنویس…</div>
-          </div>
-        </div>
-
-        <nav class="nav">
-          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a class="active" href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
-      </div>
-    </div>
-
-    <!-- ===== کتابخانه ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">کتابخانه — زبان کاربر، نه زبان ابزار مدیریتی</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span><span class="hi">کتابخانهٔ فعالیت‌ها</span><span class="sub2">۱۰۷ فعالیت در ۱۰ دسته</span></span>
-            </div>
-          </div>
-
-          <div style="padding:0 14px 10px" class="stack">
-            <div class="search" role="search">🔎 <span>جست‌وجو بر اساس نام فعالیت…</span></div>
-            <div class="row" style="gap:6px;flex-wrap:wrap">
-              <span class="fchip on">همه دسته‌ها</span>
-              <span class="fchip">سلامت جسم</span>
-              <span class="fchip">خواب و استراحت</span>
-              <span class="fchip">تمرکز و ذهن</span>
-            </div>
-          </div>
-
-          <div class="card tight">
-            <div class="act-head">
-              <span class="sticker" aria-hidden="true">🚶</span>
-              <span style="flex:1">
-                <span class="act-title">پیاده‌روی</span>
-                <span class="act-goal">روزانه · ۳۰ دقیقه</span>
-              </span>
-              <span class="code">ACT001</span>
-            </div>
-            <p>هر روزی که پیاده‌روی کردی، مدت آن را ثبت می‌کنی. هدف برنامهٔ تو ۳۰ دقیقه است.</p>
-            <div class="row" style="margin-top:12px;gap:8px">
-              <a class="btn btn-sm btn-primary" href="#">افزودن به برنامه</a>
-              <a class="btn btn-sm btn-quiet" href="#">جزئیات و راهنما</a>
-            </div>
-          </div>
-
-          <div class="card tight">
-            <div class="act-head">
-              <span class="sticker" aria-hidden="true">💧</span>
-              <span style="flex:1">
-                <span class="act-title">نوشیدن آب</span>
-                <span class="act-goal">روزانه · لیوان</span>
-              </span>
-              <span class="code">ACT002</span>
-            </div>
-            <p>مقدار آبی که در طول روز می‌نوشی را ثبت می‌کنی. تا پایان روز قابل‌تغییر است و بعد از آن قطعی می‌شود.</p>
-            <div class="row" style="margin-top:12px;gap:8px">
-              <a class="btn btn-sm btn-primary" href="#">افزودن به برنامه</a>
-              <a class="btn btn-sm btn-quiet" href="#">جزئیات و راهنما</a>
-            </div>
-          </div>
-
-          <div class="card tight">
-            <div class="row between">
-              <span class="muted">فعالیت شخصی خودت را بساز</span>
-              <a class="btn btn-sm btn-ghost" href="#">+ فعالیت جدید</a>
+            <div class="joma-msg">
+              <span class="mascot sm"><svg><use href="#owl-think"/></svg></span>
+              <div class="bubble"><div class="who">از ثبت‌های تو</div>
+                در ثبت‌های این بازه، روزهایی که خواب بهتری گزارش کرده‌ای، پیاده‌روی بیشتری هم ثبت شده است.
+                <div class="tiny" style="margin-top:4px">۲۱ جفت داده · این همراهی به‌تنهایی علت را نشان نمی‌دهد.</div></div>
             </div>
           </div>
         </div>
+      </section>
 
-        <nav class="nav">
-          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a class="active" href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
-      </div>
-    </div>
-
-    <!-- ===== گزارش ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">گزارش — دادهٔ ناکافی با توضیح، نه صفرسازی</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span><span class="hi">گزارش‌ها</span><span class="sub2">دورهٔ شهریور ۱۴۰۵</span></span>
-            </div>
-          </div>
-
-          <div class="tabs">
-            <span class="tab on">خلاصه</span>
-            <span class="tab">موفقیت</span>
-            <span class="tab">فعالیت‌ها</span>
-            <span class="tab">وزن</span>
-            <span class="tab">تقویم</span>
-            <span class="tab">روند</span>
-            <span class="tab">خلق</span>
-            <span class="tab">مقایسه</span>
-            <span class="tab">جزئیات</span>
-            <span class="tab">تحلیلی</span>
-          </div>
-
-          <div class="card tight">
-            <div class="tiles">
-              <div class="tile"><span class="n">۱۲</span><span class="t">ثبت معتبر در این دوره</span></div>
-              <div class="tile"><span class="n">۴</span><span class="t">روز با داده</span></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h4>برای این بازه هنوز دادهٔ کافی نیست</h4>
-            <p>«تحلیل موفقیت» و «مقایسه» وقتی معنا پیدا می‌کنند که چرخه‌های بیشتری بسته شود. با چند ثبت دیگر این بخش کامل می‌شود.</p>
-            <p class="muted" style="margin-top:8px">جای خالی با صفر پر نمی‌شود؛ «ثبت‌نشده» با «صفر» یکی نیست.</p>
-          </div>
-
-          <div class="card">
-            <h4>دو شاخص متفاوت خلق</h4>
-            <div class="stack" style="margin-top:10px">
-              <div class="tile"><span class="t">شاخص خلق مثبت</span><span class="n">۳٫۸ <small style="font-size:12px;color:var(--ink-3)">از ۵</small></span></div>
-              <div class="tile"><span class="t">حال‌وهوای ترکیبی</span><span class="n">۷۲ <small style="font-size:12px;color:var(--ink-3)">مقیاس متفاوت</small></span></div>
-            </div>
-            <div class="note" style="margin-top:12px">این دو یک چیز نیستند: در شاخص مثبت، استرس مثل بقیهٔ شاخص‌ها جمع نمی‌شود؛ در حال‌وهوای ترکیبی با تبدیل معکوس وارد فرمول می‌شود. عنوان‌ها و مقیاس‌ها عمداً جدا نمایش داده می‌شوند.</div>
-          </div>
-
-          <div class="card tight">
-            <span class="chip chip-unsaved">یک چرخهٔ مبهم</span>
-            <p style="margin-top:8px">در یک روز، دو رخداد روزانه برای یک فعالیت پیدا شد. تا رفع ابهام، این چرخه در محاسبهٔ موفقیت لحاظ نمی‌شود.</p>
+      <!-- ═════ کارهای امروز ═════ -->
+      <section class="page" id="page-today">
+        <div class="pagehead">
+          <span class="kicker">کارهای امروز</span>
+          <div class="row1">
+            <div><h1>امروز چه کردی؟</h1>
+              <div class="sub">مقدار واقعی را بنویس؛ کم هم حساب می‌شود. دیروز هم با برچسب تأخیر ثبت می‌شود.</div></div>
+            <span class="datechip"><svg class="ic" style="width:14px;height:14px"><use href="#i-cal"/></svg>
+              <span class="num">سه‌شنبه، ۱۶ شهریور ۱۴۰۵</span></span>
           </div>
         </div>
 
-        <nav class="nav">
-          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a class="active" href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
-      </div>
-    </div>
-
-    <!-- ===== بازگشت ===== -->
-    <div class="phone-shell">
-      <span class="phone-label">بازگشت پس از غیبت — استقبال، بدون سرزنش</span>
-      <div class="phone">
-        <div class="screen">
-          <div class="topbar">
-            <div class="who">
-              <span class="owl" aria-hidden="true">🦉</span>
-              <span><span class="hi">خوش برگشتی، جواد</span><span class="sub2">سه‌شنبه ۱۶ شهریور ۱۴۰۵</span></span>
+        <div class="grid2e">
+          <div class="stack">
+            <div class="card" style="padding:18px;text-align:center">
+              <b style="font-size:14px">مرور روز</b>
+              <div class="ring-l" style="margin:14px auto">
+                <svg viewBox="0 0 128 128"><circle class="rt" cx="64" cy="64" r="54"/>
+                  <circle class="rp" cx="64" cy="64" r="54" style="--p:50"/></svg>
+                <div class="lbl"><b class="num">۵۰٪</b><span>ثبت‌های روزانه</span></div>
+              </div>
+              <div style="display:flex;gap:18px;justify-content:center;font-size:11.5px;color:var(--ink-2)">
+                <span>ثبت شده: <b class="num">۳</b></span><span>در انتظار: <b class="num">۳</b></span>
+              </div>
+            </div>
+            <div class="joma-msg">
+              <span class="mascot sm"><svg><use href="#owl-think"/></svg></span>
+              <div class="bubble"><div class="who">جوما</div>اگر ثبت نکنی، «ثبت‌نشده» می‌ماند — این با «صفر» فرق دارد.</div>
             </div>
           </div>
 
-          <div class="card step">
-            <h4>از همین امروز ادامه می‌دهیم</h4>
-            <p>قدم‌های قبلی‌ات همچنان بخشی از مسیرت هستند. لازم نیست چیزی را جبران کنی.</p>
-            <div class="row" style="margin-top:14px">
-              <a class="btn btn-primary" href="#">شروع امروز</a>
+          <div class="stack">
+            <div class="card" style="padding:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <b style="font-size:14px">فعالیت‌های روزانه</b><span class="pill num">۶ فعالیت</span></div>
+              <div class="act-row"><span class="chip" style="background:var(--indigo-soft)"><svg class="ic" style="width:17px;height:17px"><use href="#i-moon"/></svg></span>
+                <div class="inf"><div class="t">خواب کافی</div><div class="s num">هدف این برنامه: ۸ ساعت</div></div>
+                <input class="inp num" value="۷٫۵"><span class="st done">ثبت شده</span></div>
+              <div class="act-row"><span class="chip" style="background:var(--coral-soft)"><svg class="ic" style="width:17px;height:17px"><use href="#i-walk"/></svg></span>
+                <div class="inf"><div class="t">پیاده‌روی</div><div class="s num">هدف این برنامه: ۳۰ دقیقه</div></div>
+                <input class="inp num" value="۰"><span class="st wait">در انتظار</span></div>
+              <div class="act-row"><span class="chip" style="background:var(--brand-soft)"><svg class="ic" style="width:17px;height:17px"><use href="#i-phoneoff"/></svg></span>
+                <div class="inf"><div class="t">زمان بدون موبایل</div><div class="s num">هدف این برنامه: ۶۰ دقیقه</div></div>
+                <input class="inp num" value="۴۵"><span class="st done">ثبت شده</span></div>
+              <div class="act-row"><span class="chip" style="background:var(--lav-soft)"><svg class="ic" style="width:17px;height:17px"><use href="#i-lotus"/></svg></span>
+                <div class="inf"><div class="t">مدیتیشن</div><div class="s num">هدف این برنامه: ۱۵ دقیقه</div></div>
+                <input class="inp num" value="۲۰"><span class="st done">ثبت شده</span></div>
+            </div>
+
+            <div class="card" style="padding:18px">
+              <div class="stk-head" style="margin-bottom:6px">
+                <b style="font-size:14px">آبِ امروز — روی لیوان‌ها بزن!</b>
+                <span class="tiny num" id="wcount">۶ از ۸</span></div>
+              <div class="tiny">تغییراتت ذخیره شده‌اند؛ تا پایان امروز قابل‌تغییرند و سپس خودکار قطعی می‌شوند.</div>
+              <div class="wglasses" id="wglasses"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap">
+                <button class="btn ghost sm">ثبت نهایی امروز</button>
+                <span class="tiny">«ثبت نهایی» ثانویه است و پیش‌نویس پاداش نمی‌سازد.</span>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="card tight">
-            <div class="row between"><span class="muted">آخرین ثبت</span><span>۹ روز پیش</span></div>
-            <div class="sep"></div>
-            <div class="row between"><span class="muted">سوابق قبلی</span><span class="chip chip-done">دست‌نخورده</span></div>
-            <div class="sep"></div>
-            <div class="row between"><span class="muted">راهنمای اولیه</span><span class="chip chip-none">دوباره اجباری نیست</span></div>
-          </div>
-
-          <div class="card">
-            <h4>آشیانه‌ات سر جایش است</h4>
-            <p>هر وقت آماده‌ای، به همراه کوچکت سر بزن. نیازها آرام‌تر شده‌اند، اما چیزی از دست نرفته است.</p>
-            <p class="muted" style="margin-top:10px">وضعیت همراه از دادهٔ معتبر بک‌اند می‌آید؛ نه از باز و بسته کردن صفحه.</p>
-          </div>
-
-          <div class="card tight">
-            <span class="chip chip-late">دیروز — با تأخیر</span>
-            <p style="margin-top:8px">اگر دیروز هم چیزی انجام دادی، می‌توانی ثبتش کنی. روزهای قبل‌تر قابل ثبت نیستند.</p>
+      <!-- ═════ حال من ═════ -->
+      <section class="page" id="page-mood">
+        <div class="pagehead">
+          <span class="kicker">حال من</span>
+          <div class="row1">
+            <div><h1>امروز، حال تو مهم است.</h1>
+              <div class="sub">۵ قدم کوتاه با تصویر؛ کمتر از یک دقیقه. پاسخ درست وجود ندارد.</div></div>
+            <span class="datechip"><svg class="ic" style="width:14px;height:14px"><use href="#i-cal"/></svg>
+              <span class="num">سه‌شنبه، ۱۶ شهریور ۱۴۰۵</span></span>
           </div>
         </div>
 
-        <nav class="nav">
-          <a class="active" href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
-          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
-          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
-          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
-          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
-        </nav>
-      </div>
-    </div>
+        <div class="card wiz">
+          <div class="wiz-top">
+            <div class="wdots" id="wdots">
+              <button class="wdot on" data-w="1"><i class="num">۱</i><span>حال</span></button>
+              <button class="wdot" data-w="2"><i class="num">۲</i><span>انرژی</span></button>
+              <button class="wdot" data-w="3"><i class="num">۳</i><span>تمرکز</span></button>
+              <button class="wdot" data-w="4"><i class="num">۴</i><span>خواب</span></button>
+              <button class="wdot" data-w="5"><i class="num">۵</i><span>استرس</span></button>
+            </div>
+            <span class="wcount" id="w-count">قدم ۱ از ۵</span>
+          </div>
 
+          <div class="wstep on" data-step="1" data-type="mood">
+            <div class="wstage">
+              <div class="wvisual" style="background:var(--rose-soft)"><div class="hbox ghost" data-hbox></div></div>
+              <div class="wq"><h2>امروز چه حسی داری؟</h2><p>اول از همه، حال کلی‌ات. نزدیک‌ترین چهره را انتخاب کن.</p>
+                <div class="wopts">
+                  <button class="wopt" data-l="1"><span class="wo em" data-wo></span>خیلی بد</button>
+                  <button class="wopt" data-l="2"><span class="wo em" data-wo></span>خوب نیستم</button>
+                  <button class="wopt" data-l="3"><span class="wo em" data-wo></span>معمولی</button>
+                  <button class="wopt" data-l="4"><span class="wo em" data-wo></span>خوب</button>
+                  <button class="wopt" data-l="5"><span class="wo em" data-wo></span>عالی</button>
+                </div></div>
+            </div>
+          </div>
+
+          <div class="wstep" data-step="2" data-type="energy">
+            <div class="wstage">
+              <div class="wvisual" style="background:var(--gold-soft)"><div class="hbox ghost" data-hbox></div></div>
+              <div class="wq"><h2>باتری امروزت چقدر شارژ دارد؟</h2><p>انرژی‌ای که برای کارهای روز داری را نشان بده.</p>
+                <div class="wopts">
+                  <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی کم</button>
+                  <button class="wopt" data-l="2"><span class="wo" data-wo></span>کم</button>
+                  <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                  <button class="wopt" data-l="4"><span class="wo" data-wo></span>زیاد</button>
+                  <button class="wopt" data-l="5"><span class="wo" data-wo></span>پُر</button>
+                </div></div>
+            </div>
+          </div>
+
+          <div class="wstep" data-step="3" data-type="focus">
+            <div class="wstage">
+              <div class="wvisual" style="background:var(--sky-soft)"><div class="hbox ghost" data-hbox></div></div>
+              <div class="wq"><h2>تمرکزت چطور بود؟</h2><p>جمع‌کردن حواست روی کارها امروز چقدر آسان بود؟</p>
+                <div class="wopts">
+                  <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی سخت</button>
+                  <button class="wopt" data-l="2"><span class="wo" data-wo></span>سخت</button>
+                  <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                  <button class="wopt" data-l="4"><span class="wo" data-wo></span>آسان</button>
+                  <button class="wopt" data-l="5"><span class="wo" data-wo></span>خیلی آسان</button>
+                </div></div>
+            </div>
+          </div>
+
+          <div class="wstep" data-step="4" data-type="sleep">
+            <div class="wstage">
+              <div class="wvisual" style="background:var(--indigo-soft)"><div class="hbox ghost" data-hbox></div></div>
+              <div class="wq"><h2>خواب دیشب چطور بود؟</h2><p>کیفیت خواب شب قبل را در نظر بگیر؛ نه تعداد ساعت‌هایی که خوابیدی.</p>
+                <div class="wopts">
+                  <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی ضعیف</button>
+                  <button class="wopt" data-l="2"><span class="wo" data-wo></span>ضعیف</button>
+                  <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                  <button class="wopt" data-l="4"><span class="wo" data-wo></span>خوب</button>
+                  <button class="wopt" data-l="5"><span class="wo" data-wo></span>عالی</button>
+                </div></div>
+            </div>
+          </div>
+
+          <div class="wstep" data-step="5" data-type="stress">
+            <div class="wstage">
+              <div class="wvisual" style="background:var(--coral-soft)"><div class="hbox ghost" data-hbox></div></div>
+              <div class="wq"><h2>بادکنک استرست چقدر پف کرده؟</h2><p>در طول امروز، چقدر احساس فشار و تشویش کردی؟</p>
+                <div class="wopts">
+                  <button class="wopt" data-l="1"><span class="wo" data-wo></span>خیلی کم</button>
+                  <button class="wopt" data-l="2"><span class="wo" data-wo></span>کم</button>
+                  <button class="wopt" data-l="3"><span class="wo" data-wo></span>متوسط</button>
+                  <button class="wopt" data-l="4"><span class="wo" data-wo></span>زیاد</button>
+                  <button class="wopt" data-l="5"><span class="wo" data-wo></span>خیلی زیاد</button>
+                </div></div>
+            </div>
+          </div>
+
+          <div class="wstep" data-step="6">
+            <div style="max-width:640px;margin:0 auto;text-align:center">
+              <span class="mascot lg floaty"><svg><use href="#owl-cheer"/></svg></span>
+              <h2 style="font-size:20px;font-weight:900;margin:8px 0 4px">همه آماده است! یک نگاه بینداز.</h2>
+              <p class="tiny" style="font-size:12px">روی هر چیپ کلیک کن تا اصلاحش کنی.</p>
+              <div class="wsum" id="wsum" style="justify-content:center"></div>
+              <div class="wnote">
+                اگر دوست داری، امروز را با یک جمله ثبت کن — حتی کوتاه.<br>
+                <span class="grad" style="font-weight:900">جمله‌های کوچکِ امروز، آینهٔ مسیر فردای تو هستند.</span>
+              </div>
+              <textarea class="inp" placeholder="مثلاً: امروز با یک قدم کوچک شروع کردم و همین برایم کافی بود..."></textarea>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap">
+                <span class="tiny">نوشتن جمله اجباری نیست؛ ثبت حال کافی است. 🤍</span>
+                <button class="btn primary"><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg>ثبت حال امروز</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="wnav">
+            <span class="mascot sm"><svg id="w-owl"><use href="#owl-think"/></svg></span>
+            <div class="joma-msg" style="flex:1">
+              <div class="bubble"><div class="who">جوما</div><span id="w-bubble">اول حالت را برایم بگو؛ بعد برویم قدم بعدی 🙂</span></div>
+            </div>
+            <div class="btns">
+              <button class="btn ghost" id="w-prev" disabled>قبلی</button>
+              <button class="btn primary" id="w-next" disabled>بعدی<svg class="ic" style="width:15px;height:15px"><use href="#i-arr-l"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ آشیانه ═════ -->
+      <section class="page" id="page-pet">
+        <div class="pagehead">
+          <span class="kicker">آشیانه</span>
+          <div class="row1"><div><h1>همراه کوچک من</h1>
+            <div class="sub">با ثبت‌های واقعی‌ات گرم می‌شود. اگر چند روز نیایی، دلش تنگ می‌شود — ولی هیچ‌وقت نمی‌میرد.</div></div></div>
+        </div>
+        <div class="grid2e">
+          <div class="card" style="padding:18px">
+            <div class="pet-stage" style="width:100%;height:230px;border-radius:var(--r-lg)">
+              <span class="floaty"><svg width="150" height="170" viewBox="0 0 100 110" class="wiggle">
+                <ellipse cx="50" cy="98" rx="26" ry="6" fill="rgba(0,0,0,.10)"/>
+                <ellipse cx="50" cy="66" rx="28" ry="27" fill="#FFD84D"/>
+                <ellipse cx="50" cy="76" rx="17" ry="13" fill="#FFEDA8"/>
+                <ellipse cx="26" cy="66" rx="7" ry="13" fill="#F5C22B" transform="rotate(16 26 66)"/>
+                <ellipse cx="74" cy="66" rx="7" ry="13" fill="#F5C22B" transform="rotate(-16 74 66)"/>
+                <circle cx="51" cy="41" r="20" fill="#FFD84D"/>
+                <path d="M42 22 q3 -8 7 -1 q4 -7 7 1" fill="none" stroke="#F5A32D" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="43" cy="49" r="5.5" fill="#2A2118"/><circle cx="45" cy="47" r="1.8" fill="#fff"/>
+                <circle cx="61" cy="49" r="5.5" fill="#2A2118"/><circle cx="63" cy="47" r="1.8" fill="#fff"/>
+                <path d="M51 53 L57 59 L51 63 L45 59 Z" fill="#F58E2D"/>
+                <path d="M42 92 l-2 7 M46 93 l0 7 M56 93 l0 7 M60 92 l2 7" stroke="#F58E2D" stroke-width="2.6" stroke-linecap="round"/>
+                <text x="82" y="26" font-size="15">🎵</text></svg></span>
+            </div>
+            <div style="margin-top:12px"><b style="font-size:14px">🐤 پوپک</b>
+              <span class="muted">— سرحال و آوازخوان است</span></div>
+            <div class="tiny" style="margin-top:8px">وضعیت همراه فقط از دادهٔ معتبر بک‌اند می‌آید؛ نه از باز و بسته کردن صفحه.</div>
+          </div>
+          <div class="stack">
+            <div class="card" style="padding:18px">
+              <b style="font-size:14px">مراقبت امروز</b>
+              <div class="pet-care" style="margin-top:12px">
+                <div class="pmeter"><span class="pe">🌾</span><div class="pl"><b>ظرف دونه</b><small>با ثبت کارهای روزانه</small></div>
+                  <div class="psegs"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+                <div class="pmeter"><span class="pe">💧</span><div class="pl"><b>ظرف آب</b><small>با ثبت قطعی لیوان‌های آب</small></div>
+                  <div class="psegs"><i class="on"></i><i></i><i></i></div></div>
+                <div class="pmeter"><span class="pe">🏠</span><div class="pl"><b>خانهٔ تمیز</b><small>با ثبت حال</small></div>
+                  <div class="psegs"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+                <div class="pmeter"><span class="pe">🛁</span><div class="pl"><b>وقت حمام</b><small>با تمرین نفس</small></div>
+                  <div class="psegs"><i></i><i></i><i></i></div></div>
+              </div>
+            </div>
+            <div class="joma-msg">
+              <span class="mascot sm"><svg><use href="#owl-hi"/></svg></span>
+              <div class="bubble"><div class="who">جوما</div>در نسخهٔ تجاری، پیش‌نویس آب پاداش نمی‌سازد؛ فقط ثبت قطعی معتبر است.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ گزارش ═════ -->
+      <section class="page" id="page-reports">
+        <div class="pagehead">
+          <span class="kicker">گزارش</span>
+          <div class="row1"><div><h1>گزارش پیشرفت</h1>
+            <div class="sub">تصویر روشن از مسیرت؛ بدون قضاوت، فقط داده.</div></div></div>
+        </div>
+        <div class="grid4" style="margin-bottom:14px">
+          <div class="card scard"><div class="top"><span class="lbl">پیوستگی این ماه</span>
+            <span class="chip" style="background:var(--brand-soft);color:var(--brand-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-trend"/></svg></span></div>
+            <div class="v num" style="color:var(--brand-ink)">۸۲٪</div></div>
+          <div class="card scard"><div class="top"><span class="lbl">روزهای همراهی</span>
+            <span class="chip" style="background:var(--gold-soft);color:var(--gold-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-cal"/></svg></span></div>
+            <div class="v num" style="color:var(--gold-ink)">۲۰ <small>روز</small></div></div>
+          <div class="card scard"><div class="top"><span class="lbl">شاخص خلق مثبت</span>
+            <span class="chip" style="background:var(--rose-soft);color:var(--rose-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-heart"/></svg></span></div>
+            <div class="v num" style="color:var(--rose-ink)">۳٫۸ <small>از ۵</small></div></div>
+          <div class="card scard"><div class="top"><span class="lbl">حال‌وهوای ترکیبی</span>
+            <span class="chip" style="background:var(--lav-soft);color:var(--lav-ink)"><svg class="ic" style="width:17px;height:17px"><use href="#i-chart"/></svg></span></div>
+            <div class="v num" style="color:var(--lav-ink)">۷۲ <small>مقیاس متفاوت</small></div></div>
+        </div>
+
+        <div class="grid2e">
+          <div class="card" style="padding:18px">
+            <b style="font-size:14px">تقویم ۳۰ روز گذشته</b>
+            <span class="tiny">کم ← پررنگ ← زیاد</span>
+            <div class="hm-head"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+            <div class="hm" id="hm"></div>
+            <div class="joma-msg" style="margin-top:12px">
+              <span class="mascot sm"><svg><use href="#owl-read"/></svg></span>
+              <div class="bubble"><div class="who">جوما</div>پررنگ‌ها روزهای پرثبت تو هستند. جای خالی صفر نیست؛ یعنی ثبت‌نشده.</div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card" style="padding:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <b style="font-size:14px">دو شاخص متفاوت خلق</b><span class="pill">یک عنوان ندارند</span></div>
+              <div class="tiny">مقایسهٔ این دو عدد با هم درست نیست؛ مقیاس‌شان یکی نیست و استرس در دومی با تبدیل معکوس وارد می‌شود.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+                <div style="background:var(--rose-soft);border-radius:var(--r);padding:12px">
+                  <div class="tiny" style="font-weight:800;color:var(--rose-ink)">شاخص خلق مثبت</div>
+                  <div class="num" style="font-size:22px;font-weight:900">۳٫۸ <span style="font-size:11px">از ۵</span></div></div>
+                <div style="background:var(--lav-soft);border-radius:var(--r);padding:12px">
+                  <div class="tiny" style="font-weight:800;color:var(--lav-ink)">حال‌وهوای ترکیبی</div>
+                  <div class="num" style="font-size:22px;font-weight:900">۷۲ <span style="font-size:11px">مقیاس متفاوت</span></div></div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:18px;background:var(--brand-softer)">
+              <b style="font-size:14px">برای این بازه هنوز دادهٔ کافی نیست</b>
+              <div class="tiny" style="margin-top:6px;font-size:12px">
+                «تحلیل موفقیت» و «مقایسه» وقتی معنا پیدا می‌کنند که چرخه‌های بیشتری بسته شود.
+                جای خالی با صفر پر نمی‌شود.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:18px;margin-top:14px">
+          <b style="font-size:14px">نشان‌های جوما</b><span class="tiny">با هر قدم، یک نشان جدید</span>
+          <div class="badges" style="margin-top:12px">
+            <div class="bdg on"><span class="em">🌱</span><b>اولین قدم</b></div>
+            <div class="bdg on"><span class="em">💧</span><b>آبِ کامل</b></div>
+            <div class="bdg on"><span class="em">🔥</span><b>۵ روز پیوسته</b></div>
+            <div class="bdg on"><span class="em">🧘</span><b>نفسی آرام</b></div>
+            <div class="bdg on"><span class="em">🌟</span><b>حالِ روشن</b></div>
+            <div class="bdg"><span class="em">🏆</span><b>روزِ کامل</b></div>
+            <div class="bdg"><span class="em">🐣</span><b>به دنیا آمد</b></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-ph">
+        <div class="card" style="padding:40px;text-align:center">
+          <span class="mascot lg"><svg><use href="#owl-think"/></svg></span>
+          <b style="display:block;margin-top:8px;font-size:15px" id="ph-title">این بخش</b>
+          <p class="muted" style="max-width:44ch;margin:6px auto 0">
+            در این پیش‌نمایش ساده‌سازی شده تا تمرکز روی زبان بصری باشد. این بخش در نسخهٔ کامل از محتوای واقعی بک‌اند تغذیه می‌شود.</p>
+          <button class="btn soft sm" data-go="home" style="margin-top:14px">بازگشت به خانه</button>
+        </div>
+      </section>
+    </div>
   </div>
-
-  <h2>۳) چیزهایی که این پیش‌نمایش عمداً ندارد</h2>
-  <div class="panel">
-    <div class="legend">
-      <span>✋ محاسبهٔ موفقیت و پوشش — از بک‌اند می‌آید</span>
-      <span>✋ تقویم جلالی و تعیین روز مجاز — از بک‌اند می‌آید</span>
-      <span>✋ همبستگی، میانگین و نرمال‌سازی — در فرانت ساخته نمی‌شود</span>
-      <span>✋ مجوز و سهمیهٔ هم‌مسیر — فقط سرور</span>
-      <span>✋ درصد رشد همراه و پاداش — قاعدهٔ مصوب ندارد</span>
-      <span>✋ منوی «آشیانه» — نام نهایی معلق است</span>
-    </div>
-  </div>
-
-  <footer>
-    جوما · پیش‌نمایش طراحی v0.1 · دادهٔ نمایشی، بدون اتصال به بک‌اند
-  </footer>
 </div>
 
+<nav class="tabbar">
+  <a href="#" class="on" data-page="home"><svg class="ic"><use href="#i-compass"/></svg>خانه</a>
+  <a href="#" data-page="today"><svg class="ic"><use href="#i-checkc"/></svg>امروز</a>
+  <a href="#" data-page="mood"><svg class="ic"><use href="#i-heart"/></svg>حال</a>
+  <a href="#" data-page="pet"><svg class="ic"><use href="#i-list"/></svg>آشیانه</a>
+  <a href="#" data-page="reports"><svg class="ic"><use href="#i-chart"/></svg>گزارش</a>
+</nav>
+
+<div class="toast" id="toast"><svg><use href="#owl-cheer"/></svg><span id="toast-txt">ذخیره شد</span></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs><linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="var(--grad1)"/><stop offset="1" stop-color="var(--grad2)"/>
+  </linearGradient></defs>
+</svg>
+
 <script>
-  const btnG = document.getElementById('t-glass');
-  const btnC = document.getElementById('t-classic');
-  function setTheme(name){
-    document.documentElement.dataset.theme = name;
-    const g = name === 'glass';
-    btnG.setAttribute('aria-pressed', String(g));
-    btnC.setAttribute('aria-pressed', String(!g));
+var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var FA='۰۱۲۳۴۵۶۷۸۹';function fa(n){return String(n).replace(/\d/g,function(d){return FA[d]})}
+var root=document.documentElement;
+
+/* ---------- تعویض تم ---------- */
+$('#t-classic').onclick=function(){root.setAttribute('data-theme','classic');this.classList.add('on');$('#t-glass').classList.remove('on')};
+$('#t-glass').onclick=function(){root.setAttribute('data-theme','glass');this.classList.add('on');$('#t-classic').classList.remove('on')};
+
+/* ---------- ناوبری ---------- */
+var PAGES={home:'خانه',today:'کارهای امروز',mood:'حال من',pet:'آشیانه',reports:'گزارش پیشرفت',ph:'بخش نمایشی'};
+function go(p){
+  $$('.page').forEach(function(s){s.classList.toggle('on',s.id==='page-'+p)});
+  $$('.nitem').forEach(function(b){b.classList.toggle('on',b.dataset.page===p)});
+  $$('.tabbar a').forEach(function(a){a.classList.toggle('on',a.dataset.page===p)});
+  $('#crumb').textContent=PAGES[p]||'';
+  if(p==='ph')$('#ph-title').textContent='بخش نمایشی';
+  window.scrollTo(0,0);
+}
+$$('.nitem').forEach(function(b){b.onclick=function(){go(b.dataset.page)}});
+$$('.tabbar a').forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.page)}});
+$$('[data-go]').forEach(function(b){b.onclick=function(){go(b.dataset.go)}});
+
+/* ---------- توست ---------- */
+var tT=null;
+function toast(msg){
+  var t=$('#toast');$('#toast-txt').textContent=msg;t.classList.add('show');
+  clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show')},2600);
+}
+
+/* ---------- لیوان‌های آب ---------- */
+(function(){
+  var g=$('#wglasses'),i;
+  for(i=0;i<8;i++){(function(){
+    var d=document.createElement('div');d.className='wg'+(i<6?' f':'');d.title='لیوان آب';d.innerHTML='<i></i>';
+    d.onclick=function(){
+      d.classList.toggle('f');d.classList.remove('pop');void d.offsetWidth;d.classList.add('pop');
+      var wf=$$('#wglasses .wg.f').length;
+      $('#wcount').textContent=fa(wf)+' از ۸';
+      toast('پیش‌نویس ذخیره شد — هنوز قطعی نیست');
+      if(wf===8)setTimeout(function(){toast('آبِ امروز کامل شد! 💧')},400);
+    };
+    g.appendChild(d);
+  })()}
+})();
+
+/* ---------- هیت‌مپ ---------- */
+(function(){
+  var h=$('#hm'),v=[4,3,0,2,4,3,1,4,2,3,0,4,4,2,1,3,4,4,2,0,3,4,3,2,1,4,3,4,2,3];
+  for(var i=0;i<30;i++){var d=document.createElement('i');d.style.background='var(--hm'+v[i]+')';h.appendChild(d)}
+})();
+
+/* ---------- ویزارد حال ---------- */
+var EMO5=['😖','🙁','😐','🙂','😄'];
+var LBL={mood:['خیلی بد','خوب نیستم','معمولی','خوب','عالی'],energy:['خیلی کم','کم','متوسط','زیاد','پُر'],
+  focus:['خیلی سخت','سخت','متوسط','آسان','خیلی آسان'],sleep:['خیلی ضعیف','ضعیف','متوسط','خوب','عالی'],
+  stress:['خیلی کم','کم','متوسط','زیاد','خیلی زیاد']};
+var NAME={mood:'حال کلی',energy:'انرژی',focus:'تمرکز',sleep:'خواب',stress:'استرس'};
+var KEYS=['mood','energy','focus','sleep','stress'];
+var DEF=['اول حالت را برایم بگو؛ بعد برویم قدم بعدی 🙂','باتری‌ات را نشانم کن؛ قضاوتی در کار نیست.',
+  'حواست امروز چقدر سر جایش بود؟','خواب دیشب چطور بود؟ ستاره‌ها خودشان می‌گویند.','آخرین یکی! بادکنک استرست چقدر پف کرده؟'];
+var MSG={
+  mood:['امروز سخت بوده؛ من همین‌جا کنارتم 🤍','ممنون که صادقی؛ همین توجه، خودش یک قدم است.','روزهای معمولی هم بخشی از مسیرند.','خوب است؛ همین توجه کوچک، روز را قشنگ‌تر می‌کند.','چه عالی! این حس خوب را ثبت کنیم تا یادت بماند 🌟'],
+  energy:['باتری کم است؛ امروز فقط یک قدم کوچک کافی است.','کمی انرژی داری؛ یک قدم سبک انتخاب کن.','متوسط و قابل‌اعتماد؛ همان‌قدر که لازم است.','شارژ خوبی داری؛ یک قدم محکم برمی‌داریم!','پُر و تمام! بزن بریم 🚀'],
+  focus:['ذهنت امروز شلوغ بوده؛ طبیعی است.','کمی سخت بوده؛ همین ثبتش ارزش دارد.','متوسط، مثل اکثر روزهای واقعی.','خوب بود! تمرکز، مهارتِ روزهای خوب است.','عالی! چه روزی برای ذهنت 🎯'],
+  sleep:['دیشب سخت گذشته؛ امشب زودتر بغل کنیم بالش را 🌙','کمی چرت‌مانند؛ اشکال ندارد.','یک خواب معمولی؛ بهتر از هیچ است.','خوابِ خوب، نصف انرژی فرداست.','چه خواب طلایی! بدنت از تو تشکر می‌کند ⭐'],
+  stress:['چه آرامش! عالی که فشاری حس نکردی.','کم و قابل‌مدیریت؛ خوب است.','متوسط؛ بخشی از زندگی است.','کمی فشار بوده؛ یک نفس عمیق هم خوب است.','فشار زیادی امروز؛ صحنه را برای خودت نرم کن 🤍']};
+
+function heroSVG(t,l){
+  if(t==='energy'){
+    var cols=['var(--coral)','var(--coral)','var(--gold)','var(--sky)','var(--ok)'],w=[6,12,18,24,30][l-1]||0;
+    return '<svg viewBox="0 0 40 24"><rect x="1.5" y="3.5" width="32" height="17" rx="5" fill="none" stroke="var(--ink-3)" stroke-width="2"/><rect x="35.5" y="9" width="3.6" height="6" rx="1.5" fill="var(--ink-3)"/><rect x="4.5" y="6.5" width="'+w+'" height="11" rx="3" fill="'+cols[l-1]+'"/></svg>';
   }
-  btnG.addEventListener('click', () => setTheme('glass'));
-  btnC.addEventListener('click', () => setTheme('classic'));
+  if(t==='sleep'){
+    var pos=[[24.5,7],[31,4.5],[35.5,10.5],[27,13.5],[33.5,17.5]],s='';
+    for(var i=0;i<l;i++)s+='<text x="'+pos[i][0]+'" y="'+pos[i][1]+'" font-size="7.5" fill="var(--gold)">★</text>';
+    return '<svg viewBox="0 0 40 24"><path d="M16.5 2.5a9.5 9.5 0 1 0 9 14.5A11 11 0 0 1 16.5 2.5Z" fill="var(--lav)"/>'+s+'</svg>';
+  }
+  if(t==='focus'){
+    var r=(1.5+l*1.5).toFixed(1);
+    return '<svg viewBox="0 0 40 24"><circle cx="20" cy="12" r="10" fill="none" stroke="var(--ring-track)" stroke-width="2"/><circle cx="20" cy="12" r="6.5" fill="none" stroke="var(--ring-track)" stroke-width="2"/><circle cx="20" cy="12" r="'+r+'" fill="var(--sky)"/><path d="M20 .8v3.4M20 19.8v3.4M8.8 12h3.4M27.8 12h3.4" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  }
+  if(t==='stress'){
+    var c2=['var(--sky)','var(--sky)','var(--gold)','var(--coral)','var(--rose)'],r2=(3.5+l*1.3).toFixed(1);
+    return '<svg viewBox="0 0 40 24"><circle cx="14" cy="11" r="'+r2+'" fill="'+c2[l-1]+'" opacity=".92"/><path d="M14 '+(11+ +r2).toFixed(1)+' q2.4 3 0 6" fill="none" stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round"/>'+(l>=4?'<path d="M27 7q4-2.5 6.5.5M27 15q4 2.5 6.5-.5" stroke="var(--coral)" stroke-width="1.6" fill="none" stroke-linecap="round"/>':'')+'</svg>';
+  }
+  return '';
+}
+function renderHero(stepEl,t,l){
+  var box=stepEl.querySelector('[data-hbox]');
+  if(t==='mood')box.innerHTML='<span class="big">'+EMO5[l-1]+'</span>';
+  else box.innerHTML=heroSVG(t,l).replace('<svg ','<svg class="whero" ');
+}
+var wstep=1,ans={},mx=1;
+$$('.wstep[data-type]').forEach(function(stp){
+  var t=stp.dataset.type;
+  stp.querySelectorAll('.wopt').forEach(function(o){
+    var l=+o.dataset.l,wo=o.querySelector('[data-wo]');
+    if(t==='mood')wo.textContent=EMO5[l-1];else wo.innerHTML=heroSVG(t,l);
+  });
+  renderHero(stp,t,3);
+});
+function refreshDots(){
+  $$('.wdot').forEach(function(d,i){
+    var k=i+1,cur=Math.min(wstep,5);
+    d.classList.toggle('on',k===cur);
+    d.classList.toggle('done',!!ans[KEYS[i]]&&k!==cur);
+  });
+}
+function buildSummary(){
+  var html='';
+  KEYS.forEach(function(k,i){
+    if(!ans[k])return;
+    html+='<button class="chip-sum" data-go="'+(i+1)+'"><b>'+NAME[k]+':</b> '+LBL[k][ans[k]-1]+
+      ' <span class="num" style="color:var(--ink-3)">'+fa(ans[k])+'/۵</span></button>';
+  });
+  $('#wsum').innerHTML=html;
+  $$('#wsum .chip-sum').forEach(function(c){c.onclick=function(){goW(+c.dataset.go)}});
+}
+function goW(n){
+  wstep=n;
+  $$('.wstep').forEach(function(s){s.classList.toggle('on',+s.dataset.step===n)});
+  refreshDots();
+  $('#w-count').textContent=n<=5?('قدم '+fa(n)+' از ۵'):'مرور نهایی';
+  $('#w-prev').disabled=(n===1);
+  var cur=$('.wstep[data-step="'+n+'"]'),t=cur?cur.dataset.type:null,rev=(n===6);
+  $('#w-next').hidden=rev;$('#w-prev').hidden=rev;
+  $('#w-bubble').textContent=(t&&ans[t])?MSG[t][ans[t]-1]:DEF[n-1];
+  $('#w-next').disabled=rev?false:!(t&&ans[t]);
+  if(rev)buildSummary();
+  $('#w-owl').innerHTML='<use href="'+(rev?'#owl-cheer':(t&&ans[t]?'#owl-hi':'#owl-think'))+'"/>';
+}
+$$('.wdot').forEach(function(d){d.addEventListener('click',function(){
+  var k=+d.dataset.w;if(k<=Math.max(mx,wstep))goW(k)})});
+$('#w-prev').addEventListener('click',function(){goW(Math.max(1,wstep-1))});
+$('#w-next').addEventListener('click',function(){goW(Math.min(6,wstep+1))});
+$$('.wstep[data-type]').forEach(function(stp){
+  var t=stp.dataset.type;
+  stp.querySelectorAll('.wopt').forEach(function(o){
+    o.addEventListener('click',function(){
+      var first=!ans[t];
+      stp.querySelectorAll('.wopt').forEach(function(x){x.classList.remove('sel')});
+      o.classList.add('sel');ans[t]=+o.dataset.l;
+      stp.querySelector('[data-hbox]').classList.remove('ghost');
+      renderHero(stp,t,ans[t]);
+      $('#w-bubble').textContent=MSG[t][ans[t]-1];
+      $('#w-owl').innerHTML='<use href="#owl-hi"/>';
+      refreshDots();
+      mx=Math.max(mx,+stp.dataset.step+1);
+      $('#w-next').disabled=false;
+      if(first&&+stp.dataset.step<5){
+        setTimeout(function(){
+          if(wstep===+stp.dataset.step&&ans[t]===+o.dataset.l)goW(+stp.dataset.step+1);
+        },950);
+      }
+    });
+  });
+});
+goW(1);
+
+/* ---------- نوازش همراه ---------- */
+$('#pet-stage').addEventListener('click',function(){
+  var s=this;s.classList.remove('wiggle');void s.offsetWidth;s.classList.add('wiggle');
+  var F=['قُل‌قُل! چیزی داخلشم… 🥚','دارم رشد می‌کنم؛ فقط ثبت کن!','گرمت خوبه، ممنون 🤍','به زودی می‌بینمت!'];
+  toast(F[Math.floor(Math.random()*F.length)]);
+});
 </script>
 </body>
 </html>

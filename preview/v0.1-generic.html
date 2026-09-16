@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="glass">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جوما — پیش‌نمایش طراحی v0.1</title>
+<link rel="stylesheet" href="../design/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--font);
+    color:var(--ink);
+    background-image:var(--bg-grad);
+    background-attachment:fixed;
+    background-color:var(--bg);
+    line-height:var(--lh-body);
+    padding:24px 16px 64px;
+  }
+  .wrap{max-width:1280px;margin:0 auto}
+
+  /* ---------- سربرگ پیش‌نمایش ---------- */
+  .head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
+  h1{font-size:var(--fs-28);margin:0 0 6px;font-weight:700}
+  .sub{color:var(--ink-2);font-size:var(--fs-14);margin:0;max-width:62ch}
+  .toggle{display:flex;gap:6px;background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-pill);padding:4px;backdrop-filter:var(--blur)}
+  .toggle button{font-family:inherit;font-size:var(--fs-13);font-weight:600;border:0;background:transparent;color:var(--ink-2);padding:8px 16px;border-radius:var(--r-pill);cursor:pointer;min-height:36px}
+  .toggle button[aria-pressed="true"]{background:var(--brand);color:#fff}
+
+  .banner{margin:18px 0 28px;padding:12px 16px;border-radius:var(--r-16);background:var(--c-unsaved-bg);color:var(--c-unsaved-fg);font-size:var(--fs-13);font-weight:500;border:1px solid rgba(138,90,0,.15)}
+
+  h2{font-size:var(--fs-22);margin:36px 0 14px;font-weight:700}
+  h3{font-size:var(--fs-16);margin:22px 0 10px;font-weight:600;color:var(--ink-2)}
+
+  /* ---------- پنل توکن ---------- */
+  .panel{background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-28);padding:20px;backdrop-filter:var(--blur);box-shadow:var(--sh-2)}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  .sw{border-radius:var(--r-16);overflow:hidden;border:1px solid var(--hairline);background:var(--surface-2)}
+  .sw .box{height:56px}
+  .sw .meta{padding:8px 10px;font-size:var(--fs-12);color:var(--ink-2);line-height:1.6}
+  .sw .meta b{display:block;color:var(--ink);font-weight:600}
+  .chips-demo{display:flex;flex-wrap:wrap;gap:8px}
+  .type-demo p{margin:6px 0}
+
+  /* ---------- چیپ‌ها ---------- */
+  .chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:var(--r-pill);font-size:var(--fs-12);font-weight:600;white-space:nowrap}
+  .chip-none{background:var(--c-none-bg);color:var(--c-none-fg)}
+  .chip-draft{background:var(--c-draft-bg);color:var(--c-draft-fg)}
+  .chip-unsaved{background:var(--c-unsaved-bg);color:var(--c-unsaved-fg)}
+  .chip-pending{background:var(--c-pending-bg);color:var(--c-pending-fg)}
+  .chip-done{background:var(--c-done-bg);color:var(--c-done-fg)}
+  .chip-error{background:var(--c-error-bg);color:var(--c-error-fg)}
+  .chip-late{background:var(--c-late-bg);color:var(--c-late-fg)}
+
+  /* ---------- قاب موبایل ---------- */
+  .phones{display:flex;flex-wrap:wrap;gap:26px;justify-content:center}
+  .phone-shell{display:flex;flex-direction:column;gap:10px;align-items:center}
+  .phone-label{font-size:var(--fs-13);font-weight:600;color:var(--ink-2)}
+  .phone{
+    width:360px;height:720px;border-radius:42px;padding:6px;
+    background:var(--surface-2);border:1px solid var(--stroke);
+    box-shadow:var(--sh-3);position:relative;overflow:hidden;
+  }
+  .screen{
+    width:100%;height:100%;border-radius:36px;overflow-y:auto;overflow-x:hidden;
+    background-image:var(--bg-grad);background-color:var(--bg);
+    padding-bottom:78px;position:relative;scrollbar-width:thin;
+  }
+  .screen::-webkit-scrollbar{width:0}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 10px}
+  .who{display:flex;align-items:center;gap:10px}
+  .owl{
+    width:40px;height:40px;border-radius:var(--r-pill);flex:0 0 auto;
+    background:radial-gradient(circle at 35% 30%,#f6d98a,#c99a2e 55%,#1c3247 56%);
+    display:grid;place-items:center;font-size:20px;
+    box-shadow:0 3px 10px rgba(28,50,71,.18);
+  }
+  .who .hi{font-weight:700;font-size:var(--fs-16);line-height:1.4}
+  .who .sub2{font-size:var(--fs-12);color:var(--ink-3)}
+
+  /* ---------- کارت ---------- */
+  .card{
+    background:var(--surface);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    border:1px solid var(--stroke);border-radius:var(--r-20);
+    box-shadow:var(--sh-2);padding:16px;margin:0 14px 12px;
+  }
+  .card.tight{padding:12px}
+  .card.step{background:var(--surface-2);border-inline-start:4px solid var(--brand-2);box-shadow:var(--sh-3)}
+  .card.plain{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface-2)}
+  .card h4{margin:0 0 6px;font-size:var(--fs-16);font-weight:700;display:flex;align-items:center;gap:8px}
+  .card p{margin:0;font-size:var(--fs-13);color:var(--ink-2);line-height:1.8}
+  .muted{color:var(--ink-3);font-size:var(--fs-12)}
+  .row{display:flex;align-items:center;gap:10px}
+  .row.between{justify-content:space-between}
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .sep{height:1px;background:var(--hairline);margin:12px 0}
+
+  /* ---------- دکمه ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:48px;padding:0 18px;border-radius:var(--r-16);
+    font-family:inherit;font-size:var(--fs-16);font-weight:600;
+    border:0;cursor:pointer;text-decoration:none;line-height:1;
+  }
+  .btn-sm{min-height:40px;font-size:var(--fs-13);padding:0 14px;border-radius:var(--r-12)}
+  .btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 16px rgba(14,110,125,.22)}
+  .btn-ghost{background:var(--brand-soft);color:var(--brand)}
+  .btn-quiet{background:transparent;color:var(--ink-3);font-weight:500}
+  .btn-block{width:100%}
+  .btn-outline{background:transparent;border:1.5px solid var(--hairline);color:var(--ink);font-weight:600}
+
+  /* ---------- نوار پایین ---------- */
+  .nav{
+    position:absolute;bottom:0;left:0;right:0;height:70px;display:flex;
+    background:var(--surface-2);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    border-top:1px solid var(--hairline);
+  }
+  .nav a{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    font-size:11px;color:var(--ink-3);text-decoration:none;font-weight:500;
+  }
+  .nav a .i{font-size:19px;line-height:1}
+  .nav a.active{color:var(--brand);font-weight:700}
+
+  /* ---------- ردیف فعالیت ---------- */
+  .act-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .sticker{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:var(--brand-soft);flex:0 0 auto}
+  .act-title{font-weight:600;font-size:var(--fs-16)}
+  .act-goal{font-size:var(--fs-12);color:var(--ink-3)}
+  .stepper{display:flex;align-items:center;gap:10px}
+  .rnd{
+    width:44px;height:44px;border-radius:var(--r-pill);border:1px solid var(--hairline);
+    background:var(--surface-2);color:var(--brand);font-size:22px;font-weight:600;
+    display:grid;place-items:center;cursor:pointer;font-family:inherit;line-height:1;
+  }
+  .val{font-size:var(--fs-22);font-weight:700;min-width:78px;text-align:center}
+  .val small{font-size:var(--fs-12);font-weight:500;color:var(--ink-3);display:block}
+  .quick{display:flex;gap:6px;flex-wrap:wrap}
+  .q{font-family:inherit;font-size:var(--fs-12);font-weight:600;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:7px 12px;cursor:pointer;min-height:34px}
+
+  /* ---------- آب ---------- */
+  .water-row{display:flex;align-items:center;gap:16px}
+  .vessel{width:74px;height:104px;border-radius:14px 14px 22px 22px;border:3px solid var(--brand-2);position:relative;overflow:hidden;background:var(--surface-2);flex:0 0 auto}
+  .fill{position:absolute;inset:auto 0 0 0;height:83%;background:linear-gradient(180deg,rgba(31,168,184,.45),rgba(31,168,184,.85))}
+  .fill::before{content:"";position:absolute;top:-8px;left:-20%;right:-20%;height:16px;background:var(--surface-2);border-radius:50%;opacity:.55}
+  .level{font-size:var(--fs-22);font-weight:700}
+  .level small{display:block;font-size:var(--fs-12);font-weight:500;color:var(--ink-3)}
+
+  /* ---------- حال من ---------- */
+  .dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
+  .dot{width:8px;height:8px;border-radius:999px;background:var(--hairline)}
+  .dot.on{background:var(--brand);width:22px}
+  .mood-row{display:flex;gap:8px;justify-content:space-between}
+  .opt{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+    padding:10px 4px;border-radius:var(--r-16);border:1.5px solid var(--hairline);
+    background:var(--surface-2);cursor:pointer;
+  }
+  .opt .e{font-size:26px;line-height:1}
+  .opt .l{font-size:var(--fs-12);color:var(--ink-2);text-align:center;font-weight:500}
+  .ends{display:flex;justify-content:space-between;font-size:var(--fs-12);color:var(--ink-3);margin-top:8px}
+
+  /* ---------- کتابخانه ---------- */
+  .search{
+    display:flex;align-items:center;gap:8px;background:var(--surface-2);
+    border:1px solid var(--hairline);border-radius:var(--r-16);padding:0 14px;height:48px;font-size:var(--fs-14);color:var(--ink-3)
+  }
+  .fchip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--hairline);font-size:var(--fs-13);font-weight:600;color:var(--ink-2)}
+  .fchip.on{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+  .code{font-size:10px;font-weight:600;color:var(--ink-3);letter-spacing:.5px;background:var(--surface-2);border:1px solid var(--hairline);border-radius:6px;padding:2px 6px;font-family:ui-monospace,monospace}
+
+  /* ---------- گزارش ---------- */
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;font-size:var(--fs-13);font-weight:600;color:var(--ink-3);background:var(--surface);border:1px solid var(--stroke);border-radius:var(--r-pill);padding:8px 14px}
+  .tab.on{background:var(--brand);border-color:transparent;color:#fff}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tile{background:var(--surface-2);border:1px solid var(--hairline);border-radius:var(--r-16);padding:12px}
+  .tile .n{font-size:var(--fs-22);font-weight:700}
+  .tile .t{font-size:var(--fs-12);color:var(--ink-3);line-height:1.6}
+  .note{background:var(--brand-soft);border-radius:var(--r-16);padding:12px;font-size:var(--fs-13);color:var(--ink-2);border-inline-start:3px solid var(--brand-2)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:var(--fs-12);color:var(--ink-2)}
+  footer{margin-top:48px;color:var(--ink-3);font-size:var(--fs-12);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div>
+      <h1>جوما — پیش‌نمایش طراحی</h1>
+      <p class="sub">نسخهٔ ۰٫۱ · بر پایهٔ سند مادر و بازنویسی از صفر. این صفحه فقط <b>زبان بصری، سلسله‌مراتب و الگوهای رابط</b> را نشان می‌دهد؛ هیچ محاسبه‌ای در آن انجام نمی‌شود.</p>
+    </div>
+    <div class="toggle" role="group" aria-label="انتخاب تم">
+      <button id="t-glass" aria-pressed="true">شیشه‌ای</button>
+      <button id="t-classic" aria-pressed="false">کلاسیک</button>
+    </div>
+  </div>
+
+  <div class="banner">
+    ⚠️ همهٔ اعداد، نام‌ها و وضعیت‌های این صفحه <b>دادهٔ نمونه و برچسب‌دار</b> هستند. مقادیر واقعی فقط از بک‌اند می‌آیند و در فرانت محاسبه نمی‌شوند.
+  </div>
+
+  <!-- ============ توکن‌ها ============ -->
+  <h2>۱) توکن‌ها</h2>
+  <div class="panel">
+    <h3>رنگ‌های پایه</h3>
+    <div class="swatches">
+      <div class="sw"><div class="box" style="background:var(--bg)"></div><div class="meta"><b>bg</b>زمینهٔ صفحه</div></div>
+      <div class="sw"><div class="box" style="background:var(--brand)"></div><div class="meta"><b>brand</b>متن و دکمهٔ اصلی — کنتراست ≥ ۴٫۵</div></div>
+      <div class="sw"><div class="box" style="background:var(--brand-2)"></div><div class="meta"><b>brand-2</b>تأکید گرافیکی، نه متن ریز</div></div>
+      <div class="sw"><div class="box" style="background:var(--accent)"></div><div class="meta"><b>accent</b>سبز مکمل</div></div>
+      <div class="sw"><div class="box" style="background:var(--ink)"></div><div class="meta"><b>ink</b>متن اصلی</div></div>
+      <div class="sw"><div class="box" style="background:var(--ink-3)"></div><div class="meta"><b>ink-3</b>متن ثانویه</div></div>
+    </div>
+
+    <h3>واژگان وضعیت — رنگ هرگز تنها نشانه نیست</h3>
+    <div class="chips-demo">
+      <span class="chip chip-none">ثبت نشده</span>
+      <span class="chip chip-draft">پیش‌نویس — قابل تغییر</span>
+      <span class="chip chip-unsaved">ذخیره نشد</span>
+      <span class="chip chip-pending">در انتظار قطعی‌شدن</span>
+      <span class="chip chip-done">ثبت قطعی شد</span>
+      <span class="chip chip-late">دیروز — با تأخیر</span>
+      <span class="chip chip-error">ثبت نهایی انجام نشد</span>
+    </div>
+
+    <h3>مقیاس متن</h3>
+    <div class="type-demo">
+      <p style="font-size:var(--fs-28);font-weight:700">تیتر صفحه — ۲۸</p>
+      <p style="font-size:var(--fs-18);font-weight:600">تیتر کارت — ۱۸</p>
+      <p style="font-size:var(--fs-16)">متن دکمه و رابط — ۱۶</p>
+      <p style="font-size:var(--fs-14);color:var(--ink-2)">متن توضیحی فارسی با ارتفاع خط ۱٫۹ برای خوانایی بلند — ۱۴</p>
+      <p style="font-size:var(--fs-12);color:var(--ink-3)">متن کمکی و برچسب — ۱۲ · نمونهٔ عدد: ۵ لیوان از ۶ لیوان</p>
+    </div>
+  </div>
+
+  <!-- ============ صفحه‌ها ============ -->
+  <h2>۲) صفحه‌های کلیدی</h2>
+  <div class="phones">
+
+    <!-- ===== خانه ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">خانهٔ من — یک قدم بعدی، نه چهار دکمهٔ هم‌وزن</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span>
+                <span class="hi">عصر بخیر، جواد</span>
+                <span class="sub2">سه‌شنبه ۱۶ شهریور ۱۴۰۵</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="card step">
+            <h4>امروز، دو کار مانده <span class="chip chip-none">نمونه</span></h4>
+            <p>یکی از کارها را ثبت کن؛ کمتر از یک دقیقه وقت می‌گیرد.</p>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary" href="#">ادامهٔ امروز</a>
+              <a class="btn btn-quiet" href="#">بعداً</a>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="row between">
+              <span class="muted">حال امروز</span>
+              <span class="chip chip-none">ثبت نشده</span>
+            </div>
+            <div class="sep"></div>
+            <div class="row between">
+              <span class="muted">آب امروز</span>
+              <span class="chip chip-draft">پیش‌نویس ۵ از ۶ لیوان</span>
+            </div>
+            <div class="sep"></div>
+            <div class="row between">
+              <span class="muted">ثبت‌های امروز</span>
+              <span class="chip chip-done">۱ ثبت قطعی</span>
+            </div>
+          </div>
+
+          <div class="card tight stack">
+            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>برنامهٔ این دوره</span><span class="muted">‹</span></a>
+            <div class="sep" style="margin:0"></div>
+            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>کتابخانهٔ فعالیت‌ها</span><span class="muted">‹</span></a>
+            <div class="sep" style="margin:0"></div>
+            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>آموزش تمرین‌ها</span><span class="muted">‹</span></a>
+            <div class="sep" style="margin:0"></div>
+            <a class="row between" href="#" style="text-decoration:none;color:inherit"><span>گزارش‌ها</span><span class="muted">‹</span></a>
+          </div>
+
+          <div class="card">
+            <div class="row" style="margin-bottom:6px"><span class="chip chip-draft">از ثبت‌های تو</span></div>
+            <p>در ثبت‌های این بازه، روزهایی که خواب بهتری گزارش کرده‌ای، پیاده‌روی بیشتری هم ثبت شده است.</p>
+            <div class="row between" style="margin-top:10px">
+              <span class="muted">۲۱ جفت داده · این همراهی علت را نشان نمی‌دهد</span>
+              <a class="btn btn-sm btn-ghost" href="#">این برداشت از کجا آمد؟</a>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="active" href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== امروز ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">کارهای امروز — هدف و مقدار جدا، آب با پیش‌نویس</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span><span class="hi">کارهای امروز</span><span class="sub2">سه‌شنبه ۱۶ شهریور</span></span>
+            </div>
+          </div>
+
+          <div class="tabs" style="padding-top:0">
+            <span class="tab on">امروز</span>
+            <span class="tab">دیروز <span class="chip chip-late" style="height:20px;padding:0 8px;margin-inline-start:4px">تأخیر</span></span>
+          </div>
+
+          <div class="card tight">
+            <div class="act-head">
+              <span class="sticker" aria-hidden="true">🚶</span>
+              <span style="flex:1">
+                <span class="act-title">پیاده‌روی</span>
+                <span class="act-goal">هدف این برنامه: ۳۰ دقیقه در روز</span>
+              </span>
+              <span class="chip chip-done">ثبت شد</span>
+            </div>
+            <div class="row between">
+              <div class="stepper">
+                <button class="rnd" aria-label="کاهش">−</button>
+                <span class="val">۳۰<small>دقیقه</small></span>
+                <button class="rnd" aria-label="افزایش">+</button>
+              </div>
+              <div class="quick"><span class="q">۱۰</span><span class="q">۲۰</span><span class="q">۳۰</span></div>
+            </div>
+          </div>
+
+          <div class="card plain">
+            <div class="row between" style="margin-bottom:12px">
+              <b style="font-size:var(--fs-16)">آب امروز</b>
+              <span class="chip chip-draft">پیش‌نویس — قابل تغییر</span>
+            </div>
+            <div class="water-row">
+              <div class="vessel" role="img" aria-label="سطح آب: ۵ لیوان از ۶"><div class="fill"></div></div>
+              <div style="flex:1">
+                <span class="level">۵ از ۶ <small>لیوان · هدف این برنامه</small></span>
+                <div class="stepper" style="margin-top:10px">
+                  <button class="rnd" aria-label="یک لیوان کمتر">−</button>
+                  <button class="rnd" aria-label="یک لیوان بیشتر">+</button>
+                </div>
+              </div>
+            </div>
+            <p class="muted" style="margin-top:12px">تغییراتت ذخیره شده‌اند؛ تا پایان امروز قابل‌تغییرند و سپس خودکار قطعی می‌شوند.</p>
+            <div class="sep"></div>
+            <div class="row between">
+              <a class="btn btn-sm btn-outline" href="#">ثبت نهایی امروز</a>
+              <span class="muted">پیش‌نویس پاداش نمی‌سازد</span>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="act-head">
+              <span class="sticker" aria-hidden="true">📚</span>
+              <span style="flex:1">
+                <span class="act-title">مطالعه</span>
+                <span class="act-goal">هدف این برنامه: هر روز — انجام/انجام نشد</span>
+              </span>
+              <span class="chip chip-none">ثبت نشده</span>
+            </div>
+            <div class="row" style="gap:8px">
+              <a class="btn btn-ghost btn-block" href="#">انجام دادم</a>
+              <a class="btn btn-outline btn-block" href="#">انجام ندادم</a>
+            </div>
+            <p class="muted" style="margin-top:10px">اگر ثبت نکنی، «ثبت‌نشده» می‌ماند؛ این با «صفر» فرق دارد.</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a class="active" href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== حال من ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">حال من — قدم‌به‌قدم، بدون انتخاب پیش‌فرض</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span><span class="hi">حال امروز</span><span class="sub2">قدم ۲ از ۵</span></span>
+            </div>
+            <a class="btn btn-sm btn-quiet" href="#">بعداً</a>
+          </div>
+
+          <div class="card">
+            <div class="dots" aria-hidden="true">
+              <span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <h4>انرژی امروزت چطور است؟</h4>
+            <p>گزینه‌ها از کم به زیاد مرتب شده‌اند. هر گزینه‌ای که واقعاً تجربه کرده‌ای، درست است.</p>
+            <div class="mood-row" style="margin-top:14px">
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😴</span><span class="l">خیلی کم</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙁</span><span class="l">کم</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😐</span><span class="l">متوسط</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙂</span><span class="l">زیاد</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">⚡</span><span class="l">خیلی زیاد</span></span>
+            </div>
+            <p class="muted" style="margin-top:10px">هنوز چیزی انتخاب نشده است.</p>
+            <div class="sep"></div>
+            <div class="row between">
+              <a class="btn btn-sm btn-outline" href="#">قبلی</a>
+              <a class="btn btn-sm btn-primary" href="#">بعدی</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>نمونهٔ گام ۵ — سطح استرس</h4>
+            <p>هر دو سر مقیاس برچسب دارد؛ نگاشت عددی از بک‌اند می‌آید و در فرانت حدس زده نمی‌شود.</p>
+            <div class="mood-row" style="margin-top:14px">
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😌</span><span class="l">۱</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">🙂</span><span class="l">۲</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😐</span><span class="l">۳</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😟</span><span class="l">۴</span></span>
+              <span class="opt" role="button" tabindex="0"><span class="e" aria-hidden="true">😣</span><span class="l">۵</span></span>
+            </div>
+            <div class="ends"><span>آرام</span><span>پرتنش</span></div>
+          </div>
+
+          <div class="card">
+            <h4>خواب دیشبت چطور بود؟</h4>
+            <p>کیفیت خواب شب قبل را در نظر بگیر؛ نه تعداد ساعت‌هایی که خوابیدی.</p>
+          </div>
+
+          <div class="card">
+            <h4>یادداشت امروز (اختیاری)</h4>
+            <p>اگر دوست داری، یک جمله از امروزت برای خودت نگه دار؛ کوتاه، واقعی و به زبان خودت.</p>
+            <div class="search" style="margin-top:12px;height:76px;align-items:flex-start;padding-top:12px">چیزی بنویس…</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a class="active" href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== کتابخانه ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">کتابخانه — زبان کاربر، نه زبان ابزار مدیریتی</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span><span class="hi">کتابخانهٔ فعالیت‌ها</span><span class="sub2">۱۰۷ فعالیت در ۱۰ دسته</span></span>
+            </div>
+          </div>
+
+          <div style="padding:0 14px 10px" class="stack">
+            <div class="search" role="search">🔎 <span>جست‌وجو بر اساس نام فعالیت…</span></div>
+            <div class="row" style="gap:6px;flex-wrap:wrap">
+              <span class="fchip on">همه دسته‌ها</span>
+              <span class="fchip">سلامت جسم</span>
+              <span class="fchip">خواب و استراحت</span>
+              <span class="fchip">تمرکز و ذهن</span>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="act-head">
+              <span class="sticker" aria-hidden="true">🚶</span>
+              <span style="flex:1">
+                <span class="act-title">پیاده‌روی</span>
+                <span class="act-goal">روزانه · ۳۰ دقیقه</span>
+              </span>
+              <span class="code">ACT001</span>
+            </div>
+            <p>هر روزی که پیاده‌روی کردی، مدت آن را ثبت می‌کنی. هدف برنامهٔ تو ۳۰ دقیقه است.</p>
+            <div class="row" style="margin-top:12px;gap:8px">
+              <a class="btn btn-sm btn-primary" href="#">افزودن به برنامه</a>
+              <a class="btn btn-sm btn-quiet" href="#">جزئیات و راهنما</a>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="act-head">
+              <span class="sticker" aria-hidden="true">💧</span>
+              <span style="flex:1">
+                <span class="act-title">نوشیدن آب</span>
+                <span class="act-goal">روزانه · لیوان</span>
+              </span>
+              <span class="code">ACT002</span>
+            </div>
+            <p>مقدار آبی که در طول روز می‌نوشی را ثبت می‌کنی. تا پایان روز قابل‌تغییر است و بعد از آن قطعی می‌شود.</p>
+            <div class="row" style="margin-top:12px;gap:8px">
+              <a class="btn btn-sm btn-primary" href="#">افزودن به برنامه</a>
+              <a class="btn btn-sm btn-quiet" href="#">جزئیات و راهنما</a>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="row between">
+              <span class="muted">فعالیت شخصی خودت را بساز</span>
+              <a class="btn btn-sm btn-ghost" href="#">+ فعالیت جدید</a>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a class="active" href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== گزارش ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">گزارش — دادهٔ ناکافی با توضیح، نه صفرسازی</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span><span class="hi">گزارش‌ها</span><span class="sub2">دورهٔ شهریور ۱۴۰۵</span></span>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <span class="tab on">خلاصه</span>
+            <span class="tab">موفقیت</span>
+            <span class="tab">فعالیت‌ها</span>
+            <span class="tab">وزن</span>
+            <span class="tab">تقویم</span>
+            <span class="tab">روند</span>
+            <span class="tab">خلق</span>
+            <span class="tab">مقایسه</span>
+            <span class="tab">جزئیات</span>
+            <span class="tab">تحلیلی</span>
+          </div>
+
+          <div class="card tight">
+            <div class="tiles">
+              <div class="tile"><span class="n">۱۲</span><span class="t">ثبت معتبر در این دوره</span></div>
+              <div class="tile"><span class="n">۴</span><span class="t">روز با داده</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>برای این بازه هنوز دادهٔ کافی نیست</h4>
+            <p>«تحلیل موفقیت» و «مقایسه» وقتی معنا پیدا می‌کنند که چرخه‌های بیشتری بسته شود. با چند ثبت دیگر این بخش کامل می‌شود.</p>
+            <p class="muted" style="margin-top:8px">جای خالی با صفر پر نمی‌شود؛ «ثبت‌نشده» با «صفر» یکی نیست.</p>
+          </div>
+
+          <div class="card">
+            <h4>دو شاخص متفاوت خلق</h4>
+            <div class="stack" style="margin-top:10px">
+              <div class="tile"><span class="t">شاخص خلق مثبت</span><span class="n">۳٫۸ <small style="font-size:12px;color:var(--ink-3)">از ۵</small></span></div>
+              <div class="tile"><span class="t">حال‌وهوای ترکیبی</span><span class="n">۷۲ <small style="font-size:12px;color:var(--ink-3)">مقیاس متفاوت</small></span></div>
+            </div>
+            <div class="note" style="margin-top:12px">این دو یک چیز نیستند: در شاخص مثبت، استرس مثل بقیهٔ شاخص‌ها جمع نمی‌شود؛ در حال‌وهوای ترکیبی با تبدیل معکوس وارد فرمول می‌شود. عنوان‌ها و مقیاس‌ها عمداً جدا نمایش داده می‌شوند.</div>
+          </div>
+
+          <div class="card tight">
+            <span class="chip chip-unsaved">یک چرخهٔ مبهم</span>
+            <p style="margin-top:8px">در یک روز، دو رخداد روزانه برای یک فعالیت پیدا شد. تا رفع ابهام، این چرخه در محاسبهٔ موفقیت لحاظ نمی‌شود.</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a class="active" href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===== بازگشت ===== -->
+    <div class="phone-shell">
+      <span class="phone-label">بازگشت پس از غیبت — استقبال، بدون سرزنش</span>
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div class="who">
+              <span class="owl" aria-hidden="true">🦉</span>
+              <span><span class="hi">خوش برگشتی، جواد</span><span class="sub2">سه‌شنبه ۱۶ شهریور ۱۴۰۵</span></span>
+            </div>
+          </div>
+
+          <div class="card step">
+            <h4>از همین امروز ادامه می‌دهیم</h4>
+            <p>قدم‌های قبلی‌ات همچنان بخشی از مسیرت هستند. لازم نیست چیزی را جبران کنی.</p>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary" href="#">شروع امروز</a>
+            </div>
+          </div>
+
+          <div class="card tight">
+            <div class="row between"><span class="muted">آخرین ثبت</span><span>۹ روز پیش</span></div>
+            <div class="sep"></div>
+            <div class="row between"><span class="muted">سوابق قبلی</span><span class="chip chip-done">دست‌نخورده</span></div>
+            <div class="sep"></div>
+            <div class="row between"><span class="muted">راهنمای اولیه</span><span class="chip chip-none">دوباره اجباری نیست</span></div>
+          </div>
+
+          <div class="card">
+            <h4>آشیانه‌ات سر جایش است</h4>
+            <p>هر وقت آماده‌ای، به همراه کوچکت سر بزن. نیازها آرام‌تر شده‌اند، اما چیزی از دست نرفته است.</p>
+            <p class="muted" style="margin-top:10px">وضعیت همراه از دادهٔ معتبر بک‌اند می‌آید؛ نه از باز و بسته کردن صفحه.</p>
+          </div>
+
+          <div class="card tight">
+            <span class="chip chip-late">دیروز — با تأخیر</span>
+            <p style="margin-top:8px">اگر دیروز هم چیزی انجام دادی، می‌توانی ثبتش کنی. روزهای قبل‌تر قابل ثبت نیستند.</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="active" href="#"><span class="i" aria-hidden="true">🏠</span>خانه</a>
+          <a href="#"><span class="i" aria-hidden="true">✏️</span>امروز</a>
+          <a href="#"><span class="i" aria-hidden="true">🥚</span>آشیانه</a>
+          <a href="#"><span class="i" aria-hidden="true">📊</span>گزارش</a>
+          <a href="#"><span class="i" aria-hidden="true">⋯</span>بیشتر</a>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>۳) چیزهایی که این پیش‌نمایش عمداً ندارد</h2>
+  <div class="panel">
+    <div class="legend">
+      <span>✋ محاسبهٔ موفقیت و پوشش — از بک‌اند می‌آید</span>
+      <span>✋ تقویم جلالی و تعیین روز مجاز — از بک‌اند می‌آید</span>
+      <span>✋ همبستگی، میانگین و نرمال‌سازی — در فرانت ساخته نمی‌شود</span>
+      <span>✋ مجوز و سهمیهٔ هم‌مسیر — فقط سرور</span>
+      <span>✋ درصد رشد همراه و پاداش — قاعدهٔ مصوب ندارد</span>
+      <span>✋ منوی «آشیانه» — نام نهایی معلق است</span>
+    </div>
+  </div>
+
+  <footer>
+    جوما · پیش‌نمایش طراحی v0.1 · دادهٔ نمایشی، بدون اتصال به بک‌اند
+  </footer>
+</div>
+
+<script>
+  const btnG = document.getElementById('t-glass');
+  const btnC = document.getElementById('t-classic');
+  function setTheme(name){
+    document.documentElement.dataset.theme = name;
+    const g = name === 'glass';
+    btnG.setAttribute('aria-pressed', String(g));
+    btnC.setAttribute('aria-pressed', String(!g));
+  }
+  btnG.addEventListener('click', () => setTheme('glass'));
+  btnC.addEventListener('click', () => setTheme('classic'));
+</script>
+</body>
+</html>
