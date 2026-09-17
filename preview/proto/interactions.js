@@ -79,6 +79,9 @@ window.INNER_CLICK=function(e){
 
   if((t=e.target.closest('[data-petmode]'))){
     var m=t.dataset.petmode;
+    if(m==='pale'){ APP.petMood='pale'; render(); toast('۳ تا ۵ روز بی‌ثبت — کم‌رنگ می‌شود، ولی هیچ‌وقت نمی‌میرد'); return; }
+    if(m==='miss'){ APP.petMood='miss'; render(); toast('۶ روز یا بیشتر — خاکستری: نشانگر «نیازمند توجه»، بدون سرزنش و بدون عدد'); return; }
+    if(m==='pet'){ APP.petMood='pet'; render(); return; }
     if(m==='blink'){ APP.petMood='ok'; render(); toast('پلک‌زدن خودکار است — هر چند ثانیه'); return; }
     APP.petMood=m; APP.petSleep=(m==='sleep'); render();
     if(m==='sleep') chickSnd('snore'); else if(m==='happy') chirpSnd();
@@ -618,10 +621,6 @@ document.addEventListener('click',function(e){
   if(e.target.closest('[data-addok]')){ closeModal(); toast('به برنامه اضافه شد — هدفش هم ثبت شد'); }
 });
 
-/* ---------- ثبت‌نام: فیلد «سایر» ---------- */
-document.addEventListener('input',function(e){
-  if(e.target.matches('[data-authother]')) APP.authOther=e.target.value;
-});
 
 /* ---------- جست‌وجوی کتابخانه ---------- */
 document.addEventListener('input',function(e){
@@ -638,6 +637,4 @@ document.addEventListener('input',function(e){
 document.addEventListener('change',function(e){
   if(e.target.matches('[data-libcat]')){ APP.libCat=e.target.value; render(); return; }
   if(e.target.matches('[data-libfreq]')){ APP.libFreq=e.target.value; render(); return; }
-  /* نقش انتخابی در ثبت‌نام — «سایر» فیلد خودش را باز می‌کند */
-  if(e.target.matches('[data-authrole]')){ APP.authRole=e.target.value; render(); return; }
 });

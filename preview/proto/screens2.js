@@ -20,10 +20,20 @@ var METERS=[
   {k:'bath', e:'🛁', n:'وقت حمام',  s:'با ذخیرهٔ ثبت‌ها و تمرین نفس'}
 ];
 
+/* شش حالت جوجه — همه از بک‌اند، هیچ‌کدام از کلیک (سند ۱۴ §۳.۳) */
+var PET_STATES=[
+  {k:'ok',    t:'آرام',      cond:'پیش‌فرض — روز عادی',              stage:'chick', mood:'ok'},
+  {k:'happy', t:'شاد',       cond:'بعد از یک ثبت معتبر',             stage:'chick', mood:'happy'},
+  {k:'sleep', t:'خواب',      cond:'شب، یا چند روز بی‌ثبت',           stage:'chick', mood:'sleep'},
+  {k:'pet',   t:'نوازش',     cond:'لمس کاربر — واکنش، بی‌پاداش',     stage:'chick', mood:'pet'},
+  {k:'pale',  t:'کم‌رنگ',    cond:'۳ تا ۵ روز بی‌ثبت — نشانگر توجه', stage:'calm',  mood:'tired'},
+  {k:'miss',  t:'خاکستری',   cond:'۶ روز یا بیشتر — ‌همان نشانگر',   stage:'miss',  mood:'tired'}
+];
 function R_chick(){
   var st=APP.petStage||'chick';
   var g=GROWTH[st==='egg'?0:(st==='crack'?1:(APP.petGrowthFull?3:2))];
   var name=APP.petName||'جوجهٔ من';
+  var ps=PET_STATES.filter(function(x){return x.k===(APP.petMood||'ok');})[0]||PET_STATES[0];
   var levels=empty()?{seed:0,water:0,home:0,bath:0}:{seed:3,water:2,home:2,bath:1};
   var total=levels.seed+levels.water+levels.home+levels.bath;
   var pct=Math.round(total/12*100);
@@ -33,20 +43,20 @@ function R_chick(){
 
     '<div class="pet-grid">'+
       '<div class="pet-col">'+
-        '<div class="pet-stage'+(APP.petSleep?' sleep':'')+'" data-petchick>'+
+        '<div class="pet-stage'+(ps.k==='sleep'?' sleep':'')+'" data-petchick>'+
           '<span class="halo"></span>'+
-          '<span class="pet-hold">'+chickSVG(150, st==='chick'?'chick':st,
-            st==='chick'?(APP.petSleep?'sleep':(APP.petMood||'ok')):'ok')+'</span>'+
+          '<span class="pet-hold">'+chickSVG(150, st==='chick'?ps.stage:st, st==='chick'?ps.mood:'ok')+'</span>'+
         '</div>'+
+        '<div class="pet-cond tiny">حالت فعلی: <b>'+ps.t+'</b> — '+ps.cond+'<br>'+
+          '<span class="muted">شرط هر حالت از <b>بک‌اند</b> می‌آید؛ فرانت حالت نمی‌سازد و از کلیک پاداش نمی‌دهد.</span></div>'+
         '<div class="pet-ctrls">'+
           '<button class="btn soft sm" data-petpet>'+ic('i-heart')+'نوازش</button>'+
           '<button class="btn ghost sm" data-petsleep>'+(APP.petSleep?'بیدارش کن ☀️':'بخوابانش 🌙')+'</button>'+
           '<button class="btn ghost sm" data-petsnd>'+(APP.sound?'🔊 صدا روشن':'🔇 صدا خاموش')+'</button>'+
         '</div>'+
         '<div class="pet-states">'+
-          [['ok','حالت عادی — چشم باز و عینک'],['blink','پلک‌زدن (خودکار)'],['happy','شاد — بعد از یک ثبت'],['sleep','خواب — شب یا چند روز بی‌ثبت']]
-          .map(function(s2){
-            return '<button class="'+(APP.petMood===s2[0]?'on':'')+'" data-petmode="'+s2[0]+'">'+s2[1]+'</button>';}).join('')+
+          PET_STATES.map(function(s2){
+            return '<button class="'+(ps.k===s2.k?'on':'')+'" data-petmode="'+s2.k+'" title="'+s2.cond+'">'+s2.t+'</button>';}).join('')+
         '</div>'+
         note('همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
           'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
@@ -87,8 +97,14 @@ function R_chick(){
             '<p class="tiny" style="margin-top:6px">'+(st==='chick'
               ? 'اسمش «'+name+'» است. اگر چند روز نیایی، دلش تنگ می‌شود — ولی **هیچ‌وقت نمی‌میرد** و کم‌رنگ می‌شود، نه بیشتر.'
               : 'با هر ثبت معتبر، تخم به تولد نزدیک‌تر می‌شود.')+'</p>'+
-            '<div class="hist" style="margin-top:10px"><span>شروع: ۳ شهریور</span>'+
-            (st==='chick'?'<span>تولد: ۱۹ شهریور</span>':'')+'<span>مراقبت امروز: '+fa(total)+' از ۱۲</span></div>'+
+            '<div class="hist" style="margin-top:10px"><span>مراقبت امروز: '+fa(total)+' از ۱۲</span></div>'+
+            '<div class="tline">'+
+              '<div class="tl"><span class="em">🥚</span><span><b>۳ شهریور</b> — تخم گذاشته شد</span></div>'+
+              (st==='crack'||st==='chick'?'<div class="tl"><span class="em">🥚</span><span><b>۱۷ شهریور</b> — تخم ترک خورد</span></div>':'')+
+              (st==='chick'?'<div class="tl"><span class="em">🐣</span><span><b>۱۹ شهریور</b> — به دنیا آمد</span></div>':'')+
+            '</div>'+
+            '<p class="tiny" style="margin-top:8px">این تاریخچه <b>هرگز پاک نمی‌شود</b>، حتی اگر سنجه‌ها خالی شوند — '+
+            'تا همیشه ببینی چقدر مسیر آمده‌ای (<code>PD-008</code>).</p>'+
           '</div>')+
 
         '<div class="card tip"><h3>'+ic('i-info')+'یک چیز را بدان</h3>'+

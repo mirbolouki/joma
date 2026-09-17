@@ -137,15 +137,18 @@ function chEyes(p,state){
     '<circle cx="41.5" cy="65" r="1.9" fill="#fff" opacity=".85"/><circle cx="71.5" cy="65" r="1.9" fill="#fff" opacity=".85"/>';
 }
 /* عینک جغد — امضای هویت: دو حلقهٔ طلایی، پلِ بینی، دسته‌ها (همان فرم جغد ۷B) */
-function chGlasses(p,closed){
+function chGlasses(p,happy){
+  /* امضای جوجهٔ جغد: عینک طلایی همیشه روی صورت است — در همهٔ شش حالت.
+     در «شاد»، چشم‌ها کمانی‌اند؛ عینک کمی بزرگ‌تر و بالاتر می‌رود تا تلاقی نکند. */
   var g=p.gold;
-  return '<g class="chglasses">'+
+  var inner=
     '<circle cx="45" cy="60" r="17" fill="none" stroke="'+g+'" stroke-width="2.8"/>'+
     '<circle cx="75" cy="60" r="17" fill="none" stroke="'+g+'" stroke-width="2.8"/>'+
     '<path d="M62 55.5 Q60 52.5 58 55.5" fill="none" stroke="'+g+'" stroke-width="2.6" stroke-linecap="round"/>'+
     '<path d="M28 57 q-8 -3 -13 -8" fill="none" stroke="'+g+'" stroke-width="2.4" stroke-linecap="round"/>'+
-    '<path d="M92 57 q8 -3 13 -8" fill="none" stroke="'+g+'" stroke-width="2.4" stroke-linecap="round"/>'+
-    (closed?'':'')+
+    '<path d="M92 57 q8 -3 13 -8" fill="none" stroke="'+g+'" stroke-width="2.4" stroke-linecap="round"/>';
+  return '<g class="chglasses">'+
+    (happy?'<g transform="translate(-4.8,-4.4) scale(1.08)">'+inner+'</g>':inner)+
   '</g>';
 }
 function chBrows(p){return '<path d="M30 46 q10 -7 20 -1 M90 46 q-10 -7 -20 -1" fill="none" stroke="'+p.gold+'" stroke-width="2.6" stroke-linecap="round"/>';}
@@ -174,19 +177,20 @@ function chickSVG(size, stage, mood){
   else if(stage==='crack'){ inner=chEgg(p,true); cls='wiggle'; }
   else {
     var eye=(mood==='happy')?'happy':((mood==='tired'||mood==='sleep'||stage==='calm'||stage==='miss')?'closed':'open');
+    if(mood==='pet') eye='open';   /* نوازش: چشم باز و لپ‌های صورتی، بی‌پاداش */
     var closed=(eye==='closed');
     inner = chTufts(p)+
       '<path d="M60 18 C88 18 100 44 100 72 C100 102 84 118 60 118 C36 118 20 102 20 72 C20 44 32 18 60 18 Z" fill="'+p.a+'"/>'+
       chBelly(p)+chWings(p)+
       '<g class="ch-eyes">'+chEyes(p,eye)+'</g>'+
       '<g class="ch-lids">'+chEyes(p,'closed')+'</g>'+
-      (eye==='happy'?'':chGlasses(p,closed))+
-      (mood==='tired'?'':chCheeks(p)) +
+      chGlasses(p, eye==='happy')+
+      (mood==='happy'?chCheeks(p):'') +
       chBeak(p, mood==='happy')+chFeet(p)+
       (mood==='happy'?chSpark(p):'')+
       (mood==='sleep'?'<g class="ch-zz"><text x="100" y="36" font-size="15" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text>'+
         '<text x="109" y="23" font-size="10" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text></g>':'');
-    cls = mood==='happy'?'chhappy':(mood==='sleep'?'chsleep':((mood==='tired'||stage==='calm'||stage==='miss')?'chcalm':'floaty'));
+    cls = mood==='happy'?'chhappy':(mood==='sleep'?'chsleep':(mood==='pet'?'chpet':((mood==='tired'||stage==='calm'||stage==='miss')?'chcalm':'floaty')));
   }
   return '<svg class="chsvg '+(cls||'')+'" width="'+size+'" height="'+h+'" viewBox="0 0 120 132" aria-hidden="true">'+
     '<ellipse cx="60" cy="124" rx="30" ry="4" fill="rgba(20,56,46,.10)"/>'+inner+'</svg>';
