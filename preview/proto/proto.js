@@ -38,6 +38,7 @@ var APP = {
   petStage:'chick', /* egg | crack | chick — نمایش تخم/جوجه برای بازبینی */
   petName:'',
   petGrowthFull:false,
+  petSleep:false,
   journalFilter:'all',
   reportTab:'summary',
   reportNoData:false,
@@ -317,6 +318,91 @@ function completeSnd(){
   glug(c,t0+.66,170,90,.13,.06);
   bubble(c,t0+.78,.05);
 }
+
+/* ---------- صدای جوجهٔ جوما — جیک، خرخرِ نوازش، خروپفِ نرم ----------
+   همه با Web Audio ساخته می‌شوند؛ پیش‌فرض خاموش تا مالک تصمیم بگیرد. */
+var _petLast=0;
+function petGate(ms){ var n=performance.now(); if(n-_petLast<ms) return false; _petLast=n; return true; }
+
+/* جیک دو نُتیِ جوجهٔ جغد — سینوسی با لرزش کوچک (۲۲Hz) */
+function chickTone(c,t0,f0,f1,dur,peak){
+  var o=c.createOscillator(), g=c.createGain(), lfo=c.createOscillator(), lg=c.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(f0,t0);
+  o.frequency.exponentialRampToValueAtTime(f1,t0+dur);
+  lfo.frequency.value=22; lg.gain.value=f0*.035; lfo.connect(lg); lg.connect(o.frequency);
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+.012);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+dur+.06);
+  o.connect(g); out(g,c,.5); o.start(t0); o.stop(t0+dur+.09); lfo.start(t0); lfo.stop(t0+dur+.09);
+}
+function chirpSnd(){
+  if(!APP.sound||document.hidden) return;
+  var c=ac(); if(!c||!petGate(700)) return;
+  var t0=c.currentTime+.01;
+  chickTone(c,t0,470,780,.13,.42); chickTone(c,t0+.16,620,900,.11,.34);
+}
+/* خرخرِ رضایت — نُتِ پایینِ گرم + ترمولوی ۲۶Hz + فیلتر پایین‌گذر
+   (بهبودیافته: گرم‌تر، نفس‌دارتر، با یک «جیکِ ریزِ» پایانی مثل جوجهٔ واقعی) */
+function purrSnd(){
+  if(!APP.sound||document.hidden) return;
+  var c=ac(); if(!c||!petGate(500)) return;
+  var t0=c.currentTime+.01;
+  var o=c.createOscillator(), og=c.createGain(), lp=c.createBiquadFilter(),
+      lfo=c.createOscillator(), lg=c.createGain(), air=noiseBuf(1.1,c), ag=c.createGain(), hp=c.createBiquadFilter();
+  o.type='triangle'; o.frequency.setValueAtTime(112,t0);
+  o.frequency.linearRampToValueAtTime(126,t0+.9);          /* کمی بالا می‌رود = رضایت */
+  lp.type='lowpass'; lp.frequency.setValueAtTime(520,t0);
+  lp.frequency.linearRampToValueAtTime(880,t0+.8);
+  lfo.frequency.value=26; lg.gain.value=.17;               /* لرزش خرخر */
+  og.gain.setValueAtTime(.0001,t0);
+  og.gain.exponentialRampToValueAtTime(.30,t0+.12);
+  og.gain.setValueAtTime(.30,t0+.62);
+  og.gain.exponentialRampToValueAtTime(.0001,t0+1.05);
+  lfo.connect(lg); lg.connect(og.gain);
+  o.connect(lp); lp.connect(og); out(og,c,.5); og.connect(c.destination);
+  /* نفسِ آرام روی خرخر: نویز خیلی کم با فیلتر بالاگذر */
+  hp.type='highpass'; hp.frequency.value=900;
+  ag.gain.setValueAtTime(.0001,t0);
+  ag.gain.exponentialRampToValueAtTime(.045,t0+.2);
+  ag.gain.exponentialRampToValueAtTime(.0001,t0+1.0);
+  air.connect(hp); hp.connect(ag); out(ag,c,.4); ag.connect(c.destination);
+  o.start(t0); lfo.start(t0); air.start(t0);
+  o.stop(t0+1.15); lfo.stop(t0+1.15); air.stop(t0+1.15);
+  bubble(c,t0+.95,.03);                                    /* «جیکِ» ریزِ پایانی */
+}
+/* خروپفِ نرم — نفسِ کشیدهٔ دم/بازدم با سوتِ خیلی کم؛ خواب، نه خِرخِر */
+function snoreSnd(){
+  if(!APP.sound||document.hidden) return;
+  var c=ac(); if(!c||!petGate(900)) return;
+  var t0=c.currentTime+.01;
+  function breath(at,dur,peak,f0){
+    var n=noiseBuf(dur+.1,c), g=c.createGain(), lp=c.createBiquadFilter(), o=c.createOscillator(), og=c.createGain();
+    lp.type='lowpass'; lp.frequency.setValueAtTime(f0,t0+at);
+    lp.frequency.linearRampToValueAtTime(f0*1.5,t0+at+dur*.5);
+    lp.frequency.linearRampToValueAtTime(f0*.8,t0+at+dur);
+    g.gain.setValueAtTime(.0001,t0+at);
+    g.gain.exponentialRampToValueAtTime(peak,t0+at+dur*.35);
+    g.gain.exponentialRampToValueAtTime(.0001,t0+at+dur);
+    n.connect(lp); lp.connect(g); out(g,c,.45); g.connect(c.destination);
+    n.start(t0+at); n.stop(t0+at+dur+.15);
+    o.type='sine'; o.frequency.setValueAtTime(f0*.42,t0+at);
+    o.frequency.linearRampToValueAtTime(f0*.5,t0+at+dur);
+    og.gain.setValueAtTime(.0001,t0+at);
+    og.gain.exponentialRampToValueAtTime(peak*.35,t0+at+dur*.4);
+    og.gain.exponentialRampToValueAtTime(.0001,t0+at+dur);
+    o.connect(og); out(og,c,.35); og.connect(c.destination);
+    o.start(t0+at); o.stop(t0+at+dur+.1);
+  }
+  breath(0,.62,.10,420);      /* دم */
+  breath(.80,.85,.13,300);    /* بازدم، بلندتر و بم‌تر */
+  breath(1.85,.55,.07,380);
+}
+function chickSnd(kind){
+  if(kind==='purr') purrSnd();
+  else if(kind==='snore') snoreSnd();
+  else chirpSnd();
+}
+
 function waterCard(){
   return '<div class="card wbox" id="wcard">'+
     '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">'+

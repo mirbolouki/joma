@@ -61,17 +61,17 @@ body{margin:0;background:var(--bg-layer);font-family:"Vazirmatn","IRANSans",Taho
 <div class="wrap">
   <div class="top">
     <h1>انتخاب جوجهٔ جوما</h1>
-    <span class="tag">هر دو زنده‌اند — کلیک کن، صدا را روشن کن</span>
+    <span class="tag">انتخاب مالک: الف — بدنِ گرد ✓ (قفل شد)</span>
   </div>
   <p class="lead">
     هر دو <b>جوجهٔ جغد</b>اند با رنگ و فرم جغدِ جوما (آبی، شکم کِرِم، حلقهٔ طلایی دور چشم) — نه جوجهٔ مرغ.
-    تفاوتشان در تناسب است: <b>الف</b> بدنِ گردِ یکپارچه دارد، <b>ب</b> سرِ درشت و بدنِ کوچک («توپی‌تر»).
+<b>مالک «الف» را انتخاب کرد</b> و صدای نوازش و خروپف بهتر شد؛ «ب» فقط برای مقایسهٔ تاریخی اینجاست.
     روی هر کدام کلیک کن تا واکنشش را ببینی، و با دکمه‌ها بخوابانش یا نوازشش کن.
   </p>
 
   <div class="grid">
     <section class="cand" id="candA">
-      <span class="tag">الف</span>
+      <span class="tag">الف — انتخاب‌شده ✓</span>
       <h2>بدنِ گرد</h2>
       <div class="why">یکپارچه و ساده؛ در اندازه‌های کوچک (کارت خانه، ۸۲px) هنوز خواناست. شبیه جغدِ بزرگ جوماست، فقط کوچک.</div>
       <div class="stage" data-v="A"><span class="ground"></span><span class="pet" id="petA"></span><span class="wave" id="waveA"></span></div>
@@ -110,7 +110,7 @@ body{margin:0;background:var(--bg-layer);font-family:"Vazirmatn","IRANSans",Taho
     <div><b>صداها</b> جیکِ دو نُتی ۴۸۰→۷۸۰Hz · قلقلکِ کوتاه · خرخرِ رضایت · خمیازهٔ کشدار — حجم پایین</div>
     <div><b>وقتی بزرگ شد</b> با ثبت‌های واقعی: تخم → ترک → جوجه · حالت خاکستری «نیازمند توجه» بعد از ۶ روز بی‌ثبت</div>
   </div>
-  <div class="foot">این صفحه فقط برای بازبینی است و بخشی از محصول نیست. نسخهٔ ۸ — مقایسهٔ زندهٔ جوجه.</div>
+  <div class="foot">این صفحه فقط برای بازبینی است و بخشی از محصول نیست. نسخهٔ ۹ — انتخاب قفل شد: الف · صدای نوازش و خروپف بازنویسی شد.</div>
 </div>
 
 <script>
@@ -199,19 +199,48 @@ function giggle(){ /* قلقلکِ کوتاه — سه جیک ریز */
   var t=audio().currentTime+0.02;
   [0,0.09,0.18].forEach(function(d,i){ tone(700+i*60,980+i*40,t+d,0.06,0.3); });
 }
-function purr(){ /* خرخرِ رضایت */
-  var c=audio(), t=c.currentTime+0.02, o=c.createOscillator(), g=c.createGain(),
-      f=c.createBiquadFilter(), lfo=c.createOscillator(), lg=c.createGain();
-  o.type='triangle'; o.frequency.value=118; f.type='lowpass'; f.frequency.value=700;
-  lfo.frequency.value=26; lg.gain.value=0.16;
-  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.34,t+0.12);
-  g.gain.setValueAtTime(0.34,t+0.7); g.gain.exponentialRampToValueAtTime(0.0001,t+1.1);
-  lfo.connect(lg); lg.connect(g.gain); o.connect(f); f.connect(g); g.connect(MASTER);
-  o.start(t); lfo.start(t); o.stop(t+1.2); lfo.stop(t+1.2);
+function purr(){ /* خرخرِ رضایت — گرم‌تر و نفس‌دارتر، با «جیکِ» ریزِ پایانی */
+  var c=audio(), t=c.currentTime+0.02;
+  var o=c.createOscillator(), og=c.createGain(), lp=c.createBiquadFilter(),
+      lfo=c.createOscillator(), lg=c.createGain(), air=noise(1.1), ag=c.createGain(), hp=c.createBiquadFilter();
+  o.type='triangle'; o.frequency.setValueAtTime(112,t); o.frequency.linearRampToValueAtTime(126,t+0.9);
+  lp.type='lowpass'; lp.frequency.setValueAtTime(520,t); lp.frequency.linearRampToValueAtTime(880,t+0.8);
+  lfo.frequency.value=26; lg.gain.value=0.17;
+  og.gain.setValueAtTime(0.0001,t); og.gain.exponentialRampToValueAtTime(0.30,t+0.12);
+  og.gain.setValueAtTime(0.30,t+0.62); og.gain.exponentialRampToValueAtTime(0.0001,t+1.05);
+  lfo.connect(lg); lg.connect(og.gain); o.connect(lp); lp.connect(og); og.connect(MASTER);
+  hp.type='highpass'; hp.frequency.value=900;
+  ag.gain.setValueAtTime(0.0001,t); ag.gain.exponentialRampToValueAtTime(0.045,t+0.2);
+  ag.gain.exponentialRampToValueAtTime(0.0001,t+1.0);
+  air.connect(hp); hp.connect(ag); ag.connect(MASTER);
+  o.start(t); lfo.start(t); air.start(t); o.stop(t+1.15); lfo.stop(t+1.15); air.stop(t+1.15);
+  tone(900,1200,t+0.95,0.07,0.22);
 }
-function yawn(){ var t=audio().currentTime+0.02; tone(340,190,t,0.75,0.3,'sine'); tone(240,150,t+0.5,0.8,0.22); }
+function noise(dur){ /* بافر نویز سفید برای نفس */
+  var c=audio(), n=Math.floor(c.sampleRate*dur), b=c.createBuffer(1,n,c.sampleRate), d=b.getChannelData(0);
+  for(var i=0;i<n;i++) d[i]=(Math.random()*2-1)*0.6;
+  var s=c.createBufferSource(); s.buffer=b; return s;
+}
+function snore(){ /* خروپفِ نرم: دمِ کوتاه، بازدمِ بلندتر و بم‌تر، سوتِ خیلی کم */
+  var c=audio(), t=c.currentTime+0.02;
+  function breath(at,dur,peak,f0){
+    var n=noise(dur+0.1), g=c.createGain(), lp=c.createBiquadFilter(), o=c.createOscillator(), og=c.createGain();
+    lp.type='lowpass'; lp.frequency.setValueAtTime(f0,t+at);
+    lp.frequency.linearRampToValueAtTime(f0*1.5,t+at+dur*0.5);
+    lp.frequency.linearRampToValueAtTime(f0*0.8,t+at+dur);
+    g.gain.setValueAtTime(0.0001,t+at); g.gain.exponentialRampToValueAtTime(peak,t+at+dur*0.35);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+at+dur);
+    n.connect(lp); lp.connect(g); g.connect(MASTER); n.start(t+at); n.stop(t+at+dur+0.15);
+    o.type='sine'; o.frequency.setValueAtTime(f0*0.42,t+at); o.frequency.linearRampToValueAtTime(f0*0.5,t+at+dur);
+    og.gain.setValueAtTime(0.0001,t+at); og.gain.exponentialRampToValueAtTime(peak*0.35,t+at+dur*0.4);
+    og.gain.exponentialRampToValueAtTime(0.0001,t+at+dur);
+    o.connect(og); og.connect(MASTER); o.start(t+at); o.stop(t+at+dur+0.1);
+  }
+  breath(0,0.62,0.10,420); breath(0.80,0.85,0.13,300); breath(1.85,0.55,0.07,380);
+}
+function yawn(){ var t=audio().currentTime+0.02; tone(340,190,t,0.75,0.3,'sine'); tone(240,150,t+0.5,0.8,0.22); snore(); }
 function play(kind){ if(muted) return; var w=document.getElementById('wave'+kind);
-  if(kind==='purr') purr(); else if(kind==='yawn') yawn(); else if(kind==='giggle') giggle(); else chirp();
+  if(kind==='purr') purr(); else if(kind==='snore') snore(); else if(kind==='yawn') yawn(); else if(kind==='giggle') giggle(); else chirp();
 }
 function pulseWave(v,dur){ var w=document.getElementById('wave'+v); w.classList.add('on');
   setTimeout(function(){ w.classList.remove('on'); },dur); }
@@ -248,7 +277,7 @@ function act(v,kind){
   } else if(kind==='sleep'){
     state[v].sleep=!state[v].sleep;
     stage.classList.toggle('sleep',state[v].sleep);
-    if(state[v].sleep){ stage.classList.add('blink'); play('yawn'); pulseWave(v,900); }
+    if(state[v].sleep){ stage.classList.add('blink'); play('snore'); pulseWave(v,900); }
     else stage.classList.remove('blink');
   }
 }

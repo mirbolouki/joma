@@ -31,10 +31,17 @@ function R_chick(){
   return head('جوجهٔ من', name+(st==='egg'?' — تخم':''), g.sub,
       '<span class="chip '+(st==='chick'?'g':'go')+'">'+(st==='egg'?'تخم':(st==='crack'?'در حال ترک':'جوجه'))+'</span>')+
 
-    '<div class="pet-stage'+(st==='crack'?' wiggle':'')+'" data-petchick>'+
+    '<div class="pet-stage'+(APP.petSleep?' sleep':'')+'" data-petchick>'+
       '<span class="halo"></span>'+
-      '<span class="floaty">'+chickSVG(150, st==='chick'?'chick':st, st==='chick'?'happy':'ok')+'</span>'+
+      '<span class="pet-hold">'+chickSVG(150, st==='chick'?'chick':st, st==='chick'?(APP.petSleep?'sleep':'happy'):'ok')+'</span>'+
     '</div>'+
+    '<div class="pet-ctrls">'+
+      '<button class="btn soft sm" data-petpet>'+ic('i-heart')+'نوازش</button>'+
+      '<button class="btn ghost sm" data-petsleep>'+(APP.petSleep?'بیدارش کن ☀️':'بخوابانش 🌙')+'</button>'+
+      '<button class="btn ghost sm" data-petsnd>'+(APP.sound?'🔊 صدای جوجه روشن':'🔇 صدای جوجه خاموش')+'</button>'+
+    '</div>'+
+    note('جوجهٔ **جغد** است (`owl-chick` — انتخاب مالک)، هم‌خانوادهٔ جغدِ محصول: آبی، شکم کرم، حلقهٔ طلایی دور چشم. '+
+      'لمس **بی‌پاداش** است؛ پرش و جیک فقط واکنش‌اند و داده‌ای را عوض نمی‌کنند.')+
     note('همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
       'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
 

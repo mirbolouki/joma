@@ -805,3 +805,21 @@ table.tbl{width:100%;border-collapse:collapse}
 .btnsoft{font:inherit;font-size:12.5px;font-weight:900;padding:9px 16px;border-radius:99px;
   border:1.5px solid var(--brand);background:var(--brand-soft);color:var(--brand-ink);cursor:pointer}
 .btnsoft:hover{background:var(--brand);color:#fff}
+
+/* ---------- جوجهٔ جوما (جوجهٔ جغد) ---------- */
+.pet-hold{display:grid;place-items:center}
+.chsvg .ch-lids{display:none}
+.chsvg.chcalm .ch-lids,.chsvg .ch-zz{display:block}
+.chsvg.chcalm .ch-eyes{display:none}
+.chsvg.chhappy{animation:chhop .62s cubic-bezier(.3,1.6,.5,1)}
+@keyframes chhop{0%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-20px) scale(.96,1.07)}
+  60%{transform:translateY(0) scale(1.07,.94)}80%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+.chsvg.chpet{animation:chpet .9s ease-in-out}
+@keyframes chpet{25%{transform:translateY(-3px) rotate(-3.5deg)}60%{transform:translateY(-2px) rotate(3.5deg)}}
+.chsvg .chspark{opacity:0}
+.chsvg.chhappy .chspark{opacity:1}
+.chsvg.chcalm{animation:chcalm 4.4s ease-in-out infinite}
+@keyframes chcalm{50%{transform:translateY(-3px) scale(1.01,1.02)}}
+.pet-stage.sleep{background:linear-gradient(160deg,#E8ECF6,#EDF3FA)}
+.pet-ctrls{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+@media(prefers-reduced-motion:reduce){.chsvg,.chsvg.chhappy,.chsvg.chpet,.chsvg.chcalm{animation:none}}

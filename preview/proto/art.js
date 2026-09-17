@@ -100,6 +100,86 @@ function glassSVG(i,filled){
   '</svg>';
 }
 
+/* ---------- جوجهٔ جوما — جوجهٔ جغد، انتخاب مالک: بدنِ گردِ یکپارچه ----------
+   رنگ و فرم از خانوادهٔ جغدِ ۷B: آبی #5E93C8 · شکم کرم #F6EBD9 · حلقهٔ طلایی دور چشم.
+   سه مرحلهٔ تخم/ترک/جوجه، و حالت‌های ok · happy · tired · pale · gray.
+   ============================================================ */
+var CH={a:'#5E93C8', b:'#3F6FA0', cream:'#F6EBD9', gold:'#E8B64A', beak:'#F0A63C',
+        ink:'#2E3A48', rose:'#E07898', line:'#E7D9C2', foot:'#F0A63C'};
+var CH_PALE={a:'#A9C6E0', b:'#8FA9C4', cream:'#F4EFE4', gold:'#E3C98A', beak:'#E3B478',
+             ink:'#5C6B79', rose:'#E3AFC0', line:'#E7DCC8', foot:'#E3B478'};
+var CH_GRAY={a:'#ADB8C2', b:'#94A1AC', cream:'#EFEAE2', gold:'#C9C2B4', beak:'#C0B6A4',
+             ink:'#5A6570', rose:'#C9B6BC', line:'#DDD6CB', foot:'#C0B6A4'};
+
+function chTufts(p){return '<path d="M22 48 C25 28 34 16 50 12 C46 27 47 39 51 50 Z" fill="'+p.b+'"/>'+
+  '<path d="M98 48 C95 28 86 16 70 12 C74 27 73 39 69 50 Z" fill="'+p.b+'"/>';}
+function chWings(p){return '<ellipse cx="25" cy="88" rx="8.5" ry="19" transform="rotate(9 25 88)" fill="'+p.b+'"/>'+
+  '<ellipse cx="95" cy="88" rx="8.5" ry="19" transform="rotate(-9 95 88)" fill="'+p.b+'"/>';}
+function chBelly(p){return '<ellipse cx="60" cy="90" rx="27" ry="24" fill="'+p.cream+'"/>'+
+  '<path d="M34 74 q6.5 6 13 0 q6.5 6 13 0 q6.5 6 13 0 q6.5 6 13 0" fill="none" stroke="'+p.line+'" stroke-width="1.6"/>';}
+function chCheeks(p){return '<ellipse cx="29" cy="73" rx="6" ry="3.6" fill="'+p.rose+'" opacity=".5"/>'+
+  '<ellipse cx="91" cy="73" rx="6" ry="3.6" fill="'+p.rose+'" opacity=".5"/>';}
+function chBeak(p,openMouth){
+  if(openMouth) return '<path d="M53 69 Q60 65 67 69 Q64.5 78 60 80 Q55.5 78 53 69 Z" fill="'+p.beak+'"/>'+
+    '<path d="M55 79 Q60 84 65 79 Q62 86 60 86.5 Q58 86 55 79 Z" fill="'+p.beak+'" opacity=".75"/>';
+  return '<path d="M54 70 Q60 66 66 70 Q63.5 78 60 79.5 Q56.5 78 54 70 Z" fill="'+p.beak+'"/>';
+}
+function chFeet(p){return '<path d="M50 117 q3.5 5.5 7 0 M63 117 q3.5 5.5 7 0" fill="none" stroke="'+p.foot+'" stroke-width="3.4" stroke-linecap="round"/>';}
+function chEyes(p,state){
+  if(state==='closed') return '<path d="M34 60 q11 9 22 0" fill="none" stroke="'+p.ink+'" stroke-width="3.2" stroke-linecap="round"/>'+
+    '<path d="M64 60 q11 9 22 0" fill="none" stroke="'+p.ink+'" stroke-width="3.2" stroke-linecap="round"/>';
+  if(state==='happy') return '<path d="M34 62 q11 -12 22 0" fill="none" stroke="'+p.ink+'" stroke-width="3.4" stroke-linecap="round"/>'+
+    '<path d="M64 62 q11 -12 22 0" fill="none" stroke="'+p.ink+'" stroke-width="3.4" stroke-linecap="round"/>';
+  return '<circle cx="45" cy="60" r="17" fill="none" stroke="'+p.gold+'" stroke-width="2.8"/>'+
+    '<circle cx="75" cy="60" r="17" fill="none" stroke="'+p.gold+'" stroke-width="2.8"/>'+
+    '<circle cx="45" cy="60" r="12.6" fill="'+p.ink+'"/><circle cx="75" cy="60" r="12.6" fill="'+p.ink+'"/>'+
+    '<circle cx="49.5" cy="55" r="4.6" fill="#fff"/><circle cx="79.5" cy="55" r="4.6" fill="#fff"/>'+
+    '<circle cx="41.5" cy="65" r="1.9" fill="#fff" opacity=".85"/><circle cx="71.5" cy="65" r="1.9" fill="#fff" opacity=".85"/>';
+}
+function chBrows(p){return '<path d="M30 46 q10 -7 20 -1 M90 46 q-10 -7 -20 -1" fill="none" stroke="'+p.gold+'" stroke-width="2.6" stroke-linecap="round"/>';}
+function chSpark(p){return '<g class="chspark">'+
+  '<path d="M101 24 l3 3 M111 32 l3 -3 M97 40 l4 1" stroke="'+p.gold+'" stroke-width="2.4" stroke-linecap="round"/>'+
+  '<circle cx="17" cy="34" r="2.4" fill="'+p.gold+'" opacity=".8"/><circle cx="112" cy="18" r="2" fill="'+p.b+'" opacity=".6"/></g>';}
+function chEgg(p, cracked){
+  var e='<ellipse cx="60" cy="72" rx="30" ry="37" fill="#FFF7EA" stroke="#E5D5B4" stroke-width="2.5"/>'+
+    '<ellipse cx="49" cy="58" rx="6" ry="10" fill="#fff" opacity=".85" transform="rotate(-22 49 58)"/>'+
+    '<circle cx="55" cy="88" r="2.4" fill="#EFE0C6"/><circle cx="68" cy="76" r="1.8" fill="#EFE0C6"/>'+
+    '<circle cx="50" cy="98" r="1.6" fill="#EFE0C6"/>';
+  if(cracked) e+='<path d="M38 62 l7 6 -5 6 8 5 -4 7" fill="none" stroke="#C9B387" stroke-width="2.4" stroke-linecap="round"/>'+
+    '<path d="M66 74 l6 -5 4 6 6 -4" fill="none" stroke="#C9B387" stroke-width="2.2" stroke-linecap="round"/>';
+  return e;
+}
+
+/* چتر بیرونی: اندازه و نسبت ۱۲۰×۱۳۲ */
+function chickSVG(size, stage, mood){
+  stage=stage||'chick'; mood=mood||'ok';
+  var p=CH;
+  if(mood==='tired') p=CH_PALE;
+  else if(stage==='calm') p=CH_PALE;
+  else if(stage==='miss') p=CH_GRAY;
+
+  var h=Math.round(size*1.1), inner, cls='';
+  if(stage==='egg'){ inner=chEgg(p,false); cls='floaty'; }
+  else if(stage==='crack'){ inner=chEgg(p,true); cls='wiggle'; }
+  else {
+    var eye = mood==='tired'?'closed':(mood==='happy'?'happy':'open');
+    if(mood==='sleep') eye='closed';
+    inner = chTufts(p)+
+      '<path d="M60 18 C88 18 100 44 100 72 C100 102 84 118 60 118 C36 118 20 102 20 72 C20 44 32 18 60 18 Z" fill="'+p.a+'"/>'+
+      chBelly(p)+chWings(p)+
+      '<g class="ch-eyes">'+chEyes(p,eye)+'</g>'+
+      '<g class="ch-lids">'+chEyes(p,'closed')+'</g>'+
+      chBrows(p)+ (mood==='tired'?'':chCheeks(p)) +
+      chBeak(p, mood==='happy')+chFeet(p)+
+      (mood==='happy'?chSpark(p):'')+
+      (mood==='sleep'?'<g class="ch-zz"><text x="100" y="36" font-size="15" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text>'+
+        '<text x="109" y="23" font-size="10" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text></g>':'');
+    cls = mood==='happy'?'chhappy':(mood==='tired'?'chcalm':'floaty');
+  }
+  return '<svg class="chsvg '+(cls||'')+'" width="'+size+'" height="'+h+'" viewBox="0 0 120 132" aria-hidden="true">'+
+    '<ellipse cx="60" cy="124" rx="30" ry="4" fill="rgba(20,56,46,.10)"/>'+inner+'</svg>';
+}
+
 /* ---------- جوجهٔ من — سه مرحله، از فایل مرجع A ---------- */
 function chickSVG(size,stage,mood){
   stage=stage||'chick'; mood=mood||'ok';

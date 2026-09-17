@@ -64,9 +64,37 @@ window.INNER_CLICK=function(e){
 
   /* ---------- جوجه ---------- */
   if(e.target.closest('[data-petchick]')){
+    /* لمس = واکنش، بدون پاداش: پرش کوتاه + جیک. حالت شاد فقط لحظه‌ای است. */
     var st=document.querySelector('.pet-stage');
+    if(APP.petSleep){ chickSnd('snore'); return; }
+    var art=st.querySelector('.chsvg');
     st.classList.remove('pop'); void st.offsetWidth; st.classList.add('pop');
-    APP.petGrowthFull=!APP.petGrowthFull; return;
+    if(art){
+      art.classList.remove('chhappy'); void art.offsetWidth; art.classList.add('chhappy');
+      var sp=art.querySelector('.chspark'); if(sp) sp.classList.add('on');
+      setTimeout(function(){ art.classList.remove('chhappy'); if(sp) sp.classList.remove('on'); },700);
+    }
+    chickSnd('chirp'); return;
+  }
+  if(e.target.closest('[data-petpet]')){
+    var a2=document.querySelector('.pet-stage .chsvg');
+    var st2=document.querySelector('.pet-stage');
+    st2.classList.remove('pop'); void st2.offsetWidth; st2.classList.add('pop');
+    if(a2){ a2.classList.remove('chpet'); void a2.offsetWidth; a2.classList.add('chpet');
+      setTimeout(function(){ a2.classList.remove('chpet'); },900); }
+    if(APP.petSleep) chickSnd('snore'); else chickSnd('purr');
+    toast('خرخر کرد 🤍 — نوازش، پاداش نمی‌دهد؛ فقط دلش را باز می‌کند');
+    return;
+  }
+  if(e.target.closest('[data-petsleep]')){
+    APP.petSleep=!APP.petSleep; render();
+    if(APP.petSleep) chickSnd('snore');
+    return;
+  }
+  if(e.target.closest('[data-petsnd]')){
+    APP.sound=!APP.sound; render();
+    if(APP.sound) chickSnd('chirp');
+    return;
   }
   if(e.target.closest('[data-petname]')){
     var v=(document.getElementById('petname')||{}).value||'';
