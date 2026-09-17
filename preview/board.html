@@ -1024,6 +1024,23 @@
           و کاربر بعد از برگشت، با همان رابط آشنای «آماده‌سازی» کار می‌کند — نه یک رابط دوحالتهٔ جدید.
         </p>
       </div>
+      <div class="qbox" style="margin-top:16px;background:var(--coral-soft);border-color:rgba(242,120,75,.35)">
+        <h4 style="color:var(--coral-ink)">⚠️ و یک هشدار صادقانه — این تصمیم یک «تغییر قاعده» است</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          جدول انتقال‌های سند مادر (<code>۴٫۲</code>) فقط این‌ها را دارد:
+          <code>DRAFT → PLANNING</code> · <code>PLANNING → RUNNING/DRAFT</code> · <code>RUNNING → ARCHIVED</code>.
+          <b>«برگشت به پیش‌نویس» در آن نیست.</b> پس این تصمیم، تفسیرِ قاعده نیست — <b>عوض‌کردنِ قاعده</b> است و به تأیید بک‌اند نیاز دارد.
+        </p>
+        <p class="tiny" style="margin-top:9px">
+          <b>اگر بک‌اند رد کند، طراحی رابط عوض نمی‌شود</b> — فقط منبعِ «باز است/قفل است» عوض می‌شود:
+          ویرایش درجای «در حال اجرا» تا صفر ثبت، یا ماندن دوره در «آماده‌سازی» تا اولین ثبت.
+          فرانت منتظر <code>canEdit</code> می‌ماند و هیچ‌کدام از این سه را خودش تصمیم نمی‌گیرد.
+        </p>
+        <p class="tiny" style="margin-top:9px">
+          📄 پرامپت آمادهٔ پرسیدن از ایجنت بک‌اند: <code>docs/review/backend-audit-prompt.md</code>
+        </p>
+      </div>
+
 
       <div class="grid2" style="margin-top:16px">
         <div class="card">
