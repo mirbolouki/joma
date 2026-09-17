@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="classic">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>انتخاب جوجهٔ جوما — مقایسهٔ زنده</title>
+<link rel="stylesheet" href="proto.css?v=8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+body{margin:0;background:var(--bg-layer);font-family:"Vazirmatn","IRANSans",Tahoma,system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:1000px;margin:0 auto;padding:18px 14px 60px}
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.top h1{font-size:19px;margin:0}
+.lead{font-size:12.5px;color:var(--ink-2);line-height:2;margin:6px 0 16px}
+.lead b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.cand{background:var(--card);border:2px solid var(--card-brd);border-radius:var(--r-lg);padding:14px;position:relative}
+.cand.pickA{border-color:var(--brand)}
+.tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:900;background:var(--brand-soft);color:var(--brand-ink);border-radius:99px;padding:5px 12px}
+.cand h2{font-size:15px;margin:10px 0 2px}
+.cand .why{font-size:11.5px;color:var(--ink-3);line-height:1.9;min-height:34px}
+.stage{height:250px;border-radius:var(--r);background:linear-gradient(160deg,var(--lav-soft),var(--sky-soft));
+  display:grid;place-items:center;cursor:pointer;user-select:none;position:relative;overflow:hidden;margin-top:10px}
+.stage:active{transform:scale(.995)}
+.ground{position:absolute;bottom:22px;width:120px;height:12px;border-radius:99px;background:rgba(20,56,46,.08)}
+.pet{position:relative;transform-origin:50% 92%;animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{50%{transform:translateY(-7px)}}
+.pet.happy{animation:hop .62s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hop{0%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-20px) scale(.96,1.07)}
+  60%{transform:translateY(0) scale(1.07,.94)}80%{transform:translateY(-5px) scale(1,1)}100%{transform:translateY(0)}}
+.pet.petit{animation:shake .7s ease-in-out}
+@keyframes shake{25%{transform:translateY(-3px) rotate(-4deg)}60%{transform:translateY(-2px) rotate(4deg)}}
+.pet.sleep{animation:sleep 4.4s ease-in-out infinite}
+@keyframes sleep{50%{transform:translateY(-3px) scale(1.01,1.02)}}
+.stage .eyes{transition:none}
+.stage.blink .eyes{display:none}
+.stage.blink .lids{display:block}
+.lids{display:none}
+.zz{opacity:0;transition:opacity .4s}
+.stage.sleep .zz{opacity:1}
+.spark{opacity:0}
+.pet.happy ~ .spark,.spark.on{opacity:1;transition:opacity .2s}
+.ctrls{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.ctrls button{font:inherit;font-size:11.5px;font-weight:900;padding:8px 12px;border-radius:99px;
+  border:1.5px solid var(--card-brd);background:var(--card);color:var(--ink-2);cursor:pointer}
+.ctrls button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pickbar{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-3)}
+.wave{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--brand);opacity:0;transition:opacity .15s}
+.wave.on{opacity:.85}
+.note{background:var(--brand-softer);border-radius:var(--r-sm);padding:11px 13px;font-size:12px;line-height:2;margin-top:16px}
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+@media(max-width:760px){.legend{grid-template-columns:1fr}}
+.legend div{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r-sm);padding:10px 12px;font-size:11.5px;line-height:1.95}
+.legend b{display:block;font-size:12px;margin-bottom:3px}
+.foot{margin-top:18px;font-size:11.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>انتخاب جوجهٔ جوما</h1>
+    <span class="tag">هر دو زنده‌اند — کلیک کن، صدا را روشن کن</span>
+  </div>
+  <p class="lead">
+    هر دو <b>جوجهٔ جغد</b>اند با رنگ و فرم جغدِ جوما (آبی، شکم کِرِم، حلقهٔ طلایی دور چشم) — نه جوجهٔ مرغ.
+    تفاوتشان در تناسب است: <b>الف</b> بدنِ گردِ یکپارچه دارد، <b>ب</b> سرِ درشت و بدنِ کوچک («توپی‌تر»).
+    روی هر کدام کلیک کن تا واکنشش را ببینی، و با دکمه‌ها بخوابانش یا نوازشش کن.
+  </p>
+
+  <div class="grid">
+    <section class="cand" id="candA">
+      <span class="tag">الف</span>
+      <h2>بدنِ گرد</h2>
+      <div class="why">یکپارچه و ساده؛ در اندازه‌های کوچک (کارت خانه، ۸۲px) هنوز خواناست. شبیه جغدِ بزرگ جوماست، فقط کوچک.</div>
+      <div class="stage" data-v="A"><span class="ground"></span><span class="pet" id="petA"></span><span class="wave" id="waveA"></span></div>
+      <div class="ctrls">
+        <button data-act="happy" data-v="A">شادش کن</button>
+        <button data-act="petit" data-v="A">نوازش</button>
+        <button data-act="sleep" data-v="A">بخوابان</button>
+        <button data-act="sound" data-v="A">صدا: روشن</button>
+      </div>
+      <div class="pickbar"><button class="btnsoft" data-pick="A">این را انتخاب می‌کنم — الف</button></div>
+    </section>
+
+    <section class="cand" id="candB">
+      <span class="tag">ب</span>
+      <h2>سرِ درشت</h2>
+      <div class="why">بچگانه‌تر و «توپی‌تر»؛ چشم‌ها بزرگ‌تر دیده می‌شوند و حس بغل‌کردن می‌دهند. در اندازهٔ خیلی کوچک، جزئیاتش کم می‌شود.</div>
+      <div class="stage" data-v="B"><span class="ground"></span><span class="pet" id="petB"></span><span class="wave" id="waveB"></span></div>
+      <div class="ctrls">
+        <button data-act="happy" data-v="B">شادش کن</button>
+        <button data-act="petit" data-v="B">نوازش</button>
+        <button data-act="sleep" data-v="B">بخوابان</button>
+        <button data-act="sound" data-v="B">صدا: روشن</button>
+      </div>
+      <div class="pickbar"><button class="btnsoft" data-pick="B">این را انتخاب می‌کنم — ب</button></div>
+    </section>
+  </div>
+
+  <div class="note">
+    <b>در هر دو یکی است:</b> شش حالت (آرام · پلک · شاد · خواب · نوازش · تخم) · واکنش به لمس <b>بی‌پاداش</b> است (`CAR-01`) ·
+    حالت‌های شاد/خواب از <b>دادهٔ واقعی</b> می‌آیند، نه از کلیک · صداها <b>جیک و خرخر جوجهٔ جغد</b> است، پیش‌فرض <b>بی‌صدا</b>.
+    <br><b>اگر خواستی:</b> بگو کدام، و اگر جزئیاتی را می‌خواهی عوض کنم (اندازهٔ چشم، کاکل، رنگ منقار) بگو تا همان را نهایی کنم.
+  </div>
+
+  <div class="legend">
+    <div><b>حرکت‌ها</b> نفسِ آرام (۳٫۲s) · پلک هر چند ثانیه · پرش کوتاه بعد از ثبت · لرزش هنگام نوازش · خمیازه در خواب</div>
+    <div><b>صداها</b> جیکِ دو نُتی ۴۸۰→۷۸۰Hz · قلقلکِ کوتاه · خرخرِ رضایت · خمیازهٔ کشدار — حجم پایین</div>
+    <div><b>وقتی بزرگ شد</b> با ثبت‌های واقعی: تخم → ترک → جوجه · حالت خاکستری «نیازمند توجه» بعد از ۶ روز بی‌ثبت</div>
+  </div>
+  <div class="foot">این صفحه فقط برای بازبینی است و بخشی از محصول نیست. نسخهٔ ۸ — مقایسهٔ زندهٔ جوجه.</div>
+</div>
+
+<script>
+/* ---------------- هنر جوجهٔ جغد ---------------- */
+var PAL={a:'#5E93C8',b:'#3F6FA0',cream:'#F6EBD9',gold:'#E8B64A',beak:'#F0A63C',ink:'#2E3A48',rose:'#E07898'};
+function tufts(){return '<path d="M22 48 C25 28 34 16 50 12 C46 27 47 39 51 50 Z" fill="'+PAL.b+'"/>'+
+  '<path d="M98 48 C95 28 86 16 70 12 C74 27 73 39 69 50 Z" fill="'+PAL.b+'"/>';}
+function wings(){return '<ellipse cx="25" cy="88" rx="8.5" ry="19" transform="rotate(9 25 88)" fill="'+PAL.b+'"/>'+
+  '<ellipse cx="95" cy="88" rx="8.5" ry="19" transform="rotate(-9 95 88)" fill="'+PAL.b+'"/>';}
+function belly(){return '<ellipse cx="60" cy="90" rx="27" ry="24" fill="'+PAL.cream+'"/>'+
+  '<path d="M34 74 q6.5 6 13 0 q6.5 6 13 0 q6.5 6 13 0 q6.5 6 13 0" fill="none" stroke="#E7D9C2" stroke-width="1.6"/>';}
+function cheeks(){return '<ellipse cx="29" cy="73" rx="6" ry="3.6" fill="'+PAL.rose+'" opacity=".5"/>'+
+  '<ellipse cx="91" cy="73" rx="6" ry="3.6" fill="'+PAL.rose+'" opacity=".5"/>';}
+function beak(o){return o?'<path d="M53 69 Q60 65 67 69 Q64.5 78 60 80 Q55.5 78 53 69 Z" fill="'+PAL.beak+'"/>'+
+  '<path d="M55 79 Q60 84 65 79 Q62 86 60 86.5 Q58 86 55 79 Z" fill="#D97F22"/>'
+  :'<path d="M54 70 Q60 66 66 70 Q63.5 78 60 79.5 Q56.5 78 54 70 Z" fill="'+PAL.beak+'"/>';}
+function feet(){return '<path d="M50 117 q3.5 5.5 7 0 M63 117 q3.5 5.5 7 0" fill="none" stroke="'+PAL.beak+'" stroke-width="3.4" stroke-linecap="round"/>';}
+function eyesOpen(cy){cy=cy||60;return '<g class="eyes">'+
+  '<circle cx="45" cy="'+cy+'" r="17" fill="none" stroke="'+PAL.gold+'" stroke-width="2.8"/>'+
+  '<circle cx="75" cy="'+cy+'" r="17" fill="none" stroke="'+PAL.gold+'" stroke-width="2.8"/>'+
+  '<circle cx="45" cy="'+cy+'" r="12.6" fill="'+PAL.ink+'"/><circle cx="75" cy="'+cy+'" r="12.6" fill="'+PAL.ink+'"/>'+
+  '<circle cx="49.5" cy="'+(cy-5)+'" r="4.6" fill="#fff"/><circle cx="79.5" cy="'+(cy-5)+'" r="4.6" fill="#fff"/>'+
+  '<circle cx="41.5" cy="'+(cy+5)+'" r="1.9" fill="#fff" opacity=".85"/><circle cx="71.5" cy="'+(cy+5)+'" r="1.9" fill="#fff" opacity=".85"/></g>';}
+function eyesHappy(cy){cy=cy||60;return '<g class="eyes">'+
+  '<path d="M34 '+cy+' q11 -12 22 0" fill="none" stroke="'+PAL.ink+'" stroke-width="3.4" stroke-linecap="round"/>'+
+  '<path d="M64 '+cy+' q11 -12 22 0" fill="none" stroke="'+PAL.ink+'" stroke-width="3.4" stroke-linecap="round"/></g>';}
+function lids(cy){cy=cy||60;return '<g class="lids">'+
+  '<path d="M34 '+cy+' q11 9 22 0" fill="none" stroke="'+PAL.ink+'" stroke-width="3.2" stroke-linecap="round"/>'+
+  '<path d="M64 '+cy+' q11 9 22 0" fill="none" stroke="'+PAL.ink+'" stroke-width="3.2" stroke-linecap="round"/></g>';}
+function brows(cy){cy=cy||46;return '<path d="M30 '+cy+' q10 -7 20 -1 M90 '+cy+' q-10 -7 -20 -1" fill="none" stroke="'+PAL.gold+'" stroke-width="2.6" stroke-linecap="round"/>';}
+function bodyRound(){return '<path d="M60 18 C88 18 100 44 100 72 C100 102 84 118 60 118 C36 118 20 102 20 72 C20 44 32 18 60 18 Z" fill="'+PAL.a+'"/>';}
+
+function chickA(){ /* بدنِ گرد */
+  return svg(tufts()+bodyRound()+belly()+wings()+eyesOpen()+brows()+lids()+cheeks()+beak(false)+feet(),132);}
+function chickB(){ /* سرِ درشت */
+  return svg(
+    '<ellipse cx="60" cy="106" rx="30" ry="26" fill="'+PAL.a+'"/>'+
+    '<ellipse cx="60" cy="112" rx="19" ry="17" fill="'+PAL.cream+'"/>'+
+    '<ellipse cx="33" cy="104" rx="7.5" ry="16" transform="rotate(12 33 104)" fill="'+PAL.b+'"/>'+
+    '<ellipse cx="87" cy="104" rx="7.5" ry="16" transform="rotate(-12 87 104)" fill="'+PAL.b+'"/>'+
+    tufts()+
+    '<circle cx="60" cy="52" r="37" fill="'+PAL.a+'"/>'+
+    eyesOpen(52)+brows(38)+lids(52)+
+    '<ellipse cx="25" cy="66" rx="6" ry="3.6" fill="'+PAL.rose+'" opacity=".5"/>'+
+    '<ellipse cx="95" cy="66" rx="6" ry="3.6" fill="'+PAL.rose+'" opacity=".5"/>'+
+    '<path d="M53 63 Q60 59 67 63 Q64.5 71 60 72.6 Q55.5 71 53 63 Z" fill="'+PAL.beak+'"/>'+
+    '<path d="M50 126 q3.5 5.5 7 0 M63 126 q3.5 5.5 7 0" fill="none" stroke="'+PAL.beak+'" stroke-width="3.4" stroke-linecap="round"/>',140);}
+function spark(){return '<g class="spark">'+
+  '<path d="M100 24 l3 3 M110 32 l3 -3 M96 40 l4 1" stroke="'+PAL.gold+'" stroke-width="2.4" stroke-linecap="round"/>'+
+  '<circle cx="18" cy="34" r="2.4" fill="'+PAL.gold+'" opacity=".8"/><circle cx="112" cy="18" r="2" fill="'+PAL.b+'" opacity=".6"/></g>';}
+function zz(){return '<g class="zz"><text x="100" y="36" font-size="15" font-weight="800" fill="'+PAL.b+'" font-family="sans-serif">z</text>'+
+  '<text x="109" y="23" font-size="10" font-weight="800" fill="'+PAL.b+'" font-family="sans-serif">z</text>'+
+  '<text x="115" y="13" font-size="7" font-weight="800" fill="'+PAL.b+'" font-family="sans-serif">z</text></g>';}
+function svg(inner,h){return '<svg width="170" height="'+h+'" viewBox="0 '+((h-132)/2*-1)+' 120 '+h+'" aria-hidden="true">'+
+  '<ellipse cx="60" cy="'+(h-8)+'" rx="30" ry="4" fill="rgba(20,56,46,.10)"/>'+inner+zz()+spark()+'</svg>';}
+
+var VAR={A:chickA(),B:chickB()};
+document.getElementById('petA').innerHTML=VAR.A;
+document.getElementById('petB').innerHTML=VAR.B;
+
+/* ---------------- صدا: جوجهٔ جغد ---------------- */
+var AC=null, MASTER=null, muted=true;
+function audio(){
+  if(!AC){ AC=new (window.AudioContext||window.webkitAudioContext)();
+    MASTER=AC.createGain(); MASTER.gain.value=0.5; MASTER.connect(AC.destination); }
+  if(AC.state==='suspended') AC.resume();
+  return AC;
+}
+function env(g,t0,a,peak,dec){ g.gain.setValueAtTime(0.0001,t0);
+  g.gain.exponentialRampToValueAtTime(peak,t0+a);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+a+dec); }
+function tone(f0,f1,t0,dur,peak,type){
+  var c=audio(), o=c.createOscillator(), g=c.createGain();
+  o.type=type||'sine'; o.frequency.setValueAtTime(f0,t0);
+  o.frequency.exponentialRampToValueAtTime(f1,t0+dur);
+  /* لرزش کوچک، مثل جیک پرنده */
+  var lfo=c.createOscillator(), lg=c.createGain();
+  lfo.frequency.value=22; lg.gain.value=f0*0.035; lfo.connect(lg); lg.connect(o.frequency); lfo.start(t0); lfo.stop(t0+dur+0.05);
+  env(g,t0,0.012,peak,dur); o.connect(g); g.connect(MASTER); o.start(t0); o.stop(t0+dur+0.08);
+}
+function chirp(){ /* جیک دو نُتی */
+  var t=audio().currentTime+0.02;
+  tone(470,780,t,0.13,0.5); tone(620,900,t+0.16,0.11,0.42);
+}
+function giggle(){ /* قلقلکِ کوتاه — سه جیک ریز */
+  var t=audio().currentTime+0.02;
+  [0,0.09,0.18].forEach(function(d,i){ tone(700+i*60,980+i*40,t+d,0.06,0.3); });
+}
+function purr(){ /* خرخرِ رضایت */
+  var c=audio(), t=c.currentTime+0.02, o=c.createOscillator(), g=c.createGain(),
+      f=c.createBiquadFilter(), lfo=c.createOscillator(), lg=c.createGain();
+  o.type='triangle'; o.frequency.value=118; f.type='lowpass'; f.frequency.value=700;
+  lfo.frequency.value=26; lg.gain.value=0.16;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.34,t+0.12);
+  g.gain.setValueAtTime(0.34,t+0.7); g.gain.exponentialRampToValueAtTime(0.0001,t+1.1);
+  lfo.connect(lg); lg.connect(g.gain); o.connect(f); f.connect(g); g.connect(MASTER);
+  o.start(t); lfo.start(t); o.stop(t+1.2); lfo.stop(t+1.2);
+}
+function yawn(){ var t=audio().currentTime+0.02; tone(340,190,t,0.75,0.3,'sine'); tone(240,150,t+0.5,0.8,0.22); }
+function play(kind){ if(muted) return; var w=document.getElementById('wave'+kind);
+  if(kind==='purr') purr(); else if(kind==='yawn') yawn(); else if(kind==='giggle') giggle(); else chirp();
+}
+function pulseWave(v,dur){ var w=document.getElementById('wave'+v); w.classList.add('on');
+  setTimeout(function(){ w.classList.remove('on'); },dur); }
+
+/* ---------------- رفتار ---------------- */
+var state={A:{sleep:false,last:0},B:{sleep:false,last:0},sound:{A:false,B:false}};
+['A','B'].forEach(function(v){
+  var stage=document.querySelector('.stage[data-v="'+v+'"]');
+  var pet=document.getElementById('pet'+v);
+  /* پلک زدن */
+  setInterval(function(){
+    if(state[v].sleep) return;
+    stage.classList.add('blink');
+    setTimeout(function(){ stage.classList.remove('blink'); }, 130);
+  }, 3400+Math.random()*2600);
+  stage.addEventListener('click',function(){ act(v,'happy'); });
+});
+function act(v,kind){
+  var stage=document.querySelector('.stage[data-v="'+v+'"]'), pet=document.getElementById('pet'+v);
+  var now=Date.now();
+  if(kind==='happy'){
+    if(now-state[v].last<900) { /* کلیک پشت سر هم: واکنش آرام‌تر می‌شود */
+      pet.classList.remove('happy'); void pet.offsetWidth; return; }
+    state[v].last=now;
+    stage.classList.remove('sleep'); state[v].sleep=false;
+    pet.classList.remove('happy'); void pet.offsetWidth; pet.classList.add('happy');
+    var sp=pet.querySelector('.spark'); if(sp) sp.classList.add('on');
+    setTimeout(function(){ pet.classList.remove('happy'); if(sp) sp.classList.remove('on'); },700);
+    play(v==='A'?'chirp':'chirp'); pulseWave(v,500);
+  } else if(kind==='petit'){
+    pet.classList.remove('petit'); void pet.offsetWidth; pet.classList.add('petit');
+    setTimeout(function(){ pet.classList.remove('petit'); },760);
+    play('purr'); pulseWave(v,1100);
+  } else if(kind==='sleep'){
+    state[v].sleep=!state[v].sleep;
+    stage.classList.toggle('sleep',state[v].sleep);
+    if(state[v].sleep){ stage.classList.add('blink'); play('yawn'); pulseWave(v,900); }
+    else stage.classList.remove('blink');
+  }
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]'); if(!b) return;
+  var v=b.dataset.v;
+  if(b.dataset.act==='sound'){
+    state.sound[v]=!state.sound[v]; muted=!state.sound[v];
+    b.textContent='صدا: '+(state.sound[v]?'روشن':'خاموش');
+    b.classList.toggle('on',state.sound[v]);
+    return;
+  }
+  act(v,b.dataset.act);
+});
+document.addEventListener('click',function(e){
+  var p=e.target.closest('[data-pick]'); if(!p) return;
+  var v=p.dataset.pick;
+  document.querySelectorAll('.cand').forEach(function(c){c.classList.remove('pickA');});
+  document.getElementById('cand'+v).classList.add('pickA');
+  p.textContent='انتخاب شد ✓ — همین را در سند و نمونه نهایی می‌کنم';
+  document.querySelectorAll('[data-pick]').forEach(function(x){ if(x!==p) x.textContent='این را انتخاب می‌کنم — '+x.dataset.pick; });
+});
+</script>
+</body>
+</html>
