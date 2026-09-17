@@ -35,8 +35,8 @@
 <div class="intro">
   <span class="logo"><span class="logo-tile" id="itile"></span>
     <span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>
-  <h1>نمونهٔ زنده — پیش از نوشتن کد <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px">نسخهٔ ۴ — دستهٔ ۲ آماده</span></h1>
-  <p class="tiny" style="margin-top:6px">نسخهٔ تازه: <b>دستهٔ ۲ هم آماده شد</b> — جوجه · دفترچه · گزارش‌ها · برنامه · کتابخانه · آموزش. اگر این بَج را نمی‌بینی، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b> بزن.</p>
+  <h1>نمونهٔ زنده — پیش از نوشتن کد <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px">نسخهٔ ۵ — هر ۱۸ صفحه آماده</span></h1>
+  <p class="tiny" style="margin-top:6px">نسخهٔ تازه: <b>هر ۱۸ صفحه آماده است</b> — دستهٔ ۲ و دستهٔ ۳ هم اضافه شدند. کل محصول حالا کلیک‌شدنی است. اگر این بَج را نمی‌بینی، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b> بزن.</p>
   <p class="lead">
     این همان چیزی است که خواستی: <b>کل فرانت، بصری و کلیک‌پذیر، قبل از شروع کدنویسی.</b>
     هر صفحه یک شماره دارد و به بخشی از سند وصل است — پس می‌توانی بگویی «صفحهٔ ۵ را عوض کن» بدون اینکه سند بخوانی.
@@ -56,7 +56,8 @@
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
     <a class="btn primary" href="app.html#landing">شروع از صفحهٔ ۱ — لندینگ</a>
-    <a class="btn soft" href="app.html#chick">رفتن به دستهٔ ۲ — جوجه</a>
+    <a class="btn soft" href="app.html#chick">دستهٔ ۲ — جوجه</a>
+    <a class="btn soft" href="app.html#hammasir">دستهٔ ۳ — هم‌مسیر</a>
     <a class="btn soft" href="../board.html">تابلوی تصمیم‌ها (نسخهٔ ۷)</a>
     <a class="btn ghost" href="../index.html">پیش‌نمایش قبلی (v0.2)</a>
   </div>
@@ -64,7 +65,7 @@
   <p class="tiny" style="margin-top:20px;line-height:2">
     <b>دستهٔ ۱</b> (۱ تا ۶): لندینگ · ورود · ثبت‌نام · خانه · کارهای امروز (با لیوان‌های آب) · حال من — <b>آماده و تأییدشده</b>.
     <br><b>دستهٔ ۲</b> (۷ تا ۱۲): جوجهٔ من · دفترچهٔ جوما · گزارش‌ها · برنامهٔ من · کتابخانه · آموزش — <b>آمادهٔ بازبینی</b>.
-    <br><b>دستهٔ ۳</b> (۱۳ تا ۱۸): هم‌مسیر · تنظیمات · نقش‌ها · کنسول مدیر · صفحه‌های محتوایی · حقوق داده — ساخته می‌شود.
+    <br><b>دستهٔ ۳</b> (۱۳ تا ۱۸): هم‌مسیر · تنظیمات و پروفایل · نقش‌ها · کنسول مدیر · صفحه‌های محتوایی · حقوق داده — <b>آمادهٔ بازبینی</b>.
   </p>
 </div>
 
@@ -85,12 +86,12 @@ var MAP=[
   {n:10,id:'plan',t:'برنامهٔ من',s:'۱۸'},
   {n:11,id:'library',t:'کتابخانه',s:'۱۷'},
   {n:12,id:'edu',t:'آموزش',s:'۱۹'},
-  {n:13,t:'هم‌مسیر',s:'۲۰',b:3},
-  {n:14,t:'تنظیمات',s:'۲۱',b:3},
-  {n:15,t:'نقش‌ها و سوییچ',s:'۲۴',b:3},
-  {n:16,t:'کنسول مدیر',s:'۲۳',b:3},
-  {n:17,t:'صفحه‌های محتوایی',s:'۲۵',b:3},
-  {n:18,t:'حقوق داده',s:'۲۶',b:3}
+  {n:13,id:'hammasir',t:'هم‌مسیر',s:'۲۰'},
+  {n:14,id:'settings',t:'تنظیمات',s:'۲۱'},
+  {n:15,id:'roles',t:'نقش‌ها و سوییچ',s:'۲۴'},
+  {n:16,id:'admin',t:'کنسول مدیر',s:'۲۳'},
+  {n:17,id:'content',t:'صفحه‌های محتوایی',s:'۲۵'},
+  {n:18,id:'rights',t:'حقوق داده',s:'۲۶'}
 ];
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('itile').innerHTML='<svg width="30" height="30"><use href="#owl-hi"/></svg>';

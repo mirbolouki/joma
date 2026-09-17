@@ -169,6 +169,81 @@ window.INNER_CLICK=function(e){
   if((t=e.target.closest('[data-gostep]'))){ go(t.dataset.gostep); return; }
   if((t=e.target.closest('[data-eduopen]'))){ toast('نمایش نمونه: «'+t.dataset.eduopen+'» باز می‌شود'); return; }
 
+
+  /* ---------- هم‌مسیر ---------- */
+  if(e.target.closest('[data-hamcancel]')){ toast('درخواست لغو شد'); return; }
+  if(e.target.closest('[data-hamaccept]')){ APP.hamLink='ACTIVE'; render(); toast('ارتباط فعال شد — فقط مجوزهایی که روشن کردی'); return; }
+  if(e.target.closest('[data-hamdecline]')){ APP.hamLink='DECLINED'; render(); toast('رد شد — بدون ارسال دلیل'); return; }
+  if(e.target.closest('[data-hamcut]')){
+    modal('<h3>ارتباط با دکتر مینا رستمی قطع شود؟</h3>'+
+      '<p class="tiny">او دیگر به اطلاعات تو دسترسی ندارد. گفت‌وگوهای قبلی باقی می‌مانند'+
+      ' <span class="tiny muted">(این جمله از بک‌اند می‌آید — ۱۷٫۳)</span>.</p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+      '<span class="sp"></span><button class="btn danger sm" data-hamcut2>قطع کن</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-hamcut2]')){ closeModal(); APP.hamLink='REVOKED'; render(); toast('ارتباط قطع شد — دسترسی از همین لحظه بسته شد'); return; }
+  if(e.target.closest('[data-hamoff]')){ toast('خاموش شد — یک کلیک، بدون تأیید و بدون توضیح‌خواهی'); return; }
+  if(e.target.closest('[data-hamsend]')){ APP.hamLink='PENDING_OUT'; render(); toast('درخواست فرستاده شد — تا تأیید او و تأیید تو، هیچ داده‌ای رد و بدل نمی‌شود'); return; }
+  if(e.target.closest('[data-hamcode]')){ toast('نمایش نمونه: ورود کد دعوت مشاور'); return; }
+  if(e.target.closest('[data-cliopen]')){ APP.hamRole='companion'; render(); toast('صفحهٔ مراجع — فقط بخش‌های مجاز رندر می‌شود'); return; }
+  if(e.target.closest('[data-dm]')){
+    modal('<h3>گفت‌وگو</h3><p class="tiny">سهمیه و فاصله از بک‌اند می‌آید: ۳ پیام در روز برای مراجع، ۲۰ برای همراه، فاصلهٔ حداقلی ۵ ثانیه. '+
+      'اگر هر دو مجوز پیام روشن نباشد، جعبهٔ نوشتن <b>حذف</b> می‌شود — بدون گفتن اینکه کدام مجوز خاموش است.</p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>باشه</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-send-dm]')){ toast('فرستاده شد — سهمیهٔ امروز تمام شد'); return; }
+
+  /* ---------- تنظیمات ---------- */
+  if((t=e.target.closest('[data-settab]'))){ APP.setTab=t.dataset.settab; render(); return; }
+  if((t=e.target.closest('[data-settheme]'))){ APP.theme=t.dataset.settheme; render(); toast('تم ذخیره شد'+(APP.theme==='classic'?' — کلاسیک':' — شیشه')); return; }
+  if(e.target.closest('[data-editname]')){ toast('نمایش نمونه: ویرایش نام نمایشی'); return; }
+  if(e.target.closest('[data-logout]')){
+    modal('<h3>از حسابت بیرون بیایی؟</h3><p class="tiny">ثبت‌های قطعی‌ات محفوظ می‌مانند.</p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>بمان</button>'+
+      '<span class="sp"></span><button class="btn soft sm" data-close>خروج</button></div>');
+    return;
+  }
+
+  /* ---------- نقش‌ها ---------- */
+  if((t=e.target.closest('[data-roleview]'))){
+    var rk=t.dataset.roleview;
+    if(rk==='admin'){ toast('این نقش را نداری — تب هم نمایش داده نمی‌شود'); return; }
+    APP.roleView=rk; render(); toast('داشبورد نقش عوض شد — مجوز عوض نمی‌شود');
+    return;
+  }
+
+  /* ---------- کنسول مدیر ---------- */
+  if((t=e.target.closest('[data-admsec]'))){ APP.admSec=t.dataset.admsec; render(); return; }
+  if(e.target.closest('[data-admrole]')){
+    modal('<h3>سارا نمونه مدیر شود؟</h3>'+
+      '<p class="tiny">مدیر به همهٔ بخش‌های مدیریتی دسترسی دارد و می‌تواند به دیگران هم نقش بدهد.<br>'+
+      'موقعیت‌های قبلی او: مشاور · ۴ مراجع باز <span class="tiny muted">(از بک‌اند)</span></p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+      '<span class="sp"></span><button class="btn primary sm" data-admyes>بله، مدیر شود</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-admyes]')){ closeModal(); toast('نقش داده شد — با لاگ: زمان، کاربر، مقدار قبل'); return; }
+  if(e.target.closest('[data-admoff]')){
+    modal('<h3>حساب سارا نمونه غیرفعال شود؟</h3>'+
+      '<p class="tiny">کاربر دیگر نمی‌تواند وارد شود. ثبت‌ها و گزارش‌هایش باقی می‌مانند.'+
+      ' حذف حساب ممکن نیست — تا تصمیم OPEN-12 فقط غیرفعال‌سازی.</p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+      '<span class="sp"></span><button class="btn danger sm" data-close>غیرفعال کن</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-admblock]')){ toast('ممنوع — مشاور با رابطهٔ باز را نمی‌شود غیرفعال کرد'); return; }
+  if(e.target.closest('[data-admkill]')){ toast('حذف کامل فقط با شرط صفر ارجاع و تأیید دوگانه — وگرنه غیرفعال‌سازی'); return; }
+
+  /* ---------- صفحه‌های محتوایی ---------- */
+  if((t=e.target.closest('[data-cpage]'))){ APP.contentPage=t.dataset.cpage; render(); return; }
+
+  /* ---------- حقوق داده ---------- */
+  if((t=e.target.closest('[data-rtstep]'))){ APP.rightsStep=t.dataset.rtstep; render(); return; }
+  if(e.target.closest('[data-download]')){ toast('دانلود شد — لینک یک‌بارمصرف، انقضا ۷ روز'); return; }
+  if(e.target.closest('[data-delconfirm]')){ toast('تأیید نهایی فقط با نوشتن «پاک کن» — در محصول واقعی، ساخت این جریان مشروط به OPEN-12 است'); return; }
+
   /* --- بازشدن ردیف --- */
   if((t=e.target.closest('[data-row]'))){
     var name=t.querySelector('b').textContent;

@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۴ — دستهٔ ۲: جوجه · دفترچه · گزارش · برنامه · کتابخانه · آموزش';
+var BUILD='نسخهٔ ۵ — دستهٔ ۳: هم‌مسیر · تنظیمات · نقش‌ها · مدیر · محتوا · حقوق داده';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -19,12 +19,12 @@ var SCREENS = [
   {n:10, id:'plan',    name:'برنامهٔ من',        sec:'۱۸',     batch:1, app:1, nav:'plan'},
   {n:11, id:'library', name:'کتابخانه',          sec:'۱۷',     batch:1, app:1, nav:'library'},
   {n:12, id:'edu',     name:'آموزش',             sec:'۱۹',     batch:1, app:1, nav:'edu'},
-  {n:13, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:3, app:1, nav:'hammasir'},
-  {n:14, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:3, app:1, nav:'settings'},
-  {n:15, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:3, app:1},
-  {n:16, id:'admin',   name:'کنسول مدیر',        sec:'۲۳',     batch:3, app:1},
-  {n:17, id:'content', name:'صفحه‌های محتوایی',  sec:'۲۵',     batch:3},
-  {n:18, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:3, app:1, nav:'settings'}
+  {n:13, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:1, app:1, nav:'hammasir'},
+  {n:14, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:1, app:1, nav:'settings'},
+  {n:15, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:1, app:1},
+  {n:16, id:'admin',   name:'کنسول مدیر',        sec:'۲۴ §۵',     batch:1, app:1},
+  {n:17, id:'content', name:'صفحه‌های محتوایی',  sec:'۲۵',     batch:1},
+  {n:18, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:1, app:1, nav:'settings'}
 ];
 
 /* ---------- وضعیت برنامهٔ نمونه ---------- */
@@ -46,6 +46,13 @@ var APP = {
   libQuery:'',
   libPath:'all',
   eduTab:'map',
+  hamRole:'client',
+  hamLink:'ACTIVE',
+  setTab:'profile',
+  roleView:'client',
+  admSec:'overview',
+  contentPage:'about',
+  rightsStep:'export',
   moodStep:0,
   moodAnswers:{},
   water:0
@@ -154,6 +161,8 @@ function rvbar(){
     '<button data-goal>هدف آب: '+fa(APP.waterGoal)+'</button>'+
     '<button data-pet>'+(APP.petStage==='egg'?'جوجه: تخم':(APP.petStage==='crack'?'جوجه: ترک':'جوجه: متولد'))+'</button>'+
     '<button data-plan>'+(APP.planStatus==='RUNNING'?'دوره: در اجرا':(APP.planStatus==='DRAFT'?'دوره: پیش‌نویس':(APP.planStatus==='PLANNING'?'دوره: آماده‌سازی':'دوره: بایگانی')))+'</button>'+
+    '<button data-roleview>نقش: '+(APP.roleView==='coach'?'مشاور':(APP.roleView==='admin'?'مدیر':'کاربری'))+'</button>'+
+    '<button data-hamlink>'+(APP.hamRole==='companion'?'حالت: مسیر همراه':'حالت: مسیر مراجع')+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
@@ -407,7 +416,7 @@ document.addEventListener('DOMContentLoaded',function(){
   render();
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-go]'); if(t){go(t.dataset.go);return;}
-    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan]');
+    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan],[data-roleview],[data-hamlink]');
     if(b){
       var idx=SCREENS.map(function(x){return x.id;}).indexOf(APP.screen);
       if(b.hasAttribute('data-prev')){ if(idx>0) go(SCREENS[idx-1].id); }
@@ -430,6 +439,12 @@ document.addEventListener('DOMContentLoaded',function(){
       }
       else if(b.hasAttribute('data-plan')){
         var sq=['DRAFT','PLANNING','RUNNING','ARCHIVED']; APP.planStatus=sq[(sq.indexOf(APP.planStatus)+1)%sq.length]; render();
+      }
+      else if(b.hasAttribute('data-roleview')){
+        var rq=['client','coach','admin']; APP.roleView=rq[(rq.indexOf(APP.roleView)+1)%rq.length]; render();
+      }
+      else if(b.hasAttribute('data-hamlink')){
+        APP.hamRole=(APP.hamRole==='companion')?'client':'companion'; render();
       }
       else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
       else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
