@@ -267,51 +267,74 @@ table.tbl{width:100%;border-collapse:collapse}
 .doneb{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:var(--r);
   background:linear-gradient(150deg,var(--brand-soft),var(--gold-soft));font-weight:900;font-size:12.5px}
 
-/* لیوان آب — موج واقعی، قطره، صدا */
-.wbox{--wsky:#3FA3DC;--wsky-soft:#DDF0FC;--wsky-deep:#2277A8}
-[data-theme="glass"] .wbox{--wsky:#4FB0E4;--wsky-soft:#DCEEFA;--wsky-deep:#1E6E9E}
-.wglasses{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:12px}
-.wg{aspect-ratio:2/3;border-radius:8px 8px 12px 12px;border:2px solid var(--card-brd);background:var(--card);
-  position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .25s;padding:0}
-.wg:hover{transform:translateY(-2px)}
-.wg.f{border-color:var(--wsky)}
+/* لیوان آب — لیوان شیشه‌ای واقعی، با آبِ موج‌دار داخل خودش */
+.wbox{--wsky:#3FA3DC;--wsky-soft:#BFE6F8;--wsky-deep:#1E6E9E;--wline:rgba(90,160,205,.55)}
+[data-theme="glass"] .wbox{--wsky:#4FB0E4;--wsky-soft:#CFEAFB;--wsky-deep:#16608C;--wline:rgba(255,255,255,.8)}
 
-/* سطح آب */
-.wg .fill{position:absolute;inset:auto 0 0 0;height:0;overflow:hidden;
-  background:linear-gradient(180deg,var(--wsky-soft),var(--wsky));
-  transition:height .45s cubic-bezier(.32,1.35,.5,1)}
-.wg.f .fill{height:80%;transition-delay:.07s}
+.wglasses{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:14px;align-items:end}
+@media (max-width:900px){.wglasses{grid-template-columns:repeat(4,1fr);gap:12px}}
 
-/* دو لایه موج — شکل سینوسی واقعی، سرعت و جهت متفاوت */
-.wg .wv{position:absolute;top:-7px;inset-inline-start:0;width:200%;height:14px;
-  animation:wvA 3.6s linear infinite;will-change:transform}
-.wg .wv path{fill:var(--wsky);opacity:.55}
-.wg .wv.b{animation:wvB 5.4s linear infinite}
-.wg .wv.b path{opacity:.32}
-@keyframes wvA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes wvB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.wg{padding:0;background:none;border:0;cursor:pointer;display:flex;justify-content:center;
+  transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+.wg:hover{transform:translateY(-4px)}
+.wg:active{transform:translateY(-1px) scale(.97)}
+.wg .glasssvg{width:100%;max-width:56px;height:auto;display:block;overflow:visible}
 
-/* درخشش سطح — نشانهٔ آب، نه شیشهٔ خالی */
-.wg.f .fill::after{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:#fff;opacity:.45}
+/* ---------- شیشه ---------- */
+.gsh{fill:rgba(20,56,46,.10)}
+.gg-top{stop-color:rgba(255,255,255,.85)}
+.gg-bot{stop-color:rgba(226,240,248,.65)}
+[data-theme="glass"] .gg-top{stop-color:rgba(255,255,255,.55)}
+[data-theme="glass"] .gg-bot{stop-color:rgba(255,255,255,.30)}
+.gsurf{fill:#fff;opacity:.30}
+.gwlin{fill:var(--wsky-soft);stroke:var(--wline);stroke-width:.9}
+.gwlsh{fill:#fff;opacity:.55}
+.gcaustic{fill:none;stroke:#fff;stroke-width:1.1;stroke-linecap:round;opacity:.55}
+.gline{fill:none;stroke:var(--wline);stroke-width:1.6;stroke-linejoin:round}
+.grim{fill:rgba(255,255,255,.62);stroke:var(--wline);stroke-width:1.3}
+.grim2{fill:none;stroke:rgba(255,255,255,.9);stroke-width:.9}
+[data-theme="glass"] .grim{fill:rgba(255,255,255,.35)}
+.gbase{fill:rgba(63,163,220,.13)}
+.gleam{fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;opacity:.7}
+.gleam2{fill:none;stroke:#fff;stroke-width:.9;stroke-linecap:round;opacity:.38}
+.gshine{fill:#fff;opacity:.45}
 
-/* جریان و قطره در لحظهٔ ریختن */
-.wg .stream{position:absolute;top:0;left:50%;width:5px;height:0;border-radius:99px;
-  background:linear-gradient(180deg,transparent,var(--wsky));transform:translateX(-50%);opacity:0;z-index:2}
-.wg .stream.on{animation:streamFall .42s ease-in}
-@keyframes streamFall{0%{height:0;opacity:0}
-  25%{height:36%;opacity:.9}70%{height:70%;opacity:.85}100%{height:80%;opacity:0}}
-.wg .drop{position:absolute;top:2px;left:50%;width:5px;height:5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
-  background:var(--wsky);opacity:0;z-index:3}
-.wg .drop.on{animation:dropFall .5s cubic-bezier(.4,.1,.9,.6) forwards}
-@keyframes dropFall{0%{opacity:.9;transform:translate(-50%,0) scale(.8)}
-  80%{opacity:.9;transform:translate(-50%,26px) scale(1)}
-  100%{opacity:0;transform:translate(-50%,32px) scale(.7)}}
+/* ---------- آب ---------- */
+.gwater{transition:transform .5s cubic-bezier(.32,1.35,.5,1)}
+.gs-top{stop-color:#A8DCF4}
+.gs-mid{stop-color:#3DA8E0}
+.gs-bot{stop-color:#1B6A9B}
+.wg .wv{fill:var(--wsky);opacity:.55;animation:wvA 3.6s linear infinite}
+.wg .wv.b{fill:#fff;opacity:.22;animation:wvB 5.4s linear infinite}
+@keyframes wvA{from{transform:translateX(0)}to{transform:translateX(-20px)}}
+@keyframes wvB{from{transform:translateX(-20px)}to{transform:translateX(0)}}
+.gbub{fill:#fff;opacity:0;animation:bubUp 5.4s linear infinite}
+.gbub.b2{animation-duration:6.6s;animation-delay:1.5s}
+.gbub.b3{animation-duration:7.8s;animation-delay:2.8s}
+@keyframes bubUp{0%{transform:translateY(7px);opacity:0}
+  25%{opacity:.6}75%{opacity:.5}100%{transform:translateY(-24px);opacity:0}}
+
+/* ---------- جریان و قطره ---------- */
+.gstream{fill:var(--wsky);opacity:0;transform-origin:20px 3px}
+.gstream.on{animation:streamFall .44s ease-in}
+@keyframes streamFall{0%{transform:scaleY(0);opacity:0}
+  22%{transform:scaleY(.45);opacity:.85}70%{transform:scaleY(.72);opacity:.8}
+  100%{transform:scaleY(.8);opacity:0}}
+.gdrop{fill:var(--wsky);opacity:0}
+.gdrop.on{animation:dropFall .55s cubic-bezier(.4,.1,.9,.6) forwards}
+@keyframes dropFall{0%{opacity:.95;transform:translate(0,0) scale(.85)}
+  85%{opacity:.9;transform:translate(0,25px) scale(1)}
+  100%{opacity:0;transform:translate(0,30px) scale(.7)}}
 
 .wsnd{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--ink-2);
   background:var(--card);border:1px solid var(--card-brd);border-radius:99px;padding:5px 11px}
 .wsnd.on{background:var(--brand-soft);border-color:var(--brand-soft);color:var(--brand-ink)}
 .wcount{font-size:11.5px;font-weight:800;color:var(--ink-2);margin-top:6px}
-@media (max-width:900px){.wglasses{grid-template-columns:repeat(4,1fr);gap:9px}}
+
+@media (prefers-reduced-motion:reduce){
+  .wg .wv,.gbub,.gstream,.gdrop{animation:none!important}
+  .gwater{transition:none}
+}
 
 /* ---------- ۸) حال من ---------- */
 .wiz-top{display:flex;align-items:center;gap:0;max-width:460px;margin:0 auto}

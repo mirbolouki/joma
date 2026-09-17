@@ -1,7 +1,73 @@
 /* ==========================================================================
-   تصویرها — جوجه (سند ۷A) و نمایهٔ بصری گزینه‌های حال
-   جوجه مستقیماً از reference/7A/7A.html گرفته شده (مرجع همراه = نسخهٔ A).
+   لیوان آب — یک لیوان شیشه‌ای واقعی، با آبِ موج‌دار داخل خودش
+   ساختار: بدنهٔ شیب‌دار + لبهٔ بیضی + برق شیشه + ته ضخیم + سایه
    ========================================================================== */
+
+/* سطح آب: دو موجِ سینوسی، با دورهٔ ۲۰ و دامنهٔ متفاوت */
+function waveD(amp,phase){
+  var y=(20.8+(phase||0)).toFixed(1), d='M-70 '+y, x=-70;
+  while(x<70){ d+=' q5 -'+amp+' 10 0 t10 0'; x+=20; }
+  return d+' V62 H-70 Z';
+}
+
+function glassSVG(i,filled){
+  var id='gw'+i;
+  var ty=filled?0:40;   /* ارتفاع آب در حالت پر، ۹px زیر لبه — فاصلهٔ هوا */
+  return '<svg class="glasssvg" viewBox="0 0 40 66" role="img" aria-hidden="true">'+
+    '<defs>'+
+      '<clipPath id="gc'+i+'"><path d="M5.1 11.6 L8.1 51.8 Q8.7 56.6 13.7 56.6 H26.3 '+
+        'Q31.3 56.6 31.9 51.8 L34.9 11.6 Q20 14.8 5.1 11.6 Z"/></clipPath>'+
+      '<linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1">'+
+        '<stop offset="0" class="gs-top"/><stop offset=".45" class="gs-mid"/><stop offset="1" class="gs-bot"/>'+
+      '</linearGradient>'+
+      '<linearGradient id="gg'+i+'" x1="0" y1="0" x2="0" y2="1">'+
+        '<stop offset="0" class="gg-top"/><stop offset="1" class="gg-bot"/>'+
+      '</linearGradient>'+
+    '</defs>'+
+
+    /* سایه روی میز */
+    '<ellipse class="gsh" cx="20" cy="61" rx="14.5" ry="2.6"/>'+
+
+    /* بدنهٔ شیشه — گرادینت ملایم شیشه، پشت آب */
+    '<path class="gbod" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
+      'L35.8 11 Q20 14.6 4.2 11 Z" fill="url(#'+'gg'+i+')"/>'+
+
+    /* آب — بریده‌شده داخل شکل لیوان */
+    '<g clip-path="url(#'+'gc'+i+')">'+
+      '<g class="gwater" style="transform:translateY('+ty+'px)">'+
+        '<rect x="-10" y="21.4" width="60" height="42" fill="url(#'+'id'+')"/>'+
+        '<rect x="-10" y="20.6" width="60" height="2.8" class="gsurf"/>'+
+        /* دو موجِ سینوسی روی سطح */
+        '<path class="wv" d="'+waveD('3.0',0)+'"/>'+
+        '<path class="wv b" d="'+waveD('2.2',1.2)+'"/>'+
+        /* بیضیِ سطح آب — چیزی که «مایع» را مایع نشان می‌دهد */
+        '<ellipse class="gwlin" cx="20" cy="20.8" rx="13.1" ry="2.4"/>'+
+        '<ellipse class="gwlsh" cx="14.5" cy="20.2" rx="5.6" ry="1.1"/>'+
+        /* برقِ لرزانِ روی سطح */
+        '<path class="gcaustic" d="M11.5 27 q5 2.2 9 0 M22.5 30.5 q4 1.8 7 0 M13 35 q4.5 1.8 8 0"/>'+
+        /* حباب‌ها */
+        '<circle class="gbub" cx="14" cy="52" r="1"/><circle class="gbub b2" cx="25" cy="54" r=".8"/>'+
+        '<circle class="gbub b3" cx="19" cy="50" r="1.2"/>'+
+      '</g>'+
+      /* جریان و قطره — داخل لیوان دیده می‌شوند */
+      '<rect class="gstream" x="19.1" y="3" width="1.8" height="30" rx=".9"/>'+
+      '<ellipse class="gdrop" cx="20" cy="6" rx="1.6" ry="2.1"/>'+
+    '</g>'+
+
+    /* خط شیشه — روی آب */
+    '<path class="gline" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
+      'L35.8 11 Q20 14.6 4.2 11 Z"/>'+
+    /* لبه — دو بیضی روی هم: حس ضخامت شیشه */
+    '<ellipse class="grim" cx="20" cy="11" rx="15.5" ry="3.5"/>'+
+    '<ellipse class="grim2" cx="20" cy="11" rx="13.6" ry="2.6"/>'+
+    /* ته ضخیم */
+    '<ellipse class="gbase" cx="20" cy="55.6" rx="11.6" ry="2.5"/>'+
+    /* برق شیشه */
+    '<path class="gleam" d="M11.6 16 Q10.4 33 10.8 47"/>'+
+    '<path class="gleam2" d="M29.4 17.5 Q30.2 31 29.8 43"/>'+
+    '<ellipse class="gshine" cx="14.5" cy="14.6" rx="4.6" ry="1.3"/>'+
+  '</svg>';
+}
 
 /* ---------- جوجهٔ من — سه مرحله، از فایل مرجع A ---------- */
 function chickSVG(size,stage,mood){
@@ -25,7 +91,7 @@ function chickSVG(size,stage,mood){
     : '<g><circle cx="42" cy="46" r="5" fill="#2A2118"/><circle cx="44" cy="44" r="1.6" fill="#fff"/>'+
       '<circle cx="60" cy="46" r="5" fill="#2A2118"/><circle cx="62" cy="44" r="1.6" fill="#fff"/></g>';
   var extra = mood==='happy'
-    ? '<path d="M20 30 l4 4 M28 22 l2 5 M78 26 l-4 4" stroke="#F5A32D" stroke-width="2.5" stroke-linecap="round"/>'+ 
+    ? '<path d="M20 30 l4 4 M28 22 l2 5 M78 26 l-4 4" stroke="#F5A32D" stroke-width="2.5" stroke-linecap="round"/>'+
       '<text x="79" y="24" font-size="13">🎵</text>'
     : '';
 

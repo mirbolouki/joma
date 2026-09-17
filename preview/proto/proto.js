@@ -173,81 +173,122 @@ function soon(s){
 }
 
 /* ---------- لیوان آب (مشترک: خانه و کارهای امروز) ----------
-   صدا: صدای واقعی آب — جریان + حباب + قطره. سند ۱۲ §۷.۳.            */
-var WN=8,_wfill=0,_lastSnd=0,_AC=null,_MASTER=null;
+   لیوان شیشه‌ای واقعی + آبِ موج‌دار + صدای واقعی آب (سند ۱۲ §۷).
+   صدا با Web Audio ساخته می‌شود — صفر بایت دانلود.                    */
+var WN=8,_wfill=0,_lastSnd=0,_AC=null,_MASTER=null,_WETIN=null;
 
 function ac(){
-  if(!_AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;
-    _AC=new C();_MASTER=_AC.createGain();_MASTER.gain.value=.9;_MASTER.connect(_AC.destination);}
+  if(!_AC){
+    var C=window.AudioContext||window.webkitAudioContext; if(!C) return null;
+    _AC=new C();
+    _MASTER=_AC.createGain(); _MASTER.gain.value=.85; _MASTER.connect(_AC.destination);
+    /* طنینِ کوچکِ داخل لیوان — صدا را «آب داخل ظرف» می‌کند، نه نویز خام */
+    var conv=_AC.createConvolver(); conv.buffer=makeIR(_AC,0.09,2.8);
+    var wet=_AC.createGain(); wet.gain.value=.3;
+    _WETIN=_AC.createGain();
+    _WETIN.connect(conv); conv.connect(wet); wet.connect(_MASTER);
+  }
   return _AC;
 }
+function makeIR(c,dur,decay){
+  var len=Math.max(1,Math.floor(c.sampleRate*dur)), b=c.createBuffer(2,len,c.sampleRate);
+  for(var ch=0;ch<2;ch++){
+    var d=b.getChannelData(ch);
+    for(var i=0;i<len;i++){ var k=i/len; d[i]=(Math.random()*2-1)*Math.pow(1-k,decay); }
+  }
+  return b;
+}
+function out(node,c,db){           /* خروجی: هم خشک، هم نم‌دار (داخل لیوان) */
+  node.connect(_MASTER);
+  if(_WETIN){ var g=c.createGain(); g.gain.value=db; node.connect(g); g.connect(_WETIN); }
+}
 function noiseBuf(dur,c){
-  var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
+  var n=Math.max(1,Math.floor(c.sampleRate*dur)), b=c.createBuffer(1,n,c.sampleRate), d=b.getChannelData(0);
   for(var i=0;i<n;i++) d[i]=Math.random()*2-1;
   return b;
 }
-/* جریان آب: نویز فیلترشده با موج‌دار شدن نامنظم (حباب‌ها) */
-function pourLayer(c,t0,dur){
-  var src=c.createBufferSource(); src.buffer=noiseBuf(.6,c); src.loop=true;
-  var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=.8;
-  lp.frequency.setValueAtTime(2800,t0);
-  lp.frequency.exponentialRampToValueAtTime(850,t0+dur*.8);
-  var hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=320;
-
+/* «گِلوپ» — صدای امضای ریختن آب در لیوان: فرکانس که تند افت می‌کند */
+function glug(c,t,f0,f1,dur,vol){
+  var o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(f0,t);
+  o.frequency.exponentialRampToValueAtTime(f1,t+dur*.85);
+  var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1600; lp.Q.value=.7;
+  var g=c.createGain();
+  g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(vol,t+dur*.16);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(lp); lp.connect(g); out(g,c,.55);
+  o.start(t); o.stop(t+dur+.03);
+}
+/* جریان آب: نویز باند-گذر با مرکزی که پایین می‌آید */
+function stream(c,t0,dur){
+  var src=c.createBufferSource(); src.buffer=noiseBuf(.7,c); src.loop=true;
+  var bp=c.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=.85;
+  bp.frequency.setValueAtTime(1500,t0);
+  bp.frequency.exponentialRampToValueAtTime(820,t0+dur*.85);
+  var hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=380;
   var g=c.createGain();
   g.gain.setValueAtTime(.0001,t0);
-  g.gain.exponentialRampToValueAtTime(.15,t0+.05);
-  g.gain.setValueAtTime(.15,t0+dur*.5);
+  g.gain.exponentialRampToValueAtTime(.10,t0+.045);
+  g.gain.setValueAtTime(.10,t0+dur*.45);
   g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
-
-  /* حباب‌ها: مدولاسیون دامنه با فرکانس نامنظم */
-  var lfo=c.createOscillator(); lfo.type='triangle'; lfo.frequency.value=11.5;
-  var lg=c.createGain(); lg.gain.value=.055;
-  lfo.connect(lg); lg.connect(g.gain);
-  var lfo2=c.createOscillator(); lfo2.type='sine'; lfo2.frequency.value=6.7;
-  var lg2=c.createGain(); lg2.gain.value=.03;
-  lfo2.connect(lg2); lg2.connect(g.gain);
-
-  src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(_MASTER);
-  src.start(t0); src.stop(t0+dur);
-  lfo.start(t0); lfo.stop(t0+dur);
-  lfo2.start(t0); lfo2.stop(t0+dur);
+  var lfo=c.createOscillator(); lfo.type='triangle'; lfo.frequency.value=12.5;
+  var lgf=c.createGain(); lgf.gain.value=.028; lfo.connect(lgf); lgf.connect(g.gain);
+  src.connect(hp); hp.connect(bp); bp.connect(g); out(g,c,.4);
+  src.start(t0); src.stop(t0+dur); lfo.start(t0); lfo.stop(t0+dur);
 }
-/* حباب: سینِ کوتاه با سُرخوردن رو به بالا */
-function bubble(c,t){
-  var f0=260+Math.random()*260, o=c.createOscillator(); o.type='sine';
-  o.frequency.setValueAtTime(f0,t);
-  o.frequency.exponentialRampToValueAtTime(f0*2.6+180,t+.07);
+/* شروع ریختن: یک ترقهٔ کوتاهِ پرفرکانس */
+function splash(c,t0){
+  var src=c.createBufferSource(); src.buffer=noiseBuf(.12,c);
+  var hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=2600;
   var g=c.createGain();
-  g.gain.setValueAtTime(.0001,t);
-  g.gain.exponentialRampToValueAtTime(.05,t+.01);
-  g.gain.exponentialRampToValueAtTime(.0001,t+.11);
-  o.connect(g); g.connect(_MASTER); o.start(t); o.stop(t+.13);
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(.09,t0+.008);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+.09);
+  src.connect(hp); hp.connect(g); out(g,c,.5); src.start(t0); src.stop(t0+.12);
 }
-/* قطره: سینِ با پرش سریع رو به بالا — صدای آشنای چکیدن */
-function drop(c,t,base){
+/* قطره: پریدنِ فرکانس رو به بالا — صدای آشنای چکیدن */
+function drop(c,t,base,vol){
   var o=c.createOscillator(); o.type='sine';
   o.frequency.setValueAtTime(base,t);
-  o.frequency.exponentialRampToValueAtTime(base*2.5,t+.06);
+  o.frequency.exponentialRampToValueAtTime(base*2.6,t+.055);
   var g=c.createGain();
   g.gain.setValueAtTime(.0001,t);
-  g.gain.exponentialRampToValueAtTime(.16,t+.006);
-  g.gain.exponentialRampToValueAtTime(.0001,t+.26);
-  o.connect(g); g.connect(_MASTER); o.start(t); o.stop(t+.3);
+  g.gain.exponentialRampToValueAtTime(vol||.14,t+.006);
+  g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+  o.connect(g); out(g,c,.7); o.start(t); o.stop(t+.26);
+}
+function bubble(c,t,vol){
+  var f0=320+Math.random()*300, o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(f0,t);
+  o.frequency.exponentialRampToValueAtTime(f0*2.2+120,t+.06);
+  var g=c.createGain();
+  g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(vol||.035,t+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,t+.1);
+  o.connect(g); out(g,c,.6); o.start(t); o.stop(t+.12);
 }
 function pourSnd(){
   if(!APP.sound||document.hidden) return;
   var now=performance.now(); if(now-_lastSnd<250) return; _lastSnd=now;
   var c=ac(); if(!c) return; var t0=c.currentTime+.01;
-  pourLayer(c,t0,.48);
-  for(var i=0;i<4;i++) bubble(c,t0+.05+i*.1+Math.random()*.04);
+  splash(c,t0);
+  stream(c,t0+.01,.52);
+  /* سه تا چهار «گِلوپ» با فاصلهٔ نامنظم — همان چیزی که «آب» را آب می‌کند */
+  var n=3+Math.floor(Math.random()*2), t=t0+.06;
+  for(var i=0;i<n;i++){
+    glug(c,t,150+Math.random()*90,72+Math.random()*30,.075+Math.random()*.05,.055+Math.random()*.035);
+    t+=.085+Math.random()*.09;
+  }
+  bubble(c,t0+.30,.05); bubble(c,t0+.42,.04);
 }
-/* کامل شدن: سه قطرهٔ بالارونده — صدای آب، نه زنگ فلزی */
+/* کامل شدن: چهار قطرهٔ بالارونده + یک گِلوپ نرم — جشنِ آبی، نه زنگ فلزی */
 function completeSnd(){
   if(!APP.sound||document.hidden) return;
   var c=ac(); if(!c) return; var t0=c.currentTime+.01;
-  drop(c,t0,520); drop(c,t0+.14,700); drop(c,t0+.30,960);
-  bubble(c,t0+.46);
+  drop(c,t0,470,.15); drop(c,t0+.16,620,.14); drop(c,t0+.33,840,.13); drop(c,t0+.50,1120,.11);
+  glug(c,t0+.66,170,90,.13,.06);
+  bubble(c,t0+.78,.05);
 }
 function waterCard(){
   return '<div class="card wbox" id="wcard">'+
@@ -257,41 +298,53 @@ function waterCard(){
         (APP.sound?'🔊 صدای آب روشن':'🔇 صدای آب خاموش')+'</button></div>'+
     '<div class="wcount num" id="wcount"></div>'+
     '<div class="wglasses" id="wglasses" role="group" aria-label="لیوان‌های آب امروز"></div>'+
-    '<p class="tiny" style="margin-top:10px">روی لیوان‌ها بزن — سطح آب با <b>موج دو‌لایه</b> بالا می‌آید. '+
+    '<p class="tiny" style="margin-top:10px">روی لیوان‌ها بزن — آب با <b>موج</b> بالا می‌آید و صدای <b>ریختن آب</b> دارد. '+
       'صدا پیش‌فرض خاموش است؛ بازگشت صدا ندارد.</p>'+
   '</div>';
 }
-var WAVE_PATH='<path d="M0 7 q7.5 -5 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 V14 H0Z"/>';
 function renderWater(){
   var g=document.getElementById('wglasses'); if(!g) return;
   _wfill=APP.water; g.innerHTML='';
   for(var i=0;i<WN;i++){
     var b=document.createElement('button');
     b.className='wg'+(i<_wfill?' f':''); b.dataset.i=i;
-    b.setAttribute('aria-label','لیوان '+(i+1)+' از '+WN); b.setAttribute('aria-pressed',i<_wfill?'true':'false');
-    b.innerHTML='<div class="fill"><svg class="wv" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg>'+
-      '<svg class="wv b" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg></div>'+
-      '<div class="stream"></div><div class="drop"></div>';
+    b.setAttribute('aria-label','لیوان '+(i+1)+' از '+WN+(i<_wfill?' — پر':' — خالی'));
+    b.setAttribute('aria-pressed',i<_wfill?'true':'false');
+    b.innerHTML=glassSVG(i,i<_wfill);
     g.appendChild(b);
   }
-  var c=document.getElementById('wcount');
-  if(c) c.textContent=fa(_wfill)+' از '+fa(WN)+' لیوان — هدف شخصی: '+fa(WN)+
+  waterCount();
+}
+function waterCount(){
+  var c=document.getElementById('wcount'); if(!c) return;
+  c.textContent=fa(_wfill)+' از '+fa(WN)+' لیوان — هدف شخصی: '+fa(WN)+
     (_wfill===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(_wfill===WN?' · ثبت قطعی شد ✓':' · پیش‌نویس — تا پایان امروز قابل‌تغییر'));
+}
+/* پر کردن/خالی‌کردن **در جا** — تا انیمیشن آب از دست نرود */
+function setGlass(el,filled){
+  if(!el) return;
+  var w=el.querySelector('.gwater'); if(w) w.style.transform='translateY('+(filled?0:47)+'px)';
+  el.classList.toggle('f',filled);
+  el.setAttribute('aria-pressed',filled?'true':'false');
+  el.setAttribute('aria-label',el.getAttribute('aria-label').replace(/— (پر|خالی)$/,'— '+(filled?'پر':'خالی')));
+}
+function splashAt(el){
+  var st=el.querySelector('.gstream'), dr=el.querySelector('.gdrop');
+  [st,dr].forEach(function(n){ if(!n) return; n.classList.remove('on'); void n.getBoundingClientRect(); n.classList.add('on'); });
+  setTimeout(function(){ if(st)st.classList.remove('on'); if(dr)dr.classList.remove('on'); },600);
 }
 function waterTap(i){
   var g=document.getElementById('wglasses'); if(!g) return;
-  var el=g.children[i];
-  if(i+1===_wfill && _wfill>0){ APP.water--; renderWater(); return; }   /* بازگشت: بی‌صدا */
-  if(el){
-    var st=el.querySelector('.stream'), dr=el.querySelector('.drop');
-    if(st) st.classList.add('on');
-    if(dr) dr.classList.add('on');
-    setTimeout(function(){ if(st)st.remove(); if(dr)dr.remove(); },520);
+  if(i+1===_wfill && _wfill>0){                  /* بازگشت — بی‌صدا */
+    setGlass(g.children[i],false);
+    _wfill=i; waterCount(); return;
   }
-  APP.water=i+1;
-  setTimeout(function(){ renderWater(); },70);
+  for(var j=0;j<=i;j++) setGlass(g.children[j],true);
+  for(var k=i+1;k<WN;k++) setGlass(g.children[k],false);
+  splashAt(g.children[i]);
+  _wfill=i+1; waterCount();
   pourSnd();
-  if(APP.water===WN&&el) setTimeout(completeSnd,430);
+  if(_wfill===WN) setTimeout(completeSnd,460);
 }
 
 /* ---------- رویدادها ---------- */
