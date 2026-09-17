@@ -32,6 +32,7 @@ var APP = {
   theme:'classic',  /* classic | glass */
   role:'client',    /* client | counselor | admin */
   sound:false,
+  waterGoal:8,      /* از هدف فعالیت آب در برنامهٔ کاربر — نه عدد ثابت ۸ */
   moodStep:0,
   moodAnswers:{},
   water:0
@@ -136,6 +137,7 @@ function rvbar(){
     '<button data-prev>‹ قبلی</button><button data-next>بعدی ›</button>'+
     '<button data-tgl="data" class="'+(APP.data==='full'?'on':'')+'">دادهٔ '+(APP.data==='full'?'پر':'خالی')+'</button>'+
     '<button data-tgl="theme" class="'+(APP.theme==='glass'?'on':'')+'">تم '+(APP.theme==='classic'?'کلاسیک':'شیشه')+'</button>'+
+    '<button data-goal>هدف آب: '+fa(APP.waterGoal)+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
@@ -302,23 +304,51 @@ function waterCard(){
       'صدا پیش‌فرض خاموش است؛ بازگشت صدا ندارد.</p>'+
   '</div>';
 }
+/* تعداد لیوان‌ها = هدف کاربر. سند ۱۲ §۷.۷ */
+function waterPlan(){
+  var goal=APP.waterGoal||8;
+  if(goal<=12) return {mode:'one', per:1, glasses:goal, label:''};
+  if(goal<=24) return {mode:'two', per:2, glasses:Math.ceil(goal/2), label:'هر لیوان = ۲ لیوان'};
+  return {mode:'num', per:1, glasses:0, label:''};
+}
 function renderWater(){
   var g=document.getElementById('wglasses'); if(!g) return;
-  _wfill=APP.water; g.innerHTML='';
-  for(var i=0;i<WN;i++){
+  var p=waterPlan();
+  g.style.gridTemplateColumns='repeat('+Math.min(p.glasses||1,8)+',1fr)';
+  g.innerHTML='';
+  if(p.mode==='num'){
+    g.innerHTML='<div class="wbar"><i style="width:'+Math.round(APP.water/APP.waterGoal*100)+'%"></i></div>'+
+      '<div class="wbarrow">'+
+      '<button class="btn soft sm" data-wminus aria-label="یکی کم">−</button>'+
+      '<button class="btn soft sm" data-wplus aria-label="یکی بیشتر">+</button></div>'+
+      '<p class="tiny">برای هدف‌های بالای ۲۴، تصویر لیوان کنار گذاشته می‌شود — عدد و نوار، روشن‌ترند.</p>';
+    waterCount(); return;
+  }
+  for(var i=0;i<p.glasses;i++){
+    var units=(i+1)*p.per;
+    var filled=APP.water>=units;
+    var part=APP.water>i*p.per && !filled ? true : false;   /* نیمه — فقط در حالت دوتایی */
     var b=document.createElement('button');
-    b.className='wg'+(i<_wfill?' f':''); b.dataset.i=i;
-    b.setAttribute('aria-label','لیوان '+(i+1)+' از '+WN+(i<_wfill?' — پر':' — خالی'));
-    b.setAttribute('aria-pressed',i<_wfill?'true':'false');
-    b.innerHTML=glassSVG(i,i<_wfill);
+    b.className='wg'+(filled?' f':'');
+    b.dataset.i=i; b.dataset.units=units;
+    b.setAttribute('aria-label','لیوان '+(i+1)+' از '+p.glasses+(filled?' — پر':' — خالی')+(p.per>1?' (هر لیوان '+fa(p.per)+' واحد)':''));
+    b.setAttribute('aria-pressed',filled?'true':'false');
+    b.innerHTML=glassSVG(i,filled);
+    if(part && p.per>1){
+      var w=b.querySelector('.gwater');
+      var k=(APP.water%p.per)/p.per;
+      if(w) w.style.transform='translateY('+(26-26*k).toFixed(1)+'px)';
+    }
     g.appendChild(b);
   }
+  if(p.label) g.insertAdjacentHTML('afterend','<p class="tiny wlabel">'+p.label+'</p>');
   waterCount();
 }
 function waterCount(){
   var c=document.getElementById('wcount'); if(!c) return;
-  c.textContent=fa(_wfill)+' از '+fa(WN)+' لیوان — هدف شخصی: '+fa(WN)+
-    (_wfill===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(_wfill===WN?' · ثبت قطعی شد ✓':' · پیش‌نویس — تا پایان امروز قابل‌تغییر'));
+  var g=APP.waterGoal||8;
+  c.textContent=fa(APP.water)+' از '+fa(g)+' لیوان — هدف خودت: '+fa(g)+
+    (APP.water===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(APP.water>=g?' · ثبت قطعی شد ✓':' · پیش‌نویس — تا پایان امروز قابل‌تغییر'));
 }
 /* پر کردن/خالی‌کردن **در جا** — تا انیمیشن آب از دست نرود */
 function setGlass(el,filled){
@@ -335,18 +365,25 @@ function splashAt(el){
 }
 function waterTap(i){
   var g=document.getElementById('wglasses'); if(!g) return;
-  if(i+1===_wfill && _wfill>0){                  /* بازگشت — بی‌صدا */
-    setGlass(g.children[i],false);
-    _wfill=i; waterCount(); return;
+  var p=waterPlan(); if(p.mode==='num') return;
+  var step=p.per, target=(i+1)*step;
+  var back=(APP.water>i*step && APP.water<=target);   /* لمس دوبارهٔ همان لیوان = بازگشت */
+  if(back){
+    APP.water=Math.max(0,i*step);
+    /* خالی‌کردن در جا — بی‌صدا */
+    for(var k=i;k<p.glasses;k++) setGlass(g.children[k],false);
+    waterCount(); return;
   }
-  for(var j=0;j<=i;j++) setGlass(g.children[j],true);
-  for(var k=i+1;k<WN;k++) setGlass(g.children[k],false);
+  if(APP.water>=target && APP.water===target && APP.water>=p.glasses*step){ return; }
+  APP.water=target;
+  for(var j=0;j<i;j++) setGlass(g.children[j],true);
+  setGlass(g.children[i],true);
+  for(var m=i+1;m<p.glasses;m++) setGlass(g.children[m],false);
   splashAt(g.children[i]);
-  _wfill=i+1; waterCount();
+  waterCount();
   pourSnd();
-  if(_wfill===WN) setTimeout(completeSnd,460);
+  if(APP.water>=p.glasses*step) setTimeout(completeSnd,460);
 }
-
 /* ---------- رویدادها ---------- */
 document.addEventListener('DOMContentLoaded',function(){
   if(!location.hash) location.hash='#landing';
@@ -354,7 +391,7 @@ document.addEventListener('DOMContentLoaded',function(){
   render();
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-go]'); if(t){go(t.dataset.go);return;}
-    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd]');
+    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus]');
     if(b){
       var idx=SCREENS.map(function(x){return x.id;}).indexOf(APP.screen);
       if(b.hasAttribute('data-prev')){ if(idx>0) go(SCREENS[idx-1].id); }
@@ -366,6 +403,14 @@ document.addEventListener('DOMContentLoaded',function(){
         render();
       }
       else if(b.hasAttribute('data-tglnote')){ APP.notes=(APP.notes===false); render(); }
+      else if(b.hasAttribute('data-goal')){
+        var seq=[6,8,10,12,16,20,30];
+        var at=seq.indexOf(APP.waterGoal); APP.waterGoal=seq[(at+1)%seq.length];
+        APP.water=Math.min(APP.water,APP.waterGoal); render();
+        toast('هدف آب شد '+fa(APP.waterGoal)+' لیوان — در محصول، این عدد از هدف فعالیت در برنامه می‌آید');
+      }
+      else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
+      else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
       else if(b.hasAttribute('data-hidebar')){
         document.getElementById('shellbar').classList.add('hide');
         document.getElementById('rvopen').classList.add('show');

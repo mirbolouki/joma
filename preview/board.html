@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>تابلوی تصمیم‌های جوما — نسخهٔ ۹</title>
+<title>تابلوی تصمیم‌های جوما — نسخهٔ ۱۰</title>
 <style>
   :root{
     --bg-layer:
@@ -252,19 +252,18 @@
   .wg{padding:0;background:none;border:0;cursor:pointer;display:flex;justify-content:center;transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
   .wg:hover{transform:translateY(-4px)}
   .wg .glasssvg{width:100%;max-width:56px;height:auto;display:block;overflow:visible}
-  .gsh{fill:rgba(20,56,46,.10)}
-  .gg-top{stop-color:rgba(255,255,255,.85)}.gg-bot{stop-color:rgba(226,240,248,.65)}
-  .gsurf{fill:#fff;opacity:.28}
-  .gwlin{fill:var(--wsky-soft);stroke:var(--wline);stroke-width:.9}
-  .gwlsh{fill:#fff;opacity:.6}
+  .gsh{fill:rgba(20,56,46,.11)}
+  .gw-a{stop-color:rgba(233,244,250,.85)}.gw-b{stop-color:rgba(255,255,255,.95)}
+  .ginner{fill:rgba(234,244,250,.45)}
+  .gwlin{fill:#CFEAF8;stroke:#8FC4E2;stroke-width:.9}
+  .gwlsh{fill:#fff;opacity:.65}
   .gcaustic{fill:none;stroke:#fff;stroke-width:1;stroke-linecap:round;opacity:.5}
-  .gline{fill:none;stroke:var(--wline);stroke-width:1.6;stroke-linejoin:round}
-  .grim{fill:rgba(255,255,255,.62);stroke:var(--wline);stroke-width:1.3}
-  .grim2{fill:none;stroke:rgba(255,255,255,.9);stroke-width:.9}
-  .gbase{fill:rgba(63,163,220,.13)}
-  .gleam{fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;opacity:.7}
-  .gleam2{fill:none;stroke:#fff;stroke-width:.9;stroke-linecap:round;opacity:.38}
-  .gshine{fill:#fff;opacity:.45}
+  .grim{fill:rgba(244,251,254,.85);stroke:#A9CBDE;stroke-width:.95}
+  .grim2{fill:none;stroke:rgba(255,255,255,.95);stroke-width:.8}
+  .gbase{fill:rgba(163,203,226,.24)}
+  .gleam{fill:none;stroke:#fff;stroke-width:1.5;stroke-linecap:round;opacity:.75}
+  .gleam2{fill:none;stroke:#fff;stroke-width:.85;stroke-linecap:round;opacity:.42}
+  .gshine{fill:#fff;opacity:.5}
   .gwater{transition:transform .5s cubic-bezier(.32,1.35,.5,1)}
   .gs-top{stop-color:#A8DCF4}.gs-mid{stop-color:#3DA8E0}.gs-bot{stop-color:#1B6A9B}
   .wv{fill:var(--wsky);opacity:.55;animation:wvA 3.6s linear infinite}
@@ -393,7 +392,7 @@
     <p>جای خواندن ۵٬۰۰۰ خط سند — این‌جا فقط <b>تصمیم‌ها</b> را می‌بینی. هر بخش یک نمونهٔ زنده دارد.
        اگر چیزی را عوض می‌خواهی، شمارهٔ بخش را بگو.</p>
     <p style="margin-top:12px;font-weight:800;color:var(--brand-ink)">
-      نسخهٔ ۹ — لیوان شیشه‌ای واقعی، صدای واقعی آب، و سه اصلاح مالک (لندینگ · حال · آب)
+      نسخهٔ ۱۰ — لیوان تامبلر مطابق تصویر مالک، تعداد بر اساس هدف کاربر، صدای واقعی آب
     </p>
     <div class="legend">
       <span class="lg d">✅ تصمیم قطعی</span>
@@ -1535,7 +1534,7 @@
       </div>
 
       <p class="tiny" style="margin-top:14px">
-        <b>وضعیت سند:</b> <code>10-landing.md</code> §§۲–۸ بازنویسی شد · <code>12-today.md</code> §۷٫۲ و §۷٫۳ ·
+        <b>و تعداد لیوان‌ها:</b> از <b>هدف خودِ کاربر</b> می‌آید (<code>targetValue</code> برنامهٔ همان دوره) — نه ۸ ثابت. هدف ۱۳ تا ۲۴ → هر لیوان ۲ واحد · بالای ۲۴ → حالت عددی. هیچ لیوانی کوچک‌تر از ۴۴px ساخته نمی‌شود. در نمونه، کلید <b>«هدف آب»</b> در نوار بازبینی این را نشان می‌دهد.<br><br><b>وضعیت سند:</b> <code>10-landing.md</code> §§۲–۸ بازنویسی شد · <code>12-today.md</code> §۷٫۲ و §۷٫۳ ·
         <code>13-mood.md</code> §۴٫۳ و §۵ · و هر سه در <code>00-principles.md</code> ثبت شدند.
       </p>
     </div>
@@ -1544,7 +1543,7 @@
 
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۹ · ۱۶ بخش · لیوان شیشه‌ای واقعی + صدای واقعی آب · لندینگ ساده‌تر · گزینه‌های بصری حال
+    <br>نسخهٔ ۱۰ · ۱۶ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
   </footer>
 </div>
 <script>
@@ -1553,71 +1552,101 @@ function wig(el){var s=el.querySelector('span');s.classList.remove('wiggle');voi
 
 /* ---------- لیوان شیشه‌ای واقعی + آب + صدای واقعی آب ---------- */
 /* سطح آب: دو موجِ سینوسی، با دورهٔ ۲۰ و دامنهٔ متفاوت */
-function waveD(amp,phase){
-  var y=(20.8+(phase||0)).toFixed(1), d='M-70 '+y, x=-70;
+function waveD(amp,phase,y0){
+  var y=((y0||20.4)+(phase||0)).toFixed(1), d='M-70 '+y, x=-70;
   while(x<70){ d+=' q5 -'+amp+' 10 0 t10 0'; x+=20; }
-  return d+' V62 H-70 Z';
+  return d+' V64 H-70 Z';
+}
+
+/* ============================================================
+   لیوان — تامبلر شیشه‌ای (مرجع: تصویر مالک)
+   دهانهٔ بیضی · بدنهٔ تقریباً راست با شیب ملایم · ته ضخیم
+   آب داخل حفرهٔ داخلی بریده می‌شود؛ دیوارهٔ شیشه دورش دیده می‌شود.
+   ============================================================ */
+var GL_TOP=7.2, GL_BOT=48.6;          /* لبه و کف خارجی */
+var GL_HW_TOP=19.2, GL_HW_BOT=15.0;   /* نیم‌عرض بیرونی */
+var GL_IHW_TOP=17.2, GL_IHW_BOT=13.2; /* نیم‌عرض حفرهٔ داخلی */
+var GL_CX=22;
+
+/* نیم‌عرض حفره در ارتفاع y — برای هم‌اندازه بودن سطح آب با لیوان */
+function cavHW(y){
+  var k=(y-GL_TOP)/(GL_BOT-GL_TOP);
+  return GL_IHW_TOP-(GL_IHW_TOP-GL_IHW_BOT)*k;
+}
+function cavPath(){
+  return 'M'+(GL_CX-GL_IHW_TOP)+' '+GL_TOP+
+    ' L'+(GL_CX-GL_IHW_BOT+0.6)+' '+(GL_BOT-2.2)+
+    ' Q'+(GL_CX-GL_IHW_BOT)+' '+GL_BOT+' '+(GL_CX-GL_IHW_BOT+3.4)+' '+GL_BOT+
+    ' H'+(GL_CX+GL_IHW_BOT-3.4)+
+    ' Q'+(GL_CX+GL_IHW_BOT)+' '+GL_BOT+' '+(GL_CX+GL_IHW_BOT-0.6)+' '+(GL_BOT-2.2)+
+    ' L'+(GL_CX+GL_IHW_TOP)+' '+GL_TOP+
+    /* برگشت روی خط لبهٔ جلویی — کمان بیضی داخلی */
+    ' A'+GL_IHW_TOP+' 3.1 0 0 1 '+(GL_CX-GL_IHW_TOP)+' '+GL_TOP+' Z';
+}
+function bodyPath(){
+  return 'M'+(GL_CX-GL_HW_TOP)+' '+GL_TOP+
+    ' L'+(GL_CX-GL_HW_BOT)+' '+(GL_BOT-2.6)+
+    ' Q'+(GL_CX-GL_HW_BOT)+' '+(GL_BOT+1.2)+' '+(GL_CX-GL_HW_BOT+3.8)+' '+(GL_BOT+1.2)+
+    ' H'+(GL_CX+GL_HW_BOT-3.8)+
+    ' Q'+(GL_CX+GL_HW_BOT)+' '+(GL_BOT+1.2)+' '+(GL_CX+GL_HW_BOT)+' '+(GL_BOT-2.6)+
+    ' L'+(GL_CX+GL_HW_TOP)+' '+GL_TOP+
+    ' A'+GL_HW_TOP+' 3.6 0 0 1 '+(GL_CX-GL_HW_TOP)+' '+GL_TOP+' Z';
 }
 
 function glassSVG(i,filled){
-  var id='gw'+i;
-  var ty=filled?0:40;   /* ارتفاع آب در حالت پر، ۹px زیر لبه — فاصلهٔ هوا */
-  return '<svg class="glasssvg" viewBox="0 0 40 66" role="img" aria-hidden="true">'+
+  var id='gw'+i, W=44, H=58;
+  var SURF=20.4;                    /* سطح آبِ پر — ۱۳px زیر لبه */
+  var ty=filled?0:26;
+  var rxSurf=cavHW(SURF).toFixed(2);
+  var cav=cavPath(), body=bodyPath();
+
+  return '<svg class="glasssvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-hidden="true">'+
     '<defs>'+
-      '<clipPath id="gc'+i+'"><path d="M5.1 11.6 L8.1 51.8 Q8.7 56.6 13.7 56.6 H26.3 '+
-        'Q31.3 56.6 31.9 51.8 L34.9 11.6 Q20 14.8 5.1 11.6 Z"/></clipPath>'+
-      '<linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1">'+
-        '<stop offset="0" class="gs-top"/><stop offset=".45" class="gs-mid"/><stop offset="1" class="gs-bot"/>'+
+      '<clipPath id="gc'+i+'"><path d="'+cav+'"/></clipPath>'+
+      '<linearGradient id="gwm'+i+'" x1="0" y1="0" x2="0" y2="1">'+
+        '<stop offset="0" class="gs-top"/><stop offset=".42" class="gs-mid"/><stop offset="1" class="gs-bot"/>'+
       '</linearGradient>'+
-      '<linearGradient id="gg'+i+'" x1="0" y1="0" x2="0" y2="1">'+
-        '<stop offset="0" class="gg-top"/><stop offset="1" class="gg-bot"/>'+
+      '<linearGradient id="ggl'+i+'" x1="0" y1="0" x2="1" y2="0">'+
+        '<stop offset="0" class="gw-a"/><stop offset=".14" class="gw-b"/>'+
+        '<stop offset=".5" class="gw-a"/><stop offset=".88" class="gw-b"/>'+
+        '<stop offset="1" class="gw-a"/>'+
       '</linearGradient>'+
     '</defs>'+
 
-    /* سایه روی میز */
-    '<ellipse class="gsh" cx="20" cy="61" rx="14.5" ry="2.6"/>'+
+    '<ellipse class="gsh" cx="'+GL_CX+'" cy="'+(GL_BOT+3.6)+'" rx="'+GL_HW_BOT+'" ry="2.6"/>'+
 
-    /* بدنهٔ شیشه — گرادینت ملایم شیشه، پشت آب */
-    '<path class="gbod" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
-      'L35.8 11 Q20 14.6 4.2 11 Z" fill="url(#'+'gg'+i+')"/>'+
+    /* شیشه */
+    '<path d="'+body+'" fill="url(#ggl'+i+')"/>'+
+    /* حفرهٔ داخلی — همیشه کمی سرد و شیشه‌ای */
+    '<path d="'+cav+'" class="ginner"/>'+
 
-    /* آب — بریده‌شده داخل شکل لیوان */
-    '<g clip-path="url(#'+'gc'+i+')">'+
+    /* آب — داخل حفرهٔ داخلی */
+    '<g clip-path="url(#gc'+i+')">'+
       '<g class="gwater" style="transform:translateY('+ty+'px)">'+
-        '<rect x="-10" y="21.4" width="60" height="42" fill="url(#'+'id'+')"/>'+
-        '<rect x="-10" y="20.6" width="60" height="2.8" class="gsurf"/>'+
-        /* دو موجِ سینوسی روی سطح */
-        '<path class="wv" d="'+waveD('3.0',0)+'"/>'+
-        '<path class="wv b" d="'+waveD('2.2',1.2)+'"/>'+
-        /* بیضیِ سطح آب — چیزی که «مایع» را مایع نشان می‌دهد */
-        '<ellipse class="gwlin" cx="20" cy="20.8" rx="13.1" ry="2.4"/>'+
-        '<ellipse class="gwlsh" cx="14.5" cy="20.2" rx="5.6" ry="1.1"/>'+
-        /* برقِ لرزانِ روی سطح */
-        '<path class="gcaustic" d="M11.5 27 q5 2.2 9 0 M22.5 30.5 q4 1.8 7 0 M13 35 q4.5 1.8 8 0"/>'+
-        /* حباب‌ها */
-        '<circle class="gbub" cx="14" cy="52" r="1"/><circle class="gbub b2" cx="25" cy="54" r=".8"/>'+
-        '<circle class="gbub b3" cx="19" cy="50" r="1.2"/>'+
+        '<rect x="-8" y="'+(SURF+1.4)+'" width="60" height="50" fill="url(#gwm'+i+')"/>'+
+        '<path class="wv" d="'+waveD('2.4',0,SURF)+'"/>'+
+        '<path class="wv b" d="'+waveD('1.7',1.2,SURF)+'"/>'+
+        '<ellipse class="gwlin" cx="'+GL_CX+'" cy="'+SURF+'" rx="'+rxSurf+'" ry="2.2"/>'+
+        '<ellipse class="gwlsh" cx="'+(GL_CX-6)+'" cy="'+(SURF-0.7)+'" rx="5.4" ry="1"/>'+
+        '<path class="gcaustic" d="M14 27 q5 2.2 9 0 M25 31 q4.5 1.8 8 0"/>'+
+        '<circle class="gbub" cx="16" cy="42" r="1"/><circle class="gbub b2" cx="27" cy="44" r=".8"/>'+
+        '<circle class="gbub b3" cx="21" cy="40" r="1.2"/>'+
       '</g>'+
-      /* جریان و قطره — داخل لیوان دیده می‌شوند */
-      '<rect class="gstream" x="19.1" y="3" width="1.8" height="30" rx=".9"/>'+
-      '<ellipse class="gdrop" cx="20" cy="6" rx="1.6" ry="2.1"/>'+
+      '<rect class="gstream" x="21.1" y="1" width="1.8" height="26" rx=".9"/>'+
+      '<ellipse class="gdrop" cx="'+GL_CX+'" cy="4" rx="1.6" ry="2.1"/>'+
     '</g>'+
 
-    /* خط شیشه — روی آب */
-    '<path class="gline" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
-      'L35.8 11 Q20 14.6 4.2 11 Z"/>'+
-    /* لبه — دو بیضی روی هم: حس ضخامت شیشه */
-    '<ellipse class="grim" cx="20" cy="11" rx="15.5" ry="3.5"/>'+
-    '<ellipse class="grim2" cx="20" cy="11" rx="13.6" ry="2.6"/>'+
+    /* لبه — دو بیضی نازک، نه حلقهٔ ضخیم */
+    '<ellipse class="grim" cx="'+GL_CX+'" cy="'+GL_TOP+'" rx="'+GL_HW_TOP+'" ry="3.5"/>'+
+    '<ellipse class="grim2" cx="'+GL_CX+'" cy="'+GL_TOP+'" rx="'+GL_IHW_TOP+'" ry="2.9"/>'+
     /* ته ضخیم */
-    '<ellipse class="gbase" cx="20" cy="55.6" rx="11.6" ry="2.5"/>'+
-    /* برق شیشه */
-    '<path class="gleam" d="M11.6 16 Q10.4 33 10.8 47"/>'+
-    '<path class="gleam2" d="M29.4 17.5 Q30.2 31 29.8 43"/>'+
-    '<ellipse class="gshine" cx="14.5" cy="14.6" rx="4.6" ry="1.3"/>'+
+    '<ellipse class="gbase" cx="'+GL_CX+'" cy="'+(GL_BOT-1.4)+'" rx="'+(GL_HW_BOT-2.2)+'" ry="2.8"/>'+
+    /* برق دیواره — نازک */
+    '<path class="gleam" d="M11.4 14 Q10.9 30 12.2 42"/>'+
+    '<path class="gleam2" d="M32.4 15 Q33.1 29 32.2 40"/>'+
+    '<ellipse class="gshine" cx="15.6" cy="6.3" rx="4.8" ry="1.2"/>'+
   '</svg>';
 }
-
 
 var WN=8, wfill=0, lastSnd=0, sndOn=false, AC=null, MASTER=null, WETIN=null;
 function ac(){if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();
@@ -1665,7 +1694,7 @@ function chimeSnd(){if(!sndOn||document.hidden)return;var c=ac();if(!c)return;va
   glug(c,t0+.66,170,90,.13,.06);bubble(c,t0+.78,.05);}
 
 function setGlass(el,filled){if(!el)return;
-  var w=el.querySelector('.gwater');if(w)w.style.transform='translateY('+(filled?0:40)+'px)';
+  var w=el.querySelector('.gwater');if(w)w.style.transform='translateY('+(filled?0:26)+'px)';
   el.classList.toggle('f',filled);}
 function splashAt(el){var st=el.querySelector('.gstream'),dr=el.querySelector('.gdrop');
   [st,dr].forEach(function(n){if(!n)return;n.classList.remove('on');void n.getBoundingClientRect();n.classList.add('on');});

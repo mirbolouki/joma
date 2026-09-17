@@ -4,68 +4,99 @@
    ========================================================================== */
 
 /* سطح آب: دو موجِ سینوسی، با دورهٔ ۲۰ و دامنهٔ متفاوت */
-function waveD(amp,phase){
-  var y=(20.8+(phase||0)).toFixed(1), d='M-70 '+y, x=-70;
+function waveD(amp,phase,y0){
+  var y=((y0||20.4)+(phase||0)).toFixed(1), d='M-70 '+y, x=-70;
   while(x<70){ d+=' q5 -'+amp+' 10 0 t10 0'; x+=20; }
-  return d+' V62 H-70 Z';
+  return d+' V64 H-70 Z';
+}
+
+/* ============================================================
+   لیوان — تامبلر شیشه‌ای (مرجع: تصویر مالک)
+   دهانهٔ بیضی · بدنهٔ تقریباً راست با شیب ملایم · ته ضخیم
+   آب داخل حفرهٔ داخلی بریده می‌شود؛ دیوارهٔ شیشه دورش دیده می‌شود.
+   ============================================================ */
+var GL_TOP=7.2, GL_BOT=48.6;          /* لبه و کف خارجی */
+var GL_HW_TOP=19.2, GL_HW_BOT=15.0;   /* نیم‌عرض بیرونی */
+var GL_IHW_TOP=17.2, GL_IHW_BOT=13.2; /* نیم‌عرض حفرهٔ داخلی */
+var GL_CX=22;
+
+/* نیم‌عرض حفره در ارتفاع y — برای هم‌اندازه بودن سطح آب با لیوان */
+function cavHW(y){
+  var k=(y-GL_TOP)/(GL_BOT-GL_TOP);
+  return GL_IHW_TOP-(GL_IHW_TOP-GL_IHW_BOT)*k;
+}
+function cavPath(){
+  return 'M'+(GL_CX-GL_IHW_TOP)+' '+GL_TOP+
+    ' L'+(GL_CX-GL_IHW_BOT+0.6)+' '+(GL_BOT-2.2)+
+    ' Q'+(GL_CX-GL_IHW_BOT)+' '+GL_BOT+' '+(GL_CX-GL_IHW_BOT+3.4)+' '+GL_BOT+
+    ' H'+(GL_CX+GL_IHW_BOT-3.4)+
+    ' Q'+(GL_CX+GL_IHW_BOT)+' '+GL_BOT+' '+(GL_CX+GL_IHW_BOT-0.6)+' '+(GL_BOT-2.2)+
+    ' L'+(GL_CX+GL_IHW_TOP)+' '+GL_TOP+
+    /* برگشت روی خط لبهٔ جلویی — کمان بیضی داخلی */
+    ' A'+GL_IHW_TOP+' 3.1 0 0 1 '+(GL_CX-GL_IHW_TOP)+' '+GL_TOP+' Z';
+}
+function bodyPath(){
+  return 'M'+(GL_CX-GL_HW_TOP)+' '+GL_TOP+
+    ' L'+(GL_CX-GL_HW_BOT)+' '+(GL_BOT-2.6)+
+    ' Q'+(GL_CX-GL_HW_BOT)+' '+(GL_BOT+1.2)+' '+(GL_CX-GL_HW_BOT+3.8)+' '+(GL_BOT+1.2)+
+    ' H'+(GL_CX+GL_HW_BOT-3.8)+
+    ' Q'+(GL_CX+GL_HW_BOT)+' '+(GL_BOT+1.2)+' '+(GL_CX+GL_HW_BOT)+' '+(GL_BOT-2.6)+
+    ' L'+(GL_CX+GL_HW_TOP)+' '+GL_TOP+
+    ' A'+GL_HW_TOP+' 3.6 0 0 1 '+(GL_CX-GL_HW_TOP)+' '+GL_TOP+' Z';
 }
 
 function glassSVG(i,filled){
-  var id='gw'+i;
-  var ty=filled?0:40;   /* ارتفاع آب در حالت پر، ۹px زیر لبه — فاصلهٔ هوا */
-  return '<svg class="glasssvg" viewBox="0 0 40 66" role="img" aria-hidden="true">'+
+  var id='gw'+i, W=44, H=58;
+  var SURF=20.4;                    /* سطح آبِ پر — ۱۳px زیر لبه */
+  var ty=filled?0:26;
+  var rxSurf=cavHW(SURF).toFixed(2);
+  var cav=cavPath(), body=bodyPath();
+
+  return '<svg class="glasssvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-hidden="true">'+
     '<defs>'+
-      '<clipPath id="gc'+i+'"><path d="M5.1 11.6 L8.1 51.8 Q8.7 56.6 13.7 56.6 H26.3 '+
-        'Q31.3 56.6 31.9 51.8 L34.9 11.6 Q20 14.8 5.1 11.6 Z"/></clipPath>'+
-      '<linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1">'+
-        '<stop offset="0" class="gs-top"/><stop offset=".45" class="gs-mid"/><stop offset="1" class="gs-bot"/>'+
+      '<clipPath id="gc'+i+'"><path d="'+cav+'"/></clipPath>'+
+      '<linearGradient id="gwm'+i+'" x1="0" y1="0" x2="0" y2="1">'+
+        '<stop offset="0" class="gs-top"/><stop offset=".42" class="gs-mid"/><stop offset="1" class="gs-bot"/>'+
       '</linearGradient>'+
-      '<linearGradient id="gg'+i+'" x1="0" y1="0" x2="0" y2="1">'+
-        '<stop offset="0" class="gg-top"/><stop offset="1" class="gg-bot"/>'+
+      '<linearGradient id="ggl'+i+'" x1="0" y1="0" x2="1" y2="0">'+
+        '<stop offset="0" class="gw-a"/><stop offset=".14" class="gw-b"/>'+
+        '<stop offset=".5" class="gw-a"/><stop offset=".88" class="gw-b"/>'+
+        '<stop offset="1" class="gw-a"/>'+
       '</linearGradient>'+
     '</defs>'+
 
-    /* سایه روی میز */
-    '<ellipse class="gsh" cx="20" cy="61" rx="14.5" ry="2.6"/>'+
+    '<ellipse class="gsh" cx="'+GL_CX+'" cy="'+(GL_BOT+3.6)+'" rx="'+GL_HW_BOT+'" ry="2.6"/>'+
 
-    /* بدنهٔ شیشه — گرادینت ملایم شیشه، پشت آب */
-    '<path class="gbod" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
-      'L35.8 11 Q20 14.6 4.2 11 Z" fill="url(#'+'gg'+i+')"/>'+
+    /* شیشه */
+    '<path d="'+body+'" fill="url(#ggl'+i+')"/>'+
+    /* حفرهٔ داخلی — همیشه کمی سرد و شیشه‌ای */
+    '<path d="'+cav+'" class="ginner"/>'+
 
-    /* آب — بریده‌شده داخل شکل لیوان */
-    '<g clip-path="url(#'+'gc'+i+')">'+
+    /* آب — داخل حفرهٔ داخلی */
+    '<g clip-path="url(#gc'+i+')">'+
       '<g class="gwater" style="transform:translateY('+ty+'px)">'+
-        '<rect x="-10" y="21.4" width="60" height="42" fill="url(#'+'id'+')"/>'+
-        '<rect x="-10" y="20.6" width="60" height="2.8" class="gsurf"/>'+
-        /* دو موجِ سینوسی روی سطح */
-        '<path class="wv" d="'+waveD('3.0',0)+'"/>'+
-        '<path class="wv b" d="'+waveD('2.2',1.2)+'"/>'+
-        /* بیضیِ سطح آب — چیزی که «مایع» را مایع نشان می‌دهد */
-        '<ellipse class="gwlin" cx="20" cy="20.8" rx="13.1" ry="2.4"/>'+
-        '<ellipse class="gwlsh" cx="14.5" cy="20.2" rx="5.6" ry="1.1"/>'+
-        /* برقِ لرزانِ روی سطح */
-        '<path class="gcaustic" d="M11.5 27 q5 2.2 9 0 M22.5 30.5 q4 1.8 7 0 M13 35 q4.5 1.8 8 0"/>'+
-        /* حباب‌ها */
-        '<circle class="gbub" cx="14" cy="52" r="1"/><circle class="gbub b2" cx="25" cy="54" r=".8"/>'+
-        '<circle class="gbub b3" cx="19" cy="50" r="1.2"/>'+
+        '<rect x="-8" y="'+(SURF+1.4)+'" width="60" height="50" fill="url(#gwm'+i+')"/>'+
+        '<path class="wv" d="'+waveD('2.4',0,SURF)+'"/>'+
+        '<path class="wv b" d="'+waveD('1.7',1.2,SURF)+'"/>'+
+        '<ellipse class="gwlin" cx="'+GL_CX+'" cy="'+SURF+'" rx="'+rxSurf+'" ry="2.2"/>'+
+        '<ellipse class="gwlsh" cx="'+(GL_CX-6)+'" cy="'+(SURF-0.7)+'" rx="5.4" ry="1"/>'+
+        '<path class="gcaustic" d="M14 27 q5 2.2 9 0 M25 31 q4.5 1.8 8 0"/>'+
+        '<circle class="gbub" cx="16" cy="42" r="1"/><circle class="gbub b2" cx="27" cy="44" r=".8"/>'+
+        '<circle class="gbub b3" cx="21" cy="40" r="1.2"/>'+
       '</g>'+
-      /* جریان و قطره — داخل لیوان دیده می‌شوند */
-      '<rect class="gstream" x="19.1" y="3" width="1.8" height="30" rx=".9"/>'+
-      '<ellipse class="gdrop" cx="20" cy="6" rx="1.6" ry="2.1"/>'+
+      '<rect class="gstream" x="21.1" y="1" width="1.8" height="26" rx=".9"/>'+
+      '<ellipse class="gdrop" cx="'+GL_CX+'" cy="4" rx="1.6" ry="2.1"/>'+
     '</g>'+
 
-    /* خط شیشه — روی آب */
-    '<path class="gline" d="M4.2 11 L7.2 51.4 Q7.8 57.8 13.4 57.8 H26.6 Q32.2 57.8 32.8 51.4 '+
-      'L35.8 11 Q20 14.6 4.2 11 Z"/>'+
-    /* لبه — دو بیضی روی هم: حس ضخامت شیشه */
-    '<ellipse class="grim" cx="20" cy="11" rx="15.5" ry="3.5"/>'+
-    '<ellipse class="grim2" cx="20" cy="11" rx="13.6" ry="2.6"/>'+
+    /* لبه — دو بیضی نازک، نه حلقهٔ ضخیم */
+    '<ellipse class="grim" cx="'+GL_CX+'" cy="'+GL_TOP+'" rx="'+GL_HW_TOP+'" ry="3.5"/>'+
+    '<ellipse class="grim2" cx="'+GL_CX+'" cy="'+GL_TOP+'" rx="'+GL_IHW_TOP+'" ry="2.9"/>'+
     /* ته ضخیم */
-    '<ellipse class="gbase" cx="20" cy="55.6" rx="11.6" ry="2.5"/>'+
-    /* برق شیشه */
-    '<path class="gleam" d="M11.6 16 Q10.4 33 10.8 47"/>'+
-    '<path class="gleam2" d="M29.4 17.5 Q30.2 31 29.8 43"/>'+
-    '<ellipse class="gshine" cx="14.5" cy="14.6" rx="4.6" ry="1.3"/>'+
+    '<ellipse class="gbase" cx="'+GL_CX+'" cy="'+(GL_BOT-1.4)+'" rx="'+(GL_HW_BOT-2.2)+'" ry="2.8"/>'+
+    /* برق دیواره — نازک */
+    '<path class="gleam" d="M11.4 14 Q10.9 30 12.2 42"/>'+
+    '<path class="gleam2" d="M32.4 15 Q33.1 29 32.2 40"/>'+
+    '<ellipse class="gshine" cx="15.6" cy="6.3" rx="4.8" ry="1.2"/>'+
   '</svg>';
 }
 
