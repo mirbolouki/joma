@@ -248,7 +248,7 @@
     <p>جای خواندن ۵٬۰۰۰ خط سند — این‌جا فقط <b>تصمیم‌ها</b> را می‌بینی. هر بخش یک نمونهٔ زنده دارد.
        اگر چیزی را عوض می‌خواهی، شمارهٔ بخش را بگو.</p>
     <p style="margin-top:12px;font-weight:800;color:var(--brand-ink)">
-      نسخهٔ ۲ — پاسخ‌های تو اعمال شد · بخش‌های ۹ و ۱۰ تازه‌اند · سؤال آخر در بخش ۱۱ ساده شد
+      نسخهٔ ۳ — پاسخ‌های تازه اعمال شد · بخش‌های ۱۲ و ۱۳ تازه‌اند · دراپ‌داون بدون لیست پیش‌فرض
     </p>
     <div class="legend">
       <span class="lg d">✅ تصمیم قطعی</span>
@@ -718,7 +718,7 @@
   <!-- ================= ۹ مشاور ================= -->
   <section class="sec">
     <div class="sec-head">
-      <span class="sec-n">۹</span>
+      <span class="sec-n">۸</span>
       <h2>مشاور — دراپ‌داون و سه مسیر انتساب</h2>
       <span class="tag">پاسخ‌های تو اعمال شد</span>
     </div>
@@ -754,6 +754,19 @@
             ✅ جست‌وجو داخل فهرست · ✅ بدون پیش‌انتخاب · ✅ بدون نمایش تعداد مراجع<br>
             ✅ مشاور غیرفعال در فهرست نمی‌آید — خاکستری نمی‌ماند
           </p>
+          <div class="qbox" style="margin-top:12px;background:var(--brand-softer);border-color:var(--brand-soft)">
+            <h4 style="color:var(--brand-ink)">✅ پاسخ تو: بدون لیست پیش‌فرض</h4>
+            <p class="tiny" style="margin:0">
+              «هر کاربری که نقش مشاور دارد، در دراپ‌داون بیاید.»
+              <br>یعنی لیست <b>زنده</b> است: مدیر کاربر می‌سازد ← نقش مشاور می‌دهد ← <b>بی‌درنگ دیده می‌شود</b>.
+              <br>هیچ فهرست ثابتی نگه‌داری نمی‌شود، و هر گزینه یک <b>انسان واقعی</b> است.
+              اگر هیچ مشاوری نباشد، دراپ‌داون هم نشان داده نمی‌شود.
+            </p>
+            <p class="tiny" style="margin-top:8px">
+              <b>یک کلید هم اضافه کردم:</b> هر مشاور می‌تواند «پذیرش مراجع جدید» را ببندد —
+              وگرنه مشاوری با ۵۰ مراجع راهی برای توقف درخواست‌ها ندارد. پیش‌فرض مشاور تازه: <b>بسته</b>.
+            </p>
+          </div>
         </div>
 
         <div class="card" style="padding:14px">
@@ -776,15 +789,28 @@
       </div>
 
       <div class="qbox" style="margin-top:16px;background:var(--coral-soft);border-color:rgba(242,120,75,.3)">
-        <h4 style="color:var(--coral-ink)">🔴 یک قاعده در هر سه مسیر — و یک پرسش از تو</h4>
+        <h4 style="color:var(--brand-ink)">✅ پاسخ تو: رابطه یک‌طرفه ساخته نمی‌شود</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          در هر سه مسیر، <b>کاربر تعیین‌کنندهٔ نهایی است</b>. حتی وقتی <b>مدیر</b> انتساب می‌دهد، رابطه
-          در حالت «در انتظار تأیید تو» شروع می‌شود و تا کاربر تأیید نکند، مشاور <b>هیچ داده‌ای</b> نمی‌بیند.
+          «تا کاربر تأیید نکند مسیر ایجاد نمی‌شود — هم مشاور، هم کاربر.» اعمال شد.
         </p>
-        <p style="font-size:11.5px;color:var(--ink-2);margin-top:8px">
-          <b>چرا این را گذاشتم:</b> اگر مدیر بتواند بی‌اطلاع کاربر کسی را به داده‌اش وصل کند، «رضایت آگاهانه» بی‌معنی می‌شود.
-          ولی اگر می‌خواهی مدیر <b>بدون</b> تأیید هم بتواند وصل کند (مثلاً در کلینیک که رابطه بخشی از خدمت است)، بگو —
-          این تنها جایی است که تصمیم تو با پیش‌فرض من فرق دارد.
+        <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
+          <table style="width:100%;border-collapse:collapse;font-size:11px">
+            <thead><tr style="background:var(--card)">
+              <th style="padding:8px 11px;text-align:right;font-weight:900">مسیر</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">تأیید مشاور</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">تأیید کاربر</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">۱ · مدیر</td><td style="padding:8px 11px">✅ لازم</td><td style="padding:8px 11px">✅ لازم</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">۲ · کاربر</td><td style="padding:8px 11px">✅ لازم</td><td style="padding:8px 11px">✅ انتخابش</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">۳ · مشاور</td><td style="padding:8px 11px">✅ صدور کد</td><td style="padding:8px 11px">✅ لازم</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny" style="margin-top:9px">
+          <b>مسیر ۱ دو تأیید می‌خواهد</b>، چون مدیر طرفِ رابطه نیست و هیچ‌کدام از دو طرف چیزی نگفته‌اند.
+          و تا آن لحظه، <b>مشاور هیچ داده‌ای نمی‌بیند</b> — نه وضعیت، نه عدد، نه نام.
+          <br>و حتی با تأیید دو طرف: <b>مجوزها را کاربر تعیین می‌کند</b>، نه مشاور و نه مدیر.
         </p>
       </div>
     </div>
@@ -793,7 +819,7 @@
   <!-- ================= ۱۰ کنسول مدیر ================= -->
   <section class="sec">
     <div class="sec-head">
-      <span class="sec-n">۱۰</span>
+      <span class="sec-n">۹</span>
       <h2>کنسول مدیر — داشبورد مدیریتی کامل</h2>
       <span class="tag">پاسخ تو اعمال شد</span>
     </div>
@@ -822,6 +848,37 @@
         </div>
       </div>
 
+      <div class="qbox" style="margin-top:16px;background:var(--card);border-color:var(--card-brd)">
+        <h4 style="color:var(--ink)">📌 پاسخ تو: «در دیتابیس role داریم»</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          خوب است — ولی یک نکتهٔ فنی که باید بدانی: <b>یک ستون <code>role</code> برای چندنقشی کافی نیست.</b>
+          اگر ستون تک‌مقداری باشد، با دادن نقش مشاور، نقش کاربری از دست می‌رود.
+        </p>
+        <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
+          <table style="width:100%;border-collapse:collapse;font-size:11px">
+            <thead><tr style="background:var(--brand-softer)">
+              <th style="padding:8px 11px;text-align:right;font-weight:900">مدل</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">چندنقشی؟</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">حکم</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">یک ستون تک‌مقداری</td><td style="padding:8px 11px">❌</td><td style="padding:8px 11px">کافی نیست — نقش کاربری از دست می‌رود</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">مقادیر جدا‌شده با کاما</td><td style="padding:8px 11px">⚠️</td><td style="padding:8px 11px">کار می‌کند، کوئری ضعیف</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>جدول <code>user_roles</code></b></td><td style="padding:8px 11px">✅</td><td style="padding:8px 11px"><b>پیشنهاد این سند</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny" style="margin-top:9px">
+          <code>user_roles(user_id, role_code, granted_at, granted_by)</code> — هر کاربر حداقل یک ردیف <code>client</code> دارد.
+          ستون فعلی <code>role</code> فوراً حذف نمی‌شود؛ مدتی هم‌زمان می‌ماند تا مهاجرت تأیید شود.
+          <br><b>و یک خبر خوب:</b> فرانت کاری با شکل ذخیره‌سازی ندارد — فقط فهرست نقش‌ها را از API می‌خواند.
+        </p>
+        <p class="tiny" style="margin-top:8px">
+          ❓ <b>دو چیز که باید از بک‌اند بپرسی:</b> مقادیر <b>فعلی</b> ستون <code>role</code> چه هستند؟
+          و آیا جای دیگری از کد خوانده می‌شود که با تغییر بشکند؟
+        </p>
+      </div>
+
       <p class="note" style="margin-top:16px;margin-bottom:0">
         <b>ویرایش محتوا قواعد دارد:</b> نسخه‌دار · پیش‌نمایش جدا از ذخیره · تا «انتشار» زنده نمی‌شود و کاربران نسخهٔ قبلی را می‌بینند ·
         ویرایش متن رضایت، <b>نسخهٔ جدید رضایت</b> می‌سازد و نیاز به پذیرش دوباره دارد.
@@ -830,73 +887,160 @@
     </div>
   </section>
 
-  <!-- ================= ۱۱ پرسش ================= -->
+  <!-- ================= ۱۲ برنامهٔ قفل‌شده ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۱۰</span>
+      <h2>هشدار پیش از «شروع دوره»</h2>
+      <span class="tag">پاسخ تو اعمال شد</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گفتی: «وقتی اجرا را می‌زند باید بداند که تا پایان دوره قابل ویرایش نیست.» این شد قاعده:
+        <b>هر اقدام برگشت‌ناپذیر، هزینه‌اش را پیش از اقدام می‌گوید، نه بعد از آن.</b></p>
+
+      <div class="grid2">
+        <div>
+          <div class="card" style="padding:18px;border:2px solid var(--gold-soft);background:linear-gradient(180deg,var(--gold-soft),transparent 40%),var(--card)">
+            <b style="font-size:14px;display:block;margin-bottom:12px">دورهٔ شهریور ۱۴۰۵ شروع شود؟</b>
+            <p style="font-size:11.5px;color:var(--ink-2);line-height:2">
+              با شروع، فعالیت‌ها و هدف‌های این دوره قفل می‌شوند.
+            </p>
+            <div style="background:var(--coral-soft);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
+              ⛔ <b>تا پایان دوره — ۳۱ شهریور (۲۶ روز دیگر)</b> نمی‌توانی:
+              <br>• هدفی را عوض کنی
+              <br>• فعالیتی اضافه یا کم کنی
+            </div>
+            <p class="tiny">حالا هم می‌توانی برگردی و چند روز دیگر شروع کنی.</p>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <button class="btn primary">می‌فهمم، شروع کن</button>
+              <button class="btn ghost">فعلاً نه</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="grid2" style="gap:12px">
+            <div class="card"><b style="font-size:12px">تاریخ پایان — الزامی</b>
+              <p class="tiny" style="margin-top:5px">«تا پایان دوره» بدون تاریخ، مبهم است. کاربر باید بداند تا کِی.</p></div>
+            <div class="card"><b style="font-size:12px">شمار روزهای باقی‌مانده</b>
+              <p class="tiny" style="margin-top:5px">«۲۶ روز دیگر» — به کاربر می‌گوید چقدر طول می‌کشد.</p></div>
+            <div class="card"><b style="font-size:12px">برچسب دکمه</b>
+              <p class="tiny" style="margin-top:5px">«می‌فهمم، شروع کن» — تأیید <b>درون خودِ دکمه</b>. چک‌باکس جدا لازم نیست.</p></div>
+            <div class="card"><b style="font-size:12px">راه فرار</b>
+              <p class="tiny" style="margin-top:5px">«حالا هم می‌توانی برگردی» — کاربر باید بداند <b>در همین لحظه</b> گیر نمی‌افتد.</p></div>
+          </div>
+          <div class="card" style="margin-top:12px;background:var(--brand-softer);border-color:var(--brand-soft)">
+            <b style="font-size:12px;color:var(--brand-ink)">نوار دورهٔ در حال اجرا</b>
+            <p class="tiny" style="margin-top:6px">🔒 این دوره در حال اجراست و <b>تا ۳۱ شهریور</b> قابل ویرایش نیست. <span style="color:var(--brand-ink);font-weight:800">[دیدن دلیل کامل]</span></p>
+            <p class="tiny" style="margin-top:6px">تاریخ پایان در خودِ نوار می‌آید، نه فقط در پنل دلیل.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ۱۳ پیشنهاد تو ================= -->
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۱</span>
-      <h2>آنچه هنوز باید بگویی</h2>
-      <span class="tag q">۲ مورد</span>
+      <h2>ایدهٔ تو: مدیر با درخواست کاربر برنامه را ویرایش کند</h2>
+      <span class="tag q">بررسی — منتظر انتخاب تو</span>
     </div>
     <div class="sec-body">
+      <p class="note">گفتی «این یک پیشنهاد است، بررسی‌اش کن». بررسی کردم. <b>خودِ ایده یک شکاف واقعی را نشان می‌دهد</b> —
+        ولی فکر می‌کنم راه‌حل بهتری هست. سه گزینه را با هزینه‌شان می‌گذارم.</p>
 
-      <div class="qbox" style="background:var(--brand-softer);border-color:var(--brand-soft)">
-        <h4 style="color:var(--brand-ink)">✅ پاسخ داده شد و در سند نوشته شد</h4>
+      <div class="qbox" style="background:var(--card);border-color:var(--card-brd)">
+        <h4 style="color:var(--ink)">مسئلهٔ واقعی که پیشنهاد تو نشان داد</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          نقش مشاور و سه مسیر انتساب · کنسول کامل مدیر و ویرایش محتوا · جوجهٔ وضعیت مشاور (تأیید فعلی)
+          کاربر برنامه می‌سازد ← شروع می‌کند ← بعد می‌فهمد یک هدف را غلط گذاشته ←
+          <b>قفل جلوی ویرایش را می‌گیرد</b> ← راهش بایگانی و ساختن دورهٔ نوست ←
+          <b>نتیجه: کاربر گیر می‌کند یا همه‌چیز را رها می‌کند.</b>
+        </p>
+        <p class="tiny" style="margin-top:8px">پس مسئله درست است. بحث سرِ <b>راه‌حل</b> است.</p>
+      </div>
+
+      <div class="grid3" style="margin-top:16px">
+        <div class="card" style="border-color:rgba(242,120,75,.3)">
+          <span class="gpath" style="background:var(--coral-soft);color:var(--coral-ink)">گزینهٔ الف — پیشنهاد تو</span>
+          <b style="font-size:13px;display:block;margin:6px 0">مدیر با درخواست کاربر ویرایش کند</b>
+          <p class="tiny" style="color:var(--brand-ink)">✅ شکاف را می‌بندد · قابلیت جدید لازم نیست</p>
+          <p class="tiny" style="color:var(--coral-ink);margin-top:6px">🔴 معنی قفل را می‌شکند — دلیل قفل این است که هدف‌های میانهٔ دوره عوض نشوند</p>
+          <p class="tiny" style="color:var(--coral-ink)">🔴 نابرابری پنهان: فقط کاربری که می‌داند بپرسد</p>
+          <p class="tiny" style="color:var(--coral-ink)">🔴 صف پشتیبانی می‌سازد · کاربر نمی‌بیند چه عوض شد</p>
+          <p class="tiny" style="margin-top:8px;font-weight:800">حکم: فقط برای اصلاح خطای واقعی</p>
+        </div>
+
+        <div class="card" style="border-color:var(--brand-soft);background:linear-gradient(180deg,var(--brand-softer),transparent 50%),var(--card)">
+          <span class="gpath" style="background:var(--brand-soft);color:var(--brand-ink)">گزینهٔ ب — پیشنهاد من</span>
+          <b style="font-size:13px;display:block;margin:6px 0">«تغییر هدف از امروز به بعد»</b>
+          <p class="tiny" style="color:var(--brand-ink)">✅ کاربر خودش، بی‌واسطه، بی‌صف</p>
+          <p class="tiny" style="color:var(--brand-ink)">✅ <b>دلیل قفل حفظ می‌شود</b> — گذشته دست‌نخورده</p>
+          <p class="tiny" style="color:var(--brand-ink)">✅ قابل مشاهده: «هدف از ۱۵ شهریور از ۱۵ به ۳۰ دقیقه عوض شد»</p>
+          <p class="tiny" style="color:var(--gold-ink);margin-top:6px">⚠️ بک‌اند باید <b>تاریخ اثر</b> را نگه دارد · گزارش دو هدف نشان می‌دهد</p>
+          <p class="tiny" style="margin-top:8px;font-weight:800">حکم: جواب واقعی — اگر تأیید کنی</p>
+        </div>
+
+        <div class="card">
+          <span class="gpath" style="background:var(--indigo-soft);color:var(--indigo-ink)">گزینهٔ ج — ارزان</span>
+          <b style="font-size:13px;display:block;margin:6px 0">میان‌بر «دورهٔ نو با همان فعالیت‌ها»</b>
+          <p class="tiny" style="color:var(--brand-ink)">✅ <b>صفر ریسک داده</b> — قاعدهٔ قفل کاملاً دست‌نخورده</p>
+          <p class="tiny" style="color:var(--brand-ink)">✅ همین حالا قابل پیاده‌سازی</p>
+          <p class="tiny" style="color:var(--gold-ink);margin-top:6px">⚠️ برای اصلاح یک اشتباه تایپی، سنگین است</p>
+          <p class="tiny" style="color:var(--gold-ink)">⚠️ کاربر «دوره» بیشتری در تاریخچه می‌بیند</p>
+          <p class="tiny" style="margin-top:8px;font-weight:800">حکم: الان بساز</p>
+        </div>
+      </div>
+
+      <div class="qbox" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
+        <h4 style="color:var(--brand-ink)">پیشنهاد نهایی من — با ترتیب اجرا</h4>
+        <ol style="color:var(--ink-2)">
+          <li><b>گزینهٔ ج را الان بساز</b> — ارزان، بی‌ریسک، گره را باز می‌کند</li>
+          <li><b>گزینهٔ ب را اگر تأیید کنی، بساز</b> — جواب واقعی و درست است</li>
+          <li><b>گزینهٔ الف را فقط برای اصلاح خطا نگه دار</b> — با پنج شرط پایین</li>
+        </ol>
+        <p class="tiny" style="margin-top:8px">
+          قاعدهٔ این ترتیب: <b>اول راه‌حل کم‌ریسک، بعد راه‌حل درست، و «دسترسی ویژهٔ مدیر به داده» آخرین گزینه.</b>
         </p>
       </div>
 
-      <div class="qbox" style="margin-top:14px">
-        <h4>۱ · اسامی پیش‌فرض مشاوران — این را بفرست</h4>
-        <p style="font-size:11.5px;color:var(--ink-2)">
-          گفتی قرار بود یک سری اسم پیش‌فرض بدهی تا لیست هیچ‌وقت خالی نباشد.
-          <b>اسم‌ها را بنویس تا در سند ثبت کنم.</b>
-        </p>
-        <div class="card" style="margin-top:10px">
-          <p class="tiny" style="margin:0">
-            🔴 <b>یک نکته که باید بدانی:</b> مشاور پیش‌فرض باید <b>حساب واقعی</b> باشد، نه اسم جعلی.
-            اگر اسمی باشد که هیچ‌کس پشتش نیست، کاربر انتخاب می‌کند و <b>کسی جواب نمی‌دهد</b> —
-            و در محصول سلامت روان، همین یک تجربه اعتماد را از بین می‌برد.
-            <br><br>
-            اگر این اسم‌ها برای <b>نمایش یا دموی محصول</b> است، با برچسب «نمایش نمونه» می‌آید.
-            اگر <b>مشاوران واقعی</b>اند، به‌عنوان حساب واقعی با نقش مشاور ثبت می‌شوند.
+      <div class="grid2" style="margin-top:14px">
+        <div class="card">
+          <b style="font-size:12.5px">محدودیت‌های گزینهٔ ب</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            حداکثر <b>۲ بار در هر دوره</b> برای هر فعالیت · در <b>روز آخر</b> ممنوع<br>
+            <b>کاهش هدف</b> تأیید می‌خواهد: «مطمئنی؟ هدف کمتر، موفقیت را راحت‌تر می‌کند.»<br>
+            <b>افزایش هدف</b> تأیید نمی‌خواهد<br>
+            تغییر <b>تناوب</b> ممنوع — چرخه را می‌شکند · <b>حذف</b> فعالیتی که ثبت دارد ممنوع
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">اگر گزینهٔ الف اجرا شد — پنج شرط</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            ۱. کاربر با <b>درخواست خودش</b> و یک دلیل شروع کند<br>
+            ۲. فقط <b>هدف و تاریخ</b> — نه ثبت‌ها، نه حذف<br>
+            ۳. <b>پیش و پس، به کاربر نشان داده شود</b><br>
+            ۴. <b>لاگ کامل</b>: چه کسی، چه زمانی، به درخواست چه کسی<br>
+            ۵. در گزارش‌ها با تاریخ نمایش داده شود
           </p>
         </div>
       </div>
 
-      <div class="qbox" style="margin-top:14px">
-        <h4>۲ · سؤال آخر که متوجه نشدی — با مثال</h4>
-        <p style="font-size:11.5px;color:var(--ink-2)">
-          <b>سناریو:</b> کاربر یک دوره («شهریور ۱۴۰۵») ساخته، ولی داخلش <b>هنوز هیچ فعالیتی نگذاشته</b>.
-          روی دکمهٔ «شروع این دوره» می‌زند.
-        </p>
-        <p style="font-size:12px;color:var(--ink);margin-top:8px;font-weight:800">سؤال: اجازه بدهیم شروع کند یا نه؟</p>
-        <div class="grid2" style="margin-top:12px">
-          <div class="card" style="background:var(--brand-softer);border-color:var(--brand-soft)">
-            <b style="font-size:12px;color:var(--brand-ink)">پیشنهاد من: حداقل ۱ فعالیت</b>
-            <p class="tiny" style="margin-top:5px">«برای شروع، حداقل یک فعالیت لازم است.
-              دورهٔ خالی هیچ چیزی برای ثبت ندارد و کاربر سردرگم می‌شود.»</p>
-          </div>
-          <div class="card">
-            <b style="font-size:12px">یا شاید:</b>
-            <p class="tiny" style="margin-top:5px">
-              حداقل ۳ فعالیت (برنامهٔ جدی‌تر)<br>
-              یا بدون حد — هر چقدر خواست<br>
-              یا عدد و متن را از بک‌اند بگیرم
-            </p>
-          </div>
-        </div>
-        <p class="tiny" style="margin-top:10px">
-          فقط عدد و یک جملهٔ دلیلش را می‌خواهم — همین که کاربر ببیند چرا قفل است.
-        </p>
-      </div>
+      <p class="note" style="margin-top:14px;margin-bottom:0">
+        <b>و در همهٔ گزینه‌ها این چهار چیز ثابت می‌ماند:</b>
+        گزارش‌های گذشته هرگز بازنویسی نمی‌شوند · ثبت‌های قطعی هرگز عوض نمی‌شوند ·
+        هر تغییری <b>دیده می‌شود</b> · هیچ‌کس به‌جای کاربر <b>ثبت</b> نمی‌کند.
+      </p>
 
+      <p class="note" style="margin-top:12px;margin-bottom:0;font-weight:800;color:var(--brand-ink)">
+        👈 انتخاب کن: «ج فقط» · «ج و ب» · «ج و ب و الف» — یا نظر خودت.
+      </p>
     </div>
   </section>
 
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>بخش تازه: <b>۲۴-roles.md</b> (نقش‌ها، مشاور، کنسول مدیر) · نسخهٔ ۲ تابلو
+    <br>بخش تازه: <b>۲۴-roles.md</b> (نقش‌ها، مشاور، کنسول مدیر) · نسخهٔ ۳ تابلو
   </footer>
 </div>
 </body>
