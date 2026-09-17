@@ -487,7 +487,7 @@ function R_admin(embedded){
     '</div>';
   } else if(sec==='content'){
     panel='<div class="card"><h3>'+ic('i-book')+'محتوا و آموزش</h3>'+
-      '<div class="kv"><span>راهنماها</span><b class="num">۶۳ متن (۱ + ۳۵ + ۲۷)</b></div>'+
+      '<div class="kv"><span>راهنماها</span><b class="num">۷۲ متن (۱۰ + ۳۵ + ۲۷)</b></div>'+
       '<div class="kv"><span>متن صفحه‌ها</span><button class="btn ghost sm" data-go="content">ویرایش</button></div>'+
       '<div class="kv"><span>نسخهٔ محتوا</span><b>نسخهٔ ۱۲ — منتشرشده</b></div>'+
       '<div class="banner info">'+ic('i-info')+
