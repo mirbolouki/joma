@@ -136,6 +136,18 @@ function chEyes(p,state){
     '<circle cx="49.5" cy="55" r="4.6" fill="#fff"/><circle cx="79.5" cy="55" r="4.6" fill="#fff"/>'+
     '<circle cx="41.5" cy="65" r="1.9" fill="#fff" opacity=".85"/><circle cx="71.5" cy="65" r="1.9" fill="#fff" opacity=".85"/>';
 }
+/* عینک جغد — امضای هویت: دو حلقهٔ طلایی، پلِ بینی، دسته‌ها (همان فرم جغد ۷B) */
+function chGlasses(p,closed){
+  var g=p.gold;
+  return '<g class="chglasses">'+
+    '<circle cx="45" cy="60" r="17" fill="none" stroke="'+g+'" stroke-width="2.8"/>'+
+    '<circle cx="75" cy="60" r="17" fill="none" stroke="'+g+'" stroke-width="2.8"/>'+
+    '<path d="M62 55.5 Q60 52.5 58 55.5" fill="none" stroke="'+g+'" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<path d="M28 57 q-8 -3 -13 -8" fill="none" stroke="'+g+'" stroke-width="2.4" stroke-linecap="round"/>'+
+    '<path d="M92 57 q8 -3 13 -8" fill="none" stroke="'+g+'" stroke-width="2.4" stroke-linecap="round"/>'+
+    (closed?'':'')+
+  '</g>';
+}
 function chBrows(p){return '<path d="M30 46 q10 -7 20 -1 M90 46 q-10 -7 -20 -1" fill="none" stroke="'+p.gold+'" stroke-width="2.6" stroke-linecap="round"/>';}
 function chSpark(p){return '<g class="chspark">'+
   '<path d="M101 24 l3 3 M111 32 l3 -3 M97 40 l4 1" stroke="'+p.gold+'" stroke-width="2.4" stroke-linecap="round"/>'+
@@ -162,12 +174,14 @@ function chickSVG(size, stage, mood){
   else if(stage==='crack'){ inner=chEgg(p,true); cls='wiggle'; }
   else {
     var eye=(mood==='happy')?'happy':((mood==='tired'||mood==='sleep'||stage==='calm'||stage==='miss')?'closed':'open');
+    var closed=(eye==='closed');
     inner = chTufts(p)+
       '<path d="M60 18 C88 18 100 44 100 72 C100 102 84 118 60 118 C36 118 20 102 20 72 C20 44 32 18 60 18 Z" fill="'+p.a+'"/>'+
       chBelly(p)+chWings(p)+
       '<g class="ch-eyes">'+chEyes(p,eye)+'</g>'+
       '<g class="ch-lids">'+chEyes(p,'closed')+'</g>'+
-      chBrows(p)+ (mood==='tired'?'':chCheeks(p)) +
+      (eye==='happy'?'':chGlasses(p,closed))+
+      (mood==='tired'?'':chCheeks(p)) +
       chBeak(p, mood==='happy')+chFeet(p)+
       (mood==='happy'?chSpark(p):'')+
       (mood==='sleep'?'<g class="ch-zz"><text x="100" y="36" font-size="15" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text>'+

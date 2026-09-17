@@ -31,20 +31,26 @@ function R_chick(){
   return head('جوجهٔ من', name+(st==='egg'?' — تخم':''), g.sub,
       '<span class="chip '+(st==='chick'?'g':'go')+'">'+(st==='egg'?'تخم':(st==='crack'?'در حال ترک':'جوجه'))+'</span>')+
 
-    '<div class="pet-stage'+(APP.petSleep?' sleep':'')+'" data-petchick>'+
-      '<span class="halo"></span>'+
-      '<span class="pet-hold">'+chickSVG(150, st==='chick'?'chick':st, st==='chick'?(APP.petSleep?'sleep':'happy'):'ok')+'</span>'+
-    '</div>'+
-    '<div class="pet-ctrls">'+
-      '<button class="btn soft sm" data-petpet>'+ic('i-heart')+'نوازش</button>'+
-      '<button class="btn ghost sm" data-petsleep>'+(APP.petSleep?'بیدارش کن ☀️':'بخوابانش 🌙')+'</button>'+
-      '<button class="btn ghost sm" data-petsnd>'+(APP.sound?'🔊 صدای جوجه روشن':'🔇 صدای جوجه خاموش')+'</button>'+
-    '</div>'+
-    note('جوجهٔ **جغد** است (`owl-chick` — انتخاب مالک)، هم‌خانوادهٔ جغدِ محصول: آبی، شکم کرم، حلقهٔ طلایی دور چشم. '+
-      'لمس **بی‌پاداش** است؛ پرش و جیک فقط واکنش‌اند و داده‌ای را عوض نمی‌کنند.')+
-    note('همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
-      'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
-
+    '<div class="pet-grid">'+
+      '<div class="pet-col">'+
+        '<div class="pet-stage'+(APP.petSleep?' sleep':'')+'" data-petchick>'+
+          '<span class="halo"></span>'+
+          '<span class="pet-hold">'+chickSVG(150, st==='chick'?'chick':st,
+            st==='chick'?(APP.petSleep?'sleep':(APP.petMood||'ok')):'ok')+'</span>'+
+        '</div>'+
+        '<div class="pet-ctrls">'+
+          '<button class="btn soft sm" data-petpet>'+ic('i-heart')+'نوازش</button>'+
+          '<button class="btn ghost sm" data-petsleep>'+(APP.petSleep?'بیدارش کن ☀️':'بخوابانش 🌙')+'</button>'+
+          '<button class="btn ghost sm" data-petsnd>'+(APP.sound?'🔊 صدا روشن':'🔇 صدا خاموش')+'</button>'+
+        '</div>'+
+        '<div class="pet-states">'+
+          [['ok','حالت عادی — چشم باز و عینک'],['blink','پلک‌زدن (خودکار)'],['happy','شاد — بعد از یک ثبت'],['sleep','خواب — شب یا چند روز بی‌ثبت']]
+          .map(function(s2){
+            return '<button class="'+(APP.petMood===s2[0]?'on':'')+'" data-petmode="'+s2[0]+'">'+s2[1]+'</button>';}).join('')+
+        '</div>'+
+        note('همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
+          'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
+      '</div>'+
     '<div class="grid2">'+
       '<div class="card"><h3>'+ic('i-heart')+'مراقبت امروز</h3>'+
         METERS.map(function(m){
@@ -61,7 +67,7 @@ function R_chick(){
       '<div style="display:flex;flex-direction:column;gap:14px">'+
         '<div class="card"><h3>'+ic('i-trend')+'رشد</h3>'+
           '<div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">'+
-            '<span class="bignum" style="font-size:30px;color:var(--brand-ink)">'+fa(pct)+'٪</span>'+
+            '<span class="bignum" style="font-size:24px;color:var(--brand-ink)">'+fa(pct)+'٪</span>'+
             '<span class="tiny">از مراقبت کامل</span></div>'+
           '<div style="height:9px;border-radius:99px;background:var(--ring-track);margin-top:10px;overflow:hidden">'+
             '<i style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,var(--grad1),var(--grad2))"></i></div>'+
@@ -89,7 +95,7 @@ function R_chick(){
           '<p class="tiny" style="margin-top:6px">جوجه، **ارزش اصلی محصول نیست**. کارها و گزارش‌های تو مهم‌اند؛ '+
           'جوجه فقط یادآوری می‌کند که برگردی — بدون فشار و بدون سرزنش.</p></div>'+
       '</div>'+
-    '</div>'+
+    '</div></div>'+
     note('سه چیز اینجا **نیست** و هرگز نمی‌آید: مرگ/بیماری/فرار جوجه · شمارش معکوس غیبت · مقایسه با جوجهٔ دیگران. '+
       'و هیچ قابلیت اصلی، پشت رشد جوجه قفل نمی‌شود (`CAR-04`).');
 }
@@ -341,7 +347,38 @@ function R_plan(){
         '<b>این برنامه هنوز فعالیتی ندارد</b>'+
         '<p class="tiny">از کتابخانه انتخاب کن. برای شروع دوره، حداقل یک فعالیت لازم است.</p>'+
         '<a class="btn primary sm" style="margin-top:10px" href="#library">رفتن به کتابخانه</a></div></div>';
-  } else if(tab==='settings'){
+  } else if(tab==='cal'){
+    /* تقویم ماه — «مسیر این ماه»: کاربر باید بفهمد هر نشانه یعنی چه */
+    var done={1:1,2:1,3:1,5:1,6:1,8:1,9:1,10:1,12:1,13:1,15:1,16:1};
+    var partial={4:1,11:1};
+    var miss={7:1,14:1};
+    var today=16;
+    var first=0;                 /* ۱ شهریور ۱۴۰۵ — شنبه */
+    var days=['ش','ی','د','س','چ','پ','ج'];
+    var cells='';
+    for(var b=0;b<first;b++) cells+='<span class="calcell blank"></span>';
+    for(var d=1;d<=30;d++){
+      var cls=done[d]?'full':(partial[d]?'part':(miss[d]?'miss':''));
+      cells+='<span class="calcell '+cls+(d===today?' today':'')+'" data-cald="'+d+'">'+fa(d)+'</span>';
+    }
+    body='<div class="card"><h3>'+ic('i-cal')+'مسیر شهریور ۱۴۰۵</h3>'+
+      '<p class="tiny" style="margin-top:5px">این تقویمِ دورهٔ توست: هر خانه یک روز. '+
+      'روی هر روز بزن تا ببینی چه ثبت شده — روزهای آینده خالی‌اند و قابل ثبت نیستند.</p>'+
+      '<div class="cal">'+days.map(function(x){return '<span class="caldow">'+x+'</span>';}).join('')+cells+'</div>'+
+      '<div class="cal-legend">'+
+        '<span><i class="lg full"></i> کامل ثبت شده — همهٔ کارهای آن روز</span>'+
+        '<span><i class="lg part"></i> ناقص — بعضی کارها ثبت شده</span>'+
+        '<span><i class="lg miss"></i> بدون ثبت — روزی که چیزی ثبت نشده</span>'+
+        '<span><i class="lg today"></i> امروز</span>'+
+      '</div>'+
+      '<div class="kv" style="margin-top:10px"><span>روزهای همراهی این ماه</span><b>۱۲ از ۳۰ — ۴۰٪</b></div>'+
+      '<div class="kv"><span>بهترین روز</span><b>۱۳ شهریور — همهٔ کارها</b></div>'+
+      '<div class="kv"><span>روزهای بی‌ثبت پیوسته</span><b>۲ روز (۷ و ۱۴)</b></div>'+
+    '</div>'+
+    '<div class="card"><h3>'+ic('i-info')+'چرا تقویم و نه نمودار؟</h3>'+
+      '<p class="tiny" style="margin-top:6px">عدد و درصد، در گزارش‌ها هست. اینجا فقط می‌خواهی ببینی «مسیرم چه شکلی است» — '+
+      'پس شکلِ ماه را می‌بینی، نه یک عدد. روزهای بی‌ثبت هم <b>سرزنش نیستند</b>؛ فقط نشان می‌دهند کجا شکاف افتاده.</p></div>';
+    } else if(tab==='settings'){
     body='<div class="card"><h3>'+ic('i-gear')+'تنظیمات این دوره</h3>'+
       '<div class="kv" style="margin-top:8px"><span>نام دوره</span><b>شهریور ۱۴۰۵</b></div>'+
       '<div class="kv"><span>تاریخ شروع</span><b>۳ شهریور ۱۴۰۵</b></div>'+
@@ -387,7 +424,7 @@ function R_plan(){
     note('کلید <b>وضعیت دوره</b> در همین سرصفحه (در نمونه) چهار وضعیت را نشان می‌دهد: پیش‌نویس → در حال آماده‌سازی → در حال اجرا → بایگانی. '+
       'انتقال‌های مجاز در `۴٫۲` آمده و فرانت هیچ‌کدام را خودش انجام نمی‌دهد.')+
 
-    '<div class="tabs">'+[['acts','فعالیت‌ها'],['settings','تنظیمات'],['summary','خلاصه']].map(function(t){
+    '<div class="tabs">'+[['acts','فعالیت‌ها'],['cal','مسیر این ماه'],['settings','تنظیمات'],['summary','خلاصه']].map(function(t){
       return '<button class="'+(tab===t[0]?'on':'')+'" data-ptab="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>'+
     body+
 
@@ -403,64 +440,97 @@ function R_plan(){
 
 /* ============================ ۱۱) کتابخانه — سند ۱۷ ============================ */
 var LIB=[
-  ['مدیتیشن ۱۵ دقیقه‌ای','یک تمرکز کوتاه روی نفس، برای آرام‌کردن ذهن شلوغ.','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self'],
-  ['پیاده‌روی روزانه','بیست دقیقه قدم‌زدن، هر جایی که هستی.','روزانه','۲۰ دقیقه','owl-fit','--brand-soft','self'],
-  ['خواب کافی','هدف خواب شبانه — کیفیت مهم‌تر از تعداد ساعت است.','روزانه','۸ ساعت','owl-moon','--indigo-soft','self'],
-  ['نوشیدن آب','لیوان‌های روزانه، بدون فشار و بدون شمارش معکوس.','روزانه','۸ لیوان','owl-water','--sky-soft','self'],
-  ['مطالعهٔ آرام','ده صفحه در روز؛ کم، ولی هر روز.','روزانه','۱۰ صفحه','owl-read','--gold-soft','self'],
-  ['گفت‌وگوی روزانه','پنج دقیقه گفت‌وگوی بدون گوشی با کسی که دوستش داری.','روزانه','۵ دقیقه','owl-hi','--rose-soft','couple'],
-  ['قدردانی مشترک','هر شب، یک چیز کوچک که از همسرت ممنون هستی.','روزانه','۱ مورد','owl-cheer','--rose-soft','couple'],
-  ['مرور هفتگی طرح‌واره','نگاهی کوتاه به الگوهای هفتهٔ گذشته.','هفتگی','۱ جلسه','owl-think','--indigo-soft','schema']
+  ['ACT001','پیاده‌روی','سلامت جسم','۲۰ دقیقه · روزانه','روزانه','۲۰ دقیقه','owl-fit','--brand-soft','self','sport'],
+  ['ACT002','نوشیدن آب','سلامت جسم','۸ لیوان · روزانه','روزانه','۸ لیوان','owl-water','--sky-soft','self','sport'],
+  ['ACT003','خواب کافی','سلامت جسم','۸ ساعت · روزانه','روزانه','۸ ساعت','owl-moon','--indigo-soft','self','sport'],
+  ['ACT004','خوراک سالم','سلامت جسم','۳ وعده · روزانه','روزانه','۳ وعده','owl-cheer','--rose-soft','self','food'],
+  ['ACT005','مدیتیشن ۱۵ دقیقه‌ای','مراقبه','۱۵ دقیقه · روزانه','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self','calm'],
+  ['ACT006','تمرین نفس','مراقبه','۳ نوبت · روزانه','روزانه','۳ نوبت','owl-lotus','--lav-soft','self','calm'],
+  ['ACT007','مطالعهٔ آرام','ذهن','۱۰ صفحه · روزانه','روزانه','۱۰ صفحه','owl-read','--gold-soft','self','mind'],
+  ['ACT008','نوشتن روزانه','ذهن','۱ صفحه · روزانه','روزانه','۱ صفحه','owl-read','--gold-soft','self','mind'],
+  ['ACT009','گفت‌وگوی روزانه','ارتباط','۵ دقیقه · روزانه','روزانه','۵ دقیقه','owl-hi','--rose-soft','couple','talk'],
+  ['ACT046','بازسازی صمیمیت عاطفی','زوج درمانی','۱۵ دقیقه · روزانه','روزانه','۱ تمرین','owl-hi','--rose-soft','couple','talk'],
+  ['ACT047','تمرین گفت‌وگو بدون دعوا','زوج درمانی','۲۰ دقیقه · هفتگی','هفتگی','۱ جلسه','owl-hi','--rose-soft','couple','talk'],
+  ['ACT048','هنر شنیدن همسر','زوج درمانی','۱۰ دقیقه · روزانه','روزانه','۱ تمرین','owl-think','--rose-soft','couple','talk'],
+  ['ACT101','شناخت طرح‌واره‌ها','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-think','--indigo-soft','schema','schema'],
+  ['ACT102','مرور هفتگی طرح‌واره','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-read','--indigo-soft','schema','schema']
 ];
+var LIB_CATS=['همه دسته‌ها','سلامت جسم','مراقبه','ذهن','ارتباط','زوج درمانی','طرح‌واره','خواب','تغذیه','ورزش','کار و تمرکز',
+  'خانواده','دوستان','مالی','معنویت'];
+var LIB_TAGS=['همه تناوب‌ها','روزانه','هفتگی','ماهانه','هر وقت خواستی'];
 function R_library(){
   var q=(APP.libQuery||'').trim();
   var path=APP.libPath||'all';
+  var cat=APP.libCat||'همه دسته‌ها';
+  var freq=APP.libFreq||'همه تناوب‌ها';
   var list=LIB.filter(function(a){
-    var okp=(path==='all'||a[6]===path);
+    var okp=(path==='all'||a[8]===path);
+    var okc=(cat==='همه دسته‌ها'||a[2]===cat);
+    var okf=(freq==='همه تناوب‌ها'||a[3].indexOf(freq)>=0||(freq==='هر وقت خواستی'));
     var okq=!q||a[0].indexOf(q)>=0||a[1].indexOf(q)>=0;
-    return okp&&okq;
+    return okp&&okc&&okf&&okq;
   });
   if(empty()) list=[];
 
-  return head('کتابخانه','کتابخانهٔ فعالیت‌ها','۱۰۷ فعالیت آماده — انتخاب کن، هدف بگذار، به برنامه اضافه کن.',
+  var cats=function(v){return v.map(function(c){
+    return '<option'+(cat===c?' selected':'')+'>'+c+'</option>';}).join('');};
+  var freqs=function(v){return v.map(function(c){
+    return '<option'+(freq===c?' selected':'')+'>'+c+'</option>';}).join('');};
+
+  return head('کتابخانه','کتابخانهٔ فعالیت‌ها',
+      '۱۰۷ فعالیت آماده — ۴۵ پایه، ۳۵ مسیر زوج‌درمانی، ۲۷ مسیر طرح‌واره. '+
+      'این‌ها فعالیت‌های قابل انتخاب‌اند؛ راهنمای تمرین‌ها در بخش «آموزش» است.',
       '<span class="chip g">۱۰۷ فعالیت</span>')+
 
-    '<div class="searchbar">'+ic('i-list','',18)+
-      '<input id="libq" placeholder="جست‌وجو در نام و توضیح…" value="'+esc(q)+'" data-libq>'+
-      (q?'<button class="btn ghost sm" data-libclear>پاک کن</button>':'')+'</div>'+
+    /* فیلترها — همان ساختار مرجع: جست‌وجو + دسته + تناوب + دکمهٔ فیلتر */
+    '<div class="card libfilters">'+
+      '<div class="searchbar">'+ic('i-search','',18)+
+        '<input id="libq" placeholder="جست‌وجو با نام یا ACT…" value="'+esc(q)+'" data-libq>'+
+        (q?'<button class="btn ghost sm" data-libclear>پاک کن</button>':'')+'</div>'+
+      '<select class="inp sel" data-libcat>'+cats(LIB_CATS)+'</select>'+
+      '<select class="inp sel" data-libfreq>'+freqs(LIB_TAGS)+'</select>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn soft sm" data-libreset>پاک‌کردن فیلترها</button>'+
+        '<span class="sp"></span>'+
+        '<button class="btn primary sm" data-libnew>'+ic('i-plus')+'افزودن فعالیت جدید</button>'+
+      '</div>'+
+    '</div>'+
 
-    '<div class="filterchips">'+[['all','همه'],['self','فردی'],['couple','زوجی'],['schema','طرح‌واره']]
+    /* مسیرها — چیپ */
+    '<div class="filterchips">'+[['all','همه'],['self','فردی'],['couple','زوج‌درمانی'],['schema','طرح‌واره']]
       .map(function(p){
         return '<button class="'+(path===p[0]?'btn primary sm':'btn ghost sm')+'" data-libpath="'+p[0]+'">'+p[1]+'</button>';
       }).join('')+'</div>'+
 
-    (q||path!=='all'?'<div class="banner info">'+ic('i-info')+
-      'فیلتر فعال: '+(path==='all'?'همهٔ مسیرها':(path==='self'?'فردی':(path==='couple'?'زوجی':'طرح‌واره')))+
-      (q?' · جست‌وجو: «'+esc(q)+'»':'')+' · '+fa(list.length)+' نتیجه '+
-      '<button class="btn ghost sm" style="margin-inline-start:8px" data-libreset>پاک‌کردن فیلترها</button></div>':'')+
+    '<div class="tiny libcount">'+(list.length?fa(list.length)+' فعالیت از ۱۰۷':'۰ نتیجه')+
+      ' · مسیر: '+(path==='all'?'همه':(path==='self'?'فردی':(path==='couple'?'زوج‌درمانی':'طرح‌واره')))+
+      ' · دسته: '+cat+'</div>'+
 
     (list.length?
       '<div class="libgrid">'+list.map(function(a){
         return '<article class="act-card fadeup">'+
-          '<div class="acl-art" style="background:var('+a[5]+')">'+owl(a[4],64)+'</div>'+
-          '<div class="acl-body"><h3>'+a[0]+'</h3>'+
-            '<p class="acl-desc">'+a[1]+'</p>'+
-            '<div class="acl-meta"><span class="acl-chip">'+a[2]+'</span>'+
-              '<span class="acl-chip num">هدف: '+a[3]+'</span>'+
-              '<span class="pathpill '+a[6]+'">'+(a[6]==='couple'?'زوجی':(a[6]==='schema'?'طرح‌واره':'فردی'))+'</span></div>'+
+          '<div class="acl-art" style="background:var('+a[7]+')">'+
+            '<span class="acl-code num">'+a[0]+'</span>'+owl(a[6],54)+
+            '<span class="acl-act">'+ic('i-play')+'</span></div>'+
+          '<div class="acl-body"><h3>'+a[1]+'</h3>'+
+            '<div class="tiny acl-cat">'+a[2]+'</div>'+
+            '<p class="acl-desc">'+a[4]+' · هدف: '+a[3]+'</p>'+
             '<div class="acl-actions">'+
-              '<button class="btn primary sm" data-addplan="'+a[0]+'">افزودن به برنامه</button>'+
-              '<button class="btn ghost sm" data-actdetail="'+a[0]+'">جزئیات</button>'+
+              '<button class="btn primary sm" data-addplan="'+a[1]+'">'+ic('i-plus')+'افزودن به برنامه</button>'+
+              '<button class="btn ghost sm" data-actdetail="'+a[1]+'">آموزش</button>'+
+              '<button class="btn ghost sm" data-liblock>غیرفعال</button>'+
             '</div></div></article>';
-      }).join('')+'</div>'
+      }).join('')+'</div>'+
+      '<div class="pager tiny">۱۰۷ نتیجه — نمایش ۱ تا ۱۴ <button class="btn ghost sm" data-libmore>نمایش بیشتر</button></div>'
       : '<div class="nodata">'+owl('owl-think',62,'floaty')+
         '<b>چیزی پیدا نشد</b>'+
-        '<p class="tiny">جست‌وجو را ساده‌تر کن یا فیلترها را بردار. '+
-        'اگر فعالیتی که می‌خواهی نیست، از پشتیبانی بخواه تا اضافه شود.</p>'+
+        '<p class="tiny">جست‌وجو را ساده‌تر کن یا فیلترها را بردار.</p>'+
         '<button class="btn soft sm" style="margin-top:10px" data-libreset>پاک‌کردن فیلترها</button></div>')+
 
-    note('کارت فقط همین‌ها را دارد: تصویر · نام · توضیح (حداکثر ۱۰۰ نویسه) · تناوب به **واژه** · هدف با برچسب صریح «هدف:». '+
-      'شناسهٔ `ACT` نمایش داده نمی‌شود. و اگر فقط یک دورهٔ `RUNNING` باشد، «افزودن» می‌گوید چرا رد می‌شود.');
+    note('کارت فقط همین‌ها را دارد: تصویر · نام · دسته · توضیح · تناوب به **واژه** · هدف با برچسب صریح «هدف:». '+
+      'شناسهٔ `ACT` در محصول نمایش داده نمی‌شود (اینجا فقط برای تطبیق با بک‌اند است). '+
+      '**۱۴ دسته** و **۵ تناوب** از بک‌اند می‌آیند؛ این نمونه ۱۴ کارت از ۱۰۷ را نشان می‌دهد. '+
+      'اگر فقط یک دورهٔ `RUNNING` باشد، «افزودن» می‌گوید چرا رد می‌شود و مسیر دورهٔ نو را پیشنهاد می‌دهد.');
 }
 
 /* ============================ ۱۲) آموزش — سند ۱۹ ============================ */
@@ -472,35 +542,41 @@ var HOWSTEPS=[
   ['i-book','شناختن الگو','بینش‌های شخصی','book']
 ];
 var EDU=[
-  ['جوما چطور کار می‌کند','پنج گام از انتخاب فعالیت تا دیدن الگو.','owl-think','--brand-soft',true],
-  ['برنامه‌ات را چطور بسازی','از کتابخانه انتخاب کن، هدف بگذار، و وقتی آماده بودی شروع کن.','owl-hi','--sky-soft',true],
-  ['یک فعالیت را چطور ثبت کنی','تفاوت پیش‌نویس و ثبت قطعی، و اینکه چرا روزی یک بار قفل می‌شود.','owl-cheer','--gold-soft',false],
-  ['حالِ من چطور کار می‌کند','پنج قدم کوتاه و اینکه چرا خواب، کیفیت را می‌پرسد نه ساعت را.','owl-moon','--indigo-soft',false],
-  ['گزارش‌ها را چطور بخوانی','تفاوت «مقدار»، «هدف»، «تحقق» و «پوشش» — و اینکه صفر با «ثبت‌نشده» یکی نیست.','owl-read','--lav-soft',false],
-  ['جوجهٔ من','چطور بزرگ می‌شود، چه چیزی آن را پر می‌کند، و چرا هیچ‌وقت نمی‌میرد.','owl-water','--rose-soft',false]
+  ['ورود به جوما','فلسفه و قواعد ثبت: چه چیزی، کِی، و چرا.','owl-hi','--brand-soft',true,'self','۵ دقیقه','تنها'],
+  ['تشخیص سبک مقابله','چهار سبک رایج و اینکه کدام‌یک مال توست.','owl-think','--indigo-soft',false,'schema','۷ دقیقه','تنها'],
+  ['بازسازی صمیمیت عاطفی','یک تمرین کوتاه برای نزدیک‌شدن دوباره.','owl-hi','--rose-soft',false,'couple','۱۵ دقیقه','دو نفره'],
+  ['تمرین گفت‌وگو بدون دعوا','قواعد مکث، شنیدن و پاسخ‌ندادن فوری.','owl-hi','--rose-soft',false,'couple','۲۰ دقیقه','دو نفره'],
+  ['هنر شنیدن همسر','شنیدن بدون آماده‌کردن جواب.','owl-think','--rose-soft',false,'couple','۱۰ دقیقه','دو نفره'],
+  ['قدردانی روزانه','یک جملهٔ مشخص، هر شب.','owl-cheer','--gold-soft',false,'couple','۵ دقیقه','دو نفره'],
+  ['نقشهٔ طرح‌وارهٔ من','کدام الگو بیشتر برمی‌گردد.','owl-think','--indigo-soft',false,'schema','۱۰ دقیقه','تنها'],
+  ['ذهن‌آگاهی در سه دقیقه','نفس، بدن، فکر — بدون قضاوت.','owl-lotus','--lav-soft',false,'self','۳ دقیقه','تنها'],
+  ['خواب و بی‌خوابی','سه عادت ساده که شب را بهتر می‌کند.','owl-moon','--indigo-soft',false,'self','۶ دقیقه','تنها'],
+  ['مرزها: نه گفتن محترمانه','تمرین جمله‌های کوتاه و روشن.','owl-read','--lav-soft',false,'schema','۸ دقیقه','تنها']
 ];
 function R_edu(){
   var tab=APP.eduTab||'map';
-  return head('آموزش','آموزش','کوتاه، تصویری، و بی‌تور اجباری. هر چیزی که لازم داری همین‌جاست.',
-      '<span class="chip s">۶ راهنما · ۲ مسیر تخصصی</span>')+
+  var path=APP.eduPath||'all';
+  var guides=EDU.filter(function(e){ return path==='all'||e[5]===path; });
+
+  return head('آموزش','آموزش','۶۳ راهنما: ۱ راهنمای عمومی + ۳۵ تمرین زوج‌درمانی + ۲۷ طرح‌واره — یک‌به‌یک، تصویری و بی‌تور اجباری.',
+      '<span class="chip s">۶۳ راهنما</span>')+
 
     '<div class="tabs">'+
-      [['map','جوما چطور کار می‌کند'],['cando','چه می‌توانی، چه نمی‌توانی'],['cat','کاتالوگ راهنماها'],['paths','دو مسیر تخصصی']]
-      .map(function(t){return '<button class="'+(tab===t[0]?'on':'')+'" data-edutab="'+t[0]+'">'+t[1]+'</button>';}).join('')+
+      [['map','جوما چطور کار می‌کند'],['cando','چه می‌توانی، چه نمی‌توانی'],['cat','کاتالوگ ۶۳ راهنما'],['paths','دو مسیر تخصصی']]
+      .map(function(t2){return '<button class="'+(tab===t2[0]?'on':'')+'" data-edutab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
     '</div>'+
 
     (tab==='map'?
       '<div class="card">'+
-        '<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">'+
-          owl('owl-hi',64,'floaty')+
+        '<div class="edu-head">'+owl('owl-hi',58,'floaty')+
           '<div><h3 style="font-size:16px">جوما چطور کار می‌کند</h3>'+
           '<p class="tiny">پنج گام، از انتخاب تا فهمیدن. هر گام قابل کلیک است و به صفحهٔ واقعی خودش می‌رود.</p></div></div>'+
         '<div class="howline">'+HOWSTEPS.map(function(s,i){
           return '<div class="hstep'+(i===0?' on':'')+'" data-gostep="'+s[3]+'">'+
-            '<span class="hn">'+ic(s[0])+'</span>'+
+            '<span class="hn">'+ic(s[0],'',22)+'</span>'+
             '<b>'+s[1]+'</b><small>'+s[2]+'</small></div>';
         }).join('')+'</div>'+
-        '<div class="breath">'+owl('owl-lotus',34)+'<span>تمرین نفس: ۴ ثانیه دم، ۶ ثانیه بازدم — سه بار. '+
+        '<div class="breath">'+owl('owl-lotus',30)+'<span>تمرین نفس: ۴ ثانیه دم، ۶ ثانیه بازدم — سه بار. '+
           'این تمرین هیچ پاداشی نمی‌سازد؛ فقط آرام می‌کند.</span></div>'+
       '</div>'
     : tab==='cando'?
@@ -524,32 +600,44 @@ function R_edu(){
         .map(function(x){return '<li>'+x[0]+(x[1]?'<span class="why">'+x[1]+'</span>':'')+'</li>';}).join('')+
       '</ul></div></div></div>'
     : tab==='paths'?
-      '<div class="grid2">'+
-        '<div class="card" style="border-color:var(--rose-soft)">'+
-          '<span class="pathpill couple">زوجی · ۳۵ راهنما</span>'+
-          '<h3 style="margin-top:8px">تمرین‌هایی برای دو نفر</h3>'+
-          '<p class="tiny" style="margin-top:6px">گفت‌وگو، قدردانی، و کارهای مشترک. هر راهنما می‌گوید چند دقیقه وقت می‌برد '+
-          'و آیا بدون طرف مقابل هم می‌شود انجامش داد.</p></div>'+
-        '<div class="card" style="border-color:var(--indigo-soft)">'+
-          '<span class="pathpill schema">طرح‌واره · ۲۷ راهنما</span>'+
-          '<h3 style="margin-top:8px">شناختن الگوهای تکرارشونده</h3>'+
-          '<p class="tiny" style="margin-top:6px">برای وقتی که یک الگو چند بار برگشته. '+
-          'این راهنماها **جای درمان نیستند** و کنار هر کدام همین نوشته شده است.</p></div>'+
-      '</div>'
+      /* دو مسیر تخصصی — با فهرست کامل تمرین‌های هر مسیر */
+      '<div class="path-hero couple"><span class="pathpill couple">زوج‌درمانی · ۳۵ تمرین</span>'+
+        '<h3>تمرین‌هایی برای دو نفر</h3>'+
+        '<p class="tiny">گفت‌وگو، قدردانی، شنیدن و کارهای مشترک. هر تمرین یک جلسهٔ کوتاه است و می‌گوید چند دقیقه وقت می‌برد. '+
+        'کنار هر تمرین نوشته شده که بدون طرف مقابل هم می‌شود انجامش داد یا نه.</p>'+
+        '<button class="btn soft sm" data-eduopen="فهرست تمرین‌های زوج‌درمانی">دیدن فهرست ۳۵ تمرین</button></div>'+
+      '<div class="path-hero schema"><span class="pathpill schema">طرح‌واره · ۲۷ تمرین</span>'+
+        '<h3>شناختن الگوهای تکرارشونده</h3>'+
+        '<p class="tiny">برای وقتی که یک الگو چند بار برگشته. این راهنماها <b>جای درمان نیستند</b> و کنار هر کدام همین نوشته شده است.</p>'+
+        '<button class="btn soft sm" data-eduopen="فهرست تمرین‌های طرح‌واره">دیدن فهرست ۲۷ تمرین</button></div>'+
+      '<div class="tiny" style="margin:8px 2px">۹ تکنیک و ۱۸ طرح‌وارهٔ سند مادر، زیرمجموعهٔ همین دو مسیرند؛ '+
+        '۳۵ و ۲۷ شمارِ <b>راهنمای تمرین</b> است.</div>'
     :
-      '<div class="edu-grid">'+EDU.map(function(e){
-        return '<article class="edu-card fadeup">'+
-          '<div class="edu-art" style="background:var('+e[3]+')">'+owl(e[2],58)+'</div>'+
+      /* کاتالوگ */
+      '<div class="filterchips">'+[['all','همهٔ راهنماها'],['couple','زوج‌درمانی'],['schema','طرح‌واره'],['self','عمومی']]
+        .map(function(p2){
+          return '<button class="'+(path===p2[0]?'btn primary sm':'btn ghost sm')+'" data-edupath="'+p2[0]+'">'+p2[1]+'</button>';
+        }).join('')+'</div>'+
+      '<div class="tiny libcount">'+fa(guides.length)+' راهنما از ۶۳ · '+
+        (path==='all'?'همهٔ مسیرها':(path==='couple'?'زوج‌درمانی':(path==='schema'?'طرح‌واره':'عمومی')))+'</div>'+
+      '<div class="edu-grid">'+guides.map(function(e,i){
+        return (i===9||i===18?'<div class="breath">'+owl('owl-lotus',28)+'<span>'+
+          (i===9?'تا اینجا، تمرین‌هایی برای ساختن عادت.':'بخش بعدی کمی عمیق‌تر است — با ریتم خودت پیش برو.')+
+          '</span></div>':'')+
+        '<article class="edu-card fadeup">'+
+          '<div class="edu-art" style="background:var('+e[3]+')">'+owl(e[2],54)+
+            '<span class="edu-code">'+(e[5]==='couple'?'زوج‌درمانی':(e[5]==='schema'?'طرح‌واره':'عمومی'))+'</span></div>'+
           '<div class="edu-body"><h3>'+e[0]+'</h3><p>'+e[1]+'</p>'+
-          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">'+
-            '<span class="readdot '+(e[4]?'on':'')+'"><i></i>'+(e[4]?'خوانده‌شده':'خوانده‌نشده')+'</span>'+
-            '<button class="btn ghost sm" data-eduopen="'+e[0]+'">خواندن</button>'+
+          '<div class="edu-meta"><span class="tiny">'+e[6]+' · '+e[7]+'</span>'+
+            '<span class="readdot '+(e[4]?'on':'')+'"><i></i>'+(e[4]?'خوانده‌شده':'خوانده‌نشده')+'</span></div>'+
+          '<div style="display:flex;gap:7px;margin-top:9px">'+
+            '<button class="btn primary sm" data-eduopen="'+e[0]+'">شروع تمرین</button>'+
+            (e[8]?'<button class="btn soft sm" data-addplan="'+e[0]+'">افزودن به برنامه</button>':'')+
           '</div></div></article>';
       }).join('')+'</div>'+
-      '<div class="card" style="margin-top:14px;text-align:center">'+
-        '<p class="tiny">تا اینجا، تمرین‌هایی برای ساختن عادت.</p>'+
-        '<p class="tiny" style="margin-top:4px">بخش بعدی کمی عمیق‌تر است. با ریتم خودت پیش برو.</p></div>'
+      '<div class="pager tiny">۶۳ راهنما — نمایش ۱ تا '+fa(guides.length)+' <button class="btn ghost sm" data-edumore>نمایش بیشتر</button></div>'
     )+
     note('سه قانون این صفحه: هر راهنما **تصویر** دارد نه آیکون · هر محدودیت **دلیل** دارد · '+
-      'و هیچ «۵ راهنمای داغ 🔥» یا امتیاز و ستاره‌ای وجود ندارد — کاتالوگ باید آرام و لذت‌بخش باشد، نه بازی.');
+      'و هیچ «۵ راهنمای داغ 🔥» یا امتیاز و ستاره‌ای وجود ندارد — کاتالوگ باید آرام و لذت‌بخش باشد، نه بازی. '+
+      'فهرست کامل **۶۳ راهنما** از بک‌اند می‌آید؛ این نمونه بخشی از آن را نشان می‌دهد و «نمایش بیشتر» بارگذاری تدریجی دارد.');
 }

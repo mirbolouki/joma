@@ -173,24 +173,62 @@ function rvBare(){
 
 /* ============================ ۳) ثبت‌نام — سند ۲۲ §۳ ============================ */
 function R_signup(){
-  return '<div class="auth">'+rvBare()+'<div class="box fadeup">'+
-    '<div class="hd">'+owl('owl-cheer',58,'floaty')+
-      '<h1>شروع کنیم.</h1><p>یک حساب، و بعد اولین چیزی که می‌خواهی بهتر شود.</p></div>'+
-    '<div class="fld"><label class="lbl" for="sn">اسمی که دوست داری صدایت کنیم</label>'+
-      '<input class="inp" id="sn" placeholder="مثلاً سارا"></div>'+
-    '<div class="fld"><label class="lbl" for="su">نام کاربری</label>'+
-      '<input class="inp" id="su" autocomplete="username"></div>'+
-    '<div class="fld"><label class="lbl" for="sp">رمز عبور</label>'+
-      '<div class="pw-wrap"><input class="inp" id="sp" type="password" autocomplete="new-password" data-strength>'+
-      '<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-info')+'</button></div>'+
-      '<div class="strength" id="str"><i></i><i></i><i></i><i></i></div>'+
-      '<span class="tiny" id="strtxt">حداقل ۸ نویسه — ترکیب حرف و عدد، نه فقط عدد.</span></div>'+
-    '<div class="fld"><label class="lbl" for="se">ایمیل یا موبایل</label>'+
-      '<input class="inp" id="se" placeholder="برای روزی که رمزت را فراموش کردی"></div>'+
-    note('کانال بازیابی <b>اجباری نیست</b>، ولی برجسته پرسیده می‌شود — کاربری که کانال ندارد، '+
-      'اگر شماره‌اش عوض شود راه بازگشت ندارد.')+
-    '<button class="btn primary wide" style="margin-top:8px" data-signup>ساخت حساب</button>'+
-    '<div class="alt">حساب داری؟ <a href="#login">وارد شو</a></div>'+
+  var tab=APP.authTab||'signup';
+  var fields=[
+    ['sn','اسمی که دوست داری صدایت کنیم','مثلاً سارا','text'],
+    ['su','نام کاربری','۳ تا ۲۰ کاراکتر — حرف و عدد','text'],
+    ['sp','رمز عبور','حداقل ۸ نویسه','password'],
+    ['se','ایمیل یا موبایل','برای روزی که رمزت را فراموش کردی','text']
+  ];
+  return '<div class="auth">'+rvBare()+'<div class="box fadeup auth-card">'+
+    '<div class="brand">'+
+      '<span class="brand-mark">'+owl('owl-logo',30)+'</span>'+
+      '<div><b>جوما</b><small>برنامه‌ریزی، اجرا، فهم</small></div></div>'+
+    '<h1>'+(tab==='login'?'ورود به جوما':'ساخت حساب')+'</h1>'+
+    '<p class="sub">'+(tab==='login'?'خوش برگشتی. راهت را ادامه بده.'
+      :'از یک قدم کوچک شروع می‌کنیم — بعداً می‌توانی هر چیز را عوض کنی.')+'</p>'+
+    '<div class="authtabs">'+
+      [['login','ورود'],['signup','ثبت‌نام'],['forgot','فراموشی']].map(function(t2){
+        return '<button class="'+(tab===t2[0]?'on':'')+'" data-authtab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
+    '</div>'+
+
+    (tab==='forgot'
+      ? '<div class="forgot">'+ic('i-info')+
+        '<b>بازیابی رمز</b>'+
+        '<p class="tiny">رمز را نمی‌دانیم و هیچ‌وقت نمی‌پرسیم. با کد یک‌بارمصرف که به کانال ثبت‌شدهٔ خودت می‌فرستیم، رمز تازه می‌سازی — '+
+        'کد ۱۵ دقیقه اعتبار دارد و ۵ بار می‌شود امتحانش کرد.</p>'+
+        '<div class="fld" style="margin-top:10px"><label class="lbl">ایمیل یا موبایل ثبت‌شده</label>'+
+        '<input class="inp" placeholder="مثلاً ۰۹۱۲…"></div>'+
+        '<button class="btn primary wide" data-sendcode>ارسال کد</button></div>'
+      : fields.filter(function(f2){ return tab==='signup'||f2[0]!=='sn'; }).map(function(f2,i){
+          var id=f2[0];
+          if(tab==='login'&&id==='su') return '<div class="fld"><label class="lbl" for="li">نام کاربری یا ایمیل</label>'+
+            '<input class="inp" id="li" autocomplete="username" value="sara"></div>';
+          if(tab==='login'&&id==='sp') return '<div class="fld"><label class="lbl" for="lp">رمز عبور</label>'+
+            '<div class="pw-wrap"><input class="inp" id="lp" type="password" value="········">'+
+            '<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button></div></div>';
+          if(tab==='signup'&&id==='se') return '';
+          return '<div class="fld"><label class="lbl" for="'+id+'">'+f2[1]+'</label>'+
+            (id==='sp'?'<div class="pw-wrap">':'')+
+            '<input class="inp" id="'+id+'"'+(id==='sp'?' type="password" data-strength':'')+' placeholder="'+f2[2]+'">'+
+            (id==='sp'?'<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button></div>':'')+
+            (id==='su'?'<span class="tiny" id="sucheck">این نام آزاد است ✓</span>':'')+
+            (id==='sp'?'<div class="strength" id="str"><i></i><i></i><i></i><i></i></div>':'')+
+            '</div>';
+        }).join('')+
+      (tab==='signup'
+        ? '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>قواعد حساب را خوانده‌ام</b>'+
+          '<em>شرایط استفاده و حریم خصوصی هنوز نهایی نشده‌اند؛ این جمله وقتی متن آماده شد نمایش داده می‌شود.</em></span></label>'
+        : '')+
+      '<button class="btn primary wide" style="margin-top:14px" data-auth="'+tab+'">'+
+        (tab==='login'?'ورود':'ساخت حساب')+'</button>'+
+      (tab==='login'
+        ? '<div class="alt">حساب نداری؟ <a href="#" data-authtab="signup">ثبت‌نام</a> · <a href="#" data-authtab="forgot">فراموشی رمز</a></div>'
+        : '<div class="alt">حساب داری؟ <a href="#" data-authtab="login">وارد شو</a></div>')
+    )+
+    note('همان ساختار مرجع (تصویر ۲): کارت سفید، لوگو و برند بالای کارت، سه تب «ورود/ثبت‌نام/فراموشی»، دکمهٔ اصلی پررنگ و تمام‌عرض، '+
+      'و لینک‌های فرعی زیر آن. رنگ دکمه از تم می‌آید — در تم «شیشه» بنفش مرجع، در تم «کلاسیک» سبز محصول. '+
+      'کانال بازیابی **اجباری نیست** ولی برجسته پرسیده می‌شود؛ کد ثبت‌نام اگر پیکربندی فعال باشد نمایش داده می‌شود.')+
   '</div></div>';
 }
 
@@ -302,51 +340,66 @@ function R_home(){
 
 /* ======================== ۵) کارهای امروز — سند ۱۲ ======================== */
 function R_today(){
+  /* هر ردیف: نوع داده (از بک‌اند) + واحد + هدف. ورودی با نوع داده عوض می‌شود. */
   var rows=D([
-    ['i-walk','پیاده‌روی','۲۰ دقیقه · روزانه',1,'done','ثبت قطعی'],
-    ['i-drop','نوشیدن آب','۸ لیوان · روزانه',1,'done','ثبت قطعی'],
-    ['i-lotus','مدیتیشن','۱۵ دقیقه · روزانه',1,'draft','پیش‌نویس'],
-    ['i-moon','خواب کافی','۸ ساعت · روزانه',0,'wait','در انتظار'],
-    ['i-book','مطالعه','۱۰ صفحه · هفتگی',0,'wait','در انتظار'],
-    ['i-walk','ورزش','۳ جلسه · هفتگی',0,'wait','در انتظار'],
-    ['i-heart','ثبت حال','اختیاری',0,'lock','قفل — امروز ثبت شد'],
-    ['i-trend','قند خون','مرتبه',0,'err','خطا در ثبت']
+    {ic:'i-walk', n:'پیاده‌روی',  sub:'۲۰ دقیقه · روزانه', kind:'duration', unit:'دقیقه', step:5,  v:20, st:'done'},
+    {ic:'i-drop', n:'نوشیدن آب',  sub:'۸ لیوان · روزانه',  kind:'count',    unit:'لیوان', step:1,  v:3,  st:'draft'},
+    {ic:'i-heart',n:'ورزش',       sub:'۳ جلسه · هفتگی',    kind:'yesno',    unit:'',      step:0,  v:1,  st:'done'},
+    {ic:'i-lotus',n:'مدیتیشن',    sub:'۱۵ دقیقه · روزانه', kind:'duration', unit:'دقیقه', step:5,  v:0,  st:'wait'},
+    {ic:'i-moon', n:'خواب کافی',  sub:'۸ ساعت · روزانه',   kind:'slept',    unit:'',      step:0,  v:7.5,st:'draft'},
+    {ic:'i-book', n:'مطالعه',     sub:'۱۰ صفحه · هفتگی',   kind:'count',    unit:'صفحه',  step:1,  v:0,  st:'wait'},
+    {ic:'i-heart',n:'ثبت حال',    sub:'اختیاری',           kind:'link',     unit:'',      step:0,  v:0,  st:'lock'}
   ],[]);
 
   var tabs=D([['روزانه',4],['هفتگی',2],['ماهانه',2]],[['روزانه',0]]);
 
-  return head('امروز','کارهای امروز',D('۴ از ۸ کار امروز ثبت شده.','برنامه‌ات هنوز فعالیتی ندارد.'),
+  var valueCell=function(r){
+    if(r.st==='lock') return '<span class="tiny">امروز ثبت شد</span>';
+    if(r.kind==='link') return '<button class="btn soft sm" data-go="mood">ثبت حال</button>';
+    if(r.kind==='yesno') return '<div class="yesno"><button class="'+ (r.v?'on':'')+'" data-yes>'+ic('i-check')+'انجام شد</button>'+
+      '<button data-no>'+ic('i-x')+'انجام نشد</button></div>';
+    if(r.kind==='slept') return '<div class="numrow"><button data-minus>−</button>'+
+      '<span class="numval">'+(r.v?fa(String(r.v).replace('.',','))+' ساعت':'—')+'</span><button data-minus>+</button></div>';
+    /* count و duration: دکمه‌های ± و ورودی عددی، هوشمند با step و واحد */
+    return '<div class="numrow"><button data-minus aria-label="کم">−</button>'+
+      '<span class="numval"><b>'+fa(r.v||0)+'</b> <small>'+r.unit+'</small></span>'+
+      '<button data-plus aria-label="بیشتر">+</button></div>'+
+      '<div class="steprow tiny">هر دکمه '+(r.step>1?fa(r.step)+' '+r.unit+'':'۱ '+r.unit)+'</div>';
+  };
+
+  return head('امروز','کارهای امروز',D('۴ از ۷ کار امروز ثبت شده.','برنامه‌ات هنوز فعالیتی ندارد.'),
       '<span class="daynav"><button disabled>‹ دیروز</button><button class="on">امروز</button>'+
       '<button>فردا</button></span>')+
 
-    '<div class="tabs">'+tabs.map(function(t,i){
-      return '<button class="'+(i===0?'on':'')+'" data-tab="'+i+'">'+t[0]+' <small>('+fa(t[1])+')</small></button>';
+    '<div class="banner info">'+ic('i-info')+
+      'ثبت هر کار، <b>یک حرکت</b> است: با دکمه‌های کنار عدد کم و زیاد کن، یا «انجام شد / انجام نشد» را بزن. '+
+      'نوع ورودی برای هر فعالیت <b>از بک‌اند</b> می‌آید — دقیقه، صفحه، لیوان، ساعت یا بله/خیر.</div>'+
+
+    '<div class="tabs">'+tabs.map(function(t2,i){
+      return '<button class="'+(i===0?'on':'')+'" data-tab="'+i+'">'+t2[0]+' <small>('+fa(t2[1])+')</small></button>';
     }).join('')+'</div>'+
 
     waterCard()+
-    note('لیوان‌ها <b>فقط اینجا نوشته می‌شوند</b>؛ در خانه فقط خلاصه خوانده می‌شود — «خواندن در دو جا، '+
-      'نوشتن فقط در یک جا». هر شش وضعیت داده <b>متن</b> دارند، نه فقط رنگ.')+
+    note('لیوان‌ها <b>فقط اینجا نوشته می‌شوند</b>؛ در خانه فقط خلاصه خوانده می‌شود. '+
+      'هر شش وضعیت داده <b>متن</b> دارند، نه فقط رنگ.')+
 
     '<div class="grid2"><div class="card">'+
       (rows.length?
-        '<table class="tbl"><thead><tr><th>فعالیت</th><th>هدف</th><th style="width:110px">مقدار</th>'+
-        '<th style="width:130px">وضعیت</th></tr></thead><tbody>'+
+        '<table class="tbl"><thead><tr><th>فعالیت</th><th style="width:210px">مقدار امروز</th><th style="width:130px">وضعیت</th></tr></thead><tbody>'+
         rows.map(function(r){
           return '<tr class="trow" data-row><td><span class="act"><span class="chip '+
-            ({done:'g',draft:'s',wait:'go',err:'c',lock:'n'})[r[4]]+'">'+ic(r[0])+'</span>'+
-            '<span><b>'+r[1]+'</b><small>'+r[2]+'</small></span></span></td>'+
-            '<td class="tiny">'+(r[5]==='ثبت قطعی'||r[5]==='پیش‌نویس'?'—':'—')+'</td>'+
-            '<td>'+(r[5]==='قفل — امروز ثبت شد'?'<span class="tiny">—</span>':'<input class="inp num" value="'+
-              (r[4]==='done'?'۲۰':'')+'" style="padding:7px 10px" '+(r[4]==='lock'||r[4]==='err'?'disabled':'')+'>')+'</td>'+
-            '<td><span class="tst '+r[4]+'">'+ic(r[4]==='done'?'i-check':(r[4]==='err'?'i-info':'i-clock'))+
-            r[5]+'</span></td></tr>';
+            ({done:'g',draft:'s',wait:'go',err:'c',lock:'n'})[r.st]+'">'+ic(r.ic)+'</span>'+
+            '<span><b>'+r.n+'</b><small>'+r.sub+'</small></span></span></td>'+
+            '<td>'+valueCell(r)+'</td>'+
+            '<td><span class="tst '+r.st+'">'+ic(r.st==='done'?'i-check':(r.st==='err'?'i-info':'i-clock'))+
+            ({done:'ثبت قطعی',draft:'پیش‌نویس',wait:'ثبت نشده',err:'خطا در ثبت',lock:'قفل — امروز ثبت شد'})[r.st]+'</span></td></tr>';
         }).join('')+'</tbody></table>'
         :
         '<div style="text-align:center;padding:22px">'+owl('owl-think',60,'floaty')+
         '<h3 style="margin-top:10px">برنامه‌ات هنوز فعالیتی ندارد</h3>'+
         '<p class="tiny" style="margin-top:6px">اول از کتابخانه انتخاب کن، بعد اینجا ثبت می‌شود.</p>'+
         '<a class="btn primary sm" style="margin-top:12px" href="#library">افزودن از کتابخانه</a></div>')+
-      (rows.length?'<div class="tfoot"><span class="tiny">۳ تغییر ذخیره‌نشده — با «ثبت نهایی» قطعی می‌شوند.</span>'+
+      (rows.length?'<div class="tfoot"><span class="tiny">هر تغییر تا <b>ثبت نهایی</b> پیش‌نویس است؛ بعد از ثبت نهایی، قطعی می‌شود.</span>'+
         '<span class="sp"></span><button class="btn ghost sm" data-save>ذخیرهٔ پیش‌نویس</button>'+
         '<button class="btn primary sm" data-final>ثبت نهایی</button></div>':'')+
     '</div>'+
@@ -365,10 +418,18 @@ function R_today(){
         '<button class="btn soft sm wide" style="margin-top:10px" data-go="mood">ثبت حال</button></div>'+
     '</div></div>'+
 
+    /* جملهٔ امروز — پایانِ خوشامدِ مرجع: یک جملهٔ کوتاه برای خودت */
+    '<div class="card todayline">'+owl('owl-hi',42)+
+      '<div><h3 style="font-size:14px">یک جمله برای امروز</h3>'+
+      '<p class="tiny" style="margin-top:4px">اگر دوست داری، امروز را با یک جمله ثبت کن — حتی کوتاه. نوشتن اجباری نیست؛ '+
+      'ثبت حال کافی است. 🤍</p></div>'+
+      '<button class="btn soft sm" data-go="mood">نوشتن جمله</button></div>'+
+
     (empty()?'':'<div class="doneb">'+owl('owl-cheer',38)+
       'همه را ثبت کردی! — جوما به تو افتخار می‌کند</div>')+
     note('«ثبت نهایی» قفل روز را می‌بندد. افزودن یا حذف فعالیت روی دورهٔ در حال اجرا <b>ممنوع دائمی</b> است — '+
-      'پس دکمه‌ای هم ندارد، حتی خاکستری.');
+      'پس دکمه‌ای هم ندارد، حتی خاکستری. '+
+      'دکمه‌های ± مقدار را با **step همان واحد** (از بک‌اند) عوض می‌کنند؛ برای خواب، ساعت و نیم‌ساعت.');
 }
 
 /* ========================== ۶) حال من — سند ۱۳ ========================== */

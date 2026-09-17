@@ -76,6 +76,15 @@ window.INNER_CLICK=function(e){
     }
     chickSnd('chirp'); return;
   }
+
+  if((t=e.target.closest('[data-petmode]'))){
+    var m=t.dataset.petmode;
+    if(m==='blink'){ APP.petMood='ok'; render(); toast('پلک‌زدن خودکار است — هر چند ثانیه'); return; }
+    APP.petMood=m; APP.petSleep=(m==='sleep'); render();
+    if(m==='sleep') chickSnd('snore'); else if(m==='happy') chirpSnd();
+    return;
+  }
+
   if(e.target.closest('[data-petpet]')){
     var a2=document.querySelector('.pet-stage .chsvg');
     var st2=document.querySelector('.pet-stage');
@@ -191,6 +200,73 @@ window.INNER_CLICK=function(e){
     return;
   }
   if(e.target.closest('[data-addplan2]')){ closeModal(); addToPlan('این فعالیت'); return; }
+
+
+
+
+
+  /* ---------- ورود/ثبت‌نام/فراموشی ---------- */
+  if((t=e.target.closest('[data-authtab]'))){ e.preventDefault(); APP.authTab=t.dataset.authtab; render(); return; }
+  if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف فرستاده شد — ۱۵ دقیقه اعتبار'); return; }
+  if(e.target.closest('[data-auth]')){
+    var a=e.target.closest('[data-auth]').dataset.auth;
+    if(a==='login') toast('خوش برگشتی — ورود انجام شد (نمایشی)');
+    else toast('حساب ساخته شد — برویم اولین برنامه را بسازیم');
+    return;
+  }
+
+  /* ---------- تقویم مسیر ماه ---------- */
+  if((t=e.target.closest('[data-cald]'))){
+    var d=t.dataset.cald, n=parseInt(d.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x);}),10);
+    var isFuture=n>16, isMiss=[7,14].includes(n), isPart=[4,11].includes(n);
+    modal('<h3>'+fa(n)+' شهریور ۱۴۰۵</h3>'+
+      (isFuture?'<p class="tiny">این روز هنوز نیامده — ثبت برای آینده ممکن نیست.</p>'
+        :isMiss?'<p class="tiny">این روز چیزی ثبت نشده. اشکالی ندارد — روزهای بی‌ثبت هم بخشی از مسیرند.</p>'
+        :isPart?'<p class="tiny">این روز ناقص ثبت شده: پیاده‌روی و آب ثبت شده، مدیتیشن نه.</p>'
+        :'<p class="tiny">همهٔ کارهای این روز ثبت شده — ۴ از ۴، و حال ثبت شده.</p>')+
+      '<div class="acts"><button class="btn ghost sm" data-close>بستن</button>'+
+      (isFuture?'':'<span class="sp"></span><button class="btn soft sm" data-go="today">دیدن جزئیات روز</button>')+'</div>');
+    return;
+  }
+
+  /* ---------- کارهای امروز: ± و انجام شد/نشد ---------- */
+  if(e.target.closest('[data-plus]')||e.target.closest('[data-minus]')){
+    var cell=e.target.closest('td'); var val=cell.querySelector('.numval b');
+    if(val){ var n=parseInt(val.textContent.replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d);}),10)||0;
+      n=e.target.closest('[data-plus]')?n+1:Math.max(0,n-1);
+      val.textContent=fa(n); toast('مقدار شد '+fa(n)+' — تا ثبت نهایی پیش‌نویس است'); }
+    return;
+  }
+  if(e.target.closest('[data-yes]')||e.target.closest('[data-no]')){
+    var box=e.target.closest('.yesno');
+    box.querySelectorAll('button').forEach(function(b){b.classList.remove('on');});
+    e.target.closest('button').classList.add('on');
+    toast(e.target.closest('[data-yes]')?'انجام شد — ثبت شد ✓':'انجام نشد — ثبت شد');
+    return;
+  }
+
+  /* ---------- کتابخانه: فیلترها و افزودن فعالیت ---------- */
+  if((t=e.target.closest('[data-libpath]'))){ APP.libPath=t.dataset.libpath; render(); return; }
+  if(e.target.closest('[data-libclear]')){ APP.libQuery=''; render(); return; }
+  if(e.target.closest('[data-libreset]')){ APP.libQuery=''; APP.libPath='all'; APP.libCat='همه دسته‌ها'; APP.libFreq='همه تناوب‌ها'; render(); return; }
+  if(e.target.closest('[data-libmore]')){ toast('نمایش ۱۴ کارتِ بعدی — بارگذاری تدریجی، نه صفحهٔ تازه'); return; }
+  if(e.target.closest('[data-liblock]')){ toast('غیرفعال‌کردن فعالیت، کار مدیر است — از کنسول'); return; }
+  if(e.target.closest('[data-libnew]')){
+    modal('<h3>افزودن فعالیت جدید</h3>'+
+      '<p class="tiny">فعالیتی که خودت می‌سازی، فقط برای خودت است. فعالیت‌های رسمی را مدیر اضافه می‌کند.</p>'+
+      '<div class="fld"><label class="lbl">نام فعالیت</label><input class="inp" placeholder="مثلاً شنا"></div>'+
+      '<div class="fld"><label class="lbl">واحد اندازه‌گیری</label>'+
+      '<select class="inp sel"><option>دقیقه</option><option>لیوان</option><option>تعداد</option><option>صفحه</option><option>مرتبه</option><option>کیلومتر</option></select></div>'+
+      '<div class="fld"><label class="lbl">تناوب</label>'+
+      '<select class="inp sel"><option>روزانه</option><option>هفتگی</option><option>ماهانه</option></select></div>'+
+      '<div class="fld"><label class="lbl">هدف در هر نوبت</label><input class="inp num" inputmode="numeric" value="۲۰"></div>'+
+      '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+      'واحد را از بک‌اند می‌گیریم؛ همان واحدی که انتخاب می‌کنی، تعیین می‌کند در «کارهای امروز» مقدار چطور وارد شود (دکمه‌های + و − یا ساعت و دقیقه).</div>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+      '<span class="sp"></span><button class="btn primary sm" data-libnewok>افزودن</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-libnewok]')){ closeModal(); toast('فعالیت ساخته شد — در فهرست خودت می‌آید'); return; }
 
   /* ---------- آموزش ---------- */
   if((t=e.target.closest('[data-edutab]'))){ APP.eduTab=t.dataset.edutab; render(); return; }
@@ -469,4 +545,10 @@ document.addEventListener('input',function(e){
   render();
   var el=document.getElementById('libq');
   if(el){ el.focus(); try{ el.setSelectionRange(pos,pos); }catch(_){ } }
+});
+
+/* ---------- تغییر مقادیر کتابخانه با select ---------- */
+document.addEventListener('change',function(e){
+  if(e.target.matches('[data-libcat]')){ APP.libCat=e.target.value; render(); return; }
+  if(e.target.matches('[data-libfreq]')){ APP.libFreq=e.target.value; render(); return; }
 });

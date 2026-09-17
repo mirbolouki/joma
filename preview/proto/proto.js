@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۸ — جوجهٔ جغد (طرح الف) · صدای نوازش و خروپف تازه';
+var BUILD='نسخهٔ ۹ — رفع ایرادهای بازبینی: آیکون‌ها · کتابخانه · آموزش · امروز · تقویم · جوجه';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -39,6 +39,7 @@ var APP = {
   petName:'',
   petGrowthFull:false,
   petSleep:false,
+  petMood:'ok',
   journalFilter:'all',
   reportTab:'summary',
   reportNoData:false,
@@ -46,7 +47,10 @@ var APP = {
   planTab:'acts',
   libQuery:'',
   libPath:'all',
+  libCat:'همه دسته‌ها',
+  libFreq:'همه تناوب‌ها',
   eduTab:'map',
+  eduPath:'all',
   hamRole:'client',
   hamLink:'ACTIVE',
   setTab:'profile',
@@ -56,6 +60,7 @@ var APP = {
   admProvider:'INACTIVE',
   contentPage:'about',
   rightsStep:'export',
+  authTab:'signup',
   moodStep:0,
   moodAnswers:{},
   water:0
@@ -69,8 +74,10 @@ function owl(name,size,cls){
     '" viewBox="0 0 120 120" aria-hidden="true"><use href="#'+name+'"/></svg>';
 }
 function ic(name,cls,size){
-  return '<svg class="ic '+(cls||'')+'"'+(size?' style="width:'+size+'px;height:'+size+'px"':'')+
-    ' aria-hidden="true"><use href="#'+name+'"/></svg>';
+  /* اندازه همیشه صریح است: اگر CSS جایی تعیین نکند، آیکون هرگز اندازهٔ پیش‌فرض مرورگر را نمی‌گیرد */
+  var s=size||18;
+  return '<svg class="ic '+(cls||'')+'" width="'+s+'" height="'+s+'" viewBox="0 0 24 24"'+
+    ' style="width:'+s+'px;height:'+s+'px" aria-hidden="true"><use href="#'+name+'"/></svg>';
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function empty(){return APP.data==='empty';}

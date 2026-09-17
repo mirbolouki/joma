@@ -82,9 +82,11 @@ function R_hammasir(){
         (empty()
           ? '<div class="banner warn" style="margin-top:8px">'+ic('i-info')+
             'هنوز هیچ مشاوری در فهرست نیست. دراپ‌داون نمایش داده نمی‌شود و فیلد نام کاربری هم وجود ندارد.</div>'
-          : '<div class="dropdown"><span>'+ic('i-search')+'یک مشاور انتخاب کن</span>'+
-            '<div class="dd-list"><b>دکتر مینا رستمی</b><span class="tiny">مشاور · ۴ مراجع</span>'+
-            '<b>علی کاظمی</b><span class="tiny">کوچ · ۲ مراجع</span></div></div>'+
+          : '<div class="fld" style="margin-top:8px"><label class="lbl">انتخاب مشاور</label>'+
+            '<select class="inp sel" data-hampick>'+
+              '<option>دکتر مینا رستمی — ۴ مراجع</option>'+
+              '<option>علی کاظمی — کوچ · ۲ مراجع</option>'+
+            '</select></div>'+
             '<div class="tiny" style="margin-top:6px">به او خبر می‌دهیم و خودش تصمیم می‌گیرد. فهرست از نقش مشاور می‌آید، که مدیر داده.</div>')+
       '</div></div>'+
 
@@ -92,13 +94,13 @@ function R_hammasir(){
         '<div class="tiny">هیچ چک‌باکسی پیش‌انتخاب نمی‌شود. تصمیم تو، نه پیش‌فرض محصول.</div>'+
         '<div class="perm-list">'+
           PERMS.map(function(p){
-            return '<label class="perm-row"><span class="cb"></span><span><b>'+p[1]+'</b>'+
+            return '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>'+p[1]+'</b>'+
               '<em>'+p[2]+(p[0]==='VIEW_MOOD'?' — <b>شامل متن یادداشت‌های روزانه</b>':'')+'</em></span></label>';
           }).join('')+
           '<div class="sep"></div>'+
-          '<div class="tiny"><b>گفت‌وگو</b> — برای گفت‌وگو، هر دو گزینهٔ زیر لازم است:</div>'+
-          '<label class="perm-row"><span class="cb"></span><span><b>من می‌توانم به او پیام بدهم</b><em>سقف روزانه از سرور</em></span></label>'+
-          '<label class="perm-row"><span class="cb"></span><span><b>او می‌تواند به من پیام بدهد</b><em>سقف روزانه از سرور</em></span></label>'+
+          '<div class="tiny" style="margin-bottom:4px"><b>گفت‌وگو</b> — هر دو گزینه لازم است:</div>'+
+          '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>من می‌توانم به او پیام بدهم</b><em>سقف روزانه از سرور</em></span></label>'+
+          '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>او می‌تواند به من پیام بدهد</b><em>سقف روزانه از سرور</em></span></label>'+
         '</div>'+
       '</div></div>'+
 
@@ -147,7 +149,6 @@ function R_hammasir(){
     '<div class="banner info">'+ic('i-info')+
       'این صفحه؛ نقش از <b>بک‌اند</b> می‌آید و رابط <b>جایگزین</b> می‌شود — نه اینکه دو حالت با هم بیایند و یکی با CSS مخفی شود.</div>'+
     linkCard+
-    (clients||st==='ACTIVE'?'':'')+
     steps+
     chickShare+
     (st==='ACTIVE'?dm:'')+
