@@ -4,6 +4,8 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
+var BUILD='نسخهٔ ۳ — لیوان تامبلر · هدف‌محور · صدای آب';
+
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
   {n:2,  id:'login',   name:'ورود',              sec:'۲۲ §۲',  batch:1, bare:1},
@@ -131,6 +133,7 @@ function rvbar(){
   }).join('');
   return '<div class="rvbar" id="rvbar">'+
     '<span class="rv-name">صفحهٔ '+fa(s.n)+' — '+s.name+'</span>'+
+    '<span class="rv-build" title="اگر این را می‌بینی، نسخهٔ تازه است">'+BUILD+'</span>'+
     '<span class="rv-sec">سند: '+s.sec+'</span>'+
     '<span class="dots" id="rvdots">'+dots+'</span>'+
     '<span class="sp"></span>'+
