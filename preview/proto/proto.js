@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۳ — لیوان تامبلر · هدف‌محور · صدای آب';
+var BUILD='نسخهٔ ۴ — دستهٔ ۲: جوجه · دفترچه · گزارش · برنامه · کتابخانه · آموزش';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -13,12 +13,12 @@ var SCREENS = [
   {n:4,  id:'home',    name:'خانهٔ من',          sec:'۱۱',     batch:1, app:1, nav:'home'},
   {n:5,  id:'today',   name:'کارهای امروز',      sec:'۱۲',     batch:1, app:1, nav:'today'},
   {n:6,  id:'mood',    name:'حال من',            sec:'۱۳',     batch:1, app:1, nav:'mood'},
-  {n:7,  id:'chick',   name:'جوجهٔ من',          sec:'۱۴',     batch:2, app:1, nav:'chick'},
-  {n:8,  id:'book',    name:'دفترچهٔ جوما',      sec:'۱۵',     batch:2, app:1, nav:'book'},
-  {n:9,  id:'reports', name:'گزارش‌ها',          sec:'۱۶',     batch:2, app:1, nav:'reports'},
-  {n:10, id:'plan',    name:'برنامهٔ من',        sec:'۱۸',     batch:2, app:1, nav:'plan'},
-  {n:11, id:'library', name:'کتابخانه',          sec:'۱۷',     batch:2, app:1, nav:'library'},
-  {n:12, id:'edu',     name:'آموزش',             sec:'۱۹',     batch:2, app:1, nav:'edu'},
+  {n:7,  id:'chick',   name:'جوجهٔ من',          sec:'۱۴',     batch:1, app:1, nav:'chick'},
+  {n:8,  id:'book',    name:'دفترچهٔ جوما',      sec:'۱۵',     batch:1, app:1, nav:'book'},
+  {n:9,  id:'reports', name:'گزارش‌ها',          sec:'۱۶',     batch:1, app:1, nav:'reports'},
+  {n:10, id:'plan',    name:'برنامهٔ من',        sec:'۱۸',     batch:1, app:1, nav:'plan'},
+  {n:11, id:'library', name:'کتابخانه',          sec:'۱۷',     batch:1, app:1, nav:'library'},
+  {n:12, id:'edu',     name:'آموزش',             sec:'۱۹',     batch:1, app:1, nav:'edu'},
   {n:13, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:3, app:1, nav:'hammasir'},
   {n:14, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:3, app:1, nav:'settings'},
   {n:15, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:3, app:1},
@@ -35,6 +35,17 @@ var APP = {
   role:'client',    /* client | counselor | admin */
   sound:false,
   waterGoal:8,      /* از هدف فعالیت آب در برنامهٔ کاربر — نه عدد ثابت ۸ */
+  petStage:'chick', /* egg | crack | chick — نمایش تخم/جوجه برای بازبینی */
+  petName:'',
+  petGrowthFull:false,
+  journalFilter:'all',
+  reportTab:'summary',
+  reportNoData:false,
+  planStatus:'RUNNING',
+  planTab:'acts',
+  libQuery:'',
+  libPath:'all',
+  eduTab:'map',
   moodStep:0,
   moodAnswers:{},
   water:0
@@ -141,6 +152,8 @@ function rvbar(){
     '<button data-tgl="data" class="'+(APP.data==='full'?'on':'')+'">دادهٔ '+(APP.data==='full'?'پر':'خالی')+'</button>'+
     '<button data-tgl="theme" class="'+(APP.theme==='glass'?'on':'')+'">تم '+(APP.theme==='classic'?'کلاسیک':'شیشه')+'</button>'+
     '<button data-goal>هدف آب: '+fa(APP.waterGoal)+'</button>'+
+    '<button data-pet>'+(APP.petStage==='egg'?'جوجه: تخم':(APP.petStage==='crack'?'جوجه: ترک':'جوجه: متولد'))+'</button>'+
+    '<button data-plan>'+(APP.planStatus==='RUNNING'?'دوره: در اجرا':(APP.planStatus==='DRAFT'?'دوره: پیش‌نویس':(APP.planStatus==='PLANNING'?'دوره: آماده‌سازی':'دوره: بایگانی')))+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
@@ -394,7 +407,7 @@ document.addEventListener('DOMContentLoaded',function(){
   render();
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-go]'); if(t){go(t.dataset.go);return;}
-    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus]');
+    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan]');
     if(b){
       var idx=SCREENS.map(function(x){return x.id;}).indexOf(APP.screen);
       if(b.hasAttribute('data-prev')){ if(idx>0) go(SCREENS[idx-1].id); }
@@ -411,6 +424,12 @@ document.addEventListener('DOMContentLoaded',function(){
         var at=seq.indexOf(APP.waterGoal); APP.waterGoal=seq[(at+1)%seq.length];
         APP.water=Math.min(APP.water,APP.waterGoal); render();
         toast('هدف آب شد '+fa(APP.waterGoal)+' لیوان — در محصول، این عدد از هدف فعالیت در برنامه می‌آید');
+      }
+      else if(b.hasAttribute('data-pet')){
+        var seq=['egg','crack','chick']; APP.petStage=seq[(seq.indexOf(APP.petStage)+1)%seq.length]; render();
+      }
+      else if(b.hasAttribute('data-plan')){
+        var sq=['DRAFT','PLANNING','RUNNING','ARCHIVED']; APP.planStatus=sq[(sq.indexOf(APP.planStatus)+1)%sq.length]; render();
       }
       else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
       else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
