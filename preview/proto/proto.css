@@ -288,14 +288,16 @@ table.tbl{width:100%;border-collapse:collapse}
 [data-theme="glass"] .gw-a{stop-color:rgba(255,255,255,.55)}
 [data-theme="glass"] .gw-b{stop-color:rgba(255,255,255,.85)}
 /* حفرهٔ داخلی — همیشه کمی سرد و شیشه‌ای، حتی وقتی خالی است */
-.ginner{fill:rgba(234,244,250,.45)}
+.ginner{fill:rgba(226,240,249,.55)}
+.gbody{stroke:#BBD8E8;stroke-width:.95;stroke-opacity:.85}
+.gbase{fill:rgba(120,178,210,.30)}
 [data-theme="glass"] .ginner{fill:rgba(255,255,255,.32)}
 .gsurf{fill:#fff;opacity:.28}
 .gwlin{fill:#CFEAF8;stroke:#8FC4E2;stroke-width:.9}
 .gwlsh{fill:#fff;opacity:.65}
 .gcaustic{fill:none;stroke:#fff;stroke-width:1;stroke-linecap:round;opacity:.5}
 .gline{fill:none;stroke:var(--wline);stroke-width:1.6;stroke-linejoin:round}
-.grim{fill:rgba(244,251,254,.85);stroke:#A9CBDE;stroke-width:.95}
+.grim{fill:rgba(246,252,255,.88);stroke:#9CC2DA;stroke-width:1.05}
 [data-theme="glass"] .grim{fill:rgba(255,255,255,.5);stroke:rgba(255,255,255,.9)}
 .grim2{fill:none;stroke:rgba(255,255,255,.95);stroke-width:.8}
 .gbase{fill:rgba(163,203,226,.24)}

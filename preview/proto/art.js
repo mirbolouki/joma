@@ -15,9 +15,9 @@ function waveD(amp,phase,y0){
    دهانهٔ بیضی · بدنهٔ تقریباً راست با شیب ملایم · ته ضخیم
    آب داخل حفرهٔ داخلی بریده می‌شود؛ دیوارهٔ شیشه دورش دیده می‌شود.
    ============================================================ */
-var GL_TOP=7.2, GL_BOT=48.6;          /* لبه و کف خارجی */
-var GL_HW_TOP=19.2, GL_HW_BOT=15.0;   /* نیم‌عرض بیرونی */
-var GL_IHW_TOP=17.2, GL_IHW_BOT=13.2; /* نیم‌عرض حفرهٔ داخلی */
+var GL_TOP=5.4, GL_BOT=50.0;          /* لبه و کف خارجی — بلندتر، مثل تامبلر */
+var GL_HW_TOP=16.6, GL_HW_BOT=15.6;   /* نیم‌عرض بیرونی — شیب ملایم، نه کاپ */
+var GL_IHW_TOP=14.9, GL_IHW_BOT=14.0; /* نیم‌عرض حفرهٔ داخلی */
 var GL_CX=22;
 
 /* نیم‌عرض حفره در ارتفاع y — برای هم‌اندازه بودن سطح آب با لیوان */
@@ -47,8 +47,8 @@ function bodyPath(){
 
 function glassSVG(i,filled){
   var id='gw'+i, W=44, H=58;
-  var SURF=20.4;                    /* سطح آبِ پر — ۱۳px زیر لبه */
-  var ty=filled?0:26;
+  var SURF=18.6;                    /* سطح آبِ پر — ۱۳٫۲px زیر لبه */
+  var ty=filled?0:32;
   var rxSurf=cavHW(SURF).toFixed(2);
   var cav=cavPath(), body=bodyPath();
 
@@ -68,7 +68,7 @@ function glassSVG(i,filled){
     '<ellipse class="gsh" cx="'+GL_CX+'" cy="'+(GL_BOT+3.6)+'" rx="'+GL_HW_BOT+'" ry="2.6"/>'+
 
     /* شیشه */
-    '<path d="'+body+'" fill="url(#ggl'+i+')"/>'+
+    '<path class="gbody" d="'+body+'" fill="url(#ggl'+i+')"/>'+
     /* حفرهٔ داخلی — همیشه کمی سرد و شیشه‌ای */
     '<path d="'+cav+'" class="ginner"/>'+
 
