@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تابلوی تصمیم‌های جوما — نسخهٔ ۱</title>
+<style>
+  :root{
+    --bg-layer:
+      radial-gradient(42% 34% at 88% -6%, #FFE4D2 0%, rgba(255,228,210,0) 62%),
+      radial-gradient(38% 30% at -6% 26%, #DDF3E6 0%, rgba(221,243,230,0) 60%),
+      radial-gradient(40% 34% at 106% 58%, #E9E4FC 0%, rgba(233,228,252,0) 60%),
+      radial-gradient(36% 30% at 12% 98%, #FFF3D2 0%, rgba(255,243,210,0) 60%),
+      linear-gradient(180deg,#FDFEFB 0%,#F3F8F0 100%);
+    --card:#ffffff; --card-brd:#EAEFE6;
+    --ink:#14382E; --ink-2:#5C7A6C; --ink-3:#8FA79B;
+    --brand:#0FA678; --brand2:#2FBF8F; --brand-ink:#0A7E5B;
+    --brand-soft:#D6F4E6; --brand-softer:#EDFAF3;
+    --gold:#F0B23A; --gold-soft:#FFF0C9; --gold-ink:#8F6A12;
+    --rose:#EE6D95; --rose-soft:#FFE3EC; --rose-ink:#B24763;
+    --lav:#8B7CF6; --lav-soft:#EBE7FE; --lav-ink:#5F4FC0;
+    --sky:#3FA3DC; --sky-soft:#DDF0FC; --sky-ink:#2277A8;
+    --coral:#F2784B; --coral-soft:#FFE5DA; --coral-ink:#C25327;
+    --indigo:#6D7BE0; --indigo-soft:#E7E9FD; --indigo-ink:#4B58B8;
+    --ok:#12905F; --ring-track:#E4EBE1;
+    --r-sm:10px; --r:16px; --r-lg:22px;
+    --shadow:0 2px 10px rgba(20,60,45,.06),0 18px 44px -24px rgba(20,60,45,.3);
+    --sh2:0 8px 28px -14px rgba(20,60,45,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Vazirmatn,-apple-system,"Segoe UI",Tahoma,sans-serif;
+    background:var(--bg-layer);background-attachment:fixed;color:var(--ink);
+    line-height:1.9;padding:0 0 80px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+  /* ---------- سرصفحه ---------- */
+  .board-head{padding:44px 0 28px;text-align:center}
+  .board-head h1{font-size:clamp(24px,3.4vw,36px);font-weight:900;line-height:1.4}
+  .board-head p{font-size:14px;color:var(--ink-2);max-width:640px;margin:12px auto 0}
+  .legend{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .lg{font-size:11.5px;font-weight:800;padding:5px 13px;border-radius:999px}
+  .lg.d{background:var(--brand-soft);color:var(--brand-ink)}
+  .lg.q{background:var(--gold-soft);color:var(--gold-ink)}
+  .lg.b{background:var(--coral-soft);color:var(--coral-ink)}
+
+  /* ---------- بخش ---------- */
+  .sec{margin-top:38px;background:var(--card);border:1px solid var(--card-brd);
+       border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+  .sec-head{padding:20px 24px;border-bottom:1px solid var(--card-brd);
+            display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .sec-n{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;
+         background:var(--grad1);color:#fff;font-weight:900;font-size:15px}
+  .sec-head h2{font-size:17px;font-weight:900;flex:1;min-width:200px}
+  .sec-head .tag{font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:999px;
+                 background:var(--brand-soft);color:var(--brand-ink)}
+  .sec-head .tag.q{background:var(--gold-soft);color:var(--gold-ink)}
+  .sec-body{padding:22px 24px}
+  .sec-body>p.note{font-size:12.5px;color:var(--ink-2);margin-bottom:18px}
+
+  /* ---------- اجزای پایه ---------- */
+  .btn{border:none;border-radius:999px;font-family:inherit;font-weight:800;font-size:12.5px;
+       padding:10px 20px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.18s}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+               box-shadow:0 8px 22px -10px rgba(15,166,120,.7)}
+  .btn.ghost{background:transparent;border:1.5px solid var(--card-brd);color:var(--ink-2)}
+  .btn.soft{background:var(--brand-softer);color:var(--brand-ink)}
+  .btn.sm{padding:7px 15px;font-size:11.5px}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .card{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);
+        box-shadow:var(--shadow);padding:16px}
+  .pill{font-size:10.5px;font-weight:800;padding:4px 12px;border-radius:999px;
+        background:var(--brand-soft);color:var(--brand-ink)}
+  .tiny{font-size:10.5px;color:var(--ink-3);line-height:1.8}
+  .num{font-feature-settings:"ss01"}
+  .st{font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;
+      display:inline-flex;align-items:center;gap:4px}
+  .st.done{background:var(--brand-soft);color:var(--brand-ink)}
+  .st.wait{background:var(--gold-soft);color:var(--gold-ink)}
+  .st.late{background:var(--gold-soft);color:var(--gold-ink)}
+  .st.lock{background:var(--ring-track);color:var(--ink-2)}
+  .avatar{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+          font-weight:900;font-size:13px;background:var(--brand-soft);color:var(--brand-ink);flex:none}
+  .chip{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;flex:none}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:900px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+
+  /* ---------- ۱ نقش‌ها ---------- */
+  .roleswitch{border:1.5px solid var(--card-brd);background:var(--card);border-radius:999px;
+              padding:5px 12px 5px 10px;display:inline-flex;align-items:center;gap:9px;
+              font-family:inherit;cursor:pointer;box-shadow:var(--shadow)}
+  .roleswitch b{font-size:12.5px;font-weight:800;color:var(--ink)}
+  .roleswitch small{font-size:10px;font-weight:800;color:var(--brand-ink);background:var(--brand-soft);
+                    padding:2px 8px;border-radius:999px}
+  .rl-panel{margin-top:12px;background:var(--card);border:1px solid var(--card-brd);
+            border-radius:var(--r);box-shadow:var(--sh2);overflow:hidden;max-width:320px}
+  .rl-item{display:flex;align-items:center;gap:11px;padding:12px 15px;border-bottom:1px solid var(--card-brd);
+           font-size:12.5px;font-weight:700;cursor:pointer}
+  .rl-item:last-child{border-bottom:none}
+  .rl-item .dot{width:9px;height:9px;border-radius:999px;flex:none}
+  .rl-item.on{background:var(--brand-softer)}
+  .rl-item .n{margin-inline-start:auto;font-size:10.5px;color:var(--ink-3);font-weight:700}
+  .rl-sep{height:4px;background:var(--card-brd)}
+
+  /* نقش accents */
+  .role-bar{height:3px;border-radius:99px;margin-bottom:12px}
+  .role-bar.client{background:linear-gradient(90deg,var(--brand),var(--brand2))}
+  .role-bar.counselor{background:linear-gradient(90deg,var(--indigo),var(--lav))}
+  .role-bar.admin{background:linear-gradient(90deg,var(--gold),#F7D07A)}
+  .role-strip{--accent:var(--brand);--accent-soft:var(--brand-soft);--accent-ink:var(--brand-ink);
+    background:linear-gradient(180deg,var(--accent-soft),transparent 60%),var(--card)}
+  .role-strip.counselor{--accent:var(--indigo);--accent-soft:var(--indigo-soft);--accent-ink:var(--indigo-ink)}
+  .role-strip.admin{--accent:var(--gold);--accent-soft:var(--gold-soft);--accent-ink:var(--gold-ink)}
+  .role-strip h4{font-size:11px;font-weight:900;color:var(--accent-ink);margin-bottom:8px}
+  .role-strip .mini{font-size:10.5px;color:var(--ink-3);display:block;margin-top:2px}
+  .role-strip ul{list-style:none;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+  .role-strip li{padding:3px 0}
+
+  /* ---------- ۲ جوجه مشاور ---------- */
+  .client-card{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);
+               box-shadow:var(--shadow);padding:15px;display:flex;flex-direction:column;gap:12px}
+  .client-card[data-state="attn"]{border-color:rgba(242,120,75,.35);
+               background:linear-gradient(180deg,var(--coral-soft),transparent 55%),var(--card)}
+  .client-card[data-state="calm"]{background:linear-gradient(180deg,var(--gold-soft),transparent 55%),var(--card)}
+  .cc-top{display:flex;align-items:center;gap:10px}
+  .cc-top b{font-size:13px;font-weight:800;display:block}
+  .cc-chick{display:flex;align-items:center;gap:12px;padding:10px 0}
+  .eggsvg{width:62px;height:72px;flex:none}
+  .cc-status b{font-size:12.5px;font-weight:800;display:block}
+  .cc-status small{font-size:10.5px;color:var(--ink-3);line-height:1.7}
+  .attn .cc-status b{color:var(--coral-ink)}
+  .calm .cc-status b{color:var(--gold-ink)}
+  .floaty{animation:floaty 3.2s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+  /* ---------- ۳ افزودن به برنامه ---------- */
+  .flowbox{border:1.5px dashed var(--card-brd);border-radius:var(--r);padding:16px;height:100%}
+  .flowbox h4{font-size:12px;font-weight:900;margin-bottom:10px;color:var(--brand-ink)}
+  .flowbox.q h4{color:var(--gold-ink)}
+  .flowbox li{font-size:11.5px;color:var(--ink-2);list-style:none;padding:3px 0}
+  .toast{background:var(--ink);color:#fff;border-radius:999px;padding:9px 10px 9px 16px;
+         display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;
+         box-shadow:0 10px 30px -10px rgba(0,0,0,.35);margin-top:12px}
+  .toast button{background:rgba(255,255,255,.18);border:none;color:#fff;border-radius:999px;
+                padding:4px 12px;font-family:inherit;font-weight:800;font-size:11px;cursor:pointer}
+
+  /* ---------- ۴ آموزش ---------- */
+  .howline{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;position:relative;margin:18px 0}
+  .howline::before{content:'';position:absolute;top:41px;inset-inline:9%;height:2px;background:var(--ring-track)}
+  .hstep{text-align:center;position:relative;z-index:1}
+  .hstep .hn{width:44px;height:44px;margin:0 auto 9px;border-radius:14px;display:grid;place-items:center;
+             background:var(--card);border:2px solid var(--card-brd);box-shadow:var(--shadow);
+             font-weight:900;font-size:14px;color:var(--brand-ink)}
+  .hstep.on .hn{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;color:#fff}
+  .hstep b{font-size:11.5px;font-weight:800;display:block;line-height:1.6}
+  .hstep small{font-size:9.5px;color:var(--ink-3);line-height:1.6;display:block}
+  @media(max-width:900px){
+    .howline{grid-template-columns:1fr;gap:12px}
+    .howline::before{display:none}
+    .hstep{display:flex;align-items:center;gap:12px;text-align:right}
+    .hstep .hn{margin:0}
+  }
+  .cando{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:900px){.cando{grid-template-columns:1fr}}
+  .cd-col{border-radius:var(--r);padding:16px 18px}
+  .cd-col.yes{background:var(--brand-softer);border:1px solid var(--brand-soft)}
+  .cd-col.no{background:var(--coral-soft);border:1px solid rgba(242,120,75,.25)}
+  .cd-col h3{font-size:13.5px;font-weight:900;margin-bottom:10px}
+  .cd-col.yes h3{color:var(--brand-ink)} .cd-col.no h3{color:var(--coral-ink)}
+  .cd-col li{font-size:11.5px;line-height:1.95;padding-inline-start:18px;position:relative;list-style:none}
+  .cd-col li::before{position:absolute;inset-inline-start:0;font-weight:900}
+  .cd-col.yes li::before{content:'✓';color:var(--brand-ink)}
+  .cd-col.no li::before{content:'—';color:var(--coral-ink)}
+  .cd-col b{font-weight:900}
+
+  /* کاتالوگ */
+  .gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+  @media(max-width:900px){.gcards{grid-template-columns:1fr}}
+  .gcard{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);
+         overflow:hidden;box-shadow:var(--shadow);transition:.2s}
+  .gcard:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:var(--sh2)}
+  .gcard .art{height:104px;display:grid;place-items:center;position:relative;font-size:38px}
+  .gcard .art::after{content:'✓';position:absolute;top:9px;inset-inline-start:9px;width:22px;height:22px;
+        border-radius:999px;background:var(--brand);color:#fff;display:grid;place-items:center;
+        font-size:12px;font-weight:900;opacity:0;transition:.2s}
+  .gcard.read .art::after{opacity:1}
+  .gcard .bd{padding:12px 14px 14px}
+  .gcard h4{font-size:12.5px;font-weight:800;margin-bottom:5px}
+  .gcard p{font-size:10.5px;color:var(--ink-2);line-height:1.8}
+  .gpath{font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:999px;display:inline-block;margin-bottom:7px}
+  .gpath.couple{background:var(--rose-soft);color:var(--rose-ink)}
+  .gpath.schema{background:var(--indigo-soft);color:var(--indigo-ink)}
+  .gpath.base{background:var(--brand-soft);color:var(--brand-ink)}
+  .p1{background:linear-gradient(150deg,#FFE9D6,#FFD9E6)}
+  .p2{background:linear-gradient(150deg,#E3F1FF,#DCE7FF)}
+  .p3{background:linear-gradient(150deg,#EAF7EE,#D8F0E4)}
+  .p4{background:linear-gradient(150deg,#F1EBFF,#E4E8FF)}
+  .p5{background:linear-gradient(150deg,#E2F4FB,#D9EDFA)}
+  .p6{background:linear-gradient(150deg,#FFF4D9,#FFE9D0)}
+  .breath{border-top:1px dashed var(--card-brd);text-align:center;padding:12px 0;margin-top:8px;
+          font-size:11.5px;color:var(--ink-3);font-weight:700}
+
+  /* راهنمای سه صفحه‌ای */
+  .welcome{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.welcome{grid-template-columns:1fr}}
+  .wsc{background:var(--card);border:1px solid var(--card-brd);border-radius:var(--r);
+       box-shadow:var(--shadow);padding:20px;text-align:center;display:flex;flex-direction:column;gap:10px}
+  .wsc .ic{font-size:40px}
+  .wsc b{font-size:13px;font-weight:900}
+  .wsc p{font-size:11.5px;color:var(--ink-2);flex:1}
+  .wsc .row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+  .dots{display:flex;gap:5px;justify-content:center;margin-top:4px}
+  .dots i{width:6px;height:6px;border-radius:999px;background:var(--ring-track)}
+  .dots i.on{background:var(--brand);width:18px;border-radius:99px}
+
+  /* پهنای کارت */
+  .widthdemo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:900px){.widthdemo{grid-template-columns:1fr}}
+  .wd{border-radius:var(--r);padding:14px;border:1px solid var(--card-brd);background:var(--card)}
+  .wd .lbl{font-size:11px;font-weight:900;margin-bottom:10px}
+  .wd .lbl.bad{color:var(--coral-ink)} .wd .lbl.good{color:var(--brand-ink)}
+  .wdrow{display:grid;grid-template-columns:2.2fr .7fr .8fr 40px;gap:10px;align-items:center;
+         padding:10px 0;border-bottom:1px solid var(--card-brd);font-size:11.5px}
+  .wdrow:last-child{border-bottom:none}
+  .wdrow .nm{font-weight:700}
+  .wdrow .inp{border:1.5px solid var(--card-brd);border-radius:9px;padding:6px 10px;font-family:inherit;
+              font-size:11.5px;text-align:center;color:var(--ink)}
+
+  /* پرسش‌ها */
+  .qbox{background:var(--gold-soft);border:1px solid rgba(240,178,58,.35);border-radius:var(--r);padding:16px}
+  .qbox h4{font-size:12.5px;font-weight:900;color:var(--gold-ink);margin-bottom:9px}
+  .qbox ol{padding-inline-start:18px;font-size:11.5px;color:var(--ink-2)}
+  .qbox li{padding:2px 0}
+
+  footer.board-foot{text-align:center;margin-top:34px;font-size:11.5px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="board-head">
+    <h1>تابلوی تصمیم‌های جوما</h1>
+    <p>جای خواندن ۵٬۰۰۰ خط سند — این‌جا فقط <b>تصمیم‌ها</b> را می‌بینی. هر بخش یک نمونهٔ زنده دارد.
+       اگر چیزی را عوض می‌خواهی، شمارهٔ بخش را بگو.</p>
+    <div class="legend">
+      <span class="lg d">✅ تصمیم قطعی</span>
+      <span class="lg q">❓ منتظر نظر تو</span>
+      <span class="lg b">🔴 قاعدهٔ سخت</span>
+    </div>
+  </div>
+
+  <!-- ================= ۱ نقش‌ها ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۱</span>
+      <h2>نقش‌ها و جابه‌جایی بین آن‌ها</h2>
+      <span class="tag">تصمیم قطعی</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">هر کاربر همیشه نقش «کاربری» دارد. اگر مشاور یا مدیر باشد، کلید جابه‌جایی می‌بیند.
+        کاربر تک‌نقشه <b>هیچ نشانه‌ای</b> از نقش‌های دیگر نمی‌بیند.</p>
+
+      <div class="grid2">
+        <div>
+          <div class="roleswitch">
+            <span class="avatar">س</span>
+            <b>سارا</b>
+            <small>کاربری</small>
+            <span style="color:var(--ink-3);font-size:11px">▾</span>
+          </div>
+
+          <div class="rl-panel">
+            <div class="rl-item on"><span class="dot" style="background:var(--brand)"></span> کاربری <span class="n">داشبورد من</span></div>
+            <div class="rl-item"><span class="dot" style="background:var(--indigo)"></span> مشاور <span class="n">۴ مراجع</span></div>
+            <div class="rl-item"><span class="dot" style="background:var(--gold)"></span> مدیر <span class="n">کنسول</span></div>
+            <div class="rl-sep"></div>
+            <div class="rl-item" style="color:var(--ink-3)">پروفایل و تنظیمات</div>
+            <div class="rl-item" style="color:var(--ink-3)">خروج</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card role-strip">
+            <div class="role-bar client"></div>
+            <h4>نقش: کاربری</h4>
+            <ul><li>خانهٔ من</li><li>کارهای امروز</li><li>گزارش‌ها</li></ul>
+          </div>
+          <div class="card role-strip counselor" style="margin-top:12px">
+            <div class="role-bar counselor"></div>
+            <h4>نقش: مشاور</h4>
+            <ul><li>مراجعان من</li><li>پیام‌ها</li><li>گزارش‌های مجاز</li></ul>
+          </div>
+          <div class="card role-strip admin" style="margin-top:12px">
+            <div class="role-bar admin"></div>
+            <h4>نقش: مدیر</h4>
+            <ul><li>کاربران</li><li>مشاوران</li><li>نقش‌ها و دسترسی</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:16px;margin-bottom:0">
+        <b>رنگ هر نقش فقط سه چیز را عوض می‌کند:</b> هالهٔ پس‌زمینه · نوار باریک بالای صفحه · رنگ دکمه‌های اقدام.
+        <b>تم کلاسیک/شیشه دست‌نخورده می‌ماند</b> — چون عوض‌کردن کل تم با هر جابه‌جایی، کاربر را گیج می‌کند.
+        در کنار رنگ، <b>برچسب متنی نقش</b> هم می‌آید (رنگ تنها نشانه نیست).
+      </p>
+      <p class="note" style="margin-top:10px;margin-bottom:0">
+        🔴 <b>قاعدهٔ سخت:</b> کلید نقش فقط <b>نمایش</b> را عوض می‌کند. اگر کسی کلید را دستکاری کند، فقط ناوبری خراب می‌شود — نه امنیت. مجوز از بک‌اند می‌آید.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ۲ مشاور ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۲</span>
+      <h2>داشبورد مشاور — وضعیت مراجع با جوجه</h2>
+      <span class="tag q">منتظر نظر تو</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">درخواست تو: مشاور با یک نگاه بفهمد کدام مراجع به توجه نیاز دارد — <b>بصری، نه عددی</b>.
+        سه قید گذاشتم که این ابزار به فشار روانی تبدیل نشود.</p>
+
+      <div class="grid3" style="margin-top:4px">
+
+        <div class="client-card" data-state="attn">
+          <div class="cc-top"><span class="avatar" style="background:var(--rose-soft);color:var(--rose-ink)">م</span>
+            <div><b>مریم ن.</b><span class="tiny">شروع همراهی: ۱ مرداد</span></div></div>
+          <div class="cc-chick">
+            <svg class="eggsvg" viewBox="0 0 86 96" aria-hidden="true">
+              <ellipse cx="43" cy="54" rx="29" ry="35" fill="#EDEDE7" stroke="#C9C9BE" stroke-width="2.5" transform="rotate(-14 43 54)"/>
+              <ellipse cx="32" cy="42" rx="6" ry="10" fill="#fff" opacity=".5" transform="rotate(-22 32 42)"/>
+            </svg>
+            <div class="cc-status"><b>نیازمند توجه</b><small>۶ روز است چیزی ثبت نکرده</small></div>
+          </div>
+          <div style="display:flex;gap:7px">
+            <button class="btn soft sm">دیدن وضعیت</button>
+            <button class="btn primary sm">پیام دادن</button>
+          </div>
+        </div>
+
+        <div class="client-card" data-state="calm">
+          <div class="cc-top"><span class="avatar" style="background:var(--sky-soft);color:var(--sky-ink)">ر</span>
+            <div><b>رضا ک.</b><span class="tiny">شروع همراهی: ۱۴ تیر</span></div></div>
+          <div class="cc-chick">
+            <svg class="eggsvg" viewBox="0 0 86 96" aria-hidden="true">
+              <ellipse cx="43" cy="54" rx="29" ry="35" fill="#FAF3E4" stroke="#DFD2B4" stroke-width="2.5"/>
+              <ellipse cx="32" cy="42" rx="6" ry="10" fill="#fff" opacity=".7" transform="rotate(-22 32 42)"/>
+            </svg>
+            <div class="cc-status"><b>این هفته کم‌فعال بوده</b><small>۳ روز ثبت نداشته</small></div>
+          </div>
+          <div style="display:flex;gap:7px">
+            <button class="btn soft sm">دیدن وضعیت</button>
+            <button class="btn primary sm">پیام دادن</button>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <div class="cc-top"><span class="avatar">ز</span>
+            <div><b>زهرا م.</b><span class="tiny">شروع همراهی: ۲ خرداد</span></div></div>
+          <div class="cc-chick">
+            <svg class="eggsvg floaty" viewBox="0 0 86 96" aria-hidden="true">
+              <ellipse cx="43" cy="56" rx="27" ry="31" fill="#FFD84D"/>
+              <ellipse cx="43" cy="62" rx="17" ry="19" fill="#FFEDA8"/>
+              <ellipse cx="43" cy="30" rx="24" ry="22" fill="#FFD84D"/>
+              <ellipse cx="43" cy="34" rx="15" ry="14" fill="#FFEDA8"/>
+              <circle cx="34" cy="28" r="6.5" fill="#2E3A48"/><circle cx="34" cy="26.5" r="2.2" fill="#fff"/>
+              <circle cx="52" cy="28" r="6.5" fill="#2E3A48"/><circle cx="52" cy="26.5" r="2.2" fill="#fff"/>
+              <path d="M43 36l6 5-6 5-6-5Z" fill="#F58E2D"/>
+            </svg>
+            <div class="cc-status"><b>در مسیر است</b><small>۲ هفتهٔ پیوسته ثبت</small></div>
+          </div>
+          <div style="display:flex;gap:7px">
+            <button class="btn soft sm">دیدن وضعیت</button>
+            <button class="btn ghost sm">پیام دادن</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="qbox" style="margin-top:18px">
+        <h4>🔴 سه قیدی که گذاشتم — بگو اگر مخالفی</h4>
+        <ol>
+          <li><b>مبنا فقط فعالیت است، نه حال.</b> جوجه با «روزهای بی‌ثبت» کم‌رنگ می‌شود، <b>هرگز</b> با عدد حال یا خلق.
+              اگر با حال بد کم‌رنگ شود، به مشاور می‌گوید «حال این کاربر بد است» — که یا مجوز <span class="num">VIEW_MOOD</span> می‌خواهد، یا دورزدنش.</li>
+          <li><b>کاربر چک‌باکس جداگانه دارد</b> و می‌تواند یک‌کلیکی خاموشش کند. جدای از مجوزهای دیگر، پیش‌فرض خالی.</li>
+          <li><b>مشاور هیچ متنی از یادداشت و هیچ بینشی نمی‌بیند.</b> فقط «چند روز است ثبت نکرده».</li>
+        </ol>
+        <p class="tiny" style="margin-top:8px">مرتب‌سازی پیش‌فرض: <b>نیازمند توجه</b> اول — وگرنه مشاور با فهرست بلند، کسی که به او نیاز دارد را گم می‌کند.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ۳ افزودن به برنامه ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۳</span>
+      <h2>«افزودن فعالیت به برنامه» — کِی بپرسیم، کِی نپرسیم</h2>
+      <span class="tag">تصمیم قطعی</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">نگرانی تو درست بود: هم پرسیدن همیشه کلافه‌کننده است، هم نپرسیدن در جای اشتباه خطرناک.
+        راه بیرون از این دو، یک قاعده است: <b>فقط وقتی بپرس که ابهام واقعی باشد.</b></p>
+
+      <div class="grid3">
+        <div class="flowbox">
+          <h4>۱ · یک دورهٔ در حال ساخت دارد (۹۵٪ موارد)</h4>
+          <ul>
+            <li>→ <b>مستقیم اضافه می‌شود. بدون پرسش.</b></li>
+            <li>کارت به «در برنامهٔ توست» عوض می‌شود.</li>
+          </ul>
+          <div class="toast">«مدیتیشن» به برنامهٔ «شهریور ۱۴۰۵» اضافه شد. <button>واگرد</button></div>
+        </div>
+
+        <div class="flowbox">
+          <h4>۲ · دو دورهٔ در حال ساخت دارد</h4>
+          <ul>
+            <li>→ <b>اینجا می‌پرسیم</b> — ابهام واقعی است.</li>
+            <li>هیچ گزینه‌ای پیش‌انتخاب نمی‌شود.</li>
+          </ul>
+          <div class="card" style="margin-top:10px;padding:12px;font-size:11.5px">
+            <div style="font-weight:800;margin-bottom:8px">به کدام دوره اضافه شود؟</div>
+            <div>○ شهریور ۱۴۰۵ — ۸ فعالیت</div>
+            <div>○ مهر ۱۴۰۵ — ۲ فعالیت</div>
+          </div>
+        </div>
+
+        <div class="flowbox q">
+          <h4>۳ · فقط دورهٔ در حال اجرا دارد</h4>
+          <ul>
+            <li>→ به دورهٔ در حال اجرا <b>اضافه نمی‌شود</b> (قفل محتوایی).</li>
+            <li>دکمه: <b>«ساخت دورهٔ جدید و افزودن»</b></li>
+            <li>بدون پرسش — جملهٔ روشنگر جای پرسش را می‌گیرد.</li>
+          </ul>
+          <p class="tiny" style="margin-top:8px">«دورهٔ شهریور در حال اجراست و فعالیت‌هایش قفل‌اند. برای این فعالیت، یک دورهٔ تازه می‌سازیم.»</p>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:16px;margin-bottom:0">
+        <b>یک تصمیم دیگر که با آن مخالفم و توضیح می‌دهم:</b> پنل «هدف را تعیین کن» را <b>حذف کردم</b>.
+        مقادیر پیشنهادی بک‌اند از قبل معقول‌اند؛ باز‌کردن یک فرم برای هر افزودن، همان اصطلاحاً «اصطکاک» است.
+        کاربری که هدف دقیق می‌خواهد، مسیرش را دارد (کارت ← «تنظیم هدف»)، ولی مسیر پیش‌فرض <b>یک کلیک</b> است.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ۴ حذف ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۴</span>
+      <h2>حذف — چه کسی، کجا، چه زمانی</h2>
+      <span class="tag q">یک تصحیح در تصمیم تو</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گفتی: «حذف از کتابخانه فقط برای مدیر» و «حذف فقط در برنامهٔ در حال ساخت».
+        بخش دوم را کامل اجرا کردم. بخش اول یک مشکل فنی دارد که باید بدانی.</p>
+
+      <div class="qbox" style="margin-bottom:16px">
+        <h4>🔴 تصحیح: حذف کاملِ فعالیت رسمی، گزارش‌های گذشته را می‌شکند</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          مشخصات هر فعالیت در زمان افزودن به برنامه <b>کپی (اسنپ‌شات)</b> می‌شود تا گزارش‌های قدیمی معنی‌شان بماند.
+          اگر ردیف کتابخانه حذف شود، ارجاع‌ها بی‌مرجع می‌شوند. پس دو عمل را <b>جدا</b> کردم:
+        </p>
+      </div>
+
+      <div class="grid2">
+        <div class="card" style="border-color:var(--brand-soft);background:var(--brand-softer)">
+          <b style="font-size:13px;color:var(--brand-ink)">غیرفعال‌سازی — پیش‌فرض رابط</b>
+          <p class="tiny" style="margin-top:6px">از فهرست انتخاب پنهان می‌شود. <b>هیچ اثر منفی بر گذشته.</b> قابل برگشت.</p>
+        </div>
+        <div class="card" style="border-color:rgba(242,120,75,.3);background:var(--coral-soft)">
+          <b style="font-size:13px;color:var(--coral-ink)">حذف کامل — فقط اگر هیچ ارجاعی نباشد</b>
+          <p class="tiny" style="margin-top:6px">تأیید دوگانه + اگر فعالیت در برنامهٔ کسی استفاده شده، دکمه غیرفعال است و دلیل می‌دهد.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;overflow:hidden;border-radius:var(--r);border:1px solid var(--card-brd)">
+        <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+          <thead><tr style="background:var(--brand-softer)">
+            <th style="padding:11px 14px;text-align:right;font-weight:900">چه چیزی</th>
+            <th style="padding:11px 14px;text-align:right;font-weight:900">کی</th>
+            <th style="padding:11px 14px;text-align:right;font-weight:900">چه زمانی</th>
+            <th style="padding:11px 14px;text-align:right;font-weight:900">عمل</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid var(--card-brd)"><td style="padding:10px 14px">فعالیت رسمی کتابخانه</td><td style="padding:10px 14px;font-weight:800">فقط مدیر</td><td style="padding:10px 14px">همیشه</td><td style="padding:10px 14px"><span class="st done">غیرفعال‌سازی</span></td></tr>
+            <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:10px 14px">فعالیت رسمی — حذف کامل</td><td style="padding:10px 14px;font-weight:800">فقط مدیر</td><td style="padding:10px 14px">اگر ارجاعی نباشد</td><td style="padding:10px 14px"><span class="st late">تأیید دوگانه</span></td></tr>
+            <tr style="border-top:1px solid var(--card-brd)"><td style="padding:10px 14px">فعالیت شخصی کاربر</td><td style="padding:10px 14px;font-weight:800">صاحبش + مدیر</td><td style="padding:10px 14px">هر زمان</td><td style="padding:10px 14px">حذف</td></tr>
+            <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:10px 14px">فعالیت داخل برنامه</td><td style="padding:10px 14px;font-weight:800">صاحب برنامه</td><td style="padding:10px 14px;font-weight:800;color:var(--brand-ink)">فقط در حال ساخت / پیش از اجرا</td><td style="padding:10px 14px">حذف</td></tr>
+            <tr style="border-top:1px solid var(--card-brd)"><td style="padding:10px 14px">فعالیت داخل برنامهٔ در حال اجرا</td><td style="padding:10px 14px;font-weight:800">هیچ‌کس</td><td style="padding:10px 14px">—</td><td style="padding:10px 14px"><span class="st lock">قفل — دکمه وجود ندارد</span></td></tr>
+            <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:10px 14px">ثبت و رخداد</td><td style="padding:10px 14px;font-weight:800">هیچ‌کس</td><td style="padding:10px 14px">—</td><td style="padding:10px 14px"><span class="st lock">ممنوع</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note" style="margin-top:14px;margin-bottom:0">
+        <b>مشاور هیچ دسترسی مدیریتی به کتابخانه ندارد.</b> و کاربر عادی حتی یک منوی خاکستری هم نمی‌بیند —
+        نه ویرایش، نه حذف، نه غیرفعال. قرار گرفتن این دکمه‌ها روی کارت‌ها، همان چیزی بود که ظاهر محصول را «ابزار مدیریتی» کرده بود.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ۵ دیروز ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۵</span>
+      <h2>سؤالت: «ثبت دیروزی که قطعی شده چرا باید به‌روزرسانی شود؟»</h2>
+      <span class="tag" style="background:var(--coral-soft);color:var(--coral-ink)">نباید — پاسخ کوتاه</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">سؤالت درست بود و سند هم همین را می‌گوید. فقط دو چیز قاطی می‌شد که حالا در سند جدا شدند:</p>
+
+      <div class="grid2">
+        <div class="cd-col yes">
+          <h3>✅ «ثبت دیروز» — مجاز</h3>
+          <ul>
+            <li>امروز یادت می‌آید <b>دیروز پیاده‌روی کردی و هیچ‌وقت ثبتش نکردی</b></li>
+            <li>پس با برچسب <b>«دیروز — با تأخیر»</b> ثبت می‌کنی</li>
+            <li>این یعنی <b>پرکردن جای خالی</b></li>
+          </ul>
+        </div>
+        <div class="cd-col no">
+          <h3>🚫 «ویرایش دیروز» — ممنوع</h3>
+          <ul>
+            <li>دیروز چیزی ثبت شده بود و می‌خواهی عوضش کنی</li>
+            <li>حالِ دیروز هم ممنوع است</li>
+            <li>آبِ دیروز که قطعی شده هم ممنوع</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
+        <b style="font-size:12.5px">جمله‌ای که دقیقاً در رابط می‌آید:</b>
+        <p style="font-size:13px;font-weight:800;color:var(--brand-ink);margin-top:6px">
+          «دیروز را می‌توانی پر کنی، ولی چیزی که ثبت شده را نمی‌توانی عوض کنی.»
+        </p>
+        <p class="tiny" style="margin-top:6px">اگر کاربر فکر کند می‌تواند گذشته را بازنویسی کند، دادهٔ گزارش‌ها بی‌اعتبار می‌شود. اگر فکر کند دیروز کاملاً بسته است، فرصت ثبت را از دست می‌دهد. رابط باید <b>هر دو</b> را بگوید.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ۶ آموزش ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۶</span>
+      <h2>آموزش — بصری، و کاربر بفهمد چه می‌گیرد</h2>
+      <span class="tag">تصمیم قطعی</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">خواستی کاربر مثل کسی که سند را خوانده مسلط باشد — با مثال‌های صریح: «ثبت دیروز فعاله»،
+        «برنامهٔ در حال اجرا ویرایش نداره». پس دو چیز اضافه شد: <b>نقشهٔ پنج‌گامی</b> و <b>دو ستون می‌توانی/نمی‌توانی</b>.</p>
+
+      <div class="howline">
+        <div class="hstep on">
+          <span class="hn num">۱</span>
+          <b>انتخاب فعالیت</b><small>از ۱۰۷ فعالیت</small>
+        </div>
+        <div class="hstep">
+          <span class="hn num">۲</span>
+          <b>ساخت برنامه</b><small>هدف و تناوب</small>
+        </div>
+        <div class="hstep">
+          <span class="hn num">۳</span>
+          <b>ثبت روزانه</b><small>کار + حال + آب</small>
+        </div>
+        <div class="hstep">
+          <span class="hn num">۴</span>
+          <b>دیدن گزارش</b><small>ده تب تحلیلی</small>
+        </div>
+        <div class="hstep">
+          <span class="hn num">۵</span>
+          <b>شناختن الگو</b><small>بینش‌های شخصی</small>
+        </div>
+      </div>
+      <p class="tiny" style="text-align:center">هر گام قابل کلیک است و به صفحهٔ واقعی خودش می‌رود — نه به توضیح.</p>
+
+      <div class="cando" style="margin-top:22px">
+        <div class="cd-col yes">
+          <h3>✅ می‌توانی</h3>
+          <ul>
+            <li>امروز و <b>دیروز</b> را ثبت کنی — دیروز با برچسب «تأخیر»</li>
+            <li>حال امروزت را ثبت کنی و <b>هر وقت خواستی عوضش کنی</b></li>
+            <li>آبت را در طول روز اضافه کنی؛ آخر روز خودکار قطعی می‌شود</li>
+            <li>فعالیت‌هایت را در دورهٔ <b>در حال ساخت</b> کم و زیاد کنی</li>
+            <li>هر وقت خواستی «بعداً» را بزنی و حال ثبت نکنی</li>
+            <li>بعد از چند روز غیبت برگردی؛ چیزی از دست نمی‌رود</li>
+          </ul>
+        </div>
+        <div class="cd-col no">
+          <h3>🚫 نمی‌توانی</h3>
+          <ul>
+            <li>برای <b>فردا</b> یا روزهای قبل‌تر از دیروز چیزی ثبت کنی</li>
+            <li>حالِ روزهای گذشته را ثبت یا عوض کنی</li>
+            <li>برنامه‌ای که <b>در حال اجراست</b> را ویرایش کنی</li>
+            <li>ثبتی را که <b>قطعی</b> شده عوض کنی</li>
+            <li>جوجه را از دست بدهی — <b>هیچ‌وقت نمی‌میرد</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size:14px;font-weight:900;margin:26px 0 8px">کاتالوگ — باید لذت‌بخش باشد</h3>
+      <p class="note" style="margin-bottom:0">هر راهنما تصویر خودش را دارد (نه آیکون تکراری)، مسیرها رنگ و شخصیت دارند،
+        و هر ۹ کارت یک نوار نفس‌جا می‌گیرد. نشانهٔ «خوانده‌شده» فقط بصری است — هیچ امتیازی، هیچ پاداشی.</p>
+
+      <div class="gcards">
+        <div class="gcard read">
+          <div class="art p3">🦉</div>
+          <div class="bd">
+            <span class="gpath base">پایه</span>
+            <h4>نوشیدن آب کافی</h4>
+            <p>لیوان بعدی، همین حالا. ساده‌ترین قدمی که می‌توانی برداری.</p>
+          </div>
+        </div>
+        <div class="gcard">
+          <div class="art p6">🕯️</div>
+          <div class="bd">
+            <span class="gpath couple">زوج‌درمانی</span>
+            <h4>پنج دقیقه گفت‌وگوی بی‌قضاوت</h4>
+            <p>گوش دادن بدون جواب دادن. سخت‌تر از چیزی است که فکر می‌کنی.</p>
+          </div>
+        </div>
+        <div class="gcard">
+          <div class="art p4">📖</div>
+          <div class="bd">
+            <span class="gpath schema">طرح‌واره</span>
+            <h4>شناختن الگوی رهاشدگی</h4>
+            <p>چرا وقتی تنها می‌مانی ذهنت به این مسیر می‌رود.</p>
+          </div>
+        </div>
+      </div>
+      <div class="breath">تا اینجا، تمرین‌هایی برای ساختن عادت.</div>
+
+      <h3 style="font-size:14px;font-weight:900;margin:26px 0 10px">اولین ورود — سه صفحهٔ تصویری</h3>
+      <p class="note" style="margin-bottom:14px">
+        پاسخ به سؤالت: <b>بله، در سند بود</b> — در <b>سه جا</b> و هر سه سازگار:
+        `PD-005` (خوش‌آمد کوتاه + راهنمای اختیاری) · بخش ۱۳٫۴ (قابل رد کردن، قابل اجرای مجدد، فرق تازه‌وارد و قدیمی) · و صفحهٔ احراز هویت.
+        ولی «یک پوشش دو جمله‌ای» بود؛ چون خواستی <b>بصری</b> باشد، به سه صفحه ارتقا دادم. مغایرتی نیست.
+      </p>
+
+      <div class="welcome">
+        <div class="wsc">
+          <span class="ic">🦉</span>
+          <b>سلام! من جوما هستم.</b>
+          <p>راهنمای تو در این مسیر.</p>
+          <div class="row"><button class="btn primary sm">بعدی</button><button class="btn ghost sm">رد کردن</button></div>
+          <div class="dots"><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="wsc">
+          <span class="ic">🧩</span>
+          <b>یک برنامهٔ کوچک می‌سازیم.</b>
+          <p>از ۱۰۷ فعالیت، چند تا را انتخاب می‌کنی.</p>
+          <div class="row"><button class="btn primary sm">بعدی</button><button class="btn ghost sm">رد کردن</button></div>
+          <div class="dots"><i></i><i class="on"></i><i></i></div>
+        </div>
+        <div class="wsc">
+          <span class="ic">🥚</span>
+          <b>هر روز یک قدم کوچک.</b>
+          <p>یک جوجه هم برایت داریم که با قدم‌هایت رشد می‌کند.</p>
+          <div class="row"><button class="btn primary sm">برویم برنامه بسازیم</button></div>
+          <div class="dots"><i></i><i></i><i class="on"></i></div>
+        </div>
+      </div>
+      <p class="tiny" style="margin-top:10px;text-align:center">
+        «رد کردن» در هر سه صفحه · هیچ داده‌ای در این سه صفحه نوشته نمی‌شود · کاربر قدیمی این سه صفحه را نمی‌بیند
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ۷ پهنای دسکتاپ ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۷</span>
+      <h2>پهنای کارت‌ها در دسکتاپ</h2>
+      <span class="tag">تصمیم قطعی</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گفتی «فعالیت‌ها عریض نباشند، زیبایی ندارد». درست بود — دو جا اصلاح شد.</p>
+
+      <div class="widthdemo">
+        <div class="wd">
+          <div class="lbl bad">✗ اشتباه — ستون‌ها مساوی، متن کشیده</div>
+          <div class="wdrow"><span class="nm">خواب کافی</span><span style="color:var(--ink-3)">۸ ساعت</span><span class="st done">ثبت شده</span><span>›</span></div>
+          <div class="wdrow"><span class="nm">نوشیدن آب</span><span style="color:var(--ink-3)">۵ لیوان</span><span class="st wait">در انتظار</span><span>›</span></div>
+          <div class="wdrow"><span class="nm">مدیتیشن</span><span style="color:var(--ink-3)">۲۰ دقیقه</span><span class="st done">ثبت شده</span><span>›</span></div>
+        </div>
+        <div class="wd">
+          <div class="lbl good">✓ درست — نسبت ثابت، مقدار کوتاه</div>
+          <div class="wdrow"><span class="nm">خواب کافی <span class="tiny">· هدف ۸ ساعت · روزانه</span></span><span class="inp num">۷٫۵</span><span class="st done">ثبت شده</span><span>›</span></div>
+          <div class="wdrow"><span class="nm">نوشیدن آب <span class="tiny">· هدف ۸ لیوان · روزانه</span></span><span class="inp num">۵</span><span class="st wait">در انتظار</span><span>›</span></div>
+          <div class="wdrow"><span class="nm">مدیتیشن <span class="tiny">· هدف ۱۵ دقیقه · روزانه</span></span><span class="inp num">۲۰</span><span class="st done">ثبت شده</span><span>›</span></div>
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:16px">
+        <div class="card">
+          <b style="font-size:12.5px">سقف محتوا</b>
+          <p class="tiny" style="margin-top:5px"><b>۱۱۸۰ پیکسل</b>، وسط‌چین. روی نمایشگر بزرگ‌تر، <b>بیشتر نمی‌شود</b>.</p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">شبکهٔ کارت‌ها</b>
+          <p class="tiny" style="margin-top:5px">حداکثر <b>۳ ستون</b>، هر کارت حداکثر <b>۴۴۰ پیکسل</b>. فضای خالی با کشیدن کارت پر نمی‌شود.</p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">جدول‌ها</b>
+          <p class="tiny" style="margin-top:5px">ستون‌ها <b>نسبت ثابت</b> می‌گیرند: فعالیت ۲٫۲ · مقدار ۰٫۷ · وضعیت ۰٫۸.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ۸ پرسشها ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۸</span>
+      <h2>چیزی که هنوز باید تو بگویی</h2>
+      <span class="tag q">۵ پرسش</span>
+    </div>
+    <div class="sec-body">
+      <div class="qbox">
+        <h4>۱ · «همراه» در بک‌اند چه چیزی است؟</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          گفتی همراه = کوچ/مشاور/مربی، نه دوست. در سند این را گذاشتم. ولی <b>بک‌اند فعلی</b> ممکن است هنوز
+          هر کاربری را به‌عنوان «همراه» بپذیرد. آیا در بک‌اند نقشی برای مشاور وجود دارد؟
+        </p>
+      </div>
+      <div class="qbox" style="margin-top:12px">
+        <h4>۲ · جوجهٔ وضعیت، درست فهمیدم؟</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          سه قید بخش ۲ را گذاشتم. اگر یکی‌شان را نمی‌خواهی بگو — به‌ویژه قید اول (مبنا فقط فعالیت، نه حال).
+        </p>
+      </div>
+      <div class="qbox" style="margin-top:12px">
+        <h4>۳ · انتساب مراجع به مشاور، چطور انجام شود؟</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          مراجع خودش مشاور را انتخاب می‌کند؟ یا مدیر انتساب می‌دهد؟ یا مشاور با کد دعوت مراجع اضافه می‌کند؟
+        </p>
+      </div>
+      <div class="qbox" style="margin-top:12px">
+        <h4>۴ · مدیر محتوای آموزشی را ویرایش کند؟</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          ۶۳ راهنما. آیا مدیر باید بتواند متن‌شان را در محصول ویرایش کند، یا فقط در کد/دیتابیس؟
+        </p>
+      </div>
+      <div class="qbox" style="margin-top:12px">
+        <h4>۵ · حداقل چند فعالیت برای شروع دوره؟</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          سند مادر گفته «حداقل فعالیت و گاردهای موجود» ولی عدد نداده. عدد و متن دلیلش را از بک‌اند بگیرم؟
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="board-foot">
+    همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
+    <br>بخش تازه: <b>۲۴-roles.md</b> (نقش‌ها، مشاور، کنسول مدیر)
+  </footer>
+</div>
+</body>
+</html>
