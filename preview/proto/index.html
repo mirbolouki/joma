@@ -4,107 +4,107 @@
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>نمونهٔ زندهٔ جوما — بازبینی پیش از کدنویسی</title>
+<title>نمونهٔ زندهٔ جوما — بازبینی نسخهٔ ۱۰</title>
 <link rel="stylesheet" href="proto.css?v=10">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
-  /* صفحهٔ شروع بازبینی */
-  .intro{max-width:880px;margin:0 auto;padding:30px 20px 40px}
-  .intro h1{font-size:26px;font-weight:900;margin-top:12px}
-  .intro .lead{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:2.1}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-  .steps .card b{font-size:13px;display:block}
-  .screens{margin-top:8px}
-  .scr-row{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--card);
-    border:1px solid var(--card-brd);border-radius:var(--r);margin-bottom:8px;box-shadow:var(--shadow-sm);
-    transition:transform .15s}
-  .scr-row:hover{transform:translateX(-3px)}
-  .scr-row .no{width:30px;height:30px;border-radius:10px;background:var(--brand-soft);color:var(--brand-ink);
+  .intro{max-width:940px;margin:0 auto;padding:28px 20px 48px}
+  .intro h1{font-size:25px;font-weight:900;margin-top:12px;line-height:1.6}
+  .build{display:inline-block;background:var(--brand);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px;margin-top:8px}
+  .what{margin:20px 0}
+  .wrow{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--card-brd);
+    border-radius:var(--r);padding:13px 14px;margin-bottom:9px;box-shadow:var(--shadow-sm)}
+  .wrow .n{width:26px;height:26px;border-radius:9px;background:var(--brand-soft);color:var(--brand-ink);
     display:grid;place-items:center;font-weight:900;font-size:12px;flex:none}
-  .scr-row.soon .no{background:var(--ring-track);color:var(--ink-3)}
-  .scr-row b{font-size:13px}
+  .wrow .t{flex:1;min-width:0}
+  .wrow b{font-size:13.5px}
+  .wrow p{font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.95}
+  .wrow .go{flex:none;align-self:center;font-size:11px;font-weight:900;color:var(--brand-ink);background:var(--brand-soft);
+    border-radius:999px;padding:6px 12px;text-decoration:none;white-space:nowrap}
+  .scr-row{display:flex;align-items:center;gap:11px;padding:10px 13px;background:var(--card);
+    border:1px solid var(--card-brd);border-radius:var(--r);margin-bottom:7px;box-shadow:var(--shadow-sm)}
+  .scr-row .no{width:28px;height:28px;border-radius:9px;background:var(--brand-soft);color:var(--brand-ink);
+    display:grid;place-items:center;font-weight:900;font-size:12px;flex:none}
   .scr-row .t{flex:1;min-width:0}
+  .scr-row b{font-size:13px}
   .scr-row .sec{font-size:10.5px;color:var(--ink-3)}
-  .badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:99px}
-  .badge.ok{background:var(--brand-soft);color:var(--brand-ink)}
-  .badge.no{background:var(--ring-track);color:var(--ink-3)}
-  @media (max-width:700px){.steps{grid-template-columns:1fr}}
+  .badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:99px;background:var(--brand-soft);color:var(--brand-ink)}
+  .badge.new{background:var(--gold-soft);color:var(--gold-ink)}
+  h2{font-size:16px;font-weight:900;margin:26px 0 10px}
 </style>
 </head>
 <body>
-
 <div class="intro">
   <span class="logo"><span class="logo-tile" id="itile"></span>
     <span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>
-  <h1>نمونهٔ زنده — پیش از نوشتن کد <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px">نسخهٔ ۱۰ — ثبت‌نام کامل · گزارش نموداری · آموزش یک‌به‌یک · پشتیبانی و پرسش‌ها · خروجی خوانا · تمرین تنفس</span></h1>
-  <p class="tiny" style="margin-top:6px">نسخهٔ تازه: <b>هر ۱۸ صفحه آماده است</b> — دستهٔ ۲ و دستهٔ ۳ هم اضافه شدند. کل محصول حالا کلیک‌شدنی است. اگر این بَج را نمی‌بینی، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b> بزن.</p>
-  <p class="lead">
-    این همان چیزی است که خواستی: <b>کل فرانت، بصری و کلیک‌پذیر، قبل از شروع کدنویسی.</b>
-    هر صفحه یک شماره دارد و به بخشی از سند وصل است — پس می‌توانی بگویی «صفحهٔ ۵ را عوض کن» بدون اینکه سند بخوانی.
+
+  <h1>نمونهٔ زندهٔ فرانت — نسخهٔ ۱۰</h1>
+  <span class="build" id="build">نسخهٔ ۱۰</span>
+  <p class="tiny" style="margin-top:10px;line-height:2">
+    این صفحه، <b>فهرست همه‌چیزی است که ساخته شده</b>: هشت کاری که خواستی + هر ۱۸ صفحه + شاهدهای بصری.
+    اگر بَج بالا «نسخهٔ ۱۰» نیست، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b>.
   </p>
 
-  <div class="steps">
-    <div class="card"><b>۱ · نگاه کن</b><p class="tiny">هر صفحه را باز کن. نوار پایین صفحه (کادر سبز تیره) ابزار بازبینی است — در محصول واقعی نیست.</p></div>
-    <div class="card"><b>۲ · بازی کن</b><p class="tiny">لیوان‌ها را پر کن، حال را ثبت کن، رمز را وارد کن، نقش و داده را عوض کن. جغدها با لمس تکان می‌خورند.</p></div>
-    <div class="card"><b>۳ · بگو کدام</b><p class="tiny">شماره‌ی صفحه و اینکه چه عوض شود. من هم نمونه و هم سند را اصلاح می‌کنم.</p></div>
+  <h2>۱) هشت چیزی که در این دور خواستی</h2>
+  <div class="what" id="what"></div>
+
+  <h2>۲) هر ۱۸ صفحه</h2>
+  <div id="screens"></div>
+
+  <h2>۳) شاهدهای بصری و سند</h2>
+  <div class="what">
+    <div class="wrow"><span class="n">◆</span><div class="t"><b>تصویر شاهد نمودارهای گزارش‌ها</b>
+      <p>خطی · ستونی دو‌سری · دونات با برچسب درصد · نقشهٔ حرارتی · پراکندگی خواب×حال با خط روند — همان چیزی که در تب‌های گزارش می‌بینی.</p></div>
+      <a class="go" href="../v10-charts.png" target="_blank">دیدن تصویر</a></div>
+    <div class="wrow"><span class="n">◆</span><div class="t"><b>مقایسهٔ زندهٔ جوجه (انتخاب قفل‌شده: الف)</b>
+      <p>سند تاریخی انتخاب جوجه — بدن گرد یکپارچه، عینک طلایی، چهار حالت.</p></div>
+      <a class="go" href="chick.html">دیدن</a></div>
+    <div class="wrow"><span class="n">◆</span><div class="t"><b>تابلوی تصمیم‌ها</b>
+      <p>هر تصمیم قطعی‌شده با شمارهٔ بخش سند — برای وقتی خواستی بدانی «چرا این‌طور شد».</p></div>
+      <a class="go" href="../board.html">دیدن</a></div>
+    <div class="wrow"><span class="n">◆</span><div class="t"><b>سند کامل طراحی (یک‌جا)</b>
+      <p>۲۶ بخش، پشت‌سرهم — مرجع تحویل به ایجنت. متن خام است، برای خواندن با ادیتور.</p></div>
+      <a class="go" href="../../docs/joma-design-spec-full.md" target="_blank">دیدن فایل</a></div>
   </div>
 
-  <div class="banner info" style="margin-bottom:16px">
+  <div class="banner info" style="margin-top:18px">
     ⚠ این نمونه <b>کد نهایی فرانت نیست</b> و تحویل داده نمی‌شود — مرجع بصری تأیید است. کد واقعی را ایجنت پیاده‌ساز از سند می‌نویسد.
+    <br>همهٔ اعداد این نمونه <b>نمایشی</b> هستند؛ در محصول، همه از بک‌اند می‌آید و فرانت هیچ محاسبه‌ای نمی‌کند.
   </div>
-
-  <div class="screens" id="screens"></div>
-
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-    <a class="btn primary" href="app.html?v=10#landing">شروع از صفحهٔ ۱ — لندینگ</a>
-    <a class="btn soft" href="app.html?v=10#chick">دستهٔ ۲ — جوجه</a>
-    <a class="btn soft" href="app.html?v=10#hammasir">دستهٔ ۳ — هم‌مسیر</a>
-    <a class="btn soft" href="chick.html">انتخاب جوجهٔ جوجو — مقایسهٔ زنده</a>
-    <a class="btn soft" href="../board.html">تابلوی تصمیم‌ها (نسخهٔ ۷)</a>
-    <a class="btn ghost" href="../index.html">پیش‌نمایش قبلی (v0.2)</a>
-  </div>
-
-  <p class="tiny" style="margin-top:20px;line-height:2">
-    <b>دستهٔ ۱</b> (۱ تا ۶): لندینگ · ورود · ثبت‌نام · خانه · کارهای امروز (با لیوان‌های آب) · حال من — <b>آماده و تأییدشده</b>.
-    <br><b>دستهٔ ۲</b> (۷ تا ۱۲): جوجهٔ من · دفترچهٔ جوما · گزارش‌ها · برنامهٔ من · کتابخانه · آموزش — <b>آمادهٔ بازبینی</b>.
-    <br><b>دستهٔ ۳</b> (۱۳ تا ۱۸): هم‌مسیر · تنظیمات و پروفایل · نقش‌ها · کنسول مدیر · صفحه‌های محتوایی · حقوق داده — <b>آمادهٔ بازبینی</b>.
-  </p>
 </div>
 
 <script src="sprite.js?v=10"></script>
 <script src="proto.js?v=10"></script>
+<script src="charts.js?v=10"></script>
 <script>
-/* نقشهٔ صفحه‌ها روی همین صفحهٔ شروع */
-var MAP=[
-  {n:1,id:'landing',t:'لندینگ',s:'۱۰',gp:'landing.html'},
-  {n:2,id:'login',t:'ورود',s:'۲۲ §۲'},
-  {n:3,id:'signup',t:'ثبت‌نام',s:'۲۲ §۳'},
-  {n:4,id:'home',t:'خانهٔ من',s:'۱۱'},
-  {n:5,id:'today',t:'کارهای امروز',s:'۱۲'},
-  {n:6,id:'mood',t:'حال من',s:'۱۳'},
-  {n:7,id:'chick',t:'جوجهٔ من',s:'۱۴'},
-  {n:8,id:'book',t:'دفترچهٔ جوما',s:'۱۵'},
-  {n:9,id:'reports',t:'گزارش‌ها',s:'۱۶'},
-  {n:10,id:'plan',t:'برنامهٔ من',s:'۱۸'},
-  {n:11,id:'library',t:'کتابخانه',s:'۱۷'},
-  {n:12,id:'edu',t:'آموزش',s:'۱۹'},
-  {n:13,id:'hammasir',t:'هم‌مسیر',s:'۲۰'},
-  {n:14,id:'settings',t:'تنظیمات',s:'۲۱'},
-  {n:15,id:'roles',t:'نقش‌ها و سوییچ',s:'۲۴'},
-  {n:16,id:'admin',t:'کنسول مدیر',s:'۲۳'},
-  {n:17,id:'content',t:'صفحه‌های محتوایی',s:'۲۵'},
-  {n:18,id:'rights',t:'حقوق داده',s:'۲۶'}
+var WHAT=[
+ ['ثبت‌نام کامل','فرم مطابق برنامهٔ اصلی: نام · نام خانوادگی · نام کاربری · نقش (با «سایر») · موبایل · ایمیل · رمز و تکرارش · کد امنیتی · تیک قوانین و حریم خصوصی.','signup'],
+ ['گزارش‌های نموداری','هر ده تب نمودار دارد — خطی · ستونی · دونات · نقشهٔ حرارتی · پراکندگی · میلهٔ افقی؛ با مقیاس روشن، برچسب عددی و یک جملهٔ «این نمودار چه می‌گوید».','reports'],
+ ['کتابخانه — آموزش فقط برای آموزش‌دارها','کارتی که راهنمای تمرین دارد دکمهٔ «آموزش» می‌گیرد؛ کارتِ بی‌آموزش «جزئیات». زیر هر کارت نوشته می‌شود کدام است.','library'],
+ ['آموزش — ۷۲ راهنما یک‌به‌یک','۱۰ عمومی و فردی · ۳۵ تمرین زوج‌درمانی (۶ فصل) · ۹ تکنیک طرح‌واره · ۱۸ طرح‌واره — با چیپ‌های «همه/فردی/زوج‌درمانی/طرح‌واره».','edu'],
+ ['پشتیبانی — پیامک و بله','شمارهٔ ۰۹۹۶۷۹۷۹۴۷۱ در هر دو کانال، با کپی شماره، ساعت پاسخ، «چه بفرستی» و هشدار «هرگز رمز نمی‌پرسیم».','content'],
+ ['پرسش‌های متداول — ۱۵ پرسش','با پاسخ‌های دو خطی و کاربردی؛ پرسش‌ها از جمله‌های واقعی کاربران.','content'],
+ ['خروجی داده — سه قالب','پیش‌فرض «گزارش خوانا» (PDF/تصویر) · «صفحه‌گسترده CSV» · «فایل پشتیبان JSON» با جدول «کدام قالب برای چه کاری».','rights'],
+ ['تمرین تنفس ۴-۷-۸','انیمیشنی و کامل (دایره با دم باز می‌شود، با بازدم جمع) · ۳ دور · صدای اختیاری خاموش · بی‌پاداش. در کتابخانه، آموزش، و پیشنهاد هوشمند در «کارهای امروز»/«حال من» وقتی استرس زیاد است.','today']
 ];
+var MAP=[
+ ['landing','لندینگ','۱۰'],['login','ورود','۲۲ §۲'],['signup','ثبت‌نام','۲۲ §۳'],['home','خانهٔ من','۱۱'],
+ ['today','کارهای امروز','۱۲'],['mood','حال من','۱۳'],['chick','جوجهٔ من','۱۴'],['book','دفترچهٔ جوما','۱۵'],
+ ['reports','گزارش‌ها','۱۶'],['plan','برنامهٔ من','۱۸'],['library','کتابخانه','۱۷'],['edu','آموزش','۱۹'],
+ ['hammasir','هم‌مسیر','۲۰'],['settings','تنظیمات','۲۱'],['roles','نقش‌ها و سوییچ','۲۴'],['admin','کنسول مدیر','۲۳'],
+ ['content','صفحه‌های محتوایی','۲۵'],['rights','حقوق داده','۲۶']
+];
+var NEW=['signup','reports','library','edu','content','rights','today','mood'];
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('itile').innerHTML='<svg width="30" height="30"><use href="#owl-hi"/></svg>';
-  document.getElementById('screens').innerHTML=MAP.map(function(m){
-    var ready=!m.b;
-    var href=ready?('app.html#'+m.id):'app.html#'+m.id;
-    return '<a class="scr-row'+(ready?'':' soon')+'" href="'+href+'">'+
-      '<span class="no">'+fa(m.n)+'</span>'+
-      '<span class="t"><b>'+m.t+'</b><span class="sec"> · بخش '+m.s+' سند</span></span>'+
-      (ready?'<span class="badge ok">آمادهٔ بازبینی</span>':'<span class="badge no">دستهٔ '+fa(m.b)+'</span>')+
-    '</a>';
+  document.getElementById('build').textContent=(typeof BUILD!=='undefined'?BUILD:'نسخهٔ ۱۰');
+  document.getElementById('what').innerHTML=WHAT.map(function(w,i){
+    return '<div class="wrow"><span class="n">'+fa(i+1)+'</span><div class="t"><b>'+w[0]+'</b><p>'+w[1]+'</p></div>'+
+      '<a class="go" href="app.html?v=10#'+w[2]+'">ببین</a></div>';
+  }).join('');
+  document.getElementById('screens').innerHTML=MAP.map(function(m,i){
+    return '<a class="scr-row" href="app.html?v=10#'+m[0]+'"><span class="no">'+fa(i+1)+'</span>'+
+      '<span class="t"><b>'+m[1]+'</b><span class="sec"> · بخش '+m[2]+' سند</span></span>'+
+      '<span class="badge'+(NEW.indexOf(m[0])>-1?' new':'')+'">'+(NEW.indexOf(m[0])>-1?'تازه در نسخهٔ ۱۰':'آماده')+'</span></a>';
   }).join('');
 });
 </script>

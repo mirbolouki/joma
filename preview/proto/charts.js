@@ -34,7 +34,11 @@ function chartLine(vals,opt){
   var last=vals[n-1], lx=_n(X(n-1)), ly=_n(Y(last));
   var tag='<g class="ch-tag"><rect x="'+_n(Math.max(pl,lx-46))+'" y="'+_n(Math.max(2,ly-30))+'" width="58" height="20" rx="10"/>'+
     '<text x="'+_n(Math.max(pl,lx-46)+29)+'" y="'+_n(Math.max(2,ly-30)+14)+'">'+fa(_n(last))+'</text></g>';
-  var avg=vals.reduce(function(a,b){return a+b;},0)/n;
+  /* 🔴 قانون ۹۹-handoff §۱ و ۱۶ §۱۴: فرانت هیچ میانگینی نمی‌سازد؛ خط میانگین فقط
+     وقتی رسم می‌شود که بک‌اند عددش را داده باشد (opt.avg)، نه با محاسبهٔ فرانت. */
+  var avg=(typeof opt.avg==='number')?opt.avg:null;
+  var avgLine=(avg==null)?'' : '<line class="ch-avg" x1="'+pl+'" y1="'+_n(Y(avg))+'" x2="'+_n(pl+iw)+'" y2="'+_n(Y(avg))+'/>'+
+    '<text class="ch-avgt" x="'+(pl+3)+'" y="'+_n(Y(avg)-6)+'">میانگین '+fa(_n(avg))+'</text>';
   return '<svg class="chart" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" '+
     'aria-label="'+(opt.aria||'نمودار روند')+'" style="width:100%;height:auto;display:block">'+
     '<defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1">'+
@@ -45,9 +49,7 @@ function chartLine(vals,opt){
     grid+
     '<polygon points="'+area+'" fill="url(#'+gid+')"/>'+
     '<polyline points="'+line+'" fill="none" stroke="url(#'+aid+')" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>'+
-    dots+tag+xl+
-    '<line class="ch-avg" x1="'+pl+'" y1="'+_n(Y(avg))+'" x2="'+_n(pl+iw)+'" y2="'+_n(Y(avg))+'"/>'+
-    '<text class="ch-avgt" x="'+(pl+3)+'" y="'+_n(Y(avg)-6)+'">میانگین '+fa(_n(avg))+'</text>'+
+    dots+tag+xl+avgLine+
   '</svg>';
 }
 
