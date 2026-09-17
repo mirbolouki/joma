@@ -154,16 +154,14 @@ function chEgg(p, cracked){
 function chickSVG(size, stage, mood){
   stage=stage||'chick'; mood=mood||'ok';
   var p=CH;
-  if(mood==='tired') p=CH_PALE;
-  else if(stage==='calm') p=CH_PALE;
-  else if(stage==='miss') p=CH_GRAY;
+  if(mood==='tired'||stage==='calm') p=CH_PALE;
+  if(stage==='miss') p=CH_GRAY;
 
   var h=Math.round(size*1.1), inner, cls='';
   if(stage==='egg'){ inner=chEgg(p,false); cls='floaty'; }
   else if(stage==='crack'){ inner=chEgg(p,true); cls='wiggle'; }
   else {
-    var eye = mood==='tired'?'closed':(mood==='happy'?'happy':'open');
-    if(mood==='sleep') eye='closed';
+    var eye=(mood==='happy')?'happy':((mood==='tired'||mood==='sleep'||stage==='calm'||stage==='miss')?'closed':'open');
     inner = chTufts(p)+
       '<path d="M60 18 C88 18 100 44 100 72 C100 102 84 118 60 118 C36 118 20 102 20 72 C20 44 32 18 60 18 Z" fill="'+p.a+'"/>'+
       chBelly(p)+chWings(p)+
@@ -174,50 +172,10 @@ function chickSVG(size, stage, mood){
       (mood==='happy'?chSpark(p):'')+
       (mood==='sleep'?'<g class="ch-zz"><text x="100" y="36" font-size="15" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text>'+
         '<text x="109" y="23" font-size="10" font-weight="800" fill="'+p.b+'" font-family="sans-serif">z</text></g>':'');
-    cls = mood==='happy'?'chhappy':(mood==='tired'?'chcalm':'floaty');
+    cls = mood==='happy'?'chhappy':(mood==='sleep'?'chsleep':((mood==='tired'||stage==='calm'||stage==='miss')?'chcalm':'floaty'));
   }
   return '<svg class="chsvg '+(cls||'')+'" width="'+size+'" height="'+h+'" viewBox="0 0 120 132" aria-hidden="true">'+
     '<ellipse cx="60" cy="124" rx="30" ry="4" fill="rgba(20,56,46,.10)"/>'+inner+'</svg>';
-}
-
-/* ---------- جوجهٔ من — سه مرحله، از فایل مرجع A ---------- */
-function chickSVG(size,stage,mood){
-  stage=stage||'chick'; mood=mood||'ok';
-  if(stage==='egg') return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 100 100" aria-hidden="true">'+
-    '<ellipse cx="50" cy="88" rx="26" ry="7" fill="rgba(0,0,0,.10)"/>'+
-    '<path d="M50 18 C68 18 78 42 78 60 C78 78 66 88 50 88 C34 88 22 78 22 60 C22 42 32 18 50 18Z" '+
-    'fill="#FFF4E0" stroke="#EBD9BC" stroke-width="2"/>'+
-    '<circle cx="42" cy="45" r="3" fill="#F2E2C8"/><circle cx="58" cy="60" r="4" fill="#F2E2C8"/></svg>';
-
-  if(stage==='crack') return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 100 100" class="wiggle" aria-hidden="true">'+
-    '<ellipse cx="50" cy="88" rx="26" ry="7" fill="rgba(0,0,0,.10)"/>'+
-    '<path d="M50 18 C68 18 78 42 78 60 C78 78 66 88 50 88 C34 88 22 78 22 60 C22 42 32 18 50 18Z" '+
-    'fill="#FFF4E0" stroke="#EBD9BC" stroke-width="2"/>'+
-    '<path d="M38 40 l7 6 -5 6 8 5 -4 7" fill="none" stroke="#C9A96A" stroke-width="2.5" stroke-linecap="round"/>'+
-    '<path d="M62 35 l-5 7 6 4" fill="none" stroke="#C9A96A" stroke-width="2.5" stroke-linecap="round"/></svg>';
-
-  var eye = mood==='sad'
-    ? '<path d="M38 46 q4 -4 8 0" stroke="#2A2118" stroke-width="3" fill="none" stroke-linecap="round"/>'+
-      '<path d="M56 46 q4 -4 8 0" stroke="#2A2118" stroke-width="3" fill="none" stroke-linecap="round"/>'
-    : '<g><circle cx="42" cy="46" r="5" fill="#2A2118"/><circle cx="44" cy="44" r="1.6" fill="#fff"/>'+
-      '<circle cx="60" cy="46" r="5" fill="#2A2118"/><circle cx="62" cy="44" r="1.6" fill="#fff"/></g>';
-  var extra = mood==='happy'
-    ? '<path d="M20 30 l4 4 M28 22 l2 5 M78 26 l-4 4" stroke="#F5A32D" stroke-width="2.5" stroke-linecap="round"/>'+
-      '<text x="79" y="24" font-size="13">🎵</text>'
-    : '';
-
-  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 100 100" '+
-    'class="'+(mood==='happy'?'wiggle':'')+'" aria-hidden="true">'+
-    '<ellipse cx="50" cy="90" rx="24" ry="6" fill="rgba(0,0,0,.10)"/>'+
-    '<ellipse cx="50" cy="62" rx="27" ry="26" fill="#FFD84D"/>'+
-    '<ellipse cx="50" cy="72" rx="16" ry="12" fill="#FFEDA8"/>'+
-    '<ellipse cx="27" cy="62" rx="7" ry="12" fill="#F5C22B" transform="rotate(16 27 62)"/>'+
-    '<ellipse cx="73" cy="62" rx="7" ry="12" fill="#F5C22B" transform="rotate(-16 73 62)"/>'+
-    '<circle cx="51" cy="38" r="19" fill="#FFD84D"/>'+
-    '<path d="M42 20 q3 -7 7 -1 q4 -6 7 1" fill="none" stroke="#F5A32D" stroke-width="3" stroke-linecap="round"/>'+
-    eye + '<path d="M51 50 L56 55 L51 59 L46 55 Z" fill="#F58E2D"/>'+
-    '<path d="M42 88 l-2 6 M46 89 l0 6 M56 89 l0 6 M60 88 l2 6" stroke="#F58E2D" stroke-width="2.6" stroke-linecap="round"/>'+
-    extra+'</svg>';
 }
 
 /* ---------- نمایهٔ بصری گزینه‌های حال (سند ۱۳ §۳) ----------

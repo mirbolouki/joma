@@ -809,8 +809,10 @@ table.tbl{width:100%;border-collapse:collapse}
 /* ---------- جوجهٔ جوما (جوجهٔ جغد) ---------- */
 .pet-hold{display:grid;place-items:center}
 .chsvg .ch-lids{display:none}
-.chsvg.chcalm .ch-lids,.chsvg .ch-zz{display:block}
-.chsvg.chcalm .ch-eyes{display:none}
+.chsvg .ch-zz{display:none}
+.chsvg.chcalm .ch-lids,.chsvg.chsleep .ch-lids{display:block}
+.chsvg.chcalm .ch-eyes,.chsvg.chsleep .ch-eyes{display:none}
+.chsvg.chsleep .ch-zz{display:block}
 .chsvg.chhappy{animation:chhop .62s cubic-bezier(.3,1.6,.5,1)}
 @keyframes chhop{0%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-20px) scale(.96,1.07)}
   60%{transform:translateY(0) scale(1.07,.94)}80%{transform:translateY(-5px)}100%{transform:translateY(0)}}
