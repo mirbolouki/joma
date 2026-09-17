@@ -47,7 +47,7 @@ function chartLine(vals,opt){
     '<polyline points="'+line+'" fill="none" stroke="url(#'+aid+')" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>'+
     dots+tag+xl+
     '<line class="ch-avg" x1="'+pl+'" y1="'+_n(Y(avg))+'" x2="'+_n(pl+iw)+'" y2="'+_n(Y(avg))+'"/>'+
-    '<text class="ch-avgt" x="'+(pl+iw)+'" y="'+_n(Y(avg)-5)+'">میانگین '+fa(_n(avg))+'</text>'+
+    '<text class="ch-avgt" x="'+(pl+3)+'" y="'+_n(Y(avg)-6)+'">میانگین '+fa(_n(avg))+'</text>'+
   '</svg>';
 }
 
@@ -140,7 +140,7 @@ function chartScatter(pairs,opt){
     'aria-label="'+(opt.aria||'نمودار پراکندگی خواب و حال')+'" style="width:100%;height:auto;display:block">'+
     grid+line+pts+
     '<text class="ch-xt" x="'+_n(pl+iw/2)+'" y="'+(h-6)+'">'+(opt.xlabel||'')+'</text>'+
-    '<text class="ch-yt" x="'+_n(pl-7)+'" y="'+_n(pt-2)+'">'+(opt.ylabel||'')+'</text></svg>';
+    '<text class="ch-yt" x="'+_n(pl+2)+'" y="'+_n(pt-8)+'">'+(opt.ylabel||'')+'</text></svg>';
 }
 
 /* ---------- جرقه: خط کوچک داخل کارت شاخص ---------- */

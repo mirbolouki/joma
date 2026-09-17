@@ -967,7 +967,7 @@ table.tbl{width:100%;border-collapse:collapse}
 .ch-tag rect{fill:var(--brand-ink)}
 .ch-tag text{fill:#fff;font-size:10.5px;font-weight:900;text-anchor:middle}
 .ch-avg{stroke:var(--sky);stroke-width:1.6;stroke-dasharray:6 5;opacity:.8}
-.ch-avgt{fill:var(--sky-ink);font-size:9.5px;font-weight:800;text-anchor:end}
+.ch-avgt{fill:var(--sky-ink);font-size:9.5px;font-weight:800;text-anchor:start}
 .ch-bp{fill:var(--ring-track)}
 .ch-bd{fill:var(--brand)}
 .ch-bv{fill:var(--brand-ink);font-size:10px;font-weight:900;text-anchor:middle}
