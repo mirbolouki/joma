@@ -244,11 +244,11 @@
 <div class="wrap">
 
   <div class="board-head">
-    <h1>تابلوی تصمیم‌های جوما</h1>
+    <h1>تابلوی تصمیم‌های جوما <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:12px;font-weight:900;padding:4px 11px;border-radius:999px;margin-inline-start:8px">نسخهٔ ۳</span></h1>
     <p>جای خواندن ۵٬۰۰۰ خط سند — این‌جا فقط <b>تصمیم‌ها</b> را می‌بینی. هر بخش یک نمونهٔ زنده دارد.
        اگر چیزی را عوض می‌خواهی، شمارهٔ بخش را بگو.</p>
     <p style="margin-top:12px;font-weight:800;color:var(--brand-ink)">
-      نسخهٔ ۳ — پاسخ‌های تازه اعمال شد · بخش‌های ۱۲ و ۱۳ تازه‌اند · دراپ‌داون بدون لیست پیش‌فرض
+      نسخهٔ ۳ — همهٔ پاسخ‌های تو اعمال شد · بخش‌های ۸ تا ۱۲ به‌روز یا تازه‌اند · «قفل، در دارد»
     </p>
     <div class="legend">
       <span class="lg d">✅ تصمیم قطعی</span>
@@ -832,7 +832,7 @@
         <div class="card"><b style="font-size:12.5px">۲ · کاربران</b>
           <p class="tiny" style="margin-top:5px">جست‌وجو · ویرایش · فعال/غیرفعال · <b>دادن و گرفتن نقش</b></p></div>
         <div class="card"><b style="font-size:12.5px">۳ · مشاوران</b>
-          <p class="tiny" style="margin-top:5px">فهرست · <b>انتساب مراجع</b> · بار کاری · فهرست پیش‌فرض</p></div>
+          <p class="tiny" style="margin-top:5px">فهرست زنده · <b>انتساب مراجع</b> · بار کاری · کلید «پذیرش مراجع جدید»</p></div>
         <div class="card"><b style="font-size:12.5px">۴ · نقش‌ها و دسترسی</b>
           <p class="tiny" style="margin-top:5px">دادن/گرفتن مشاور و مدیر · ماتریس دسترسی · لاگ</p></div>
         <div class="card"><b style="font-size:12.5px">۵ · کتابخانه</b>
@@ -848,34 +848,30 @@
         </div>
       </div>
 
-      <div class="qbox" style="margin-top:16px;background:var(--card);border-color:var(--card-brd)">
-        <h4 style="color:var(--ink)">📌 پاسخ تو: «در دیتابیس role داریم»</h4>
+      <div class="qbox" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
+        <h4 style="color:var(--brand-ink)">✅ پاسخ تو: «کاربری داریم که هر سه نقش را دارد» — و این پیشنهاد من را باطل می‌کند</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          خوب است — ولی یک نکتهٔ فنی که باید بدانی: <b>یک ستون <code>role</code> برای چندنقشی کافی نیست.</b>
-          اگر ستون تک‌مقداری باشد، با دادن نقش مشاور، نقش کاربری از دست می‌رود.
+          نسخهٔ پیشین گفته بود «یک ستون <code>role</code> برای چندنقشی کافی نیست» و مهاجرت داده پیشنهاد داده بود.
+          <b>آن پیشنهاد پس گرفته شد.</b> اگر کاربر سه‌نقشی وجود دارد، مدل داده <b>همین حالا</b> کار می‌کند؛ فرض اشتباه از من بود.
+          و مهم‌تر: <b>تغییر دیتابیس از دامنهٔ این سند بیرون است</b>.
         </p>
         <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
           <table style="width:100%;border-collapse:collapse;font-size:11px">
-            <thead><tr style="background:var(--brand-softer)">
-              <th style="padding:8px 11px;text-align:right;font-weight:900">مدل</th>
-              <th style="padding:8px 11px;text-align:right;font-weight:900">چندنقشی؟</th>
+            <thead><tr style="background:var(--card)">
+              <th style="padding:8px 11px;text-align:right;font-weight:900">فرانت چه می‌خواهد</th>
               <th style="padding:8px 11px;text-align:right;font-weight:900">حکم</th>
             </tr></thead>
             <tbody>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">یک ستون تک‌مقداری</td><td style="padding:8px 11px">❌</td><td style="padding:8px 11px">کافی نیست — نقش کاربری از دست می‌رود</td></tr>
-              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">مقادیر جدا‌شده با کاما</td><td style="padding:8px 11px">⚠️</td><td style="padding:8px 11px">کار می‌کند، کوئری ضعیف</td></tr>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>جدول <code>user_roles</code></b></td><td style="padding:8px 11px">✅</td><td style="padding:8px 11px"><b>پیشنهاد این سند</b></td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">فهرست نقش‌ها در پاسخ API: <code>roles: [...]</code></td><td style="padding:8px 11px">✅ فقط همین</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">بداند نقش‌ها در یک ستون‌اند یا چند جدول</td><td style="padding:8px 11px">❌ به فرانت مربوط نیست</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">از یک مقدار تک، بقیهٔ نقش‌ها را حدس بزند</td><td style="padding:8px 11px">🚫 ممنوع</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">بداند «الان کدام نقش فعال است»</td><td style="padding:8px 11px">ترجیح نمایشی، نه داده — پیش‌فرض کاربری</td></tr>
             </tbody>
           </table>
         </div>
         <p class="tiny" style="margin-top:9px">
-          <code>user_roles(user_id, role_code, granted_at, granted_by)</code> — هر کاربر حداقل یک ردیف <code>client</code> دارد.
-          ستون فعلی <code>role</code> فوراً حذف نمی‌شود؛ مدتی هم‌زمان می‌ماند تا مهاجرت تأیید شود.
-          <br><b>و یک خبر خوب:</b> فرانت کاری با شکل ذخیره‌سازی ندارد — فقط فهرست نقش‌ها را از API می‌خواند.
-        </p>
-        <p class="tiny" style="margin-top:8px">
-          ❓ <b>دو چیز که باید از بک‌اند بپرسی:</b> مقادیر <b>فعلی</b> ستون <code>role</code> چه هستند؟
-          و آیا جای دیگری از کد خوانده می‌شود که با تغییر بشکند؟
+          <b>پس دیتابیس دست نمی‌خورد.</b> فقط دو چیز <i>اطلاعاتی</i> می‌ماند که بک‌اند جواب بدهد:
+          کد دقیق نقش‌ها چه رشته‌ای است؟ و آیا جایی «نقش جاری» جدا ذخیره می‌شود؟
         </p>
       </div>
 
@@ -906,9 +902,17 @@
               با شروع، فعالیت‌ها و هدف‌های این دوره قفل می‌شوند.
             </p>
             <div style="background:var(--coral-soft);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
-              ⛔ <b>تا پایان دوره — ۳۱ شهریور (۲۶ روز دیگر)</b> نمی‌توانی:
-              <br>• هدفی را عوض کنی
-              <br>• فعالیتی اضافه یا کم کنی
+              ⛔ <b>تا ۳۱ شهریور (۲۶ روز دیگر) قفل می‌شود:</b>
+              <br>• تناوب فعالیت‌ها
+              <br>• حذف فعالیتی که ثبت دارد
+              <br>• هدف‌های گذشته
+            </div>
+            <div style="background:var(--brand-softer);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
+              ✅ <b>باز می‌ماند — از امروز به بعد:</b>
+              <br>• تغییر هدف یک فعالیت
+              <br>• افزودن فعالیت
+              <br>• حذف فعالیتی که ثبتی ندارد
+              <br>• ساخت دورهٔ نو با همین فعالیت‌ها
             </div>
             <p class="tiny">حالا هم می‌توانی برگردی و چند روز دیگر شروع کنی.</p>
             <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
@@ -928,10 +932,12 @@
               <p class="tiny" style="margin-top:5px">«می‌فهمم، شروع کن» — تأیید <b>درون خودِ دکمه</b>. چک‌باکس جدا لازم نیست.</p></div>
             <div class="card"><b style="font-size:12px">راه فرار</b>
               <p class="tiny" style="margin-top:5px">«حالا هم می‌توانی برگردی» — کاربر باید بداند <b>در همین لحظه</b> گیر نمی‌افتد.</p></div>
+            <div class="card"><b style="font-size:12px">دو فهرست، نه یک فهرست</b>
+              <p class="tiny" style="margin-top:5px">پنل شروع باید <b>هم «قفل است» و هم «باز است»</b> را بگوید. فهرست تکِ ممنوعیت، کاربر را به رهاکردن می‌برد.</p></div>
           </div>
           <div class="card" style="margin-top:12px;background:var(--brand-softer);border-color:var(--brand-soft)">
             <b style="font-size:12px;color:var(--brand-ink)">نوار دورهٔ در حال اجرا</b>
-            <p class="tiny" style="margin-top:6px">🔒 این دوره در حال اجراست و <b>تا ۳۱ شهریور</b> قابل ویرایش نیست. <span style="color:var(--brand-ink);font-weight:800">[دیدن دلیل کامل]</span></p>
+            <p class="tiny" style="margin-top:6px">🔒 دورهٔ در حال اجرا — <b>تا ۳۱ شهریور</b>. گذشته قفل است؛ از امروز به بعد می‌توانی هدف را عوض کنی. <span style="color:var(--brand-ink);font-weight:800">[چه می‌توانم بکنم؟]</span></p>
             <p class="tiny" style="margin-top:6px">تاریخ پایان در خودِ نوار می‌آید، نه فقط در پنل دلیل.</p>
           </div>
         </div>
@@ -944,9 +950,10 @@
     <div class="sec-head">
       <span class="sec-n">۱۱</span>
       <h2>ایدهٔ تو: مدیر با درخواست کاربر برنامه را ویرایش کند</h2>
-      <span class="tag q">بررسی — منتظر انتخاب تو</span>
+      <span class="tag">تصمیم گرفته شد</span>
     </div>
     <div class="sec-body">
+      <p class="note" style="background:var(--brand-softer);border-color:var(--brand-soft)"><b>✅ تصمیم گرفته شد.</b> چون گفتی «برنامه خشک نباشد»، هر سه گزینه اعمال شد — با این تفاوت که گزینهٔ الف از «ویرایش برنامه» به <b>«اصلاح با درخواست کاربر · دلیل · لاگ · نمایش قبل و بعد»</b> محدود شد. جزئیات کامل در <b>بخش ۱۲</b> · سند: <code>24-roles.md</code> §۹</p>
       <p class="note">گفتی «این یک پیشنهاد است، بررسی‌اش کن». بررسی کردم. <b>خودِ ایده یک شکاف واقعی را نشان می‌دهد</b> —
         ولی فکر می‌کنم راه‌حل بهتری هست. سه گزینه را با هزینه‌شان می‌گذارم.</p>
 
@@ -1038,9 +1045,127 @@
     </div>
   </section>
 
+  <!-- ================= ۱۲ اصلاح اشتباه ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۱۲</span>
+      <h2>«اشتباه انتخاب کردم» — چطور اصلاح می‌شود</h2>
+      <span class="tag">تصمیم تو اعمال شد</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گفتی: «برنامه خیلی هم خشک نباشد که کاربر حتی با پشتیبان هم نتواند اشتباهش را اصلاح کند.»
+        این شد قاعده: <b>قفل، برای محافظت از گذشته است، نه برای مجازات کاربر.</b> و «اصلاح» با «بازنویسی» فرق دارد.</p>
+
+      <div class="qbox" style="background:var(--card);border-color:var(--card-brd)">
+        <h4 style="color:var(--ink)">قاعدهٔ بنیادی — سه کلمه، سه حکم</h4>
+        <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
+          <table style="width:100%;border-collapse:collapse;font-size:11px">
+            <thead><tr style="background:var(--brand-softer)">
+              <th style="padding:8px 11px;text-align:right;font-weight:900">کلمه</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">یعنی</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">حکم</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>به‌روزرسانی</b></td><td style="padding:8px 11px">عدد عوض شود، بی‌دلیل، بی‌سابقه</td><td style="padding:8px 11px;color:var(--coral-ink)">❌ ممنوع — همان‌طور که بود</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px"><b>اصلاح</b></td><td style="padding:8px 11px">+ دلیل + مقدار قبلی بماند + برچسب «اصلاح‌شده»</td><td style="padding:8px 11px;color:var(--brand-ink)">✅ مجاز</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>باطل‌کردن</b></td><td style="padding:8px 11px">رخداد از جمع بیرون برود، در سابقه بماند</td><td style="padding:8px 11px;color:var(--brand-ink)">✅ مجاز با دلیل</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny" style="margin-top:9px">پس «درست‌کردن» آزاد است، <b>«پاک‌کردن» نه</b>.</p>
+      </div>
+
+      <div class="grid2" style="margin-top:16px">
+        <div>
+          <div class="card" style="padding:16px">
+            <b style="font-size:13px">چهار سطح اصلاح</b>
+            <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
+              <table style="width:100%;border-collapse:collapse;font-size:11px">
+                <tbody>
+                  <tr><td style="padding:8px 10px;font-weight:900;white-space:nowrap">۱</td><td style="padding:8px 10px">پیش از شروع — هر چیزی، <b>بی‌محدودیت</b></td></tr>
+                  <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 10px;font-weight:900">۲</td><td style="padding:8px 10px"><b>دورهٔ در حال اجرا</b> — افزودن فعالیت (از امروز، سقف ۲) · تغییر هدف (از امروز، تا ۲ بار) · حذف فعالیت بدون ثبت · «دورهٔ نو» یک‌کلیکی</td></tr>
+                  <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 10px;font-weight:900">۳</td><td style="padding:8px 10px"><b>ثبت‌ها</b> — امروز آزاد · دیروز تا ۳ روز با دلیل · قدیمی‌تر: درخواست</td></tr>
+                  <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 10px;font-weight:900">۴</td><td style="padding:8px 10px"><b>میز اصلاح</b> — مشاورِ خودِ کاربر، بعد پشتیبانی. کاربر خودش درخواست باز می‌کند</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tiny" style="margin-top:9px">
+              <b>سقف سخت برای اصلاح نمی‌گذاریم:</b> کاربری که نتواند غلطش را درست کند، ثبت درست را هم رها می‌کند.
+              اگر کسی در هفته بیش از ۵ اصلاح داشت، به مشاورش به‌عنوان «نیازمند توجه» نشان داده می‌شود — <b>راهنمایی، نه ممانعت</b>.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="padding:16px;border:2px solid var(--brand-soft);background:linear-gradient(180deg,var(--brand-softer),transparent 45%),var(--card)">
+            <b style="font-size:13px;display:block;margin-bottom:10px">کادر «اصلاح ثبت»</b>
+            <div style="font-size:11.5px;color:var(--ink-2);line-height:2">
+              <b>اصلاح ثبت — پیاده‌روی · ۲۰ شهریور</b>
+              <div style="background:var(--card);border:1px solid var(--card-brd);border-radius:9px;padding:9px 11px;margin:8px 0">
+                مقدار فعلی: <b>۲ کیلومتر</b><br>
+                مقدار درست: <b>[ ۵ ] کیلومتر</b>
+              </div>
+              چرا؟
+              <div style="background:var(--card);border:1px solid var(--card-brd);border-radius:9px;padding:9px 11px;margin:6px 0">
+                ○ اشتباه در عدد<br>
+                ○ <b>این کار را نکردم</b> → ثبت باطل می‌شود<br>
+                ○ زمان اشتباه است<br>
+                ○ دلیل دیگر…
+              </div>
+              <span class="tiny">مقدار قبلی در سابقه می‌ماند و در گزارش‌ها با برچسب «اصلاح‌شده» دیده می‌شود.</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <button class="btn primary">ثبت اصلاح</button>
+              <button class="btn ghost">انصراف</button>
+            </div>
+          </div>
+          <div class="card" style="margin-top:12px">
+            <b style="font-size:12px">بازخورد فوری + راه برگشت</b>
+            <p class="tiny" style="margin-top:5px">«اصلاح شد: ۲ → ۵ کیلومتر · با دلیل تو ثبت شد.» + دکمهٔ «بازگرداندن» تا <b>۶۰ ثانیه</b> — برگشت هم خودش یک اصلاح ثبت‌شده است.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:14px">
+        <div class="card">
+          <b style="font-size:12.5px">«باطل‌کردن» — برای کاری که واقعاً نکرده‌ام</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            رخداد با خط‌خوردگی ملایم + چیپ «باطل‌شده» + دلیل — <b>پاک نمی‌شود</b>.<br>
+            از <b>جمع و درصد و زنجیرهٔ جوجه بیرون</b> می‌رود؛ یعنی دقیقاً همان چیزی که کاربر می‌خواهد.<br>
+            حذف واقعی: <b>هرگز</b>.
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">میز اصلاح — پشتیبان چه می‌بیند</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            <b>فقط همان قلمِ بازشده</b> و توضیح کاربر — نه پرونده، نه بقیهٔ روزها.<br>
+            <b>تا بسته‌شدن درخواست</b>، بعد دسترسی تمام می‌شود.<br>
+            مشاور کاربر اول؛ اگر نبود یا ۴۸ ساعت پاسخ نداد → میز پشتیبانی، و کاربر مطلع می‌شود.<br>
+            <b>ممنوع:</b> ثبت به‌جای کاربر · دیدن بیرون از درخواست · عوض‌کردن بی‌سابقه · رد بی‌دلیل.
+          </p>
+        </div>
+      </div>
+
+      <div class="qbox" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
+        <h4 style="color:var(--brand-ink)">در هر چهار سطح، این چهار چیز ثابت می‌ماند</h4>
+        <ol>
+          <li><b>گزارش‌های گذشته بازنویسی نمی‌شوند</b></li>
+          <li><b>هیچ رخدادی حذف نمی‌شود</b> — فقط اصلاح یا باطل، با دلیل</li>
+          <li><b>هیچ‌کس به‌جای کاربر ثبت نمی‌کند</b> — نه مشاور، نه مدیر</li>
+          <li><b>هیچ تغییری خاموش نیست</b> — کاربر می‌بیند چه شد و چرا</li>
+        </ol>
+        <p class="tiny" style="margin-top:8px">
+          <b>و یک تذکر صادقانه:</b> این تصمیم، یک قاعدهٔ قبلی سند را عوض کرد — «ویرایش ثبت دیروز» از <b>مطلقاً ممنوع</b>
+          به <b>اصلاح با دلیل در پنجرهٔ ۳ روزه</b> تغییر کرد. «به‌روزرسانی بی‌دلیل» هنوز ممنوع است.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>بخش تازه: <b>۲۴-roles.md</b> (نقش‌ها، مشاور، کنسول مدیر) · نسخهٔ ۳ تابلو
+    <br>نسخهٔ ۳ · ۱۲ بخش · بخش‌های تازه: <b>اصلاح اشتباه</b> · سندهای به‌روزشده: <code>24-roles.md</code> §۹ · <code>12-today.md</code> §۱۳ · <code>18-plan.md</code> §۳
   </footer>
 </div>
 </body>
