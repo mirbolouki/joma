@@ -244,11 +244,11 @@
 <div class="wrap">
 
   <div class="board-head">
-    <h1>تابلوی تصمیم‌های جوما <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:12px;font-weight:900;padding:4px 11px;border-radius:999px;margin-inline-start:8px">نسخهٔ ۴</span></h1>
+    <h1>تابلوی تصمیم‌های جوما <span style="display:inline-block;vertical-align:middle;background:var(--brand);color:#fff;font-size:12px;font-weight:900;padding:4px 11px;border-radius:999px;margin-inline-start:8px">نسخهٔ ۵</span></h1>
     <p>جای خواندن ۵٬۰۰۰ خط سند — این‌جا فقط <b>تصمیم‌ها</b> را می‌بینی. هر بخش یک نمونهٔ زنده دارد.
        اگر چیزی را عوض می‌خواهی، شمارهٔ بخش را بگو.</p>
     <p style="margin-top:12px;font-weight:800;color:var(--brand-ink)">
-      نسخهٔ ۴ — راه‌حل «شهریور» در بخش ۱۲ · «قفل از اولین ثبت» · هر چیز معوق جدا شده
+      نسخهٔ ۵ — پاسخ بازبینی بک‌اند آمد · سه تصمیم رد شد و درست شد · بخش ۱۲ بازنویسی شد
     </p>
     <div class="legend">
       <span class="lg d">✅ تصمیم قطعی</span>
@@ -265,6 +265,27 @@
       <span class="tag">تصمیم قطعی</span>
     </div>
     <div class="sec-body">
+      <div class="qbox" style="margin-top:0;margin-bottom:16px;background:var(--coral-soft);border-color:rgba(242,120,75,.35)">
+        <h4 style="color:var(--coral-ink)">🔴 به‌روزرسانی — نقش‌ها **دو لایه**اند، نه یکی</h4>
+        <p style="font-size:11.5px;color:var(--ink-2)">
+          بازبینی بک‌اند قطعی کرد: <b>نقش مشاور در <code>role_key</code> جوما نیست.</b>
+          جملهٔ خودش: «نقش مشاور را از <code>role_key</code> نخوانید — از حالت هم‌مسیر بخوانید.»
+        </p>
+        <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
+          <table style="width:100%;border-collapse:collapse;font-size:11px">
+            <tbody>
+              <tr><td style="padding:8px 11px">سطح حساب جوما — <code>joma_users.role_key</code></td><td style="padding:8px 11px"><code>member</code> · <code>plus</code> · <code>coach</code> · <code>admin</code></td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">حالت هم‌مسیر — <code>hammasir_mode</code> / <code>user_flags.mode</code></td><td style="padding:8px 11px">۱ کاربر · ۲ مشاور · ۳ مدیر</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">قابلیت مشاور بودن</td><td style="padding:8px 11px">ردیف <b>فعال</b> در <code>joma_hammasir_providers</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny" style="margin-top:9px">
+          <b>در هر لحظه یک حالت فعال است</b> — نه سه نقش هم‌زمان. یک نفر می‌تواند هم کاربر باشد هم مشاور.
+          <br><b><code>coach</code> را با «مشاور» قاطی نکنیم</b> — <code>coach</code> یعنی مربی و در اجرا با عضو یکی است.
+          <br>فرانت <b>هیچ‌جا</b> رشتهٔ <code>counselor</code> نمی‌سازد؛ «مشاور» یک نام نمایشی برای حالت ۲ است.
+        </p>
+      </div>
       <p class="note">هر کاربر همیشه نقش «کاربری» دارد. اگر مشاور یا مدیر باشد، کلید جابه‌جایی می‌بیند.
         کاربر تک‌نقشه <b>هیچ نشانه‌ای</b> از نقش‌های دیگر نمی‌بیند.</p>
 
@@ -757,14 +778,16 @@
           <div class="qbox" style="margin-top:12px;background:var(--brand-softer);border-color:var(--brand-soft)">
             <h4 style="color:var(--brand-ink)">✅ پاسخ تو: بدون لیست پیش‌فرض</h4>
             <p class="tiny" style="margin:0">
-              «هر کاربری که نقش مشاور دارد، در دراپ‌داون بیاید.»
-              <br>یعنی لیست <b>زنده</b> است: مدیر کاربر می‌سازد ← نقش مشاور می‌دهد ← <b>بی‌درنگ دیده می‌شود</b>.
+              «هر کاربری که <b>مشاور فعال</b> است، در دراپ‌داون بیاید.»
+              <br>منبعش، طبق پاسخ بک‌اند: ردیف‌های <b>فعال</b> در <code>joma_hammasir_providers</code> — نه یک ستون نقش در جدول کاربران.
               <br>هیچ فهرست ثابتی نگه‌داری نمی‌شود، و هر گزینه یک <b>انسان واقعی</b> است.
-              اگر هیچ مشاوری نباشد، دراپ‌داون هم نشان داده نمی‌شود.
+              اگر هیچ مشاور فعالی نباشد، دراپ‌داون هم نشان داده نمی‌شود.
             </p>
             <p class="tiny" style="margin-top:8px">
-              <b>یک کلید هم اضافه کردم:</b> هر مشاور می‌تواند «پذیرش مراجع جدید» را ببندد —
-              وگرنه مشاوری با ۵۰ مراجع راهی برای توقف درخواست‌ها ندارد. پیش‌فرض مشاور تازه: <b>بسته</b>.
+              <b>و یک تصحیح:</b> کلید «پذیرش مراجع جدید» <b>ساخته نمی‌شود</b> — بک‌اند گفت چنین چیزی نیست،
+              و <code>ACTIVE</code>/<code>INACTIVE</code> هم معنی «مراجع فعلی بمانند، جدید نیاید» را نمی‌دهد
+              (خاموش‌کردن مشاوری که رابطهٔ باز دارد ممنوع است).
+              در عوض، مشاور می‌تواند درخواست‌ها را <b>رد</b> کند — همان مسیر موجود، بدون قابلیت تازه.
             </p>
           </div>
         </div>
@@ -849,29 +872,28 @@
       </div>
 
       <div class="qbox" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
-        <h4 style="color:var(--brand-ink)">✅ پاسخ تو: «کاربری داریم که هر سه نقش را دارد» — و این پیشنهاد من را باطل می‌کند</h4>
+        <h4 style="color:var(--brand-ink)">✅ پاسخ بک‌اند: نقش‌ها **دو لایه**اند — و پیشنهاد قبلی من باطل است</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          نسخهٔ پیشین گفته بود «یک ستون <code>role</code> برای چندنقشی کافی نیست» و مهاجرت داده پیشنهاد داده بود.
-          <b>آن پیشنهاد پس گرفته شد.</b> اگر کاربر سه‌نقشی وجود دارد، مدل داده <b>همین حالا</b> کار می‌کند؛ فرض اشتباه از من بود.
-          و مهم‌تر: <b>تغییر دیتابیس از دامنهٔ این سند بیرون است</b>.
+          در نسخهٔ قبلی نوشته بودم «یک ستون <code>role</code> برای چندنقشی کافی نیست» و مهاجرت داده پیشنهاد داده بودم.
+          <b>پاسخ بک‌اند:</b> کاربر سه‌نقشی وجود دارد، ولی نقش مشاور <b>در <code>role_key</code> نیست</b> —
+          از ماژول هم‌مسیر می‌آید. یعنی <b>هیچ تغییر دیتابیسی لازم نیست</b> و پیشنهاد من از دامنهٔ سند بیرون بود.
         </p>
         <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
           <table style="width:100%;border-collapse:collapse;font-size:11px">
             <thead><tr style="background:var(--card)">
-              <th style="padding:8px 11px;text-align:right;font-weight:900">فرانت چه می‌خواهد</th>
-              <th style="padding:8px 11px;text-align:right;font-weight:900">حکم</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">لایه</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">مقادیر واقعی</th>
             </tr></thead>
             <tbody>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">فهرست نقش‌ها در پاسخ API: <code>roles: [...]</code></td><td style="padding:8px 11px">✅ فقط همین</td></tr>
-              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">بداند نقش‌ها در یک ستون‌اند یا چند جدول</td><td style="padding:8px 11px">❌ به فرانت مربوط نیست</td></tr>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">از یک مقدار تک، بقیهٔ نقش‌ها را حدس بزند</td><td style="padding:8px 11px">🚫 ممنوع</td></tr>
-              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">بداند «الان کدام نقش فعال است»</td><td style="padding:8px 11px">ترجیح نمایشی، نه داده — پیش‌فرض کاربری</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>سطح حساب جوما</b> — <code>role_key</code></td><td style="padding:8px 11px"><code>member</code> · <code>plus</code> · <code>coach</code> · <code>admin</code></td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px"><b>حالت هم‌مسیر</b> — <code>mode</code></td><td style="padding:8px 11px">۱ کاربر · ۲ مشاور · ۳ مدیر</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px"><b>قابلیت مشاور</b></td><td style="padding:8px 11px">ردیف فعال در <code>joma_hammasir_providers</code></td></tr>
             </tbody>
           </table>
         </div>
         <p class="tiny" style="margin-top:9px">
-          <b>پس دیتابیس دست نمی‌خورد.</b> فقط دو چیز <i>اطلاعاتی</i> می‌ماند که بک‌اند جواب بدهد:
-          کد دقیق نقش‌ها چه رشته‌ای است؟ و آیا جایی «نقش جاری» جدا ذخیره می‌شود؟
+          پس در کنسول مدیر: <b>سطح حساب</b> از <code>role_key</code> · <b>قابلیت مشاور</b> با ساخت ردیف در <code>providers</code> ·
+          <b>مدیر بودن</b> با <code>role_key = admin</code>. و فرانت هرگز <code>counselor</code> نمی‌سازد.
         </p>
       </div>
 
@@ -884,36 +906,40 @@
   </section>
 
   <!-- ================= ۱۲ برنامهٔ قفل‌شده ================= -->
+  <!-- ================= ۱۰ برنامهٔ قفل‌شده ================= -->
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۰</span>
-      <h2>پیش از «شروع دوره» — کاربر بداند چه می‌شود</h2>
-      <span class="tag">پاسخ تو اعمال شد</span>
+      <h2>پیش از «شروع اجرا» — کاربر بداند چه می‌شود</h2>
+      <span class="tag">پاسخ بک‌اند اعمال شد</span>
     </div>
     <div class="sec-body">
-      <p class="note">گفتی: «وقتی اجرا را می‌زند باید بداند که تا پایان دوره قابل ویرایش نیست.» و در مثال دیروزت، مراجع <b>دقیقاً همین را نمی‌دانست</b>.
-        پس دو کار شد: جملهٔ صریح، و <b>کوتاه‌کردن قفل</b> (بخش ۱۲).</p>
+      <p class="note">بک‌اند یک چیز را قطعی کرد: <b>قفل با «شروع اجرا» است، نه با اولین ثبت</b> — و برگشت وجود ندارد.
+        پس تنها راه حل مسئلهٔ شهریور، <b>همین پنل</b> است: کاربر باید دقیقاً بداند چه چیزی قفل می‌شود.</p>
 
       <div class="grid2">
         <div>
-          <div class="card" style="padding:18px;border:2px solid var(--brand-soft);background:linear-gradient(180deg,var(--brand-softer),transparent 45%),var(--card)">
-            <b style="font-size:14px;display:block;margin-bottom:12px">دورهٔ شهریور ۱۴۰۵ شروع شود؟</b>
-            <p style="font-size:11.5px;color:var(--ink-2);line-height:2">
-              با شروع، وضعیت این دوره «در حال اجرا» می‌شود.
+          <div class="card" style="padding:18px;border:2px solid var(--coral-soft);background:linear-gradient(180deg,var(--coral-soft),transparent 45%),var(--card)">
+            <b style="font-size:14px;display:block;margin-bottom:12px">اجرای دورهٔ شهریور ۱۴۰۵ شروع شود؟</b>
+            <p style="font-size:11.5px;color:var(--coral-ink);line-height:2;font-weight:800">
+              ⚠️ بعد از شروع، تا پایان ماه قابل برگشت نیست.
             </p>
-            <div style="background:var(--brand-softer);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
-              🟢 <b>تا وقتی اولین ثبت را انجام ندهی:</b>
-              <br>• همه‌چیز قابل تغییر است
-              <br>• می‌توانی برگردی به «آماده‌سازی»
-            </div>
             <div style="background:var(--coral-soft);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
-              🔒 <b>از اولین ثبت به بعد:</b>
-              <br>• برنامه و هدف‌ها قفل می‌شوند
-              <br>• راهِ دورهٔ تازه: «دورهٔ نو با همین فعالیت‌ها» — یک کلیک
+              🔒 <b>تا ۳۱ شهریور (۲۶ روز) قفل می‌شود:</b>
+              <br>• افزودن یا حذف فعالیت
+              <br>• تغییر هدف و وزن فعالیت‌ها
+              <br>• تغییر تناوب
             </div>
-            <p class="tiny">حالا هم می‌توانی برگردی و چند روز دیگر شروع کنی.</p>
+            <div style="background:var(--brand-softer);border-radius:11px;padding:11px 13px;margin:11px 0;font-size:11.5px;line-height:2">
+              ✅ <b>هر وقت خواستی:</b>
+              <br>• ثبت عملکرد روزانه
+              <br>• دیدن گزارش‌ها و نمودارها
+              <br>• بایگانی زودتر از موعد
+            </div>
+            <p class="tiny"><b>در همین ماه فرصت دومی نیست</b> — برای ماه بعد می‌توانی همین فعالیت‌ها را با یک کلیک بسازی.</p>
+            <p class="tiny" style="margin-top:6px">حالا هم می‌توانی برگردی و چیزها را عوض کنی.</p>
             <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-              <button class="btn primary">می‌فهمم، شروع کن</button>
+              <button class="btn primary">می‌فهمم، اجرا را شروع کن</button>
               <button class="btn ghost">فعلاً نه</button>
             </div>
           </div>
@@ -922,25 +948,27 @@
         <div>
           <div class="grid2" style="gap:12px">
             <div class="card"><b style="font-size:12px">تاریخ پایان — الزامی</b>
-              <p class="tiny" style="margin-top:5px">«تا پایان دوره» بدون تاریخ، مبهم است. کاربر باید بداند تا کِی.</p></div>
-            <div class="card"><b style="font-size:12px">شمار روزهای باقی‌مانده</b>
-              <p class="tiny" style="margin-top:5px">«۲۶ روز دیگر» — به کاربر می‌گوید چقدر طول می‌کشد.</p></div>
-            <div class="card"><b style="font-size:12px">برچسب دکمه</b>
-              <p class="tiny" style="margin-top:5px">«می‌فهمم، شروع کن» — تأیید <b>درون خودِ دکمه</b>. چک‌باکس جدا لازم نیست.</p></div>
-            <div class="card"><b style="font-size:12px">دو فهرست: 🟢 آزاد / 🔒 قفل</b>
-              <p class="tiny" style="margin-top:5px">فهرست تکِ ممنوعیت، کاربر را به رهاکردن می‌برد.</p></div>
+              <p class="tiny" style="margin-top:5px">دوره = ماه شمسی. کاربر باید بداند تا کِی قفل است.</p></div>
+            <div class="card"><b style="font-size:12px">«برگشت نیست» — صریح</b>
+              <p class="tiny" style="margin-top:5px">همین جمله‌ای که مراجع دیروزی تو نمی‌دانست. جای آن نمی‌شود «شروع» را ساده گفت و بعد شرمنده شد.</p></div>
+            <div class="card"><b style="font-size:12px">کلمهٔ «اجرا» در دکمه</b>
+              <p class="tiny" style="margin-top:5px">«می‌فهمم، اجرا را شروع کن» — یعنی «قفل می‌شود»، نه «ذخیره می‌شود».</p></div>
+            <div class="card"><b style="font-size:12px">فهرست «بعد از شروع هم آزاد»</b>
+              <p class="tiny" style="margin-top:5px">اگر این را نگوییم، کاربر خیال می‌کند کل دوره قفل شده و رهایش می‌کند.</p></div>
           </div>
           <div class="card" style="margin-top:12px;background:var(--brand-softer);border-color:var(--brand-soft)">
-            <b style="font-size:12px;color:var(--brand-ink)">نوارهای دورهٔ در حال اجرا</b>
-            <p class="tiny" style="margin-top:6px">🟢 <b>صفر ثبت:</b> «هنوز چیزی ثبت نکرده‌ای — تا اولین ثبت، همه‌چیز قابل تغییر است. [برگشت به پیش‌نویس]»</p>
-            <p class="tiny" style="margin-top:6px">🔒 <b>ثبت‌دار:</b> «در حال اجراست (۳ ثبت) و تا ۳۱ شهریور تغییر نمی‌کند. [دورهٔ نو با همین فعالیت‌ها]»</p>
+            <b style="font-size:12px;color:var(--brand-ink)">سه واژه که نباید قاطی شوند</b>
+            <p class="tiny" style="margin-top:6px">
+              <b>پیش‌نویس</b> (<code>DRAFT</code>) — ساخته شده، آماده نیست.<br>
+              <b>آماده‌سازی</b> (<code>PLANNING</code>) — کامل شده، <b>هنوز اجرا نشده؛ همه‌چیز آزاد</b>.<br>
+              <b>در حال اجرا</b> (<code>RUNNING</code>) — <b>قفل</b>.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= ۱۱ ایدهٔ مالک — معوق ================= -->
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۱</span>
@@ -988,88 +1016,101 @@
   </section>
 
   <!-- ================= ۱۲ راه‌حل شهریور ================= -->
+  <!-- ================= ۱۲ تصمیم ردشده ================= -->
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۲</span>
-      <h2>مثال خودت: «شهریور را نهایی‌سازی کرد و نمی‌توانست ویرایش کند»</h2>
-      <span class="tag">تصمیم تو اعمال شد</span>
+      <h2>پاسخ بازبینی بک‌اند — سه تصمیم من رد شد</h2>
+      <span class="tag q">قاعدهٔ مالک اعمال شد</span>
     </div>
     <div class="sec-body">
-      <p class="note">پیشنهاد تو این بود: «اگر دوره هنوز ثبت عملکرد نداشت، بتواند برنامه را ویرایش کند.»
-        <b>پیشنهادت درست است</b> — با یک تغییر کوچک که هزینه‌اش را از «هر جای ویرایش» به <b>یک جا</b> می‌آورد:</p>
+      <p class="note">حق با تو بود: «ما حق نداریم به سلامت برنامه آسیب بزنیم.» ایجنت بک‌اند تصمیم‌ها را با کد سنجید.
+        نتیجه: <b>سه چیز رد شد</b>، <b>یک چیز با شرط تأیید شد</b>، و <b>معوق‌ها درست بودند</b>. همه اعمال شد.</p>
 
-      <div class="qbox" style="background:var(--brand-softer);border-color:var(--brand-soft)">
-        <h4 style="color:var(--brand-ink)">قفل از «اولین ثبت» شروع می‌شود، نه از «زدن دکمهٔ شروع»</h4>
+      <div style="overflow:hidden;border-radius:12px;border:1px solid var(--card-brd)">
+        <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+          <thead><tr style="background:var(--brand-softer)">
+            <th style="padding:9px 12px;text-align:right;font-weight:900">#</th>
+            <th style="padding:9px 12px;text-align:right;font-weight:900">تصمیم من</th>
+            <th style="padding:9px 12px;text-align:right;font-weight:900">حکم بک‌اند</th>
+            <th style="padding:9px 12px;text-align:right;font-weight:900">جایگزین</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-top:1px solid var(--card-brd)">
+              <td style="padding:9px 12px;font-weight:900">۱</td>
+              <td style="padding:9px 12px">قفل از «اولین ثبت» + «برگشت به پیش‌نویس»</td>
+              <td style="padding:9px 12px;color:var(--coral-ink);font-weight:800">❌ نمی‌شود</td>
+              <td style="padding:9px 12px">قفل روی <b>شروع اجرا</b> · پیشگیری با پنل صریح (بخش ۱۰)</td>
+            </tr>
+            <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB">
+              <td style="padding:9px 12px;font-weight:900">۲</td>
+              <td style="padding:9px 12px">جملهٔ «تا اولین ثبت همه‌چیز آزاد است»</td>
+              <td style="padding:9px 12px;color:var(--coral-ink);font-weight:800">❌ غلط است</td>
+              <td style="padding:9px 12px">متن صادق: «تا شروع اجرا آزاد است؛ بعد از آن قفل»</td>
+            </tr>
+            <tr style="border-top:1px solid var(--card-brd)">
+              <td style="padding:9px 12px;font-weight:900">۳</td>
+              <td style="padding:9px 12px">حذف فعالیت بدون ثبت در دورهٔ در حال اجرا</td>
+              <td style="padding:9px 12px;color:var(--coral-ink);font-weight:800">❌ نمی‌شود</td>
+              <td style="padding:9px 12px">فقط در پیش‌نویس/آماده‌سازی · روی اجرا دکمه‌ای نیست</td>
+            </tr>
+            <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB">
+              <td style="padding:9px 12px;font-weight:900">۴</td>
+              <td style="padding:9px 12px">«دورهٔ نو با همین فعالیت‌ها»</td>
+              <td style="padding:9px 12px;color:var(--brand-ink);font-weight:800">✅ با شرط</td>
+              <td style="padding:9px 12px">ماه <b>دیگر</b> · اسنپ‌شات مبدأ · بدون کپی ثبت و حال · <b>تابع تازه</b></td>
+            </tr>
+            <tr style="border-top:1px solid var(--card-brd)">
+              <td style="padding:9px 12px;font-weight:900">۵</td>
+              <td style="padding:9px 12px">معوق‌ها (توقف فعالیت، اصلاح ثبت، میز پشتیبانی)</td>
+              <td style="padding:9px 12px;color:var(--brand-ink);font-weight:800">✅ درست بود</td>
+              <td style="padding:9px 12px">هیچ‌کدام در بک‌اند نیست — بیرون بمانند</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="qbox" style="margin-top:16px;background:var(--coral-soft);border-color:rgba(242,120,75,.35)">
+        <h4 style="color:var(--coral-ink)">و دو چیز که بک‌اند دربارهٔ نقش‌ها گفت و طراحی را عوض کرد</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          قفل برای محافظت از <b>دادهٔ ثبت‌شده</b> است. اگر هیچ ثبتی نیست، چیزی برای محافظت نیست.
-          پس تعهد واقعی، <b>اولین ثبت</b> است — نه یک دکمه که کاربر معنایش را نمی‌داند.
+          <b>۱ · نقش مشاور از <code>role_key</code> جوما نمی‌آید.</b>
+          جملهٔ خودش: «از حالت هم‌مسیر بخوانید.» یعنی <b>دو لایه</b>:
         </p>
         <div style="overflow:hidden;border-radius:10px;border:1px solid var(--card-brd);margin-top:10px">
           <table style="width:100%;border-collapse:collapse;font-size:11px">
             <thead><tr style="background:var(--card)">
-              <th style="padding:8px 11px;text-align:right;font-weight:900">وضعیت دوره</th>
-              <th style="padding:8px 11px;text-align:right;font-weight:900">ثبت‌ها</th>
-              <th style="padding:8px 11px;text-align:right;font-weight:900">رابط</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">لایه</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">مقادیر</th>
+              <th style="padding:8px 11px;text-align:right;font-weight:900">نکته</th>
             </tr></thead>
             <tbody>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">آماده‌سازی</td><td style="padding:8px 11px">۰</td><td style="padding:8px 11px">ویرایش کامل (وضع موجود)</td></tr>
-              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px"><b>در حال اجرا</b></td><td style="padding:8px 11px"><b>۰</b></td><td style="padding:8px 11px"><b>ویرایش کامل + «برگشت به پیش‌نویس»</b></td></tr>
-              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">در حال اجرا</td><td style="padding:8px 11px">۱ یا بیشتر</td><td style="padding:8px 11px">قفل با دلیل + «دورهٔ نو با همین فعالیت‌ها»</td></tr>
-              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">بایگانی</td><td style="padding:8px 11px">—</td><td style="padding:8px 11px">فقط‌خواندنی</td></tr>
+              <tr style="border-top:1px solid var(--card-brd)"><td style="padding:8px 11px">سطح حساب جوما<br><code>role_key</code></td><td style="padding:8px 11px"><code>member</code> · <code>plus</code> · <code>coach</code> · <code>admin</code></td><td style="padding:8px 11px"><code>counselor</code> و <code>moshaver</code> <b>نبودند</b> — من اشتباه فرض کرده بودم</td></tr>
+              <tr style="border-top:1px solid var(--card-brd);background:#FCFDFB"><td style="padding:8px 11px">حالت هم‌مسیر<br><code>mode</code></td><td style="padding:8px 11px">۱ کاربر · ۲ مشاور · ۳ مدیر</td><td style="padding:8px 11px"><b>در هر لحظه یک حالت فعال</b> · قابلیت مشاور = ردیف فعال در <code>providers</code></td></tr>
             </tbody>
           </table>
         </div>
         <p class="tiny" style="margin-top:9px">
-          <b>چرا این بهتر از «ویرایش دورهٔ بدون ثبت» است؟</b> شرط در <b>یک گارد</b> اعمال می‌شود (انتقال «در حال اجرا → آماده‌سازی»)، نه در هر مسیر ویرایش.
-          و کاربر بعد از برگشت، با همان رابط آشنای «آماده‌سازی» کار می‌کند — نه یک رابط دوحالتهٔ جدید.
+          <b>۲ · کلید «پذیرش مراجع جدید» وجود ندارد.</b> نزدیک‌ترین چیز <code>ACTIVE</code>/<code>INACTIVE</code> است،
+          ولی <b>خاموش‌کردن مشاوری که رابطهٔ باز دارد ممنوع است</b> — پس نمی‌شود «مراجع فعلی بمانند، فقط جدید نپذیرم».
+          اگر این را بخواهی، یک <b>کلید تازه</b> لازم است. در این نسخه <b>ساخته نمی‌شود</b>.
         </p>
-      </div>
-      <div class="qbox" style="margin-top:16px;background:var(--coral-soft);border-color:rgba(242,120,75,.35)">
-        <h4 style="color:var(--coral-ink)">⚠️ و یک هشدار صادقانه — این تصمیم یک «تغییر قاعده» است</h4>
-        <p style="font-size:11.5px;color:var(--ink-2)">
-          جدول انتقال‌های سند مادر (<code>۴٫۲</code>) فقط این‌ها را دارد:
-          <code>DRAFT → PLANNING</code> · <code>PLANNING → RUNNING/DRAFT</code> · <code>RUNNING → ARCHIVED</code>.
-          <b>«برگشت به پیش‌نویس» در آن نیست.</b> پس این تصمیم، تفسیرِ قاعده نیست — <b>عوض‌کردنِ قاعده</b> است و به تأیید بک‌اند نیاز دارد.
-        </p>
-        <p class="tiny" style="margin-top:9px">
-          <b>اگر بک‌اند رد کند، طراحی رابط عوض نمی‌شود</b> — فقط منبعِ «باز است/قفل است» عوض می‌شود:
-          ویرایش درجای «در حال اجرا» تا صفر ثبت، یا ماندن دوره در «آماده‌سازی» تا اولین ثبت.
-          فرانت منتظر <code>canEdit</code> می‌ماند و هیچ‌کدام از این سه را خودش تصمیم نمی‌گیرد.
-        </p>
-        <p class="tiny" style="margin-top:9px">
-          📄 پرامپت آمادهٔ پرسیدن از ایجنت بک‌اند: <code>docs/review/backend-audit-prompt.md</code>
-        </p>
-      </div>
-
-
-      <div class="grid2" style="margin-top:16px">
-        <div class="card">
-          <b style="font-size:12.5px">مراجع دیروزی تو، امروز چه می‌بیند</b>
-          <p class="tiny" style="margin-top:6px;line-height:2">
-            <b>اگر چیزی ثبت نکرده باشد (حالا):</b> نوار سبز «هنوز چیزی ثبت نکرده‌ای» + دکمهٔ «برگشت به پیش‌نویس» → شهریور کاملاً آزاد می‌شود.<br>
-            <b>اگر ثبت کرده باشد:</b> دکمهٔ «دورهٔ نو با همین فعالیت‌ها» → دورهٔ تازه با همان فعالیت‌ها، آمادهٔ ویرایش. گزارش‌های شهریور دست‌نخورده.
-          </p>
-        </div>
-        <div class="card">
-          <b style="font-size:12.5px">و جمله‌ای که جلوی تکرارش را می‌گیرد</b>
-          <p class="tiny" style="margin-top:6px;line-height:2">
-            در پنل تأیید «شروع»: «<b>تا وقتی اولین ثبت را انجام ندهی، هر تغییری آزاد است — حتی برگشت به پیش‌نویس.</b>
-            از اولین ثبت به بعد، راهت «دورهٔ نو با همین فعالیت‌ها» است.»
-          </p>
-        </div>
       </div>
 
       <div class="qbox" style="margin-top:16px;background:var(--card);border-color:var(--card-brd)">
-        <h4 style="color:var(--ink)">و یک نکتهٔ کم‌خطر که پیشنهاد می‌کنم</h4>
+        <h4 style="color:var(--ink)">فهرست مشاوران — بدون تغییر، ولی با منبع درست</h4>
         <p style="font-size:11.5px;color:var(--ink-2)">
-          در دورهٔ <b>ثبت‌دار</b>، اگر یک فعالیت در همین دوره <b>هیچ ثبتی</b> ندارد، حذفش از برنامه گذشته‌ای را خراب نمی‌کند.
-          اگر بک‌اند اجازه بدهد، دکمه‌اش را می‌گذاریم؛ اگر نه، <b>دکمه‌اش ساخته نمی‌شود</b> — نه اینکه خاکستری شود.
+          «لیست پیش‌فرض نمی‌خواهم» تو سر جایش می‌ماند؛ فقط منبعش روشن شد:
+          <b>ردیف‌های فعال <code>joma_hammasir_providers</code></b> — نه یک ستون نقش در جدول کاربران.
+          نتیجه برای تو یکی است: <b>کاربر می‌سازی، ردیف مشاور می‌گذاری، در دراپ‌داون می‌آید.</b>
         </p>
       </div>
+
+      <p class="note" style="margin-top:16px;margin-bottom:0">
+        📄 پاسخ کامل بک‌اند، کلمه‌به‌کلمه: <code>docs/review/backend-audit-response.md</code>
+      </p>
     </div>
   </section>
 
-  <!-- ================= ۱۳ معوق‌ها ================= -->
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۳</span>
@@ -1120,7 +1161,7 @@
 
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۴ · ۱۳ بخش · بخش‌های تازه: <b>۱۲</b> (راه‌حل شهریور) و <b>۱۳</b> (معوق‌ها) · سند معوق‌ها: <code>docs/spec/98-deferred.md</code>
+    <br>نسخهٔ ۵ · ۱۳ بخش · پاسخ بازبینی بک‌اند اعمال شد · سند پاسخ: <code>docs/review/backend-audit-response.md</code> · معوق‌ها: <code>docs/spec/98-deferred.md</code>
   </footer>
 </div>
 </body>
