@@ -171,65 +171,115 @@ function rvBare(){
     'جایش، راه تماس با پشتیبانی هست. خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد.');
 }
 
-/* ============================ ۳) ثبت‌نام — سند ۲۲ §۳ ============================ */
+/* ============================ ۳) ثبت‌نام — سند ۲۲ §۳ ============================
+   کامل، مطابق اسکرین‌شات فرستادهٔ مالک: نام · نام خانوادگی · نام کاربری · نقش/سایر
+   · شماره موبایل · ایمیل · رمز عبور و تکرارش · کد امنیتی با دکمهٔ «درخواست کد امنیتی»
+   · تیک قوانین و سیاست حریم خصوصی · دکمهٔ «ساخت حساب جدید».
+   ستون کنار: برند «جوجهٔ من» + توضیح + بازگشت به صفحهٔ معرفی.                    */
+function fx(id,label,ph,type,opts){
+  opts=opts||{};
+  var inner;
+  if(type==='select'){
+    inner='<select id="'+id+'"'+(opts.data?' data-'+opts.data:'')+'>'+opts.body+'</select>';
+  } else {
+    inner='<input id="'+id+'" type="'+(type||'text')+'"'+(opts.dir?' dir="'+opts.dir+'"':'')+
+      (ph?' placeholder="'+ph+'"':'')+(opts.ac?' autocomplete="'+opts.ac+'"':'')+
+      (opts.data?' data-'+opts.data:'')+'>'+(opts.tail||'');
+  }
+  return '<div class="fx'+(opts.wide?' wide':'')+(opts.err?' err':'')+'">'+
+    '<label class="fxl" for="'+id+'">'+label+'</label>'+inner+
+    (opts.hint?'<span class="fxh tiny">'+opts.hint+'</span>':'')+'</div>';
+}
 function R_signup(){
   var tab=APP.authTab||'signup';
-  var fields=[
-    ['sn','اسمی که دوست داری صدایت کنیم','مثلاً سارا','text'],
-    ['su','نام کاربری','۳ تا ۲۰ کاراکتر — حرف و عدد','text'],
-    ['sp','رمز عبور','حداقل ۸ نویسه','password'],
-    ['se','ایمیل یا موبایل','برای روزی که رمزت را فراموش کردی','text']
-  ];
-  return '<div class="auth">'+rvBare()+'<div class="box fadeup auth-card">'+
-    '<div class="brand">'+
-      '<span class="brand-mark">'+owl('owl-logo',30)+'</span>'+
-      '<div><b>جوما</b><small>برنامه‌ریزی، اجرا، فهم</small></div></div>'+
-    '<h1>'+(tab==='login'?'ورود به جوما':'ساخت حساب')+'</h1>'+
-    '<p class="sub">'+(tab==='login'?'خوش برگشتی. راهت را ادامه بده.'
-      :'از یک قدم کوچک شروع می‌کنیم — بعداً می‌توانی هر چیز را عوض کنی.')+'</p>'+
-    '<div class="authtabs">'+
-      [['login','ورود'],['signup','ثبت‌نام'],['forgot','فراموشی']].map(function(t2){
-        return '<button class="'+(tab===t2[0]?'on':'')+'" data-authtab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
-    '</div>'+
+  var role=APP.authRole||'client';
+  var roles=[['client','کاربر (مراجع)'],['coach','مشاور'],['admin','مدیر'],['other','سایر']];
+  var roleOpts=roles.map(function(r){
+    return '<option value="'+r[0]+'"'+(role===r[0]?' selected':'')+'>'+r[1]+'</option>';}).join('');
 
-    (tab==='forgot'
-      ? '<div class="forgot">'+ic('i-info')+
-        '<b>بازیابی رمز</b>'+
-        '<p class="tiny">رمز را نمی‌دانیم و هیچ‌وقت نمی‌پرسیم. با کد یک‌بارمصرف که به کانال ثبت‌شدهٔ خودت می‌فرستیم، رمز تازه می‌سازی — '+
-        'کد ۱۵ دقیقه اعتبار دارد و ۵ بار می‌شود امتحانش کرد.</p>'+
-        '<div class="fld" style="margin-top:10px"><label class="lbl">ایمیل یا موبایل ثبت‌شده</label>'+
-        '<input class="inp" placeholder="مثلاً ۰۹۱۲…"></div>'+
-        '<button class="btn primary wide" data-sendcode>ارسال کد</button></div>'
-      : fields.filter(function(f2){ return tab==='signup'||f2[0]!=='sn'; }).map(function(f2,i){
-          var id=f2[0];
-          if(tab==='login'&&id==='su') return '<div class="fld"><label class="lbl" for="li">نام کاربری یا ایمیل</label>'+
-            '<input class="inp" id="li" autocomplete="username" value="sara"></div>';
-          if(tab==='login'&&id==='sp') return '<div class="fld"><label class="lbl" for="lp">رمز عبور</label>'+
-            '<div class="pw-wrap"><input class="inp" id="lp" type="password" value="········">'+
-            '<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button></div></div>';
-          if(tab==='signup'&&id==='se') return '';
-          return '<div class="fld"><label class="lbl" for="'+id+'">'+f2[1]+'</label>'+
-            (id==='sp'?'<div class="pw-wrap">':'')+
-            '<input class="inp" id="'+id+'"'+(id==='sp'?' type="password" data-strength':'')+' placeholder="'+f2[2]+'">'+
-            (id==='sp'?'<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button></div>':'')+
-            (id==='su'?'<span class="tiny" id="sucheck">این نام آزاد است ✓</span>':'')+
-            (id==='sp'?'<div class="strength" id="str"><i></i><i></i><i></i><i></i></div>':'')+
-            '</div>';
-        }).join('')+
-      (tab==='signup'
-        ? '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>قواعد حساب را خوانده‌ام</b>'+
-          '<em>شرایط استفاده و حریم خصوصی هنوز نهایی نشده‌اند؛ این جمله وقتی متن آماده شد نمایش داده می‌شود.</em></span></label>'
-        : '')+
-      '<button class="btn primary wide" style="margin-top:14px" data-auth="'+tab+'">'+
-        (tab==='login'?'ورود':'ساخت حساب')+'</button>'+
-      (tab==='login'
-        ? '<div class="alt">حساب نداری؟ <a href="#" data-authtab="signup">ثبت‌نام</a> · <a href="#" data-authtab="forgot">فراموشی رمز</a></div>'
-        : '<div class="alt">حساب داری؟ <a href="#" data-authtab="login">وارد شو</a></div>')
-    )+
-    note('همان ساختار مرجع (تصویر ۲): کارت سفید، لوگو و برند بالای کارت، سه تب «ورود/ثبت‌نام/فراموشی»، دکمهٔ اصلی پررنگ و تمام‌عرض، '+
-      'و لینک‌های فرعی زیر آن. رنگ دکمه از تم می‌آید — در تم «شیشه» بنفش مرجع، در تم «کلاسیک» سبز محصول. '+
-      'کانال بازیابی **اجباری نیست** ولی برجسته پرسیده می‌شود؛ کد ثبت‌نام اگر پیکربندی فعال باشد نمایش داده می‌شود.')+
-  '</div></div>';
+  var tabs='<div class="authtabs v">'+
+    [['login','ورود'],['signup','ثبت‌نام'],['forgot','فراموشی']].map(function(t2){
+      return '<button class="'+(tab===t2[0]?'on':'')+'" data-authtab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
+    '</div>';
+
+  var hd='<div class="auth-top"><div>'+
+    '<h1>'+(tab==='login'?'ورود به جومای من':'ساخت حساب جومای من')+'</h1>'+
+    '<p class="sub">'+(tab==='login'?'خوش برگشتی؛ از همان‌جا که بودی ادامه بده.'
+      :'با پذیرش قوانین، حساب کاربری خود را می‌سازید.')+'</p></div>'+tabs+'</div>'+
+    '<div id="autherr"></div>';
+
+  if(tab==='forgot'){
+    return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
+      '<div class="forgot">'+ic('i-info')+
+        '<b>بازیابی رمز — با کد یک‌بارمصرف</b>'+
+        '<p class="tiny">رمز را نمی‌دانیم و هیچ‌وقت نمی‌پرسیم. کد را به کانال ثبت‌شدهٔ خودت می‌فرستیم؛ '+
+        '۱۵ دقیقه اعتبار دارد و ۵ بار می‌شود امتحانش کرد.</p></div>'+
+      '<div class="auth-grid">'+
+        fx('fg1','شماره موبایل یا ایمیل ثبت‌شده','۰۹۱۲۳۴۵۶۷۸۹','text',{wide:true,dir:'ltr'})+
+        fx('fg2','کد یک‌بارمصرف','۶ رقمی','text',{dir:'ltr',tail:'<button class="fxbtn" data-authcode>درخواست کد امنیتی</button>'})+
+        fx('fg3','رمز تازه','حداقل ۸ نویسه','password',{})+
+        fx('fg4','تکرار رمز تازه','همان رمز','password',{})+
+      '</div>'+
+      '<button class="btn primary wide big" data-auth="forgot">ساختن رمز تازه</button>'+
+      '<div class="alt">رمزت را به یاد آوردی؟ <a href="#" data-authtab="login">وارد شو</a></div>'+
+      note('این مسیر تا حل‌شدن <code>SEC-01</code> در محصول واقعی فعال نمی‌شود؛ تا آن تصمیم، کارت ورود مسیر «تماس با پشتیبانی» را نشان می‌دهد.')+
+    '</section></div>';
+  }
+
+  if(tab==='login'){
+    return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
+      '<div class="auth-grid">'+
+        fx('li','نام کاربری یا ایمیل','مثلاً sara','text',{ac:'username',dir:'ltr'})+
+        fx('lp','رمز عبور','••••••••','password',{ac:'current-password',tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>'})+
+      '</div>'+
+      '<label class="perm-row"><span class="cb" data-tglcb></span><span class="pbody"><b>مرا به خاطر بسپار</b>'+
+        '<em>فقط روی همین دستگاه — هر وقت خواستی در تنظیمات می‌توانی ببندی.</em></span></label>'+
+      '<button class="btn primary wide big" data-login>ورود</button>'+
+      '<div class="alt">حساب نداری؟ <a href="#" data-authtab="signup">ثبت‌نام کن</a> · '+
+        '<a href="#" data-authtab="forgot">فراموشی رمز</a></div>'+
+      note('دکمهٔ «رمزت را فراموش کردی؟» تا حل‌شدن <code>SEC-01</code> نمایش داده نمی‌شود. خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد.')+
+    '</section></div>';
+  }
+
+  /* ---------- ثبت‌نام: همان فرم اسکرین‌شات، کامل ---------- */
+  return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
+  '<div class="auth-grid">'+
+    fx('sn','نام','مثلاً سارا','text',{ac:'given-name'})+
+    fx('sf','نام خانوادگی','مثلاً محمدی','text',{ac:'family-name'})+
+    fx('su','نام کاربری','۳ تا ۲۰ کاراکتر — حرف و عدد','text',{ac:'username',dir:'ltr'})+
+    fx('sr','نقش','','select',{body:roleOpts})+
+    (role==='other'? fx('sr2','سایر — چه نقشی داری؟','مثلاً دانشجو، پژوهشگر، مدیر محتوا','text',{wide:true,data:'authother'}) : '')+
+    fx('sm','شماره موبایل','۰۹۱۲۳۴۵۶۷۸۹','tel',{dir:'ltr',ac:'tel',data:'authphone'})+
+    fx('se','ایمیل','you@example.com','email',{dir:'ltr',ac:'email'})+
+    fx('sp','رمز عبور','حداقل ۸ نویسه','password',{ac:'new-password',tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>',data:'authpw'})+
+    fx('sp2','تکرار رمز عبور','همان رمز','password',{ac:'new-password',hint:'هر دو رمز باید یکی باشند — همین‌جا چک می‌شود.'})+
+  '</div>'+
+  '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
+  '<div class="auth-grid tight">'+
+    fx('sc','کد امنیتی','۶ رقمی','text',{dir:'ltr',data:'authcode',tail:'<button class="fxbtn" data-authcode'+(APP.authCodeAsked?' disabled':'')+'>'+
+      (APP.authCodeAsked?'ارسال دوباره':'درخواست کد امنیتی')+'</button>'})+
+  '</div>'+
+  '<label class="perm-row"><span class="cb'+(APP.authTerms?' on':'')+'" data-tglcb="terms"></span>'+
+    '<span class="pbody"><b>قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم.</b>'+
+    '<em>نسخهٔ متنی همین‌جا در دسترس است — پیش از انتشار تجاری، بررسی حقوقی می‌شود (۱۷٫۳). '+
+    '<a href="#content">خواندن قوانین و مقررات</a> · <a href="#content">حریم خصوصی</a></em></span></label>'+
+  '<div class="banner info tiny" style="margin:2px 0 12px">'+ic('i-info')+
+    'شمارهٔ موبایل و ایمیل برای «بازیابی حساب» و «پشتیبانی» است؛ هیچ‌وقت برای تبلیغ استفاده نمی‌شود '+
+    'و پشتیبانی هرگز رمز نمی‌پرسد.</div>'+
+  '<button class="btn primary wide big" data-auth="signup">'+ic('i-checkc')+'ساخت حساب جدید</button>'+
+  '<div class="alt">قبلاً حساب ساختی؟ <a href="#" data-authtab="login">وارد شو</a></div>'+
+  note('این فرم <b>عیناً</b> همان چیزی است که فرستادی: نام · نام خانوادگی · نام کاربری · نقش (با گزینهٔ «سایر» که فیلد خودش را باز می‌کند) · '+
+    'شماره موبایل · ایمیل · رمز عبور و تکرارش · کد امنیتی با دکمهٔ «درخواست کد امنیتی» · تیک قوانین و حریم خصوصی · دکمهٔ «ساخت حساب جدید». '+
+    'نقش انتخابی فقط <b>درخواست</b> است؛ نقش واقعی را مدیر تأیید می‌کند (سند ۲۴) و حساب همیشه با نقش «کاربری» ساخته می‌شود.');
+}
+function authRail(){
+  return '<aside class="auth-rail">'+
+    '<div class="rail-brand"><span class="brand-mark">'+owl('owl-logo',36)+'</span>'+
+      '<span><b>جوجهٔ من</b><small>همراه تو، قدم‌به‌قدم</small></span></div>'+
+    '<p class="tiny rail-txt">جوما جایی برای چیدن کارها، ثبت روزانه و دیدن الگوهای خودت است. '+
+      'هر چیزی که ثبت کنی مال خودت است و فقط با اجازهٔ خودت دیده می‌شود.</p>'+
+    '<a class="rail-back" href="#landing">'+ic('i-chev-r')+'بازگشت به صفحهٔ معرفی</a>'+
+  '</aside>';
 }
 
 /* ============================ ۴) خانه — سند ۱۱ ============================ */
@@ -375,6 +425,8 @@ function R_today(){
       'ثبت هر کار، <b>یک حرکت</b> است: با دکمه‌های کنار عدد کم و زیاد کن، یا «انجام شد / انجام نشد» را بزن. '+
       'نوع ورودی برای هر فعالیت <b>از بک‌اند</b> می‌آید — دقیقه، صفحه، لیوان، ساعت یا بله/خیر.</div>'+
 
+    (APP.stress>=3 && !empty() ? breathCard('today') : '')+
+
     '<div class="tabs">'+tabs.map(function(t2,i){
       return '<button class="'+(i===0?'on':'')+'" data-tab="'+i+'">'+t2[0]+' <small>('+fa(t2[1])+')</small></button>';
     }).join('')+'</div>'+
@@ -415,7 +467,8 @@ function R_today(){
         :'روزهایی که آب کامل بوده، تمرکزت بالاتر بوده.')+'</p></div>'+
       '<div class="card"><h3>'+ic('i-heart')+'حال امروز</h3>'+
         (empty()?'<div class="tiny" style="margin-top:6px">ثبت نشده.</div>':'<div class="tiny" style="margin-top:6px">ثبت شده ✓</div>')+
-        '<button class="btn soft sm wide" style="margin-top:10px" data-go="mood">ثبت حال</button></div>'+
+        '<button class="btn soft sm wide" style="margin-top:10px" data-go="mood">ثبت حال</button>'+
+        '<button class="btn ghost sm wide" style="margin-top:8px" data-breathopen="today">'+ic('i-lotus')+'تمرین تنفس ۴-۷-۸</button></div>'+
     '</div></div>'+
 
     /* جملهٔ امروز — پایانِ خوشامدِ مرجع: یک جملهٔ کوتاه برای خودت */
@@ -514,12 +567,14 @@ function R_mood(){
         '<button class="btn primary sm" data-go="home">بازگشت به خانه</button>'+
         '<button class="btn ghost sm" data-go="reports">دیدن گزارش</button></div>'+
       '</div>'+
+      (APP.stress>=3? breathCard('mood'):'')+
       note('پس از ثبت، پاسخ‌ها <b>قابل اصلاح‌اند</b> ولی نسخهٔ قبلی در تاریخچه می‌ماند — «اصلاح با دلیل»، نه پاک‌کردن بی‌رد.')+
       wnav('cheer');
   }
 
   return head('حال من','حال من',D('پنج قدم کوتاه. هر پنج تا هم اختیاری‌اند — می‌توانی همین حالا بروی.',''),
-      '<span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شده</span>')+
+      '<span class="headacts"><button class="btn ghost sm" data-breathopen="mood">'+ic('i-lotus')+'تمرین تنفس</button>'+
+      '<span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شده</span></span>')+
     wiz+
     '<div class="scene" style="background:var('+s.bg+')">'+
       '<div class="art">'+moodArt(s.k,ans===undefined?null:ans)+'</div>'+

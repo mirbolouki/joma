@@ -165,12 +165,36 @@ var RTABS=[
   ['detail','جزئیات','همهٔ رخدادها، با برچسب منبع و وضعیت.'],
   ['report','گزارش تحلیلی','ترکیب دلخواه: فعالیت‌ها، خلق و همبستگی.']
 ];
+/* داده‌های نمونهٔ رسم نمودار — در محصول، همه از بک‌اند می‌آید */
+var RP={
+  days:['۱۴','۱۵','۱۶','۱۷','۱۸','۱۹','۲۰','۲۱','۲۲','۲۳','۲۴','۲۵','۲۶','۲۷'],
+  mood14:[3,2,4,3,3,4,5,4,3,4,4,5,4,4],
+  weeks:[['هفتهٔ ۱',72,80],['هفتهٔ ۲',68,80],['هفتهٔ ۳',84,90],['هفتهٔ ۴',79,90]],
+  mix:[['پیاده‌روی',28,'var(--brand)'],['خواب کافی',22,'var(--indigo)'],['نوشیدن آب',18,'var(--sky)'],
+       ['مدیتیشن',14,'var(--lav)'],['مطالعه',10,'var(--gold)'],['سایر',8,'var(--coral)']],
+  heat:[3,2,1,3,2,0,1, 2,3,3,1,2,2,0, 1,0,2,3,3,2,1, 3,3,2,2,1,3,0, 2,1,2,3,2,2,1],
+  scatter:[[2,2],[4,3],[3,2],[5,4],[2,3],[3,3],[4,4],[5,5],[3,4],[4,3],[2,2],[5,4],[3,3],[4,4]],
+  acts:[['پیاده‌روی',88,'۲۲ از ۲۵ روز','var(--brand)'],['خواب کافی',92,'۱۸ از ۲۰ روز','var(--indigo)'],
+        ['نوشیدن آب',76,'۱۵ از ۲۰ روز','var(--sky)'],['مدیتیشن',54,'۱۱ از ۲۰ روز','var(--lav)'],
+        ['مطالعه',31,'۶ از ۲۰ روز','var(--gold)']],
+  kpi:[['موفقیت کلی','٪۷۴','با وزنِ خودت',[62,66,71,68,72,77,74],'var(--brand)'],
+       ['پوشش داده','٪۸۸','۱۸ روز از ۲۰ روز',[70,74,80,78,84,88,88],'var(--sky)'],
+       ['روزهای کامل','۱۲','همهٔ کارها ثبت شده',[2,3,5,7,8,10,12],'var(--gold)'],
+       ['میانگین حال','۴٫۱ از ۵','سه شاخص ثبت‌شده',[3.4,3.2,3.6,3.8,3.9,4,4.1],'var(--rose)']]
+};
+function chartCap(txt){
+  return '<div class="ch-cap tiny">'+ic('i-info')+txt+'</div>';
+}
+function chLegend(items){
+  return '<div class="legend">'+items.map(function(x){
+    return '<span><i style="background:'+x[1]+'"></i>'+x[0]+'</span>';}).join('')+'</div>';
+}
 function R_reports(){
   var tab=APP.reportTab||'summary';
   var noData=empty()||APP.reportNoData;
   var t=RTABS.filter(function(x){return x[0]===tab;})[0]||RTABS[0];
 
-  var body;
+  var body='';
   if(noData){
     body='<div class="card"><div class="nodata">'+owl('owl-moon',64,'floaty')+
       '<b>برای این انتخاب داده‌ای نیست</b>'+
@@ -179,78 +203,131 @@ function R_reports(){
       'وضعیت موتور: <b>NO_DATA</b> — هیچ رخداد واجد شرایطی در این بازه نیست.</div>'+
       '</div></div>';
   } else if(tab==='summary'){
-    body='<div class="stat4">'+
-      [['موفقیت کلی','۷۴٪','با وزنِ خودت','--brand-ink'],
-       ['پوشش داده','۸۸٪','۱۸ روز از ۲۰ روز','--sky-ink'],
-       ['روزهای کامل','۱۲','همهٔ کارها ثبت شده','--gold-ink'],
-       ['میانگین حال','۴٫۱ از ۵','سه شاخص ثبت‌شده','--rose-ink']]
-      .map(function(s){return '<div class="card"><div class="lb">'+s[0]+'</div>'+
-        '<div class="vl" style="color:var('+s[3]+')">'+s[1]+'</div><div class="sb">'+s[2]+'</div></div>';}).join('')+
+    body=
+    /* شاخص‌ها با جرقهٔ روند */
+    '<div class="stat4">'+RP.kpi.map(function(k){
+      return '<div class="card kpi"><div class="lb">'+k[0]+'</div>'+
+        '<div class="vl" style="color:'+k[4]+'">'+k[1]+'</div>'+
+        '<div class="sb">'+k[2]+'</div>'+
+        '<div class="sparkbox">'+chartSpark(k[3],k[4])+'</div></div>';}).join('')+'</div>'+
+
+    /* ۱ — روند حال */
+    '<div class="card"><div class="ch-head"><h3>'+ic('i-chart')+'روند حال من — ۱۴ روز آخر</h3>'+
+      '<span class="chip">میانگین ۱ تا ۵</span></div>'+
+      chartLine(RP.mood14,{xlabels:RP.days,aria:'روند حال در ۱۴ روز آخر'})+
+      chLegend([['حال روزانه (خودگزارشی)','var(--brand)'],['خط میانگین','var(--sky)']])+
+      '<div class="insights">'+
+        '<span class="ins">'+ic('i-checkc')+'بهترین روز: <b>۲۰ شهریور</b> — حال ۵</span>'+
+        '<span class="ins">'+ic('i-info')+'سخت‌ترین روز: <b>۱۵ شهریور</b> — حال ۲</span>'+
+        '<span class="ins">'+ic('i-clock')+'روند کلی: <b>کمی رو به بالا</b> (۱۴ روز)</span>'+
+      '</div>'+
+      chartCap('این نمودار <b>خودگزارشی</b> است؛ جوما حال تو را حدس نمی‌زند و از آن نتیجهٔ درمانی نمی‌گیرد.')+
     '</div>'+
-    '<div class="grid2"><div class="card"><h3>'+ic('i-chart')+'هفته‌به‌هفته</h3>'+
-      '<div class="bars">'+[52,64,71,68,79,84,88].map(function(h,i){
-        return '<div class="b" style="height:'+h+'%"><span>ه'+fa(i+1)+'</span></div>';}).join('')+'</div>'+
-      '<div class="legend"><span><i style="background:var(--brand)"></i>موفقیت کلی هر هفته</span></div></div>'+
-    '<div class="card"><h3>'+ic('i-info')+'این عددها یعنی چه؟</h3>'+
-      '<div class="kv"><span>مقداری که ثبت کرده‌ای</span><b>۷٫۵ ساعت</b></div>'+
-      '<div class="kv"><span>هدف</span><b>هدف: ۸ ساعت</b></div>'+
-      '<div class="kv"><span>هدف را چقدر برآورده کردی</span><b>۹۴٪</b></div>'+
-      '<div class="kv"><span>چقدر داده داری</span><b>۸۸٪ پوشش</b></div>'+
-      '<div class="kv"><span>موفقیت کلی</span><b>۷۴٪</b></div>'+
-      '<div class="kv"><span>ثبت‌نشده</span><b>«ثبت نشده»</b></div>'+
-    '</div></div>';
+
+    '<div class="grid2">'+
+      /* ۲ — پایبندی هفتگی */
+      '<div class="card"><div class="ch-head"><h3>'+ic('i-target')+'پایبندی هفتگی</h3></div>'+
+        chartBars(RP.weeks,{aria:'پایبندی هفتگی: برنامه‌ریزی‌شده در برابر انجام‌شده'})+
+        chLegend([['انجام‌شده','var(--brand)'],['برنامه‌ریزی‌شده','var(--ring-track)']])+
+        chartCap('ستون روشن یعنی چیزی که در برنامه بود؛ ستون پُر یعنی چیزی که واقعاً انجام شد.')+
+      '</div>'+
+      /* ۳ — ترکیب فعالیت‌ها */
+      '<div class="card"><div class="ch-head"><h3>'+ic('i-list')+'ترکیب ثبت‌ها</h3></div>'+
+        chartDonut(RP.mix,{centerTop:fa(35),centerSub:'ثبت این دوره'})+
+        chartCap('سهم هر دسته از کل ثبت‌های این دوره — با درصد، نه فقط رنگ.')+
+      '</div>'+
+    '</div>'+
+
+    /* ۴ — نقشهٔ ثبت */
+    '<div class="card"><div class="ch-head"><h3>'+ic('i-cal')+'نقشهٔ ثبت — ۵ هفته</h3>'+
+      '<span class="chip s">۱۲ روز کامل</span></div>'+
+      '<div class="heat-wrap">'+chartHeat(RP.heat)+
+      '<div class="legend v"><span><i class="ch-h0"></i>ثبت‌نشده</span><span><i class="ch-h1"></i>کم</span>'+
+      '<span><i class="ch-h2"></i>خوب</span><span><i class="ch-h3"></i>کامل</span>'+
+      '<span class="streak">'+ic('i-bolt')+'بیشترین زنجیره: <b>۶ روز پیاپی</b></span></div></div>'+
+      chartCap('هر خانه یک روز است. خالی‌بودن یک روز، «شکست» نیست — فقط داده‌ای برای آن روز نداریم.')+
+    '</div>'+
+
+    '<div class="grid2">'+
+      /* ۵ — پراکندگی خواب و حال */
+      '<div class="card"><div class="ch-head"><h3>'+ic('i-moon')+'خواب و حال، کنار هم</h3></div>'+
+        chartScatter(RP.scatter,{xlabel:'کیفیت خواب (۱ تا ۵)',ylabel:'حال'})+
+        chartCap('هر نقطه یک روز است. <b>همبستگی، علت نیست</b> — این نمودار فقط می‌گوید دو چیز با هم بالا و پایین رفته‌اند.')+
+      '</div>'+
+      /* توضیح عددها */
+      '<div class="card"><h3>'+ic('i-info')+'این عددها یعنی چه؟</h3>'+
+        '<div class="kv"><span>مقداری که ثبت کرده‌ای</span><b>۷٫۵ ساعت</b></div>'+
+        '<div class="kv"><span>هدف</span><b>هدف: ۸ ساعت</b></div>'+
+        '<div class="kv"><span>هدف را چقدر برآورده کردی</span><b>٪۹۴</b></div>'+
+        '<div class="kv"><span>چقدر داده داری</span><b>٪۸۸ پوشش</b></div>'+
+        '<div class="kv"><span>موفقیت کلی</span><b>٪۷۴</b></div>'+
+        '<div class="kv"><span>ثبت‌نشده</span><b>«ثبت نشده»</b></div>'+
+        chartCap('واژه‌نامهٔ کامل با دکمهٔ «واژه‌نامهٔ عددها» بالای صفحه باز می‌شود.')+
+      '</div>'+
+    '</div>';
   } else if(tab==='mood'){
-    body='<div class="grid2">'+
-      [['خواب','--indigo',[3,4,5,4,4,5,4]],
-       ['انرژی','--gold',[2,3,3,4,4,3,5]],
-       ['تمرکز','--sky',[3,3,4,4,3,5,4]],
-       ['استرس','--coral',[4,3,2,3,2,2,1]]]
-      .map(function(m){
-        return '<div class="card"><h3>'+m[0]+'</h3>'+
-          '<div class="bars"><div class="b" style="height:'+60+'%"></div></div>'+
-          '<div class="bars">'+m[2].map(function(v){
-            return '<div class="b" style="height:'+(v*18)+'%" title="'+v+' از ۵"></div>';}).join('')+'</div>'+
-          '<div class="tiny" style="margin-top:6px">میانگین: '+(m[2].reduce(function(a,b){return a+b;})/7).toFixed(1)+' از ۵</div></div>';
-      }).join('')+'</div>'+
-      note('«خواب دیشبت» **کیفیت** را می‌پرسد نه ساعت — و همین در زیرنویس فرم حال هم گفته می‌شود.');
-  } else if(tab==='success'||tab==='acts'||tab==='weight'){
-    var rows=empty()?[]:[
-      ['پیاده‌روی','۸۸٪','۲۲ از ۲۵','وزن: زیاد'],
-      ['خواب کافی','۹۲٪','۱۸ از ۲۰','وزن: زیاد'],
-      ['نوشیدن آب','۷۶٪','۱۵ از ۲۰','وزن: متوسط'],
-      ['مدیتیشن','۵۴٪','۱۱ از ۲۰','وزن: متوسط'],
-      ['مطالعه','۳۱٪','۶ از ۲۰','وزن: کم']
-    ];
-    body='<div class="card">'+
-      '<div class="banner info" style="margin-bottom:12px">'+ic('i-info')+
-        'هدف‌های این جدول **اسنپ‌شات برنامه** هستند؛ اگر فعالیت کتابخانه بعداً عوض شود، این‌ها تغییر نمی‌کنند.</div>'+
-      '<table class="tbl"><thead><tr><th>فعالیت</th><th>هدف را چقدر برآورده کردی</th>'+
+    var series=[['خواب','var(--indigo)',[3,4,5,4,4,5,4,3,4,5,4,4,5,4]],
+                ['انرژی','var(--gold)',[2,3,3,4,4,3,5,3,4,4,3,5,4,4]],
+                ['تمرکز','var(--sky)',[3,3,4,4,3,5,4,3,4,3,4,4,3,4]],
+                ['استرس','var(--coral)',[4,3,2,3,2,2,1,3,2,2,3,1,2,2]]];
+    body='<div class="grid2">'+series.map(function(m){
+      var avg=m[2].reduce(function(x,y){return x+y;},0)/m[2].length;
+      return '<div class="card"><div class="ch-head"><h3 style="color:'+m[1]+'">'+m[0]+'</h3>'+
+        '<span class="tiny">میانگین '+fa(Math.round(avg*10)/10)+' از ۵</span></div>'+
+        chartLine(m[2],{xlabels:RP.days,h:150,aria:'روند '+m[0]})+
+        '</div>';}).join('')+'</div>'+
+      note('پنج شاخص خلق، هر کدام نمودار خودش را دارد — روی هم انداختنشان تصویر را شلوغ می‌کند. '+
+        '«خواب دیشبت» **کیفیت** را می‌پرسد نه ساعت — و همین در زیرنویس فرم حال هم گفته می‌شود.');
+  } else if(tab==='acts'||tab==='success'||tab==='weight'){
+    var metric=(tab==='weight'?'وزن هر فعالیت در موفقیت کلی':(tab==='acts'?'مقدار ثبت‌شده در برابر هدف':'تحقق هدف'));
+    body='<div class="card"><div class="ch-head"><h3>'+ic('i-target')+metric+'</h3>'+
+      '<span class="chip g">۵ فعالیت فعال</span></div>'+
+      hbars(RP.acts)+
+      '<div class="banner info" style="margin-top:12px">'+ic('i-info')+
+        'هدف‌های این نمودار **اسنپ‌شات برنامه** هستند؛ اگر فعالیت کتابخانه بعداً عوض شود، این‌ها تغییر نمی‌کنند.</div>'+
+      chartCap('هر میله یک فعالیت است؛ عدد کنارش می‌گوید در چند روز از روزهای ممکن ثبت شده.')+
+      '</div>'+
+      '<div class="card"><h3>'+ic('i-list')+'جدول کامل</h3>'+
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>فعالیت</th><th>هدف را چقدر برآورده کردی</th>'+
       '<th>چقدر داده داری</th><th>وزن</th></tr></thead><tbody>'+
-      rows.map(function(r){
+      RP.acts.map(function(r,i){
         return '<tr><td><b style="font-size:12px">'+r[0]+'</b></td>'+
-          '<td>'+(tab==='weight'?'<span class="tiny">—</span>':r[1])+'</td>'+
-          '<td><span class="tiny">'+r[2]+' روز</span></td>'+
-          '<td><span class="acl-chip">'+r[3]+'</span></td></tr>';
-      }).join('')+'</tbody></table></div>';
-  } else if(tab==='cal'){
-    body='<div class="card"><h3>'+ic('i-cal')+'تقویم این دوره</h3>'+
-      '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px">'+
-      Array.from({length:30},function(_,i){
-        var l=(i*5)%4;
-        var c=empty()?'var(--ring-track)':['var(--ring-track)','var(--brand-soft)','var(--brand)','var(--brand-ink)'][l];
-        return '<div style="aspect-ratio:1;border-radius:9px;background:'+c+';display:grid;place-items:center;'+
-          'font-size:10px;color:'+(l>1?'#fff':'var(--ink-3)')+'">'+fa(i+1)+'</div>';
-      }).join('')+'</div>'+
-      '<div class="legend"><span><i style="background:var(--ring-track)"></i>ثبت‌نشده</span>'+
-      '<span><i style="background:var(--brand-soft)"></i>کم</span>'+
-      '<span><i style="background:var(--brand)"></i>خوب</span>'+
-      '<span><i style="background:var(--brand-ink)"></i>کامل</span></div></div>';
+          '<td>'+(tab==='weight'?'<span class="tiny">—</span>':'٪'+fa(r[1]))+'</td>'+
+          '<td><span class="tiny">'+r[2]+'</span></td>'+
+          '<td><span class="acl-chip">'+['زیاد','زیاد','متوسط','متوسط','کم'][i]+'</span></td></tr>';}).join('')+
+      '</tbody></table></div></div>';
+  } else if(tab==='cal'||tab==='trend'){
+    body='<div class="card"><div class="ch-head"><h3>'+ic('i-cal')+(tab==='cal'?'تقویم ثبت‌ها':'روند مقدارها')+'</h3>'+
+      '<span class="chip">شهریور ۱۴۰۵</span></div>'+
+      '<div class="heat-wrap">'+chartHeat(RP.heat)+
+      '<div class="legend v"><span><i class="ch-h0"></i>ثبت‌نشده</span><span><i class="ch-h1"></i>کم</span>'+
+      '<span><i class="ch-h2"></i>خوب</span><span><i class="ch-h3"></i>کامل</span></div></div>'+
+      chartCap('روی هر روز می‌شود رفت — روزهای بی‌ثبت هم رنگ خودشان را دارند و «صفر» حساب نمی‌شوند.')+
+      '</div>'+
+      '<div class="grid2">'+
+        '<div class="card"><div class="ch-head"><h3>'+ic('i-drop')+'آب — روند روزانه</h3></div>'+
+          chartLine([5,6,7,8,6,5,8,7,8,8,6,7,8,8],{xlabels:RP.days,min:0,max:8,h:150,aria:'روند نوشیدن آب'})+'</div>'+
+        '<div class="card"><div class="ch-head"><h3>'+ic('i-walk')+'پیاده‌روی — روند روزانه</h3></div>'+
+          chartLine([20,0,25,20,15,30,20,0,20,25,20,30,15,20],{xlabels:RP.days,min:0,max:30,h:150,aria:'روند پیاده‌روی'})+'</div>'+
+      '</div>';
+  } else if(tab==='compare'){
+    body='<div class="card"><div class="ch-head"><h3>'+ic('i-chart')+'این دوره در برابر مرداد</h3></div>'+
+      chartBars([['موفقیت',79,82],['پوشش',88,84],['روزهای کامل',62,55],['میانگین حال',82,74]],
+        {aria:'مقایسهٔ این دوره با دورهٔ پیش'})+
+      chLegend([['شهریور (این دوره)','var(--brand)'],['مرداد (دورهٔ پیش)','var(--ring-track)']])+
+      chartCap('درصدها نسبی‌اند تا دوره‌های با طول متفاوت قابل‌مقایسه باشند.')+
+      '</div>'+
+      '<div class="card"><h3>'+ic('i-info')+'سه عدد، سه معنی</h3>'+
+      '<div class="kv"><span>پیشرفت این ماه</span><b>٪۸۲ — ۱۴ واحد رشد</b></div>'+
+      '<div class="kv"><span>روزهای همراهی</span><b>۲۰ روز — ٪۶۵ روزها</b></div>'+
+      '<div class="banner info" style="margin-top:12px">'+ic('i-info')+
+      '«پیشرفت» و «موفقیت» و «تحقق» سه چیز متفاوت‌اند و هر کدام عنوان خودشان را دارند (۵٫۲).</div></div>';
   } else if(tab==='detail'){
     body='<div class="card">'+
       '<div class="banner warn" style="margin-bottom:12px">'+ic('i-info')+
       'وضعیت موتور: <b>AMBIGUOUS_DUPLICATE</b> — ۲ رخداد مبهم پیدا شد و علامت خورده‌اند. '+
       'این هشدار بسته نمی‌شود؛ تا رفع نشود، عدد نهایی قطعی نیست.</div>'+
-      '<table class="tbl"><thead><tr><th>تاریخ</th><th>فعالیت</th><th>مقدار</th><th>منبع</th><th>وضعیت</th></tr></thead><tbody>'+
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>تاریخ</th><th>فعالیت</th><th>مقدار</th><th>منبع</th><th>وضعیت</th></tr></thead><tbody>'+
       [['۱۲ شهریور','پیاده‌روی','۲۰ دقیقه','ثبت روزانه','done'],
        ['۱۲ شهریور','آب','۸ لیوان','قطعی خودکار','done'],
        ['۱۱ شهریور','مدیتیشن','۱۵ دقیقه','ثبت با تأخیر','draft'],
@@ -262,27 +339,22 @@ function R_reports(){
         return '<tr><td class="tiny num">'+r[0]+'</td><td><b style="font-size:12px">'+r[1]+'</b></td>'+
           '<td class="tiny num">'+r[2]+'</td><td class="tiny">'+r[3]+'</td>'+
           '<td><span class="tst '+r[4]+'">'+ic(r[4]==='err'?'i-info':'i-check')+map[r[4]][1]+'</span></td></tr>';
-      }).join('')+'</tbody></table></div>';
-  } else if(tab==='compare'){
-    body='<div class="card"><h3>'+ic('i-chart')+'این دوره در برابر مرداد</h3>'+
-      '<div class="bars">'+[62,74].map(function(h,i){
-        return '<div class="b" style="height:'+h+'%"><span>'+(i?'شهریور':'مرداد')+'</span></div>';}).join('')+'</div>'+
-      '<div class="kv" style="margin-top:24px"><span>پیشرفت این ماه</span><b>۸۲٪ — ۱۴ واحد رشد</b></div>'+
-      '<div class="kv"><span>روزهای همراهی</span><b>۲۰ روز — ۶۵٪ روزها</b></div>'+
-      '<div class="banner info" style="margin-top:12px">'+ic('i-info')+
-      '«پیشرفت» و «موفقیت» و «تحقق» سه چیز متفاوت‌اند و هر کدام عنوان خودشان را دارند ('+'۵٫۲'+').</div></div>';
+      }).join('')+'</tbody></table></div></div>';
   } else {
-    body='<div class="card"><h3>'+ic('i-book')+'گزارش تحلیلی</h3>'+
-      '<p class="tiny" style="margin-top:6px">ترکیب دلخواه بساز: فعالیت‌ها، خلق، و همبستگی.</p>'+
+    body='<div class="card"><h3>'+ic('i-book')+'گزارش تحلیلی بساز</h3>'+
+      '<p class="tiny" style="margin-top:6px">ترکیب دلخواه بساز: فعالیت‌ها، خلق و همبستگی — و همان را به نمودار تبدیل کن.</p>'+
       '<div class="rfilters" style="margin-top:12px">'+
       '<span class="acl-chip">فعالیت: پیاده‌روی</span><span class="acl-chip">فعالیت: خواب</span>'+
       '<span class="acl-chip">خلق: انرژی</span><span class="acl-chip">+ افزودن</span></div>'+
+      '<button class="btn primary sm" style="margin-top:12px" data-repbuild>ساختن نمودار ترکیبی</button>'+
       '<div class="banner info" style="margin-top:12px">'+ic('i-info')+
       'همبستگی، **علت را نشان نمی‌دهد**. هر جملهٔ همبستگی در گزارش، همین را می‌گوید.</div></div>';
   }
 
-  return head('گزارش‌ها','گزارش‌های من','هر عددی که می‌بینی، از بک‌اند می‌آید — فرانت هیچ میانگینی نمی‌سازد.',
-      '<button class="btn ghost sm" data-vocab>واژه‌نامهٔ عددها</button>')+
+  return head('گزارش‌ها','گزارش‌های من','هر عدد و هر نمودار از بک‌اند می‌آید — فرانت هیچ میانگینی نمی‌سازد.',
+      '<span class="headacts"><button class="btn ghost sm" data-vocab>واژه‌نامهٔ عددها</button>'+
+      '<button class="btn soft sm" data-export="report">'+ic('i-download')+'گزارش PDF</button>'+
+      '<button class="btn ghost sm" data-export="image">تصویر نمودارها</button></span>')+
     '<div class="rtabs" role="tablist">'+RTABS.map(function(x){
       return '<button role="tab" aria-selected="'+(x[0]===tab)+'" data-rtab="'+x[0]+'">'+x[1]+'</button>';}).join('')+'</div>'+
     '<p class="tabnote">این تب چه چیزی نشان می‌دهد؟ '+t[2]+'</p>'+
@@ -290,7 +362,7 @@ function R_reports(){
       '<select class="fpick"><option>دوره: شهریور ۱۴۰۵</option><option>دوره: مرداد ۱۴۰۵</option></select>'+
       '<select class="fpick"><option>بازه: کل دوره</option><option>بازه: ۷ روز آخر</option></select>'+
       '<select class="fpick"><option>فعالیت: همه</option><option>فعالیت: پیاده‌روی</option></select>'+
-      '<select class="fpick"><option>شاخص: همه</option><option>شاخص: موفقیت</option></select>'+
+      '<select class="fpick"><option>نمودار: خطی</option><option>نمودار: ستونی</option></select>'+
       '<select class="fpick"><option>مقایسه با: مرداد</option><option>بدون مقایسه</option></select>'+
       '<span class="sp" style="flex:1"></span>'+
       '<button class="btn ghost sm" data-nodatatoggle>'+(noData?'داده را نشان بده':'حالت بدون داده')+'</button>'+
@@ -299,6 +371,7 @@ function R_reports(){
       'یک هشدار موتور باز است (رخداد تکراری مشکوک). این نوار تا رفع نشود بسته نمی‌شود.</div>')+
     body+
     note('ده تب — **هیچ‌کدام حذف نمی‌شوند**، حتی اگر خالی باشند. تب خالی، `.nodata` می‌گیرد نه «صفر». '+
+      'نمودارها **همیشه** سه چیز دارند: محور و مقیاس روشن · برچسب عددی (نه فقط رنگ) · یک جملهٔ «این نمودار چه می‌گوید». '+
       'و واژه‌نامهٔ عددها (مقدار / هدف / تحقق / پوشش / موفقیت / ثبت‌نشده) **در خود محصول** است، نه فقط در سند.');
 }
 
@@ -439,21 +512,24 @@ function R_plan(){
 }
 
 /* ============================ ۱۱) کتابخانه — سند ۱۷ ============================ */
+/* ردیف‌ها: [کد، نام، دسته، تناوب(نمایش)، تناوب(فیلتر)، هدف، جوجه، رنگ، مسیر، نماد، آموزش‌دار؟]
+   ستون آخر تعیین می‌کند کارت دکمهٔ «آموزش» بگیرد یا نه — کاربرِ مالک: «فقط فعالیت‌هایی
+   که آموزش دارند باید گزینهٔ آموزش داشته باشند». بقیه «جزئیات» می‌گیرند.            */
 var LIB=[
-  ['ACT001','پیاده‌روی','سلامت جسم','۲۰ دقیقه · روزانه','روزانه','۲۰ دقیقه','owl-fit','--brand-soft','self','sport'],
-  ['ACT002','نوشیدن آب','سلامت جسم','۸ لیوان · روزانه','روزانه','۸ لیوان','owl-water','--sky-soft','self','sport'],
-  ['ACT003','خواب کافی','سلامت جسم','۸ ساعت · روزانه','روزانه','۸ ساعت','owl-moon','--indigo-soft','self','sport'],
-  ['ACT004','خوراک سالم','سلامت جسم','۳ وعده · روزانه','روزانه','۳ وعده','owl-cheer','--rose-soft','self','food'],
-  ['ACT005','مدیتیشن ۱۵ دقیقه‌ای','مراقبه','۱۵ دقیقه · روزانه','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self','calm'],
-  ['ACT006','تمرین نفس','مراقبه','۳ نوبت · روزانه','روزانه','۳ نوبت','owl-lotus','--lav-soft','self','calm'],
-  ['ACT007','مطالعهٔ آرام','ذهن','۱۰ صفحه · روزانه','روزانه','۱۰ صفحه','owl-read','--gold-soft','self','mind'],
-  ['ACT008','نوشتن روزانه','ذهن','۱ صفحه · روزانه','روزانه','۱ صفحه','owl-read','--gold-soft','self','mind'],
-  ['ACT009','گفت‌وگوی روزانه','ارتباط','۵ دقیقه · روزانه','روزانه','۵ دقیقه','owl-hi','--rose-soft','couple','talk'],
-  ['ACT046','بازسازی صمیمیت عاطفی','زوج درمانی','۱۵ دقیقه · روزانه','روزانه','۱ تمرین','owl-hi','--rose-soft','couple','talk'],
-  ['ACT047','تمرین گفت‌وگو بدون دعوا','زوج درمانی','۲۰ دقیقه · هفتگی','هفتگی','۱ جلسه','owl-hi','--rose-soft','couple','talk'],
-  ['ACT048','هنر شنیدن همسر','زوج درمانی','۱۰ دقیقه · روزانه','روزانه','۱ تمرین','owl-think','--rose-soft','couple','talk'],
-  ['ACT101','شناخت طرح‌واره‌ها','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-think','--indigo-soft','schema','schema'],
-  ['ACT102','مرور هفتگی طرح‌واره','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-read','--indigo-soft','schema','schema']
+  ['ACT001','پیاده‌روی','سلامت جسم','۲۰ دقیقه · روزانه','روزانه','۲۰ دقیقه','owl-fit','--brand-soft','self','sport',true],
+  ['ACT002','نوشیدن آب','سلامت جسم','۸ لیوان · روزانه','روزانه','۸ لیوان','owl-water','--sky-soft','self','sport',true],
+  ['ACT003','خواب کافی','سلامت جسم','۸ ساعت · روزانه','روزانه','۸ ساعت','owl-moon','--indigo-soft','self','sport',true],
+  ['ACT004','خوراک سالم','سلامت جسم','۳ وعده · روزانه','روزانه','۳ وعده','owl-cheer','--rose-soft','self','food',false],
+  ['ACT005','مدیتیشن ۱۵ دقیقه‌ای','مراقبه','۱۵ دقیقه · روزانه','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self','calm',true],
+  ['ACT006','تمرین تنفس ۴-۷-۸','مراقبه','۳ دور · روزانه','روزانه','۳ دور','owl-lotus','--lav-soft','self','calm',true],
+  ['ACT007','مطالعهٔ آرام','ذهن','۱۰ صفحه · روزانه','روزانه','۱۰ صفحه','owl-read','--gold-soft','self','mind',false],
+  ['ACT008','نوشتن روزانه','ذهن','۱ صفحه · روزانه','روزانه','۱ صفحه','owl-read','--gold-soft','self','mind',true],
+  ['ACT009','گفت‌وگوی روزانه','ارتباط','۵ دقیقه · روزانه','روزانه','۵ دقیقه','owl-hi','--rose-soft','couple','talk',true],
+  ['ACT046','بازسازی صمیمیت عاطفی','زوج درمانی','۱۵ دقیقه · روزانه','روزانه','۱ تمرین','owl-hi','--rose-soft','couple','talk',true],
+  ['ACT047','تمرین گفت‌وگو بدون دعوا','زوج درمانی','۲۰ دقیقه · هفتگی','هفتگی','۱ جلسه','owl-hi','--rose-soft','couple','talk',true],
+  ['ACT048','هنر شنیدن همسر','زوج درمانی','۱۰ دقیقه · روزانه','روزانه','۱ تمرین','owl-think','--rose-soft','couple','talk',true],
+  ['ACT101','شناخت طرح‌واره‌ها','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-think','--indigo-soft','schema','schema',true],
+  ['ACT102','مرور هفتگی طرح‌واره','طرح‌واره','۱ جلسه · هفتگی','هفتگی','۱ جلسه','owl-read','--indigo-soft','schema','schema',false]
 ];
 var LIB_CATS=['همه دسته‌ها','سلامت جسم','مراقبه','ذهن','ارتباط','زوج درمانی','طرح‌واره','خواب','تغذیه','ورزش','کار و تمرکز',
   'خانواده','دوستان','مالی','معنویت'];
@@ -478,8 +554,8 @@ function R_library(){
     return '<option'+(freq===c?' selected':'')+'>'+c+'</option>';}).join('');};
 
   return head('کتابخانه','کتابخانهٔ فعالیت‌ها',
-      '۱۰۷ فعالیت آماده — ۴۵ پایه، ۳۵ مسیر زوج‌درمانی، ۲۷ مسیر طرح‌واره. '+
-      'این‌ها فعالیت‌های قابل انتخاب‌اند؛ راهنمای تمرین‌ها در بخش «آموزش» است.',
+      '۱۰۷ فعالیت آماده — ۴۵ پایه و فردی، ۳۵ مسیر زوج‌درمانی، ۲۷ مسیر طرح‌واره. '+
+      'دکمهٔ «آموزش» فقط روی فعالیت‌هایی است که راهنمای تمرین دارند؛ بقیه «جزئیات» می‌گیرند.',
       '<span class="chip g">۱۰۷ فعالیت</span>')+
 
     /* فیلترها — همان ساختار مرجع: جست‌وجو + دسته + تناوب + دکمهٔ فیلتر */
@@ -502,9 +578,10 @@ function R_library(){
         return '<button class="'+(path===p[0]?'btn primary sm':'btn ghost sm')+'" data-libpath="'+p[0]+'">'+p[1]+'</button>';
       }).join('')+'</div>'+
 
-    '<div class="tiny libcount">'+(list.length?fa(list.length)+' فعالیت از ۱۰۷':'۰ نتیجه')+
+    '<div class="tiny libcount">'+(list.length?fa(list.length)+' فعالیت از '+(path==='self'?'۴۵':(path==='couple'?'۳۵':(path==='schema'?'۲۷':'۱۰۷'))):'۰ نتیجه')+
       ' · مسیر: '+(path==='all'?'همه':(path==='self'?'فردی':(path==='couple'?'زوج‌درمانی':'طرح‌واره')))+
-      ' · دسته: '+cat+'</div>'+
+      ' · دسته: '+cat+
+      ' <span class="pathcounts"><b>۴۵</b> پایه و فردی · <b>۳۵</b> زوج‌درمانی · <b>۲۷</b> طرح‌واره</span></div>'+
 
     (list.length?
       '<div class="libgrid">'+list.map(function(a){
@@ -515,9 +592,13 @@ function R_library(){
           '<div class="acl-body"><h3>'+a[1]+'</h3>'+
             '<div class="tiny acl-cat">'+a[2]+'</div>'+
             '<p class="acl-desc">'+a[4]+' · هدف: '+a[3]+'</p>'+
+            '<div class="acl-edu '+(a[10]?'has':'no')+' tiny">'+
+              (a[10]? ic('i-checkc')+'راهنمای تمرین دارد — دکمهٔ «آموزش»':'راهنمای تمرین ندارد — «جزئیات»')+'</div>'+
             '<div class="acl-actions">'+
               '<button class="btn primary sm" data-addplan="'+a[1]+'">'+ic('i-plus')+'افزودن به برنامه</button>'+
-              '<button class="btn ghost sm" data-actdetail="'+a[1]+'">آموزش</button>'+
+              (a[0]==='ACT006'? '<button class="btn soft sm" data-breathopen="library">'+ic('i-play')+'شروع تنفس</button>':'')+
+              (a[10]? '<button class="btn ghost sm" data-actdetail="'+a[1]+'">'+ic('i-book')+'آموزش</button>'
+                    : '<button class="btn ghost sm" data-actdetail="'+a[1]+'">جزئیات</button>')+
               '<button class="btn ghost sm" data-liblock>غیرفعال</button>'+
             '</div></div></article>';
       }).join('')+'</div>'+
@@ -528,6 +609,8 @@ function R_library(){
         '<button class="btn soft sm" style="margin-top:10px" data-libreset>پاک‌کردن فیلترها</button></div>')+
 
     note('کارت فقط همین‌ها را دارد: تصویر · نام · دسته · توضیح · تناوب به **واژه** · هدف با برچسب صریح «هدف:». '+
+      '**آموزش فقط برای فعالیت‌هایی که راهنمای تمرین دارند**؛ بقیه کارت «جزئیات» دارند تا کاربر دنبال چیزی نگردد که نیست. '+
+      '«تمرین تنفس ۴-۷-۸» از همین‌جا یک‌کلیک شروع می‌شود. '+
       'شناسهٔ `ACT` در محصول نمایش داده نمی‌شود (اینجا فقط برای تطبیق با بک‌اند است). '+
       '**۱۴ دسته** و **۵ تناوب** از بک‌اند می‌آیند؛ این نمونه ۱۴ کارت از ۱۰۷ را نشان می‌دهد. '+
       'اگر فقط یک دورهٔ `RUNNING` باشد، «افزودن» می‌گوید چرا رد می‌شود و مسیر دورهٔ نو را پیشنهاد می‌دهد.');
@@ -541,28 +624,155 @@ var HOWSTEPS=[
   ['i-chart','دیدن گزارش','ده تب تحلیلی','reports'],
   ['i-book','شناختن الگو','بینش‌های شخصی','book']
 ];
+
+/* ==========================================================================
+   کاتالوگ کامل آموزش — ۷۲ راهنما
+   ۱۰ عمومی و فردی + ۳۵ تمرین زوج‌درمانی + ۹ تکنیک طرح‌واره + ۱۸ طرح‌واره
+   هر ردیف: [کد، عنوان، توضیح، مدت، تنها/دو نفره، جوجه، رنگ، مسیر، فصل، خوانده‌شده، افزودن به برنامه]
+   مالک: «آموزش کامل و یک‌به‌یک هر تمرین، نقطهٔ قوت برنامه بود» — پس همه اینجا فهرست می‌شوند.
+   ========================================================================== */
 var EDU=[
-  ['ورود به جوما','فلسفه و قواعد ثبت: چه چیزی، کِی، و چرا.','owl-hi','--brand-soft',true,'self','۵ دقیقه','تنها'],
-  ['تشخیص سبک مقابله','چهار سبک رایج و اینکه کدام‌یک مال توست.','owl-think','--indigo-soft',false,'schema','۷ دقیقه','تنها'],
-  ['بازسازی صمیمیت عاطفی','یک تمرین کوتاه برای نزدیک‌شدن دوباره.','owl-hi','--rose-soft',false,'couple','۱۵ دقیقه','دو نفره'],
-  ['تمرین گفت‌وگو بدون دعوا','قواعد مکث، شنیدن و پاسخ‌ندادن فوری.','owl-hi','--rose-soft',false,'couple','۲۰ دقیقه','دو نفره'],
-  ['هنر شنیدن همسر','شنیدن بدون آماده‌کردن جواب.','owl-think','--rose-soft',false,'couple','۱۰ دقیقه','دو نفره'],
-  ['قدردانی روزانه','یک جملهٔ مشخص، هر شب.','owl-cheer','--gold-soft',false,'couple','۵ دقیقه','دو نفره'],
-  ['نقشهٔ طرح‌وارهٔ من','کدام الگو بیشتر برمی‌گردد.','owl-think','--indigo-soft',false,'schema','۱۰ دقیقه','تنها'],
-  ['ذهن‌آگاهی در سه دقیقه','نفس، بدن، فکر — بدون قضاوت.','owl-lotus','--lav-soft',false,'self','۳ دقیقه','تنها'],
-  ['خواب و بی‌خوابی','سه عادت ساده که شب را بهتر می‌کند.','owl-moon','--indigo-soft',false,'self','۶ دقیقه','تنها'],
-  ['مرزها: نه گفتن محترمانه','تمرین جمله‌های کوتاه و روشن.','owl-read','--lav-soft',false,'schema','۸ دقیقه','تنها']
+  /* ---------- عمومی و فردی (۱۰) ---------- */
+  ['G01','ورود به جوما','فلسفه و قواعد ثبت: چه چیزی، کِی، و چرا.','۵ دقیقه','تنها','owl-hi','--brand-soft','self','gen',true,false],
+  ['G02','تمرین تنفس ۴-۷-۸','انیمیشنی: دایره با دم باز می‌شود، با بازدم جمع. سه دور.','۳ دقیقه','تنها','owl-lotus','--lav-soft','self','gen',false,true],
+  ['G03','ذهن‌آگاهی در سه دقیقه','نفس، بدن، فکر — بدون قضاوت.','۳ دقیقه','تنها','owl-lotus','--lav-soft','self','gen',false,true],
+  ['G04','بدن‌آگاهی: پویش پنج‌دقیقه‌ای','از سر تا پا، آرام و بی‌عجله.','۵ دقیقه','تنها','owl-lotus','--indigo-soft','self','gen',false,false],
+  ['G05','خواب و بی‌خوابی','سه عادت ساده که شب را بهتر می‌کند.','۶ دقیقه','تنها','owl-moon','--indigo-soft','self','gen',false,true],
+  ['G06','مرزها: نه گفتن محترمانه','تمرین جمله‌های کوتاه و روشن.','۸ دقیقه','تنها','owl-read','--lav-soft','self','gen',false,true],
+  ['G07','دفترچهٔ سه‌خطی','سه جمله در پایان روز: چه شد، چه حس شد، چه می‌خواهم.','۴ دقیقه','تنها','owl-read','--gold-soft','self','gen',false,false],
+  ['G08','پیاده‌روی آگاهانه','ده دقیقه راه‌رفتن بدون گوشی.','۱۰ دقیقه','تنها','owl-fit','--brand-soft','self','gen',false,true],
+  ['G09','برنامه‌ریزی سبک روز','سه کار مهم، نه بیست کار.','۷ دقیقه','تنها','owl-fit','--sky-soft','self','gen',false,false],
+  ['G10','استرس: چه وقت کمک تازه بگیریم','نشانه‌ها و مسیر گرفتن کمک حرفه‌ای.','۶ دقیقه','تنها','owl-think','--coral-soft','self','gen',false,false],
+
+  /* ---------- زوج‌درمانی (۳۵) — فصل ۱: پایه‌های گفت‌وگو ---------- */
+  ['C01','نقشهٔ رابطه','گفت‌وگوی ساختاریافته دربارهٔ نیازهای هر دو.','۱۵ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c1',false,true],
+  ['C02','گوش‌دادن آینه‌ای','بازگویی حرف طرف مقابل، پیش از پاسخ‌دادن.','۱۰ دقیقه','دو نفره','owl-think','--rose-soft','couple','c1',false,true],
+  ['C03','جملهٔ «من» به‌جای «تو»','بیان احساس بدون سرزنش: «من ناراحت شدم چون…».','۸ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c1',false,false],
+  ['C04','گفت‌وگو بدون دعوا','قواعد مکث، شنیدن و پاسخ‌ندادن فوری.','۲۰ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c1',true,true],
+  ['C05','پرسش‌های عمیق‌تر','کارت‌های پرسش برای شناخت دوبارهٔ هم.','۱۲ دقیقه','دو نفره','owl-think','--rose-soft','couple','c1',false,false],
+  ['C06','توقف دعوا با علامت توافقی','یک کلمه یا حرکت، برای وقتی کار بالا می‌گیرد.','۵ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c1',false,false],
+
+  /* فصل ۲: شنیدن و نزدیکی */
+  ['C07','هنر شنیدن همسر','شنیدن بدون آماده‌کردن جواب.','۱۰ دقیقه','دو نفره','owl-think','--rose-soft','couple','c2',true,true],
+  ['C08','بازسازی صمیمیت عاطفی','یک تمرین کوتاه برای نزدیک‌شدن دوباره.','۱۵ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c2',false,true],
+  ['C09','پنج دقیقه بدون صفحه','حضور کامل، بدون گوشی، هر روز.','۵ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c2',false,true],
+  ['C10','خاطره‌بازی موتور رابطه','یادآوری تجربه‌های خوب مشترک.','۱۰ دقیقه','دو نفره','owl-cheer','--gold-soft','couple','c2',false,false],
+  ['C11','برنامهٔ شب دو نفره','یک شب ثابت در هفته، فقط برای هم.','۲۰ دقیقه','دو نفره','owl-moon','--indigo-soft','couple','c2',false,false],
+  ['C12','گفت‌وگوی محترمانه دربارهٔ نزدیکی','زبان مشترک برای یک حرف سخت و لازم.','۲۰ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c2',false,false],
+
+  /* فصل ۳: قدردانی و گرمی */
+  ['C13','قدردانی روزانه','یک جملهٔ مشخص، هر شب.','۵ دقیقه','دو نفره','owl-cheer','--gold-soft','couple','c3',false,true],
+  ['C14','کارهای مشترک کوچک','ساختن روال‌های دو نفره‌ای که هر روز تکرار می‌شوند.','۱۰ دقیقه','دو نفره','owl-hi','--brand-soft','couple','c3',false,false],
+  ['C15','جمله‌سازی هدیه‌ای','سه جملهٔ مشخص که به او می‌گویی چرا مهم است.','۷ دقیقه','دو نفره','owl-cheer','--gold-soft','couple','c3',false,false],
+  ['C16','پیام گرم روزانه','یک پیام کوتاه وسط روز — بدون درخواست، فقط حضور.','۳ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c3',false,false],
+  ['C17','جشن‌های کوچک دو نفره','بزرگ‌کردن موفقیت‌های کوچک، نه فقط تولدها.','۱۰ دقیقه','دو نفره','owl-cheer','--gold-soft','couple','c3',false,false],
+
+  /* فصل ۴: اختلاف و مرز */
+  ['C18','راهکار برد-برد در اختلاف','گام‌های مذاکره‌ای که هیچ‌کس بازنده نباشد.','۲۰ دقیقه','دو نفره','owl-think','--sky-soft','couple','c4',false,true],
+  ['C19','تقسیم کار خانه','بازنویسی مسئولیت‌ها، این بار شفاف.','۲۰ دقیقه','دو نفره','owl-read','--sky-soft','couple','c4',false,false],
+  ['C20','بودجهٔ خانواده بدون تنش','مرور مشترک پول با قاعده‌های روشن.','۲۰ دقیقه','دو نفره','owl-read','--sky-soft','couple','c4',false,false],
+  ['C21','مرزهای رابطه با خانواده‌ها','توافق مشترک دربارهٔ چه کسی، چه وقت، چقدر.','۱۵ دقیقه','دو نفره','owl-hi','--lav-soft','couple','c4',false,true],
+  ['C22','تحمل تفاوت','وقتی ارزش‌ها کنار هم می‌ایستند، نه روبه‌روی هم.','۱۲ دقیقه','دو نفره','owl-think','--lav-soft','couple','c4',false,false],
+  ['C23','فاصلهٔ سالم در رابطه','زمان تنهایی، بدون حس رهاشدگی.','۱۰ دقیقه','دو نفره','owl-moon','--indigo-soft','couple','c4',false,false],
+
+  /* فصل ۵: ترمیم و اعتماد */
+  ['C24','بازسازی اعتماد','تعهدهای کوچک و قابل اندازه‌گیری، روز به روز.','۲۰ دقیقه','دو نفره','owl-think','--sky-soft','couple','c5',false,true],
+  ['C25','عذرخواهی مؤثر','سه بخش عذرخواهی کامل — بدون «اما».','۸ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c5',false,true],
+  ['C26','بخشیدن مرحله‌ای','بخشیدن بدون فراموش‌کردن و بدون شتاب.','۱۵ دقیقه','دو نفره','owl-lotus','--lav-soft','couple','c5',false,false],
+  ['C27','جبران پس از اشتباه','یک برنامهٔ ترمیم کوتاه و مشخص.','۱۵ دقیقه','دو نفره','owl-think','--sky-soft','couple','c5',false,false],
+  ['C28','همدلی در تنش','شناختن احساس زیر خشم، قبل از پاسخ.','۱۲ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c5',false,true],
+  ['C29','توافق روی نشانه‌های هشدار','چه وقت لازم است سراغ کمک تازه برویم؟','۱۵ دقیقه','دو نفره','owl-think','--coral-soft','couple','c5',false,false],
+
+  /* فصل ۶: رابطه در گذر زمان */
+  ['C30','جلسهٔ هفتگی رابطه','بیست دقیقهٔ ثابت در هفته، برای حرف‌های نگفته.','۲۰ دقیقه','دو نفره','owl-moon','--sky-soft','couple','c6',false,true],
+  ['C31','تجربهٔ تازهٔ مشترک','یک کار نو در هفته — دشمن عادت‌زدگی.','۳۰ دقیقه','دو نفره','owl-cheer','--gold-soft','couple','c6',false,false],
+  ['C32','بازبینی ماهانهٔ رابطه','چه چیزی خوب بود، چه چیزی سخت، چه چیزی را عوض کنیم.','۲۰ دقیقه','دو نفره','owl-moon','--sky-soft','couple','c6',false,true],
+  ['C33','هدف مشترک یک‌ماهه','یک هدف، دو نفر، سی روز.','۱۵ دقیقه','دو نفره','owl-fit','--brand-soft','couple','c6',false,false],
+  ['C34','نقشهٔ دلبستگی دو نفره','سبک خودت و او، و اینکه کجا به هم می‌رسید.','۱۵ دقیقه','دو نفره','owl-think','--indigo-soft','couple','c6',false,false],
+  ['C35','همراهی در روز سخت','چه کارهایی واقعاً کمک می‌کند، وقتی حال او بد است.','۱۰ دقیقه','دو نفره','owl-hi','--rose-soft','couple','c6',false,false],
+
+  /* ---------- طرح‌واره: ۹ تکنیک ---------- */
+  ['T01','پرسشگری تجربی (سقراطی)','با چند پرسش کوتاه، شواهد یک باور را بررسی کن.','۱۰ دقیقه','تنها','owl-think','--indigo-soft','schema','sk',false,true],
+  ['T02','تصویرسازی ذهنی','صحنهٔ سخت را تصور کن و پایانش را خودت بنویس.','۱۲ دقیقه','تنها','owl-read','--indigo-soft','schema','sk',false,false],
+  ['T03','بازوالدینی محدود','با خودِ کوچک‌ترت حرف بزن؛ این بار مانند والدِ مهربان.','۱۵ دقیقه','تنها','owl-hi','--lav-soft','schema','sk',false,true],
+  ['T04','گفت‌وگوی دو صندلی','دو حالت ذهنت را روبه‌روی هم بنشان و حرفشان را بشنو.','۱۵ دقیقه','تنها','owl-think','--lav-soft','schema','sk',false,false],
+  ['T05','کارت‌های آموزشی طرح‌واره','یک کارت جیبی برای لحظه‌ای که الگو برمی‌گردد.','۵ دقیقه','تنها','owl-read','--gold-soft','schema','sk',false,true],
+  ['T06','شکستن الگو با تمرین رفتاری','یک کار کوچک و ترسناک، هر هفته یک پله.','۱۵ دقیقه','تنها','owl-fit','--brand-soft','schema','sk',false,true],
+  ['T07','نام‌گذاری و تنظیم هیجان','نام احساس، شدتش، و یک کار کوچک برای کم‌کردنش.','۸ دقیقه','تنها','owl-hi','--coral-soft','schema','sk',false,true],
+  ['T08','گفت‌وگوی درونی مهربان','جمله‌ای که به دوستت می‌گویی، به خودت هم بگو.','۷ دقیقه','تنها','owl-cheer','--rose-soft','schema','sk',false,false],
+  ['T09','مهارت مرز و ابراز','خواستن، ردکردن و مذاکره‌کردن — با جمله‌های کوتاه.','۱۰ دقیقه','تنها','owl-hi','--sky-soft','schema','sk',false,true],
+
+  /* ---------- طرح‌واره: ۱۸ طرح‌واره ---------- */
+  ['S01','رهاشدگی / بی‌ثباتی','ترس از تنها ماندن و چسبیدن به رابطه‌ها.','۸ دقیقه','تنها','owl-moon','--indigo-soft','schema','sc',false,false],
+  ['S02','بی‌اعتمادی / بدرفتاری','انتظار آسیب از دیگران، حتی وقتی خبری نیست.','۸ دقیقه','تنها','owl-think','--indigo-soft','schema','sc',false,false],
+  ['S03','محرومیت هیجانی','این حس که کسی واقعاً حالم را نمی‌فهمد.','۸ دقیقه','تنها','owl-hi','--coral-soft','schema','sc',false,false],
+  ['S04','نقص / شرم','باور به اینکه «من کافی نیستم».','۸ دقیقه','تنها','owl-think','--coral-soft','schema','sc',false,false],
+  ['S05','انزوای اجتماعی','حس بیگانه‌بودن، حتی در جمع.','۷ دقیقه','تنها','owl-hi','--lav-soft','schema','sc',false,false],
+  ['S06','وابستگی / بی‌کفایتی','ناتوانی در تصمیم‌گرفتن بدون تأیید دیگران.','۸ دقیقه','تنها','owl-think','--lav-soft','schema','sc',false,false],
+  ['S07','آسیب‌پذیری','ترس مداوم از اتفاق بد برای خودت یا عزیزانت.','۷ دقیقه','تنها','owl-moon','--indigo-soft','schema','sc',false,false],
+  ['S08','خودِ تحول‌نیافته / گرفتار','گره‌خوردن با دیگران تا حد از دست دادن خودت.','۸ دقیقه','تنها','owl-hi','--indigo-soft','schema','sc',false,false],
+  ['S09','شکست','باور به اینکه هر کاری را خراب می‌کنی.','۷ دقیقه','تنها','owl-fit','--gold-soft','schema','sc',false,false],
+  ['S10','اطاعت','تسلیم‌شدن در برابر خواستهٔ دیگران، برای فرار از تنش.','۸ دقیقه','تنها','owl-read','--gold-soft','schema','sc',false,false],
+  ['S11','ایثار','گذاشتن نیاز خودت آخر صف، همیشه.','۸ دقیقه','تنها','owl-hi','--rose-soft','schema','sc',false,false],
+  ['S12','تأییدطلبی','تعریف دیگران، سوختِ حال خوبت شده.','۷ دقیقه','تنها','owl-cheer','--gold-soft','schema','sc',false,false],
+  ['S13','منفی‌گرایی / بدبینی','چشم‌داشتن به بدترین احتمال، در هر موقعیت.','۷ دقیقه','تنها','owl-think','--sky-soft','schema','sc',false,false],
+  ['S14','بازداری هیجانی','نگه‌داشتن احساس‌ها در سینه، چون «نمی‌شود گفت».','۸ دقیقه','تنها','owl-hi','--lav-soft','schema','sc',false,false],
+  ['S15','معیارهای سختگیرانه','کمال‌گرایی‌ای که لذت را از موفقیت می‌گیرد.','۸ دقیقه','تنها','owl-fit','--sky-soft','schema','sc',false,false],
+  ['S16','استحقاق','باور به اینکه قواعد برای دیگران است.','۷ دقیقه','تنها','owl-cheer','--gold-soft','schema','sc',false,false],
+  ['S17','خودکنترلی ناکافی','شروع زیاد، ادامهٔ کم.','۸ دقیقه','تنها','owl-lotus','--brand-soft','schema','sc',false,true],
+  ['S18','تنبیه‌گری','سخت‌گیری بی‌رحمانه با خود یا دیگران وقتی خطایی رخ می‌دهد.','۸ دقیقه','تنها','owl-think','--coral-soft','schema','sc',false,false]
 ];
+var EDU_CH=[
+  ['gen','عمومی و فردی','۱۰ راهنما — شروع، آرام‌سازی، خواب، مرزها','self','owl-lotus','--brand-soft'],
+  ['c1','زوج‌درمانی · فصل ۱ — پایه‌های گفت‌وگو','۶ تمرین · یکی‌یکی','couple','owl-hi','--rose-soft'],
+  ['c2','زوج‌درمانی · فصل ۲ — شنیدن و نزدیکی','۶ تمرین · یکی‌یکی','couple','owl-hi','--rose-soft'],
+  ['c3','زوج‌درمانی · فصل ۳ — قدردانی و گرمی','۵ تمرین · یکی‌یکی','couple','owl-cheer','--gold-soft'],
+  ['c4','زوج‌درمانی · فصل ۴ — اختلاف و مرز','۶ تمرین · یکی‌یکی','couple','owl-think','--sky-soft'],
+  ['c5','زوج‌درمانی · فصل ۵ — ترمیم و اعتماد','۶ تمرین · یکی‌یکی','couple','owl-lotus','--lav-soft'],
+  ['c6','زوج‌درمانی · فصل ۶ — رابطه در گذر زمان','۶ تمرین · یکی‌یکی','couple','owl-moon','--sky-soft'],
+  ['sk','طرح‌واره · ۹ تکنیک','تکنیک‌های پایه برای شناختن و کار کردن با الگوها','schema','owl-think','--indigo-soft'],
+  ['sc','طرح‌واره · ۱۸ طرح‌واره','فهرست کامل طرح‌واره‌های ناسازگار اولیه','schema','owl-read','--indigo-soft']
+];
+function eduPathName(p){ return p==='couple'?'زوج‌درمانی':(p==='schema'?'طرح‌واره':'عمومی و فردی'); }
+function eduCount(p){ return EDU.filter(function(e){ return p==='all'||e[7]===p; }).length; }
+function eduRow(e){
+  var isBreath=(e[0]==='G02');
+  return '<div class="edu-row">'+
+    '<span class="er-code num">'+e[0]+'</span>'+
+    '<div class="er-body"><b>'+e[1]+'</b>'+
+      '<p class="tiny">'+e[2]+'</p>'+
+      '<div class="er-meta tiny">'+ic('i-clock')+e[3]+' · '+e[4]+
+        (e[5]&&e[5].indexOf('جوجه')>=0?'':'')+
+        (e[9]?' · <span class="readdot on"><i></i>خوانده‌شده</span>':'')+'</div></div>'+
+    '<div class="er-acts">'+
+      (isBreath? '<button class="btn primary sm" data-breathopen="edu">'+ic('i-play')+'شروع تنفس</button>'
+               : '<button class="btn primary sm" data-eduopen="'+e[1]+'">شروع تمرین</button>')+
+      (e[10]?'<button class="btn soft sm" data-addplan="'+e[1]+'">افزودن به برنامه</button>':'')+
+    '</div></div>';
+}
+function eduChapter(ch,path){
+  var items=EDU.filter(function(e){ return e[8]===ch[0]; });
+  var open=(APP.eduChap==='all'||APP.eduChap===ch[0]);
+  return '<section class="chap-card'+(open?' open':'')+'">'+
+    '<div class="chap-head">'+
+      '<div class="chap-art" style="background:var('+ch[5]+')">'+owl(ch[4],40)+'</div>'+
+      '<div class="chap-t"><b>'+ch[1]+'</b><span class="tiny">'+ch[2]+(path==='all'?' · '+eduPathName(ch[3]):'')+'</span></div>'+
+      '<span class="chip">'+fa(items.length)+' راهنما</span>'+
+      '<button class="btn '+(open?'ghost':'soft')+' sm" data-educhap="'+ch[0]+'">'+(open?'بستن فهرست':'دیدن فهرست')+'</button>'+
+    '</div>'+
+    (open? '<div class="edu-list">'+items.map(eduRow).join('')+'</div>' : '')+
+  '</section>';
+}
 function R_edu(){
   var tab=APP.eduTab||'map';
   var path=APP.eduPath||'all';
-  var guides=EDU.filter(function(e){ return path==='all'||e[5]===path; });
+  var chips=[['all','همه'],['self','فردی'],['couple','زوج‌درمانی'],['schema','طرح‌واره']];
 
-  return head('آموزش','آموزش','۶۳ راهنما: ۱ راهنمای عمومی + ۳۵ تمرین زوج‌درمانی + ۲۷ طرح‌واره — یک‌به‌یک، تصویری و بی‌تور اجباری.',
-      '<span class="chip s">۶۳ راهنما</span>')+
+  return head('آموزش','آموزش','۷۲ راهنما، یک‌به‌یک: ۱۰ عمومی و فردی + ۳۵ تمرین زوج‌درمانی + ۹ تکنیک و ۱۸ طرح‌واره. تصویری، بی‌تور اجباری.',
+      '<span class="chip s">۷۲ راهنما</span>')+
 
     '<div class="tabs">'+
-      [['map','جوما چطور کار می‌کند'],['cando','چه می‌توانی، چه نمی‌توانی'],['cat','کاتالوگ ۶۳ راهنما'],['paths','دو مسیر تخصصی']]
+      [['map','جوما چطور کار می‌کند'],['cando','چه می‌توانی، چه نمی‌توانی'],['cat','کاتالوگ ۷۲ راهنما'],['paths','دو مسیر تخصصی']]
       .map(function(t2){return '<button class="'+(tab===t2[0]?'on':'')+'" data-edutab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
     '</div>'+
 
@@ -576,8 +786,9 @@ function R_edu(){
             '<span class="hn">'+ic(s[0],'',22)+'</span>'+
             '<b>'+s[1]+'</b><small>'+s[2]+'</small></div>';
         }).join('')+'</div>'+
-        '<div class="breath">'+owl('owl-lotus',30)+'<span>تمرین نفس: ۴ ثانیه دم، ۶ ثانیه بازدم — سه بار. '+
-          'این تمرین هیچ پاداشی نمی‌سازد؛ فقط آرام می‌کند.</span></div>'+
+        '<div class="breath">'+owl('owl-lotus',30)+'<span>تمرین تنفس ۴-۷-۸ — دایره با دم باز می‌شود، با بازدم جمع. '+
+          'صدای راهنما اختیاری و پیش‌فرض خاموش است. این تمرین هیچ پاداشی نمی‌سازد؛ فقط آرام می‌کند.</span>'+
+          '<button class="btn primary sm" data-breathopen="edu">شروع تنفس</button></div>'+
       '</div>'
     : tab==='cando'?
       '<div class="card"><h3>چه می‌توانی، چه نمی‌توانی</h3>'+
@@ -589,6 +800,7 @@ function R_edu(){
          'آبت را در طول روز اضافه کنی؛ آخر روز خودکار قطعی می‌شود',
          'فعالیت‌هایت را در دورهٔ <b>در حال ساخت</b> کم و زیاد کنی',
          'هر وقت خواستی «بعداً» را بزنی و حال ثبت نکنی',
+         'تمرین تنفس را همین‌جا، بی‌ثبت‌کردن، انجام بدهی',
          'بعد از چند روز غیبت برگردی؛ چیزی از دست نمی‌رود']
         .map(function(x){return '<li>'+x+'</li>';}).join('')+
       '</ul></div><div class="cd-col no"><h3>🚫 نمی‌توانی</h3><ul>'+
@@ -600,44 +812,40 @@ function R_edu(){
         .map(function(x){return '<li>'+x[0]+(x[1]?'<span class="why">'+x[1]+'</span>':'')+'</li>';}).join('')+
       '</ul></div></div></div>'
     : tab==='paths'?
-      /* دو مسیر تخصصی — با فهرست کامل تمرین‌های هر مسیر */
       '<div class="path-hero couple"><span class="pathpill couple">زوج‌درمانی · ۳۵ تمرین</span>'+
         '<h3>تمرین‌هایی برای دو نفر</h3>'+
-        '<p class="tiny">گفت‌وگو، قدردانی، شنیدن و کارهای مشترک. هر تمرین یک جلسهٔ کوتاه است و می‌گوید چند دقیقه وقت می‌برد. '+
-        'کنار هر تمرین نوشته شده که بدون طرف مقابل هم می‌شود انجامش داد یا نه.</p>'+
-        '<button class="btn soft sm" data-eduopen="فهرست تمرین‌های زوج‌درمانی">دیدن فهرست ۳۵ تمرین</button></div>'+
-      '<div class="path-hero schema"><span class="pathpill schema">طرح‌واره · ۲۷ تمرین</span>'+
+        '<p class="tiny">شش فصل: پایه‌های گفت‌وگو · شنیدن و نزدیکی · قدردانی و گرمی · اختلاف و مرز · ترمیم و اعتماد · رابطه در گذر زمان. '+
+        'هر تمرین یک جلسهٔ کوتاه است و می‌گوید چند دقیقه وقت می‌برد و دو نفره است یا تنها.</p>'+
+        '<button class="btn primary sm" data-edupath="couple" data-educhap="all">'+ic('i-list')+'دیدن فهرست ۳۵ تمرین</button></div>'+
+      '<div class="path-hero schema"><span class="pathpill schema">طرح‌واره · ۹ تکنیک و ۱۸ طرح‌واره</span>'+
         '<h3>شناختن الگوهای تکرارشونده</h3>'+
         '<p class="tiny">برای وقتی که یک الگو چند بار برگشته. این راهنماها <b>جای درمان نیستند</b> و کنار هر کدام همین نوشته شده است.</p>'+
-        '<button class="btn soft sm" data-eduopen="فهرست تمرین‌های طرح‌واره">دیدن فهرست ۲۷ تمرین</button></div>'+
-      '<div class="tiny" style="margin:8px 2px">۹ تکنیک و ۱۸ طرح‌وارهٔ سند مادر، زیرمجموعهٔ همین دو مسیرند؛ '+
-        '۳۵ و ۲۷ شمارِ <b>راهنمای تمرین</b> است.</div>'
+        '<div class="paths-acts"><button class="btn primary sm" data-edupath="schema" data-educhap="sk">دیدن ۹ تکنیک</button>'+
+        '<button class="btn soft sm" data-edupath="schema" data-educhap="sc">دیدن ۱۸ طرح‌واره</button></div></div>'+
+      '<div class="tiny" style="margin:8px 2px">۹ تکنیک و ۱۸ طرح‌وارهٔ سند مادر، زیرمجموعهٔ مسیر طرح‌واره‌اند؛ '+
+        '۳۵ و ۲۷ شمارِ <b>راهنمای تمرین</b> است (۲۷ = ۹ تکنیک + ۱۸ طرح‌واره).</div>'
     :
-      /* کاتالوگ */
-      '<div class="filterchips">'+[['all','همهٔ راهنماها'],['couple','زوج‌درمانی'],['schema','طرح‌واره'],['self','عمومی']]
-        .map(function(p2){
-          return '<button class="'+(path===p2[0]?'btn primary sm':'btn ghost sm')+'" data-edupath="'+p2[0]+'">'+p2[1]+'</button>';
-        }).join('')+'</div>'+
-      '<div class="tiny libcount">'+fa(guides.length)+' راهنما از ۶۳ · '+
-        (path==='all'?'همهٔ مسیرها':(path==='couple'?'زوج‌درمانی':(path==='schema'?'طرح‌واره':'عمومی')))+'</div>'+
-      '<div class="edu-grid">'+guides.map(function(e,i){
-        return (i===9||i===18?'<div class="breath">'+owl('owl-lotus',28)+'<span>'+
-          (i===9?'تا اینجا، تمرین‌هایی برای ساختن عادت.':'بخش بعدی کمی عمیق‌تر است — با ریتم خودت پیش برو.')+
-          '</span></div>':'')+
-        '<article class="edu-card fadeup">'+
-          '<div class="edu-art" style="background:var('+e[3]+')">'+owl(e[2],54)+
-            '<span class="edu-code">'+(e[5]==='couple'?'زوج‌درمانی':(e[5]==='schema'?'طرح‌واره':'عمومی'))+'</span></div>'+
-          '<div class="edu-body"><h3>'+e[0]+'</h3><p>'+e[1]+'</p>'+
-          '<div class="edu-meta"><span class="tiny">'+e[6]+' · '+e[7]+'</span>'+
-            '<span class="readdot '+(e[4]?'on':'')+'"><i></i>'+(e[4]?'خوانده‌شده':'خوانده‌نشده')+'</span></div>'+
-          '<div style="display:flex;gap:7px;margin-top:9px">'+
-            '<button class="btn primary sm" data-eduopen="'+e[0]+'">شروع تمرین</button>'+
-            (e[8]?'<button class="btn soft sm" data-addplan="'+e[0]+'">افزودن به برنامه</button>':'')+
-          '</div></div></article>';
-      }).join('')+'</div>'+
-      '<div class="pager tiny">۶۳ راهنما — نمایش ۱ تا '+fa(guides.length)+' <button class="btn ghost sm" data-edumore>نمایش بیشتر</button></div>'
+      /* کاتالوگ کامل */
+      '<div class="filterchips">'+chips.map(function(p2){
+          return '<button class="'+(path===p2[0]?'btn primary sm':'btn ghost sm')+'" data-edupath="'+p2[0]+'">'+
+            p2[1]+' <span class="chnum">'+fa(eduCount(p2[0]))+'</span></button>';
+        }).join('')+
+        (path!=='all'? '<button class="btn soft sm" data-educhap="all">'+ic('i-list')+'باز کردن همهٔ فصل‌ها</button>':'')+
+      '</div>'+
+      '<div class="tiny libcount">'+fa(eduCount(path))+' راهنما'+(path==='all'?' از ۷۲':'')+
+        ' · '+(path==='all'?'همهٔ مسیرها':eduPathName(path))+
+        ' <span class="pathcounts">فردی ۱۰ · زوج‌درمانی ۳۵ · طرح‌واره ۲۷</span></div>'+
+      '<div class="chap-wrap">'+
+        EDU_CH.filter(function(ch){ return path==='all'||ch[3]===path; }).map(function(ch){
+          return eduChapter(ch,path); }).join('')+
+      '</div>'+
+      (path==='all'&&!APP.eduChap?
+        '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+        'برای دیدن <b>فهرست یک‌به‌یک</b>، یک مسیر را انتخاب کن یا روی «دیدن فهرست» هر فصل بزن. '+
+        'در محصول واقعی هر ۷۲ راهنما بارگذاری تدریجی دارد، ولی شمار کل همیشه نوشته می‌شود.</div>':'')
     )+
     note('سه قانون این صفحه: هر راهنما **تصویر** دارد نه آیکون · هر محدودیت **دلیل** دارد · '+
       'و هیچ «۵ راهنمای داغ 🔥» یا امتیاز و ستاره‌ای وجود ندارد — کاتالوگ باید آرام و لذت‌بخش باشد، نه بازی. '+
-      'فهرست کامل **۶۳ راهنما** از بک‌اند می‌آید؛ این نمونه بخشی از آن را نشان می‌دهد و «نمایش بیشتر» بارگذاری تدریجی دارد.');
+      'فهرست کامل **۷۲ راهنما** (۱۰ + ۳۵ + ۹ + ۱۸) اینجاست و یک‌به‌یک نوشته شده؛ '+
+      '«طرح‌واره» خودش دو بخش است: ۹ تکنیک و ۱۸ طرح‌واره — همان‌طور که در برنامهٔ اصلی بود.');
 }

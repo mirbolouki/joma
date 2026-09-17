@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۹ — رفع ایرادهای بازبینی: آیکون‌ها · کتابخانه · آموزش · امروز · تقویم · جوجه';
+var BUILD='نسخهٔ ۱۰ — ثبت‌نام کامل · گزارش نموداری · کتابخانه · آموزش کامل · پشتیبانی و پرسش‌ها · خروجی خوانا · تمرین تنفس';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -61,6 +61,14 @@ var APP = {
   contentPage:'about',
   rightsStep:'export',
   authTab:'signup',
+  authRole:'client',
+  authOther:'',
+  authCodeAsked:false,
+  stress:4,          /* آخرین استرس ثبت‌شده — پیشنهاد تنفس از همین می‌آید */
+  phone:'09•••••••۹۱',
+  eduChap:'',
+  faqOpen:'',
+  exportFmt:'report',
   moodStep:0,
   moodAnswers:{},
   water:0
@@ -197,6 +205,8 @@ function render(){
   var bar=document.getElementById('shellbar');
   bar.innerHTML=rvbar();
   renderWater();
+  /* لایهٔ تمرین تنفس — روی هر صفحه‌ای می‌نشیند و با بستن، می‌رود */
+  if(window.BR && BR.open && window.brMount) brMount();
 }
 function soon(s){
   return '<div class="main fadeup" style="max-width:640px;margin:0 auto;padding-top:40px">'+

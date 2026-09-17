@@ -210,10 +210,83 @@ window.INNER_CLICK=function(e){
   if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف فرستاده شد — ۱۵ دقیقه اعتبار'); return; }
   if(e.target.closest('[data-auth]')){
     var a=e.target.closest('[data-auth]').dataset.auth;
-    if(a==='login') toast('خوش برگشتی — ورود انجام شد (نمایشی)');
-    else toast('حساب ساخته شد — برویم اولین برنامه را بسازیم');
+    if(a==='signup'){
+      /* همان فرم کامل: تیک قوانین + تطابق دو رمز + طول رمز */
+      var ebox=document.getElementById('autherr');
+      var pw=document.getElementById('sp'), pw2=document.getElementById('sp2');
+      var errs=[];
+      if(!APP.authTerms) errs.push('تیک «قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم» را بزن.');
+      if(pw&&pw2&&pw.value&&pw2.value&&pw.value!==pw2.value) errs.push('دو رمز یکی نیستند — همان‌جا اصلاح کن.');
+      if(pw&&pw.value&&pw.value.length<8) errs.push('رمز باید حداقل ۸ نویسه باشد.');
+      if(errs.length){
+        if(ebox) ebox.innerHTML='<div class="banner err" style="margin:10px 0 12px">'+ic('i-info')+errs.join('<br>')+'</div>';
+        toast('چند چیز مانده — بالا نوشته شده');
+        return;
+      }
+      toast('حسابت ساخته شد — برویم اولین برنامه را بسازیم');
+      location.hash='#home'; return;
+    }
+    if(a==='forgot'){ toast('نمایشی: تا حل SEC-01 مسیر بازیابی فعال نمی‌شود — با پشتیبانی تماس بگیر'); return; }
+    toast('خوش برگشتی — ورود انجام شد (نمایشی)');
     return;
   }
+
+  /* ---------- تمرین تنفس ۴-۷-۸ ---------- */
+  if(e.target.closest('[data-breathopen]')){ clearTimeout(_moodT); brOpen(); return; }
+  if(e.target.closest('[data-breathlater]')){ toast('باشه — هر وقت خواستی، از «کارهای امروز» شروع کن'); return; }
+  if(e.target.closest('[data-brstart]')){ brStart(); return; }
+  if(e.target.closest('[data-brstop]')){ brStop(); toast('مکث کرد — هر وقت خواستی «شروع» را بزن'); return; }
+  if(e.target.closest('[data-brx]')){ brClose(); return; }
+  if(e.target.closest('[data-brmood]')){ brClose(); APP.moodStep=0; location.hash='#mood'; render(); return; }
+  if((t=e.target.closest('[data-brsnd]'))){
+    BR.sound=!BR.sound;
+    t.textContent=(BR.sound?'صدای راهنما روشن':'بی‌صدا');
+    if(BR.sound) brSound();
+    toast(BR.sound?'صدای راهنما روشن شد — فقط همراهیِ آرام، بی‌پاداش':'بی‌صدا شد');
+    return;
+  }
+
+  /* ---------- ثبت‌نام: نقش «سایر»، کد امنیتی، تیک قوانین ---------- */
+  if(e.target.closest('[data-authcode]')){
+    APP.authCodeAsked=true; render();
+    toast('کد امنیتی فرستاده شد — ۱۵ دقیقه اعتبار دارد');
+    return;
+  }
+  if((t=e.target.closest('[data-tglcb]'))){
+    if(t.dataset.tglcb==='terms'){ APP.authTerms=!APP.authTerms; render(); }
+    else { t.classList.toggle('on'); toast('روی همین دستگاه به خاطر می‌سپاریم'); }
+    return;
+  }
+
+  /* ---------- آموزش: فصل‌ها و مسیرها ---------- */
+  if((t=e.target.closest('[data-educhap]'))){
+    var k=t.dataset.educhap;
+    APP.eduChap=(APP.eduChap===k?'':k);
+    render(); return;
+  }
+  if((t=e.target.closest('[data-edupath]'))){
+    APP.eduPath=t.dataset.edupath;
+    APP.eduChap=(t.dataset.educhap||'');
+    render(); return;
+  }
+
+  /* ---------- پرسش‌های پرتکرار · قالب خروجی · خروجی گزارش ---------- */
+  if((t=e.target.closest('[data-faq]'))){
+    APP.faqOpen=(APP.faqOpen===t.dataset.faq?'':t.dataset.faq);
+    render(); return;
+  }
+  if((t=e.target.closest('[data-exportfmt]'))){ APP.exportFmt=t.dataset.exportfmt; render(); return; }
+  if((t=e.target.closest('[data-export]'))){
+    var ek=t.dataset.export;
+    toast(ek==='image'?'تصویر نمودارها آماده می‌شود — همان چیزی که روی صفحه می‌بینی'
+                     :'گزارش PDF ساخته می‌شود — فارسی، راست‌به‌چپ، با نمودارها');
+    return;
+  }
+  if((t=e.target.closest('[data-copy]'))){
+    try{ if(navigator&&navigator.clipboard) navigator.clipboard.writeText(t.dataset.copy); }catch(_){}
+    toast('شماره کپی شد: ۰۹۹۶۷۹۷۹۴۷۱'); return;
+  }
+  if(e.target.closest('[data-repbuild]')){ toast('نمودار ترکیبی ساخته شد — هر دو سری با برچسب خودشان'); return; }
 
   /* ---------- تقویم مسیر ماه ---------- */
   if((t=e.target.closest('[data-cald]'))){
@@ -496,7 +569,7 @@ document.addEventListener('click',function(e){
 
 /* ---------- قدرت رمز ---------- */
 document.addEventListener('input',function(e){
-  if(!e.target.matches('[data-strength]')) return;
+  if(!e.target.matches('[data-strength],[data-authpw]')) return;
   var v=e.target.value, sc=0;
   if(v.length>=8) sc++;
   if(/[A-Za-z]/.test(v)&&/[0-9]/.test(v)) sc++;
@@ -536,6 +609,11 @@ document.addEventListener('click',function(e){
   if(e.target.closest('[data-addok]')){ closeModal(); toast('به برنامه اضافه شد — هدفش هم ثبت شد'); }
 });
 
+/* ---------- ثبت‌نام: فیلد «سایر» ---------- */
+document.addEventListener('input',function(e){
+  if(e.target.matches('[data-authother]')) APP.authOther=e.target.value;
+});
+
 /* ---------- جست‌وجوی کتابخانه ---------- */
 document.addEventListener('input',function(e){
   if(!e.target.matches('[data-libq]')) return;
@@ -551,4 +629,6 @@ document.addEventListener('input',function(e){
 document.addEventListener('change',function(e){
   if(e.target.matches('[data-libcat]')){ APP.libCat=e.target.value; render(); return; }
   if(e.target.matches('[data-libfreq]')){ APP.libFreq=e.target.value; render(); return; }
+  /* نقش انتخابی در ثبت‌نام — «سایر» فیلد خودش را باز می‌کند */
+  if(e.target.matches('[data-authrole]')){ APP.authRole=e.target.value; render(); return; }
 });
