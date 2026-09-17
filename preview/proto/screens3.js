@@ -409,31 +409,59 @@ function R_admin(embedded){
       '<b>مدیر دادهٔ درمانی کاربران را به‌عنوان ابزار مدیریت نمی‌بیند.</b> برای دیدن وضعیت یک کاربر، همان مسیر مشاور و همان مجوزها لازم است.</div>'+
     '</div>';
   } else if(sec==='users'){
+    var R=APP.admRoles||['client'];
+    var isCoach=(APP.admProvider==='ACTIVE');
+    var roleChip=function(k){
+      var m={client:['کاربری','g'],coach:['مربی (coach)','ind'],admin:['مدیر','gold']}[k]||[k,''];
+      return '<span class="chip '+m[1]+'" style="font-size:10px">'+m[0]+'</span>';
+    };
     panel='<div class="card"><h3>'+ic('i-users')+'کاربران</h3>'+
       '<div class="searchbar">'+ic('i-search')+'<input class="inp" placeholder="جست‌وجوی نام یا نام کاربری…"></div>'+
-      '<div class="filterchips">'+['همه','فعال','غیرفعال','دارای مشاور','بدون مشاور'].map(function(c,i){
+      '<div class="filterchips">'+['همه','فعال','غیرفعال','مشاور','بدون مشاور'].map(function(c,i){
         return '<button class="chip '+(i===0?'g':'')+'">'+c+'</button>';}).join('')+'</div>'+
-      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>کاربر</th><th>نقش‌ها</th><th>وضعیت</th><th>عضویت</th><th></th></tr></thead><tbody>'+
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>کاربر</th><th>نقش‌های حساب</th><th>قابلیت مشاور</th><th>وضعیت</th><th>اقدام</th></tr></thead><tbody>'+
         (empty()?'':'<tr><td>سارا نمونه<div class="tiny num">@sara</div></td>'+
-        '<td><span class="chip g" style="font-size:10px">کاربری</span> <span class="chip ind" style="font-size:10px">مشاور</span></td>'+
-        '<td><span class="tst ok">'+ic('i-check')+'فعال</span></td><td class="num">۱۴۰۴</td>'+
-        '<td><button class="btn ghost sm" data-admrole>دادن نقش</button> <button class="btn ghost sm" data-admoff>غیرفعال</button></td></tr>')+
+        '<td>'+R.map(roleChip).join(' ')+'</td>'+
+        '<td>'+(isCoach?'<span class="tst ok">'+ic('i-check')+'فعال — در فهرست مشاوران می‌آید</span>'
+                        :'<span class="tst">'+ic('i-info')+'ندارد — مشاور نیست</span>')+'</td>'+
+        '<td><span class="tst ok">'+ic('i-check')+'فعال</span></td><td class="adm-acts">'+
+        '<button class="btn ghost sm" data-admrolestep>نقش‌ها</button>'+
+        '<button class="btn '+(isCoach?'ghost':'soft')+' sm" data-admprovider>'+(isCoach?'گرفتن قابلیت مشاور':'مشاورش کن')+'</button>'+
+        '<button class="btn ghost sm" data-admoff>غیرفعال</button></td></tr>')+
       '</tbody></table></div>'+
-      note('«حذف حساب کاربر» ممنوع است تا OPEN-12؛ فقط <b>غیرفعال‌سازی</b>. و هیچ اقدامی بدون لاگ نیست: زمان، کاربر، مقدار قبل.')+
+      '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+      '<b>دو لایهٔ جدا:</b> «نقش‌های حساب» = <span class="num">role_key</span> (کاربری/مربی/مدیر) که مدیر می‌دهد و <b>دسترسی درمانی نمی‌سازد</b>. '+
+      '«قابلیت مشاور» از ردیف <span class="num">providers</span> می‌آید — <b>«مشاورش کن» یعنی همین.</b></div>'+
+      '<div class="banner warn">'+ic('i-lock')+
+      'هر تغییر نقش، <b>تأیید دو مرحله‌ای</b> و <b>لاگ</b> دارد (زمان، کاربر، مقدار قبل) و قابل <b>واگرد</b> است. '+
+      'گرفتن نقش مدیر از <b>آخرین مدیر</b> ممکن نیست.</div>'+
+      note('«حذف حساب کاربر» ممنوع است تا OPEN-12؛ فقط <b>غیرفعال‌سازی</b>. و مدیر نمی‌تواند به‌جای کاربر چیزی ثبت کند.')+
     '</div>';
-  } else if(sec==='coaches'){
+    } else if(sec==='coaches'){
+    var extra=APP.admProvider==='ACTIVE'
+      ? '<tr><td>سارا نمونه <span class="chip ind" style="font-size:9.5px">تازه</span></td><td class="num">۰</td>'+
+        '<td><span class="tst ok">'+ic('i-check')+'فعال</span></td>'+
+        '<td><button class="btn ghost sm" data-admpropose>افزودن مراجع</button></td></tr>' : '';
     panel='<div class="card"><h3>'+ic('i-heart')+'مشاوران</h3>'+
       '<p class="tiny">منبع فهرست: ردیف فعال در لایهٔ <b>providers</b> هم‌مسیر — نه از <span class="num">role_key</span>.</p>'+
-      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>مشاور</th><th>مراجعان باز</th><th>وضعیت ردیف</th><th></th></tr></thead><tbody>'+
+      '<div class="acts" style="justify-content:flex-start;margin-bottom:10px">'+
+      '<button class="btn primary sm" data-admaddcoach>'+ic('i-users')+'مشاور کردن یک کاربر</button></div>'+
+      '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>مشاور</th><th>مراجعان باز</th><th>وضعیت ردیف</th><th>اقدام</th></tr></thead><tbody>'+
         '<tr><td>دکتر مینا رستمی</td><td class="num">۴</td><td><span class="tst ok">'+ic('i-check')+'فعال</span></td>'+
-        '<td><button class="btn ghost sm" data-admblock>غیرفعال‌کردن</button></td></tr>'+
+        '<td><button class="btn ghost sm" data-admpropose>افزودن مراجع</button> '+
+        '<button class="btn ghost sm" data-admblock>غیرفعال‌کردن</button></td></tr>'+
         '<tr><td>علی کاظمی</td><td class="num">۲</td><td><span class="tst ok">'+ic('i-check')+'فعال</span></td>'+
-        '<td><button class="btn ghost sm" data-admblock>غیرفعال‌کردن</button></td></tr>'+
+        '<td><button class="btn ghost sm" data-admpropose>افزودن مراجع</button> '+
+        '<button class="btn ghost sm" data-admblock>غیرفعال‌کردن</button></td></tr>'+
+        extra+
       '</tbody></table></div>'+
-      '<div class="banner warn">'+ic('i-lock')+
+      '<div class="banner warn" style="margin-top:10px">'+ic('i-lock')+
       'غیرفعال‌کردن مشاوری که <b>رابطهٔ باز</b> دارد ممنوع است — اول رابطه‌ها باید بسته شوند.</div>'+
+      '<div class="banner info">'+ic('i-info')+
+      '<b>«افزودن مراجع» فقط پیشنهاد است:</b> مجوزها <b>خالی و روشن‌نشده</b> می‌آید، و رابطه تا <b>پذیرش خودِ کاربر</b> ساخته نمی‌شود. '+
+      'اگر ۷ روز پاسخ ندهد، درخواست منقضی می‌شود — بدون فشار دوباره.</div>'+
     '</div>';
-  } else if(sec==='roles'){
+    } else if(sec==='roles'){
     panel='<div class="card"><h3>'+ic('i-lock')+'نقش‌ها و دسترسی</h3>'+
       '<div class="kv"><span><span class="num">role_key</span> جوما</span><b class="num">member / plus / coach / admin</b></div>'+
       '<div class="kv"><span><span class="num">mode</span> هم‌مسیر</span><b>۱ / ۲ / ۳</b></div>'+
@@ -549,9 +577,9 @@ function R_content(){
       '<div class="grid3">'+
         '<div class="card"><h3>'+ic('i-users')+'چه کسی می‌بیند</h3><p class="tiny">خودت · همراه (فقط با اجازه‌ات) · تیم فنی (فقط برای پشتیبانی، با لاگ)</p></div>'+
         '<div class="card not-box"><h3>'+ic('i-lock')+'چه چیزی هرگز</h3><p class="tiny">فروش داده · تبلیغ هدفمند · خواندن یادداشت بدون اجازه</p></div>'+
-        '<div class="card"><h3>'+ic('i-rights')+'حقوق تو</h3><p class="tiny">دیدن · خروجی گرفتن · پاک‌کردن · پس‌گرفتن اجازهٔ همراه</p></div>'+
+        '<div class="card"><h3>'+ic('i-checkc')+'حقوق تو</h3><p class="tiny">دیدن · خروجی گرفتن · پاک‌کردن · پس‌گرفتن اجازهٔ همراه</p></div>'+
       '</div>'+
-      '<div class="card"><h3>'+ic('i-history')+'تاریخچهٔ تغییرات</h3>'+
+      '<div class="card"><h3>'+ic('i-clock')+'تاریخچهٔ تغییرات</h3>'+
         '<div class="kv"><span>نسخهٔ ۳ — شهریور ۱۴۰۵</span><b>افزودن جدول داده‌ها</b></div>'+
         '<div class="kv"><span>نسخهٔ ۲ — تیر ۱۴۰۵</span><b>روشن‌کردن متن رضایت هم‌مسیر</b></div></div>'+
       '<div class="banner err">'+ic('i-info')+'این صفحات <b>قبل از انتشار تجاری</b> نیاز به بررسی حقوقی دارند (۱۷٫۳).</div>'+

@@ -244,23 +244,99 @@ window.INNER_CLICK=function(e){
 
   /* ---------- کنسول مدیر ---------- */
   if((t=e.target.closest('[data-admsec]'))){ APP.admSec=t.dataset.admsec; render(); return; }
-  if(e.target.closest('[data-admrole]')){
-    modal('<h3>سارا نمونه مدیر شود؟</h3>'+
-      '<p class="tiny">مدیر به همهٔ بخش‌های مدیریتی دسترسی دارد و می‌تواند به دیگران هم نقش بدهد.<br>'+
-      'موقعیت‌های قبلی او: مشاور · ۴ مراجع باز <span class="tiny muted">(از بک‌اند)</span></p>'+
-      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
-      '<span class="sp"></span><button class="btn primary sm" data-admyes>بله، مدیر شود</button></div>');
+  if(e.target.closest('[data-admrolestep]')||e.target.closest('[data-admrole]')){
+    var R=APP.admRoles||['client'];
+    var row=function(k,label,desc){
+      var has=R.indexOf(k)>=0;
+      return '<label class="role-row '+(has?'on':'')+'" data-admtoggle="'+k+'">'+
+        '<span class="cb'+(has?' on':'')+'"></span><div><b>'+label+'</b>'+
+        '<div class="tiny">'+desc+'</div></div><span class="sp"></span>'+
+        (has?'<span class="chip g" style="font-size:10px">دارد</span>':'')+'</label>';
+    };
+    modal('<h3>نقش‌های حساب سارا نمونه</h3>'+
+      '<p class="tiny">این‌ها <b>نقش حساب</b>‌اند (<span class="num">role_key</span>). هر تغییر، تأیید و لاگ می‌خواهد.</p>'+
+      row('client','کاربری','همیشه هست؛ برداشته نمی‌شود.')+
+      row('coach','مربی (coach)','نقش حساب است، نه قابلیت مشاور. در اجرا با عضو یکی است.')+
+      row('admin','مدیر','دسترسی کامل به کنسول؛ با تأیید دو مرحله‌ای.')+
+      '<div class="banner warn" style="margin-top:10px">'+ic('i-info')+
+      '<b>«مشاور» یک نقش حساب نیست.</b> قابلیت مشاور از ردیف <span class="num">providers</span> می‌آید — '+
+      'با دکمهٔ «مشاورش کن» در همین جدول.</div>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>بستن</button></div>');
     return;
   }
-  if(e.target.closest('[data-admyes]')){ closeModal(); toast('نقش داده شد — با لاگ: زمان، کاربر، مقدار قبل'); return; }
-  if(e.target.closest('[data-admoff]')){
-    modal('<h3>حساب سارا نمونه غیرفعال شود؟</h3>'+
-      '<p class="tiny">کاربر دیگر نمی‌تواند وارد شود. ثبت‌ها و گزارش‌هایش باقی می‌مانند.'+
-      ' حذف حساب ممکن نیست — تا تصمیم OPEN-12 فقط غیرفعال‌سازی.</p>'+
-      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
-      '<span class="sp"></span><button class="btn danger sm" data-close>غیرفعال کن</button></div>');
+  if((t2=e.target.closest('[data-admtoggle]'))){
+    var rk=t2.dataset.admtoggle;
+    if(rk==='client'){ toast('نقش کاربری همیشه هست و برداشته نمی‌شود'); return; }
+    var RR=APP.admRoles||['client'];
+    var ix=RR.indexOf(rk);
+    if(ix>=0){ RR=RR.filter(function(x){return x!==rk;}); }
+    else { RR=RR.concat([rk]); }
+    APP.admRoles=RR; closeModal();
+    if(rk==='admin'&&ix<0){
+      modal('<h3>سارا نمونه مدیر شود؟</h3>'+
+        '<p class="tiny">مدیر به همهٔ بخش‌های مدیریتی دسترسی دارد و می‌تواند به دیگران هم نقش بدهد.<br>'+
+        'موقعیت‌های قبلی او: مشاور · ۴ مراجع باز <span class="muted">(از بک‌اند)</span></p>'+
+        '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+        '<span class="sp"></span><button class="btn primary sm" data-admyes>بله، مدیر شود</button></div>');
+      return;
+    }
+    render(); toast(ix>=0?'نقش از او گرفته شد — با لاگ':'نقش داده شد — با لاگ'); return;
+  }
+  if(e.target.closest('[data-admprovider]')){
+    var on=(APP.admProvider==='ACTIVE');
+    if(on){
+      modal('<h3>قابلیت مشاور از سارا نمونه گرفته شود؟</h3>'+
+        '<p class="tiny">او از <b>فهرست مشاوران</b> و از دراپ‌داون کاربران حذف می‌شود.<br>'+
+        'اگر <b>رابطهٔ باز</b> دارد، اول باید بسته شود — وگرنه این کار ممکن نیست.</p>'+
+        '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+        '<span class="sp"></span><button class="btn danger sm" data-admprovideroff>بگیر</button></div>');
+    } else {
+      modal('<h3>سارا نمونه مشاور شود؟</h3>'+
+        '<p class="tiny">این کار <b>قابلیت مشاور</b> می‌دهد، نه دسترسی به دادهٔ کسی:</p>'+
+        '<div class="kv"><span>ردیف <span class="num">providers</span></span><b>فعال می‌شود</b></div>'+
+        '<div class="kv"><span>در فهرست مشاوران کاربران</span><b>دیده می‌شود</b></div>'+
+        '<div class="kv"><span>حالت «مشاور» در صفحهٔ هم‌مسیر او</span><b>فعال می‌شود</b></div>'+
+        '<div class="kv"><span>دادهٔ هیچ کاربری</span><b>خودکار نمی‌بیند</b></div>'+
+        '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+        'برای همراهی با کسی، باید از «افزودن مراجع» پیشنهاد بدهی و <b>خودِ کاربر</b> تأیید کند.</div>'+
+        '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+        '<span class="sp"></span><button class="btn primary sm" data-admprovideron>بله، مشاور شود</button></div>');
+    }
     return;
   }
+  if(e.target.closest('[data-admprovideron]')){ closeModal(); APP.admProvider='ACTIVE'; render();
+    toast('قابلیت مشاور فعال شد — با لاگ (زمان، کاربر، مقدار قبل)'); return; }
+  if(e.target.closest('[data-admprovideroff]')){ closeModal(); APP.admProvider='INACTIVE'; render();
+    toast('قابلیت مشاور گرفته شد — دلیلش هم ثبت شد'); return; }
+  if(e.target.closest('[data-admaddcoach]')){
+    modal('<h3>کدام کاربر مشاور شود؟</h3>'+
+      '<div class="searchbar">'+ic('i-search')+'<input class="inp" placeholder="جست‌وجوی نام یا نام کاربری…"></div>'+
+      '<div class="term-list">'+
+      ['سارا نمونه','رضا احمدی','نگار کریمی'].map(function(u){
+        return '<button class="term-pick" data-admpickcoach="'+u+'">'+u+'<span class="tiny"> — کاربر</span></button>';}).join('')+
+      '</div>'+
+      note('فهرست کاربران از بک‌اند می‌آید. مشاورشدن <b>دسترسی به دادهٔ کسی نمی‌دهد</b>؛ فقط قابلیت است.')+
+      '<div class="acts"><button class="btn ghost sm" data-close>بستن</button></div>');
+    return;
+  }
+  if((t3=e.target.closest('[data-admpickcoach]'))){
+    closeModal(); APP.admProvider='ACTIVE'; APP.admSec='coaches'; render();
+    toast('«'+t3.dataset.admpickcoach+'» مشاور شد — ردیف providers فعال شد'); return;
+  }
+  if(e.target.closest('[data-admpropose]')){
+    modal('<h3>مراجع پیشنهاد شود؟</h3>'+
+      '<p class="tiny">مجوزها <b>خالی و روشن‌نشده</b> پیشنهاد می‌شوند؛ کاربر خودش می‌تواند کم یا زیاد کند.</p>'+
+      '<div class="perm-list">'+
+      ['خلاصهٔ وضعیت و پیشرفت کلی','پیشرفت و پوشش تجمیعی','جزئیات فعالیت‌ها','شاخص‌های حال من'].map(function(p){
+        return '<label class="perm-row"><span class="cb"></span><span><b>'+p+'</b><em>پیش‌فرض خاموش — تصمیم کاربر</em></span></label>';}).join('')+
+      '</div>'+
+      '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+      'تا <b>پذیرش کاربر</b> رابطه‌ای ساخته نمی‌شود و مشاور <b>هیچ داده‌ای</b> نمی‌بیند. اگر ۷ روز پاسخ ندهد، درخواست منقضی می‌شود.</div>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>انصراف</button>'+
+      '<span class="sp"></span><button class="btn primary sm" data-admproposeok>پیشنهاد بفرست</button></div>');
+    return;
+  }
+  if(e.target.closest('[data-admproposeok]')){ closeModal(); toast('پیشنهاد رفت — منتظر پذیرش کاربر'); return; }
   if(e.target.closest('[data-admblock]')){ toast('ممنوع — مشاور با رابطهٔ باز را نمی‌شود غیرفعال کرد'); return; }
   if(e.target.closest('[data-admkill]')){ toast('حذف کامل فقط با شرط صفر ارجاع و تأیید دوگانه — وگرنه غیرفعال‌سازی'); return; }
 

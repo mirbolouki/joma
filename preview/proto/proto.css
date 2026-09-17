@@ -825,3 +825,11 @@ table.tbl{width:100%;border-collapse:collapse}
 .pet-stage.sleep{background:linear-gradient(160deg,#E8ECF6,#EDF3FA)}
 .pet-ctrls{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 @media(prefers-reduced-motion:reduce){.chsvg,.chsvg.chhappy,.chsvg.chpet,.chsvg.chcalm{animation:none}}
+
+/* فهرست انتخاب کاربر در کنسول */
+.term-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.term-pick{text-align:start;font:inherit;font-size:12.5px;font-weight:800;padding:11px 12px;
+  border:1.5px solid var(--card-brd);border-radius:var(--r-sm);background:var(--card);cursor:pointer}
+.term-pick:hover{border-color:var(--indigo);background:var(--indigo-soft)}
+.term-pick .tiny{color:var(--ink-3)}
+.adm-acts{display:flex;gap:6px;flex-wrap:wrap}

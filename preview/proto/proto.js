@@ -52,6 +52,8 @@ var APP = {
   setTab:'profile',
   roleView:'client',
   admSec:'overview',
+  admRoles:['client'],
+  admProvider:'INACTIVE',
   contentPage:'about',
   rightsStep:'export',
   moodStep:0,
