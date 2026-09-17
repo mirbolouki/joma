@@ -252,12 +252,19 @@
   .wg{aspect-ratio:2/3;border-radius:8px 8px 12px 12px;border:2px solid var(--card-brd);background:var(--card);
     position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s}
   .wg:hover{transform:translateY(-2px)}
-  .wg .fill{position:absolute;inset:auto 0 0 0;height:0;background:linear-gradient(180deg,var(--sky),var(--sky-soft));transition:height .42s cubic-bezier(.3,1.5,.5,1)}
+  .wg .fill{position:absolute;inset:auto 0 0 0;height:0;overflow:hidden;background:linear-gradient(180deg,var(--sky-soft),var(--sky));transition:height .45s cubic-bezier(.32,1.35,.5,1)}
   .wg.f .fill{height:80%}
   .wg.f{border-color:var(--sky)}
-  .wg .fill .wv{position:absolute;top:-9px;inset-inline:-60%;width:220%;height:18px;background:var(--sky);opacity:.5;border-radius:45%;animation:spin 3.6s linear infinite}
-  .wg .fill .wv.b{opacity:.3;animation-duration:5.2s;animation-direction:reverse}
-  @keyframes spin{to{transform:rotate(360deg)}}
+  .wg .wv{position:absolute;top:-7px;inset-inline-start:0;width:200%;height:14px;animation:wvA 3.6s linear infinite}
+  .wg .wv path{fill:var(--sky);opacity:.55}
+  .wg .wv.b{animation:wvB 5.4s linear infinite}
+  .wg .wv.b path{opacity:.32}
+  @keyframes wvA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes wvB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  .wg.f .fill::after{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:#fff;opacity:.45}
+  .wg .drop{position:absolute;top:2px;left:50%;width:5px;height:5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--sky);opacity:0;z-index:3}
+  .wg .drop.on{animation:dropFall .5s cubic-bezier(.4,.1,.9,.6) forwards}
+  @keyframes dropFall{0%{opacity:.9;transform:translate(-50%,0) scale(.8)}80%{opacity:.9;transform:translate(-50%,26px) scale(1)}100%{opacity:0;transform:translate(-50%,32px) scale(.7)}}
   .wg .stream{position:absolute;top:-4px;left:50%;width:6px;height:0;border-radius:99px;
     background:linear-gradient(180deg,var(--sky-soft),var(--sky));transform:translateX(-50%);opacity:0}
   .wg .stream.on{animation:pour .34s ease-in}
@@ -1423,7 +1430,7 @@
         <div class="card wbox">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
             <b style="font-size:12.5px">آب امروز</b>
-            <span class="wsnd" id="wsnd" onclick="toggleSnd()">🔇 صدا خاموش</span>
+            <span class="wsnd" id="wsnd" onclick="toggleSnd()">🔇 صدای آب خاموش</span>
           </div>
           <div class="tiny" id="wcount" style="margin-top:6px;font-weight:800">۰ از ۸ لیوان — هدف شخصی: ۸</div>
           <div class="wglasses" id="wglasses"></div>
@@ -1447,9 +1454,84 @@
   </section>
 
 
+  <!-- ================= ۱۶ سه اصلاح مالک ================= -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۱۶</span>
+      <h2>سه اصلاح تو — اعمال شد</h2>
+      <span class="tag q">در نمونه ببین</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">هر سه مورد در <b>سند</b> و در <b>نمونهٔ زنده</b> اصلاح شدند — نه فقط در تصویر.
+        جای دیدنشان: <code>preview/proto/index.html</code> · صفحه‌های ۱ · ۵ · ۶</p>
+
+      <div class="grid2">
+        <div class="card">
+          <b style="font-size:12.5px">۱ · لندینگ — از ۹ ناحیه به ۷</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            «خیلی شلوغه» درست بود. سه بخش <b>حذف</b> شد: نوار آمار (عدد بی‌منبع) · هشت پین «دنیای جوما» ·
+            نوار بالای چهارلینکی. و <b>دو بخشی که یک حرف را می‌زدند</b> («سه کارت ویژگی» و «چطور کار می‌کند»)
+            در <b>یک بخش «سه قدم»</b> ادغام شدند: انتخاب کن · ثبت کن · ببین.
+          </p>
+          <div style="background:var(--brand-softer);border-radius:10px;padding:9px 11px;margin-top:8px;font-size:11px;line-height:2">
+            <b>و یک اضافه:</b> بخش <b>«جوجهٔ من»</b> — با سه جملهٔ صادقانه:
+            «با هر ثبت بزرگ‌تر می‌شود» · «هیچ‌وقت نمی‌میرد» · «با روز بد تنبیه نمی‌شود».
+            دلیلش: لندینگ باید کاربر را <b>برگرداند</b>، نه فقط ثبت‌نام کند.
+          </div>
+        </div>
+
+        <div class="card">
+          <b style="font-size:12.5px">۲ · آب — موج واقعی، و <span style="color:var(--sky-ink)">صدای آب</span></b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            حق با تو بود: دو لکهٔ چرخان، آب نبود. حالا <b>دو مسیر سینوسی</b> با سرعت و جهت متفاوت موج می‌سازند،
+            و با هر لمس یک <b>جریان</b> از بالا می‌ریزد و یک <b>قطره</b> می‌افتد.
+          </p>
+          <div class="wbox" style="margin-top:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="tiny" style="font-weight:800">همین‌جا امتحان کن</span>
+              <span class="wsnd" id="wsnd2" onclick="toggleSnd2()">🔇 صدای آب خاموش</span>
+            </div>
+            <div class="wglasses" id="wglasses2" style="grid-template-columns:repeat(6,1fr)"></div>
+          </div>
+          <p class="tiny" style="margin-top:9px">
+            <b>صدای جدید = صدای واقعی آب:</b> جریانِ فیلترشده با <b>قُلُقُل حباب</b> · چهار <b>حباب</b> کوتاه ·
+            و در پر شدن آخرین لیوان، <b>سه قطرهٔ بالارونده</b> — جشن، ولی با صدای آب، نه زنگ فلزی.
+            <br>پیش‌فرض خاموش · بی‌صدا در بارگذاری · خاموش در تب پنهان · بازگشت بی‌صدا.
+          </p>
+        </div>
+      </div>
+
+      <div class="qbox" style="margin-top:16px;background:var(--brand-softer);border-color:var(--brand-soft)">
+        <h4 style="color:var(--brand-ink)">۳ · گزینه‌های حال — هر گزینه تصویر خودش را دارد، و انتخاب خودش می‌رود</h4>
+        <p style="font-size:11.5px;color:var(--ink-2);margin:0">
+          سند از اول گفته بود هر گزینه «تصویر کوچک همان شکل» + واژه را دارد؛ <b>نمونهٔ من نداشت — ایراد از من بود.</b>
+          حالا هر پنج گزینه، هر پنج قدم:
+        </p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <span class="chip n" style="background:var(--card)">😖🙁😐🙂😄 حال</span>
+          <span class="chip n" style="background:var(--card)">🔋 باتری ۵ بخشی — انرژی</span>
+          <span class="chip n" style="background:var(--card)">🎯 حلقه‌های هدف — تمرکز</span>
+          <span class="chip n" style="background:var(--card)">🌙 ماه و ستاره — خواب</span>
+          <span class="chip n" style="background:var(--card)">🎈 بادکنک — استرس</span>
+        </div>
+        <p class="tiny" style="margin-top:10px">
+          <b>و انتخاب، خودش می‌رود قدم بعد</b> (<code>520ms</code>) — «بعدی» حذف شد.
+          جایش «رد کن» آمد: کاربر باید راه بی‌جواب‌دادن داشته باشد.
+          تأخیر عمدی است تا کاربر <b>تصویر انتخابی‌اش را ببیند</b>.
+        </p>
+      </div>
+
+      <p class="tiny" style="margin-top:14px">
+        <b>وضعیت سند:</b> <code>10-landing.md</code> §§۲–۸ بازنویسی شد · <code>12-today.md</code> §۷٫۲ و §۷٫۳ ·
+        <code>13-mood.md</code> §۴٫۳ و §۵ · و هر سه در <code>00-principles.md</code> ثبت شدند.
+      </p>
+    </div>
+  </section>
+
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۷ · ۱۵ بخش · بخش ۱۵ تازه: <b>جغد مرجع (متحرک)</b> و <b>لیوان‌های آب با موج و صدا</b>
+    <br>نسخهٔ ۸ · ۱۶ بخش · سه اصلاح مالک اعمال شد: لندینگ ساده‌تر · موج و صدای آب · گزینه‌های بصری حال
   </footer>
 </div>
 <script>
@@ -1459,19 +1541,42 @@ function wig(el){var s=el.querySelector('span');s.classList.remove('wiggle');voi
 /* آب */
 var WN=8, wfill=0, lastSnd=0, sndOn=false, AC=null;
 function ac(){if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;AC=new C();}return AC;}
-function noise(dur){var c=ac();if(!c)return null;var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
-  for(var i=0;i<n;i++){d[i]=(Math.random()*2-1)*(1-i/n);}return b;}
-function pourSnd(){ if(!sndOn||document.hidden) return; var t=performance.now(); if(t-lastSnd<250)return; lastSnd=t;
-  var c=ac(); if(!c) return; var b=noise(.26); if(!b) return; var s=c.createBufferSource(); s.buffer=b;
-  var f=c.createBiquadFilter(); f.type='bandpass'; f.frequency.value=1150; f.Q.value=1.1;
-  var g=c.createGain(); g.gain.setValueAtTime(.0001,c.currentTime);
-  g.gain.exponentialRampToValueAtTime(.16,c.currentTime+.02); g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.24);
-  s.connect(f);f.connect(g);g.connect(c.destination); s.start();
+var WAVE_PATH='<path d="M0 7 q7.5 -5 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 V14 H0Z"/>';
+var MASTER=null;
+function master(){var c=ac();if(!c)return null;if(!MASTER){MASTER=c.createGain();MASTER.gain.value=.9;MASTER.connect(c.destination);}return MASTER;}
+function noiseBuf(dur,c){var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
+  for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return b;}
+function pourLayer(c,t0,dur){
+  var src=c.createBufferSource(); src.buffer=noiseBuf(.6,c); src.loop=true;
+  var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=.8;
+  lp.frequency.setValueAtTime(2800,t0); lp.frequency.exponentialRampToValueAtTime(850,t0+dur*.8);
+  var hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=320;
+  var g=c.createGain(); g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(.15,t0+.05); g.gain.setValueAtTime(.15,t0+dur*.5);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+  var lfo=c.createOscillator(); lfo.type='triangle'; lfo.frequency.value=11.5;
+  var lg=c.createGain(); lg.gain.value=.055; lfo.connect(lg); lg.connect(g.gain);
+  var lfo2=c.createOscillator(); lfo2.type='sine'; lfo2.frequency.value=6.7;
+  var lg2=c.createGain(); lg2.gain.value=.03; lfo2.connect(lg2); lg2.connect(g.gain);
+  src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(master());
+  src.start(t0); src.stop(t0+dur); lfo.start(t0); lfo.stop(t0+dur); lfo2.start(t0); lfo2.stop(t0+dur);
 }
-function chimeSnd(){ if(!sndOn||document.hidden) return; var c=ac(); if(!c) return;
-  [660,880,1320].forEach(function(fr,i){ var o=c.createOscillator(),g=c.createGain(); o.type='sine'; o.frequency.value=fr;
-    var t0=c.currentTime+i*.08; g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(.12,t0+.02);
-    g.gain.exponentialRampToValueAtTime(.0001,t0+.5); o.connect(g);g.connect(c.destination); o.start(t0); o.stop(t0+.55); });
+function bubble(c,t){var f0=260+Math.random()*260,o=c.createOscillator();o.type='sine';
+  o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f0*2.6+180,t+.07);
+  var g=c.createGain(); g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(.05,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+.11);
+  o.connect(g); g.connect(master()); o.start(t); o.stop(t+.13);}
+function drop(c,t,base){var o=c.createOscillator();o.type='sine';
+  o.frequency.setValueAtTime(base,t); o.frequency.exponentialRampToValueAtTime(base*2.5,t+.06);
+  var g=c.createGain(); g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(.16,t+.006); g.gain.exponentialRampToValueAtTime(.0001,t+.26);
+  o.connect(g); g.connect(master()); o.start(t); o.stop(t+.3);}
+function pourSnd(){ if(!sndOn||document.hidden) return; var now=performance.now(); if(now-lastSnd<250)return; lastSnd=now;
+  var c=ac(); if(!c) return; var t0=c.currentTime+.01; pourLayer(c,t0,.48);
+  for(var i=0;i<4;i++) bubble(c,t0+.05+i*.1+Math.random()*.04);
+}
+function chimeSnd(){ if(!sndOn||document.hidden) return; var c=ac(); if(!c) return; var t0=c.currentTime+.01;
+  drop(c,t0,520); drop(c,t0+.14,700); drop(c,t0+.30,960); bubble(c,t0+.46);
 }
 function renderW(){
   var g=document.getElementById('wglasses'); if(!g) return;
@@ -1479,7 +1584,9 @@ function renderW(){
   for(var i=0;i<WN;i++){
     var d=document.createElement('div'); d.className='wg'+(i<wfill?' f':''); d.setAttribute('role','button');
     d.setAttribute('aria-label','لیوان '+(i+1)); d.dataset.i=i;
-    d.innerHTML='<div class="fill"><div class="wv"></div><div class="wv b"></div></div>';
+    d.innerHTML='<div class="fill"><svg class="wv" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg>'+
+      '<svg class="wv b" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg></div>'+
+      '<div class="stream"></div><div class="drop"></div>';
     d.onclick=function(){ toggleG(+this.dataset.i); };
     g.appendChild(d);
   }
@@ -1489,17 +1596,53 @@ function toggleG(i){
   var g=document.getElementById('wglasses').children[i];
   if(i+1===wfill && wfill>0){ wfill--; renderW(); return; }   /* بازگشت: بی‌صدا */
   var st=document.createElement('div'); st.className='stream on'; g.appendChild(st);
-  setTimeout(function(){ if(st.parentNode) st.remove(); },360);
+  var dr=document.createElement('div'); dr.className='drop on'; g.appendChild(dr);
+  setTimeout(function(){ if(st.parentNode)st.remove(); if(dr.parentNode)dr.remove(); },520);
   wfill=i+1; pourSnd();
-  setTimeout(function(){ renderW(); if(wfill===WN) chimeSnd(); },60);
+  setTimeout(function(){ renderW(); },70);
+  if(wfill===WN) setTimeout(chimeSnd,430);
 }
 function toggleSnd(){
   sndOn=!sndOn; var b=document.getElementById('wsnd');
-  b.className='wsnd'+(sndOn?' on':''); b.textContent=sndOn?'🔊 صدا روشن':'🔇 صدا خاموش';
+  b.className='wsnd'+(sndOn?' on':''); b.textContent=sndOn?'🔊 صدای آب روشن':'🔇 صدای آب خاموش';
   if(sndOn){ if(ac()&&AC.state==='suspended'&&AC.resume) AC.resume(); pourSnd(); }
 }
 function fa(n){return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];});}
 renderW();
+</script>
+
+<script>
+var WN2=6, fill2=0, snd2=false, last2=0;
+function ac2(){return ac();}
+function renderW2(){
+  var g=document.getElementById('wglasses2'); if(!g) return; g.innerHTML='';
+  for(var i=0;i<WN2;i++){
+    var d=document.createElement('div'); d.className='wg'+(i<fill2?' f':''); d.dataset.i=i;
+    d.style.cursor='pointer';
+    d.innerHTML='<div class="fill"><svg class="wv" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+
+      '</svg><svg class="wv b" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg></div>'+
+      '<div class="stream"></div><div class="drop"></div>';
+    d.onclick=function(){ tapW2(+this.dataset.i); };
+    g.appendChild(d);
+  }
+}
+function tapW2(i){
+  var g=document.getElementById('wglasses2');
+  if(i+1===fill2 && fill2>0){ fill2--; renderW2(); return; }
+  var el=g.children[i];
+  if(el){ var st=el.querySelector('.stream'), dr=el.querySelector('.drop');
+    if(st)st.classList.add('on'); if(dr)dr.classList.add('on');
+    setTimeout(function(){ if(st)st.remove(); if(dr)dr.remove(); },520); }
+  fill2=i+1;
+  var wasSnd=sndOn; sndOn=snd2; if(!wasSnd) pourSnd(); sndOn=wasSnd;
+  setTimeout(function(){ renderW2(); if(fill2===WN2){ var w=sndOn; sndOn=snd2; chimeSnd(); sndOn=w; } },70);
+}
+function toggleSnd2(){
+  snd2=!snd2; var b=document.getElementById('wsnd2');
+  b.className='wsnd'+(snd2?' on':''); b.textContent=snd2?'🔊 صدای آب روشن':'🔇 صدای آب خاموش';
+  if(snd2){ var c=ac(); if(c&&c.state==='suspended'&&c.resume)c.resume(); var w=sndOn; sndOn=true; pourSnd(); sndOn=w; }
+}
+renderW2();
 </script>
 
 </body>

@@ -267,28 +267,51 @@ table.tbl{width:100%;border-collapse:collapse}
 .doneb{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:var(--r);
   background:linear-gradient(150deg,var(--brand-soft),var(--gold-soft));font-weight:900;font-size:12.5px}
 
-/* لیوان آب */
-.wbox{--wsky:#3FA3DC;--wsky-soft:#DDF0FC}
-[data-theme="glass"] .wbox{--wsky:#4FB0E4;--wsky-soft:#DCEEFA}
+/* لیوان آب — موج واقعی، قطره، صدا */
+.wbox{--wsky:#3FA3DC;--wsky-soft:#DDF0FC;--wsky-deep:#2277A8}
+[data-theme="glass"] .wbox{--wsky:#4FB0E4;--wsky-soft:#DCEEFA;--wsky-deep:#1E6E9E}
 .wglasses{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:12px}
 .wg{aspect-ratio:2/3;border-radius:8px 8px 12px 12px;border:2px solid var(--card-brd);background:var(--card);
-  position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s;padding:0}
+  position:relative;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .25s;padding:0}
 .wg:hover{transform:translateY(-2px)}
-.wg .fill{position:absolute;inset:auto 0 0 0;height:0;
-  background:linear-gradient(180deg,var(--wsky),var(--wsky-soft));transition:height .42s cubic-bezier(.3,1.5,.5,1)}
 .wg.f{border-color:var(--wsky)}
-.wg.f .fill{height:80%}
-.wg .wv{position:absolute;top:-9px;inset-inline:-60%;width:220%;height:18px;background:var(--wsky);
-  opacity:.5;border-radius:45%;animation:spin 3.6s linear infinite}
-.wg .wv.b{opacity:.3;animation-duration:5.2s;animation-direction:reverse}
-@keyframes spin{to{transform:rotate(360deg)}}
-.wg .stream{position:absolute;top:-4px;left:50%;width:6px;height:0;border-radius:99px;
-  background:linear-gradient(180deg,var(--wsky-soft),var(--wsky));transform:translateX(-50%);opacity:0}
-.wg .stream.on{animation:pour .34s ease-in}
-@keyframes pour{0%{height:0;opacity:.95}60%{height:28px;opacity:.95}100%{height:28px;opacity:0}}
+
+/* سطح آب */
+.wg .fill{position:absolute;inset:auto 0 0 0;height:0;overflow:hidden;
+  background:linear-gradient(180deg,var(--wsky-soft),var(--wsky));
+  transition:height .45s cubic-bezier(.32,1.35,.5,1)}
+.wg.f .fill{height:80%;transition-delay:.07s}
+
+/* دو لایه موج — شکل سینوسی واقعی، سرعت و جهت متفاوت */
+.wg .wv{position:absolute;top:-7px;inset-inline-start:0;width:200%;height:14px;
+  animation:wvA 3.6s linear infinite;will-change:transform}
+.wg .wv path{fill:var(--wsky);opacity:.55}
+.wg .wv.b{animation:wvB 5.4s linear infinite}
+.wg .wv.b path{opacity:.32}
+@keyframes wvA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes wvB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* درخشش سطح — نشانهٔ آب، نه شیشهٔ خالی */
+.wg.f .fill::after{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:#fff;opacity:.45}
+
+/* جریان و قطره در لحظهٔ ریختن */
+.wg .stream{position:absolute;top:0;left:50%;width:5px;height:0;border-radius:99px;
+  background:linear-gradient(180deg,transparent,var(--wsky));transform:translateX(-50%);opacity:0;z-index:2}
+.wg .stream.on{animation:streamFall .42s ease-in}
+@keyframes streamFall{0%{height:0;opacity:0}
+  25%{height:36%;opacity:.9}70%{height:70%;opacity:.85}100%{height:80%;opacity:0}}
+.wg .drop{position:absolute;top:2px;left:50%;width:5px;height:5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:var(--wsky);opacity:0;z-index:3}
+.wg .drop.on{animation:dropFall .5s cubic-bezier(.4,.1,.9,.6) forwards}
+@keyframes dropFall{0%{opacity:.9;transform:translate(-50%,0) scale(.8)}
+  80%{opacity:.9;transform:translate(-50%,26px) scale(1)}
+  100%{opacity:0;transform:translate(-50%,32px) scale(.7)}}
+
 .wsnd{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--ink-2);
   background:var(--card);border:1px solid var(--card-brd);border-radius:99px;padding:5px 11px}
 .wsnd.on{background:var(--brand-soft);border-color:var(--brand-soft);color:var(--brand-ink)}
+.wcount{font-size:11.5px;font-weight:800;color:var(--ink-2);margin-top:6px}
+@media (max-width:900px){.wglasses{grid-template-columns:repeat(4,1fr);gap:9px}}
 
 /* ---------- ۸) حال من ---------- */
 .wiz-top{display:flex;align-items:center;gap:0;max-width:460px;margin:0 auto}
@@ -304,8 +327,15 @@ table.tbl{width:100%;border-collapse:collapse}
 .scene h2{font-size:17px;font-weight:900}
 .scene p.sub{font-size:11.5px;color:var(--ink-2);margin-top:3px}
 .opts{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:16px}
-.opt{padding:11px 6px;border-radius:14px;background:var(--card);border:2px solid transparent;font-size:11.5px;
-  font-weight:900;box-shadow:var(--shadow-sm);transition:transform .15s,border-color .15s}
+.opt{padding:12px 6px 10px;border-radius:14px;background:var(--card);border:2px solid transparent;
+  box-shadow:var(--shadow-sm);transition:transform .15s,border-color .15s,background .2s;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;color:var(--ink)}
+.opt .oart{height:42px;display:grid;place-items:center;transition:transform .22s}
+.opt .oart svg{max-width:100%;height:auto}
+.opt .olbl{font-size:11px;font-weight:900;line-height:1.5}
+.opt:hover .oart{transform:translateY(-3px)}
+.opt.sel{background:var(--brand-soft)}
+.opt.sel .oart{transform:scale(1.14)}
 .opt:hover{transform:translateY(-3px)}
 .opt.sel{border-color:var(--brand);background:var(--brand-soft)}
 .wnav{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--card-brd);

@@ -172,62 +172,126 @@ function soon(s){
     '</div></div>';
 }
 
-/* ---------- لیوان آب (مشترک: خانه و کارهای امروز) ---------- */
-var WN=8,_wfill=0,_lastSnd=0,_AC=null;
-function ac(){if(!_AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;_AC=new C();}return _AC;}
-function noiseBuf(dur,c){var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
-  for(var i=0;i<n;i++){d[i]=(Math.random()*2-1)*(1-i/n);}return b;}
+/* ---------- لیوان آب (مشترک: خانه و کارهای امروز) ----------
+   صدا: صدای واقعی آب — جریان + حباب + قطره. سند ۱۲ §۷.۳.            */
+var WN=8,_wfill=0,_lastSnd=0,_AC=null,_MASTER=null;
+
+function ac(){
+  if(!_AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;
+    _AC=new C();_MASTER=_AC.createGain();_MASTER.gain.value=.9;_MASTER.connect(_AC.destination);}
+  return _AC;
+}
+function noiseBuf(dur,c){
+  var n=Math.floor(c.sampleRate*dur),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);
+  for(var i=0;i<n;i++) d[i]=Math.random()*2-1;
+  return b;
+}
+/* جریان آب: نویز فیلترشده با موج‌دار شدن نامنظم (حباب‌ها) */
+function pourLayer(c,t0,dur){
+  var src=c.createBufferSource(); src.buffer=noiseBuf(.6,c); src.loop=true;
+  var lp=c.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=.8;
+  lp.frequency.setValueAtTime(2800,t0);
+  lp.frequency.exponentialRampToValueAtTime(850,t0+dur*.8);
+  var hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=320;
+
+  var g=c.createGain();
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.exponentialRampToValueAtTime(.15,t0+.05);
+  g.gain.setValueAtTime(.15,t0+dur*.5);
+  g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+
+  /* حباب‌ها: مدولاسیون دامنه با فرکانس نامنظم */
+  var lfo=c.createOscillator(); lfo.type='triangle'; lfo.frequency.value=11.5;
+  var lg=c.createGain(); lg.gain.value=.055;
+  lfo.connect(lg); lg.connect(g.gain);
+  var lfo2=c.createOscillator(); lfo2.type='sine'; lfo2.frequency.value=6.7;
+  var lg2=c.createGain(); lg2.gain.value=.03;
+  lfo2.connect(lg2); lg2.connect(g.gain);
+
+  src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(_MASTER);
+  src.start(t0); src.stop(t0+dur);
+  lfo.start(t0); lfo.stop(t0+dur);
+  lfo2.start(t0); lfo2.stop(t0+dur);
+}
+/* حباب: سینِ کوتاه با سُرخوردن رو به بالا */
+function bubble(c,t){
+  var f0=260+Math.random()*260, o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(f0,t);
+  o.frequency.exponentialRampToValueAtTime(f0*2.6+180,t+.07);
+  var g=c.createGain();
+  g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(.05,t+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,t+.11);
+  o.connect(g); g.connect(_MASTER); o.start(t); o.stop(t+.13);
+}
+/* قطره: سینِ با پرش سریع رو به بالا — صدای آشنای چکیدن */
+function drop(c,t,base){
+  var o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(base,t);
+  o.frequency.exponentialRampToValueAtTime(base*2.5,t+.06);
+  var g=c.createGain();
+  g.gain.setValueAtTime(.0001,t);
+  g.gain.exponentialRampToValueAtTime(.16,t+.006);
+  g.gain.exponentialRampToValueAtTime(.0001,t+.26);
+  o.connect(g); g.connect(_MASTER); o.start(t); o.stop(t+.3);
+}
 function pourSnd(){
-  if(!APP.sound||document.hidden)return;
-  var t=performance.now(); if(t-_lastSnd<250)return; _lastSnd=t;
-  var c=ac(); if(!c)return; var s=c.createBufferSource(); s.buffer=noiseBuf(.26,c);
-  var f=c.createBiquadFilter(); f.type='bandpass'; f.frequency.value=1150; f.Q.value=1.1;
-  var g=c.createGain(); g.gain.setValueAtTime(.0001,c.currentTime);
-  g.gain.exponentialRampToValueAtTime(.16,c.currentTime+.02);
-  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.24);
-  s.connect(f);f.connect(g);g.connect(c.destination);s.start();
+  if(!APP.sound||document.hidden) return;
+  var now=performance.now(); if(now-_lastSnd<250) return; _lastSnd=now;
+  var c=ac(); if(!c) return; var t0=c.currentTime+.01;
+  pourLayer(c,t0,.48);
+  for(var i=0;i<4;i++) bubble(c,t0+.05+i*.1+Math.random()*.04);
 }
-function chimeSnd(){
-  if(!APP.sound||document.hidden)return; var c=ac(); if(!c)return;
-  [660,880,1320].forEach(function(fr,i){
-    var o=c.createOscillator(),g=c.createGain(); o.type='sine'; o.frequency.value=fr;
-    var t0=c.currentTime+i*.08; g.gain.setValueAtTime(.0001,t0);
-    g.gain.exponentialRampToValueAtTime(.12,t0+.02);
-    g.gain.exponentialRampToValueAtTime(.0001,t0+.5);
-    o.connect(g);g.connect(c.destination);o.start(t0);o.stop(t0+.55);
-  });
+/* کامل شدن: سه قطرهٔ بالارونده — صدای آب، نه زنگ فلزی */
+function completeSnd(){
+  if(!APP.sound||document.hidden) return;
+  var c=ac(); if(!c) return; var t0=c.currentTime+.01;
+  drop(c,t0,520); drop(c,t0+.14,700); drop(c,t0+.30,960);
+  bubble(c,t0+.46);
 }
-function waterCard(compact){
-  return '<div class="card wbox" id="wcard"><div style="display:flex;justify-content:space-between;'+
-    'align-items:center;gap:10px;flex-wrap:wrap"><h3>'+ic('i-drop')+'آب امروز</h3>'+
-    '<button class="wsnd '+(APP.sound?'on':'')+'" data-snd>'+(APP.sound?'🔊 صدا روشن':'🔇 صدا خاموش')+'</button></div>'+
-    '<div class="tiny num" id="wcount" style="margin-top:6px;font-weight:800;color:var(--ink-2)"></div>'+
-    '<div class="wglasses" id="wglasses"></div>'+
-    (compact?'':'<p class="tiny" style="margin-top:10px">روی لیوان‌ها بزن — سطح آب با <b>موج دو‌لایه</b> بالا می‌آید. '+
-      'پیش‌فرض صدا خاموش است؛ «بازگشت» صدا ندارد.</p>')+
+function waterCard(){
+  return '<div class="card wbox" id="wcard">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">'+
+      '<h3>'+ic('i-drop')+'آب امروز</h3>'+
+      '<button class="wsnd '+(APP.sound?'on':'')+'" data-snd aria-pressed="'+(APP.sound?'true':'false')+'">'+
+        (APP.sound?'🔊 صدای آب روشن':'🔇 صدای آب خاموش')+'</button></div>'+
+    '<div class="wcount num" id="wcount"></div>'+
+    '<div class="wglasses" id="wglasses" role="group" aria-label="لیوان‌های آب امروز"></div>'+
+    '<p class="tiny" style="margin-top:10px">روی لیوان‌ها بزن — سطح آب با <b>موج دو‌لایه</b> بالا می‌آید. '+
+      'صدا پیش‌فرض خاموش است؛ بازگشت صدا ندارد.</p>'+
   '</div>';
 }
+var WAVE_PATH='<path d="M0 7 q7.5 -5 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 V14 H0Z"/>';
 function renderWater(){
-  var g=document.getElementById('wglasses'); if(!g)return;
+  var g=document.getElementById('wglasses'); if(!g) return;
   _wfill=APP.water; g.innerHTML='';
   for(var i=0;i<WN;i++){
     var b=document.createElement('button');
-    b.className='wg'+(i<_wfill?' f':''); b.setAttribute('aria-label','لیوان '+(i+1)); b.dataset.i=i;
-    b.innerHTML='<div class="fill"><div class="wv"></div><div class="wv b"></div></div>';
+    b.className='wg'+(i<_wfill?' f':''); b.dataset.i=i;
+    b.setAttribute('aria-label','لیوان '+(i+1)+' از '+WN); b.setAttribute('aria-pressed',i<_wfill?'true':'false');
+    b.innerHTML='<div class="fill"><svg class="wv" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg>'+
+      '<svg class="wv b" viewBox="0 0 120 14" preserveAspectRatio="none">'+WAVE_PATH+'</svg></div>'+
+      '<div class="stream"></div><div class="drop"></div>';
     g.appendChild(b);
   }
   var c=document.getElementById('wcount');
-  if(c)c.textContent=fa(_wfill)+' از '+fa(WN)+' لیوان — هدف شخصی: '+fa(WN)+
+  if(c) c.textContent=fa(_wfill)+' از '+fa(WN)+' لیوان — هدف شخصی: '+fa(WN)+
     (_wfill===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(_wfill===WN?' · ثبت قطعی شد ✓':' · پیش‌نویس — تا پایان امروز قابل‌تغییر'));
 }
 function waterTap(i){
-  var g=document.getElementById('wglasses'); if(!g)return;
-  if(i+1===_wfill && _wfill>0){ APP.water--; renderWater(); return; } /* بازگشت: بی‌صدا */
+  var g=document.getElementById('wglasses'); if(!g) return;
   var el=g.children[i];
-  var st=document.createElement('div'); st.className='stream on'; if(el)el.appendChild(st);
-  setTimeout(function(){if(st.parentNode)st.remove();},360);
-  APP.water=i+1; pourSnd();
-  setTimeout(function(){renderWater(); if(APP.water===WN)chimeSnd();},60);
+  if(i+1===_wfill && _wfill>0){ APP.water--; renderWater(); return; }   /* بازگشت: بی‌صدا */
+  if(el){
+    var st=el.querySelector('.stream'), dr=el.querySelector('.drop');
+    if(st) st.classList.add('on');
+    if(dr) dr.classList.add('on');
+    setTimeout(function(){ if(st)st.remove(); if(dr)dr.remove(); },520);
+  }
+  APP.water=i+1;
+  setTimeout(function(){ renderWater(); },70);
+  pourSnd();
+  if(APP.water===WN&&el) setTimeout(completeSnd,430);
 }
 
 /* ---------- رویدادها ---------- */
@@ -257,7 +321,7 @@ document.addEventListener('DOMContentLoaded',function(){
       else if(b.hasAttribute('data-snd')){
         APP.sound=!APP.sound;
         if(APP.sound){var c=ac(); if(c&&c.state==='suspended'&&c.resume)c.resume(); pourSnd();}
-        b.className='wsnd '+(APP.sound?'on':''); b.textContent=APP.sound?'🔊 صدا روشن':'🔇 صدا خاموش';
+        b.className='wsnd '+(APP.sound?'on':''); b.textContent=APP.sound?'🔊 صدای آب روشن':'🔇 صدای آب خاموش';
         if(window.CTX_AFTER) window.CTX_AFTER(b);
       }
       return;

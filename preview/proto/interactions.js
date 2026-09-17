@@ -1,3 +1,8 @@
+var _moodT=null;
+function moodNext(){
+  if(APP.moodStep<MOOD_STEPS.length-1) APP.moodStep++; else APP.moodStep=MOOD_STEPS.length;
+  render();
+}
 /* ==========================================================================
    رفتار صفحه‌های نمونه — دستهٔ ۱
    ========================================================================== */
@@ -26,13 +31,15 @@ window.INNER_CLICK=function(e){
     var s=MOOD_STEPS[APP.moodStep];
     APP.moodAnswers[s.k]=+t.dataset.mood;
     render();
+    /* انتخاب، خودش می‌رود قدم بعد — کاربر لازم نیست «بعدی» بزند */
+    clearTimeout(_moodT);
+    _moodT=setTimeout(moodNext,520);
     return;
   }
-  if(e.target.closest('[data-mood-next]')){
-    if(APP.moodStep<MOOD_STEPS.length-1) APP.moodStep++; else APP.moodStep=MOOD_STEPS.length;
-    render(); return;
-  }
-  if(e.target.closest('[data-mood-prev]')){ if(APP.moodStep>0) APP.moodStep--; render(); return; }
+  if(e.target.closest('[data-mood-skip]')){ clearTimeout(_moodT); moodNext(); return; }
+  if(e.target.closest('[data-mood-prev]')){
+    clearTimeout(_moodT);
+    if(APP.moodStep>0) APP.moodStep--; render(); return; }
   if(e.target.closest('[data-mood-reset]')){ APP.moodAnswers={}; APP.moodStep=0; render(); return; }
 
   /* --- چهره‌های خانه و لندینگ --- */

@@ -9,40 +9,37 @@ function note(txt){
   return '<div class="rvnote">🏷 <b>یادداشت سند:</b> '+txt+'</div>';
 }
 
-/* ============================ ۱) لندینگ — سند ۱۰ ============================ */
+/* ============================ ۱) لندینگ — سند ۱۰ ============================
+   تصمیم مالک: «خیلی شلوغ است». نسخهٔ ساده: هدف برنامه، سه قدم، حال، جوجه، دعوت.
+   حذف‌شده‌ها: نوار آمار · سه کارت ویژگی · هشت پین «دنیای جوما» · قدم چهارمِ ساخته‌شده.
+   ========================================================================== */
 function R_landing(){
-  var pins=[
-    ['p1','owl-fit','ورزش با جوما','حتی ده دقیقه هم، یک قدم واقعی است.','--coral-soft'],
-    ['p2','owl-read','لحظهٔ مطالعه','ده صفحهٔ آرام، برای ذهن شلوغ.','--lav-soft'],
-    ['p3','owl-lotus','مدیتیشن آرام','نفسی عمیق؛ همین، شروع است.','--brand-soft'],
-    ['p4','owl-moon','خوابِ مرتب','جغدها شب‌ها بیدارند؛ تو نه! بخواب.','--indigo-soft'],
-    ['p5','owl-water','آبِ کافی','لیوان بعدی، همین حالا.','--sky-soft'],
-    ['p6','owl-cheer','جشن پیشرفت','هر ثبت، یک دسته‌گل کوچک از جوما.','--gold-soft'],
-    ['p7','owl-think','نکتهٔ روز','هر روز یک ایدهٔ کوچک برای بهتر زندگی‌کردن.','--rose-soft'],
-    ['p8','owl','همراه همیشگی','روز خوب یا بد؛ جوما هست.','--brand-softer']
+  var steps=[
+    ['۰۱','owl-think','انتخاب کن','از ۱۰۷ فعالیت آماده، آنچه با زندگی‌ات جور است را انتخاب کن و یک هدف بگذار.'],
+    ['۰۲','owl-hi','هر روز ثبت کن','چند ثانیه: کاری که کردی و حالی که داشتی. تمام.'],
+    ['۰۳','owl-cheer','مسیرت را ببین','جوما نشان می‌دهد چطور پیش رفته‌ای — و کنار هر عدد می‌نویسد یعنی چه.']
   ];
+
   return '<div class="landing fadeup">'+
-    /* نوار بالا */
+
+    /* ۱ · نوار بالا — فقط دو دکمه */
     '<div class="lnav"><span class="logo"><span class="logo-tile">'+owl('owl-hi',30)+'</span>'+
       '<span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>'+
       '<span class="sp"></span>'+
-      '<span class="links desk-only"><a href="#how-anchor">چطور کار می‌کند؟</a><a href="#pins-anchor">دنیای جوما</a>'+
-      '<a href="#content">دربارهٔ جوما</a><a href="#content">پشتیبانی</a></span>'+
       '<a class="btn ghost sm" href="#login">ورود</a>'+
       '<a class="btn primary sm" href="#signup">شروع رایگان</a>'+
     '</div>'+
 
-    /* قهرمان */
+    /* ۲ · قهرمان */
     '<div class="hero"><div>'+
       '<span class="chip s">فضایی برای رشد، با ریتم خودت</span>'+
       '<h1>قدم‌های کوچک،<br><em>حال بهتر.</em></h1>'+
-      '<p class="lead">از برنامه‌ای که با زندگی‌ات شروع می‌شود، نه برعکس. فعالیت‌هایت را انتخاب کن، '+
-        'به حال خودت توجه کن و مسیرت را ببین — بدون فشار، بدون قضاوت.</p>'+
-      '<div class="cta"><a class="btn primary" href="#signup">مسیر من از اینجا شروع می‌شود ←</a>'+
-        '<a class="btn soft" href="#today">دیدن پلن نمونه</a></div>'+
-      '<div class="tiny" style="margin-top:10px">✅ برنامه شخصی · ثبت روزانه · گزارش روشن</div>'+
-      '<div class="joma-msg" style="margin-top:18px;max-width:420px">'+owl('owl-hi',44)+
-        '<div class="bub">سلام! من جغد راهنمای تو‌ام؛ یک تخم هم برایت دارم که با قدم‌هایت جوانه می‌زند 🥚</div></div>'+
+      '<p class="lead">فعالیت‌هایت را انتخاب کن، هر روز در چند ثانیه ثبت کن، و مسیرت را ببین.</p>'+
+      '<div class="cta"><a class="btn primary" href="#signup">شروع رایگان</a>'+
+        '<a class="btn soft" href="#today">یک روز نمونه را ببین</a></div>'+
+      '<div class="tiny" style="margin-top:12px">۱۰۷ فعالیت آماده · بدون فشار · بدون قضاوت</div>'+
+      '<div class="joma-msg" style="margin-top:20px;max-width:430px">'+owl('owl-hi',44)+
+        '<div class="bub">سلام! من جغد راهنمای تو‌ام. یک جوجه هم برایت دارم که با قدم‌هایت بزرگ می‌شود 🐣</div></div>'+
     '</div>'+
 
     '<div class="phone desk-only"><div style="display:flex;align-items:center;gap:7px;margin-bottom:9px">'+
@@ -62,90 +59,91 @@ function R_landing(){
         '</div>'+
         ['خواب کافی · ۸ ساعت','مدیتیشن · ۱۵ دقیقه','پیاده‌روی · ۲۰ دقیقه'].map(function(t,i){
           return '<div class="card" style="margin-top:7px;padding:9px 11px;display:flex;align-items:center;gap:8px">'+
-            '<span class="chip40 tick'+(i<2?' on':'')+'" style="width:22px;height:22px;border-radius:99px;'+
-            'border:2px solid '+(i<2?'var(--ok)':'var(--ring-track)')+';background:'+(i<2?'var(--ok)':'transparent')+';'+
-            'display:grid;place-items:center">'+ic('i-check','',11)+'</span>'+
+            '<span style="width:22px;height:22px;border-radius:99px;border:2px solid '+(i<2?'var(--ok)':'var(--ring-track)')+';'+
+            'background:'+(i<2?'var(--ok)':'transparent')+';display:grid;place-items:center">'+
+            (i<2?ic('i-check','',11):'')+'</span>'+
             '<span style="font-size:11px;font-weight:800">'+t+'</span></div>';
         }).join('')+
         '<div class="tiny" style="margin-top:10px">رفتن به کارهای امروز ←</div>'+
       '</div>'+
-      '<div class="chip go" style="margin-top:10px">۱۴ واحد رشد · نسبت به ماه گذشته</div>'+
     '</div></div>'+
 
-    note('نوار آمار 7B (۳۲۲+ عضو · ۱۰۶+ هزار قدم · ۹۱٪ ادامهٔ دوره) <b>حذف شد</b> — عدد بی‌منبع خط سرخ است. '+
-      'اگر بک‌اند عدد واقعی بدهد، با منبع و تاریخ برمی‌گردد.')+
-
-    /* سه کارت ویژگی */
-    '<div class="sec-title">چرا جوما</div><h2 class="sec-h">سه چیز، ساده و روشن.</h2>'+
-    '<div class="sec-sub">هیچ‌کدام وعدهٔ درمان نمی‌دهد.</div>'+
-    '<div class="feat3">'+
-      [['i-target','برنامه‌ای که با تو ساخته می‌شود','from کتابخانه انتخاب می‌کنی، هدف می‌گذاری، و دوره‌ات را وقتی آماده بودی شروع می‌کنی.'],
-       ['i-heart','حال، در کنار کارها','خواب، انرژی، تمرکز و استرس را ثبت می‌کنی — چون تصویر روز بدون حالش کامل نیست.'],
-       ['i-chart','گزارش‌هایی که می‌فهمی','عدد به‌تنهایی معنی ندارد؛ جوما کنارش می‌نویسد این عدد یعنی چه.']]
-      .map(function(f){return '<div class="card">'+ic(f[0])+'<h3>'+f[1]+'</h3><p class="tiny">'+f[2]+'</p></div>';}).join('')+
+    /* ۳ · سه قدم — تنها بخش توضیحی صفحه */
+    '<div id="how-anchor"></div>'+
+    '<div style="text-align:center;max-width:560px;margin:24px auto 20px">'+
+      '<div class="sec-title">چطور کار می‌کند؟</div>'+
+      '<h2 class="sec-h" style="font-size:22px">سه قدم، همین.</h2>'+
+      '<p class="sec-sub" style="margin-bottom:0">هر کدام چند ثانیه وقت می‌گیرد.</p>'+
     '</div>'+
-
-    /* چطور کار می‌کند */
-    '<div id="how-anchor"></div><div class="sec-title">چطور کار می‌کند؟</div>'+
-    '<h2 class="sec-h">رشد قرار نیست پیچیده باشد.</h2>'+
-    '<div class="sec-sub">سه قدم ساده، برای روزهای آگاهانه‌تر.</div>'+
-    '<div class="how">'+
-      [['۰۱','owl-think','برنامه‌ای برای خودت بساز','از کتابخانهٔ فعالیت‌ها انتخاب کن و هدفی تعیین کن که با وقت و شرایطت هماهنگ باشد.'],
-       ['۰۲','owl-hi','هر روز، یک قدم کوچک','آنچه انجام داده‌ای و حالی که داشته‌ای را ثبت کن؛ چند دقیقه برای توجه به خودت.'],
-       ['۰۳','owl-cheer','مسیرت را بهتر بشناس','با گزارش‌های روشن ببین چطور پیوسته‌تر شده‌ای و دورهٔ بعد را آگاهانه‌تر شروع کنی.'],
-       ['۰۴','owl-read','آموزش، وقتی لازم شد','جوما نشان می‌دهد هر بخش چطور کار می‌کند و چه محدودیت‌هایی دارد.']]
-      .map(function(h){return '<div class="card"><span class="n">'+h[0]+'</span>'+
-        owl(h[1],46)+'<h3>'+h[2]+'</h3><p class="tiny">'+h[3]+'</p></div>';}).join('')+
-    '</div>'+
-    note('قدم ۴ در سند نبود؛ اضافه شد چون «آموزش» یکی از وعده‌های اصلی محصول است. جمع: <b>۱۰۷ فعالیت</b> — '+
-      'عدد واقعی کاتالوگ، با منبع.')+
-
-    /* دنیای جوما */
-    '<div id="pins-anchor"></div><div class="sec-title">دنیای جوما</div>'+
-    '<h2 class="sec-h">یک جغد، صد حال خوب.</h2>'+
-    '<div class="sec-sub">جغد ما هر کاری بکند، تو هم می‌توانی هم‌قدمش شوی.</div>'+
-    '<div class="pins">'+pins.map(function(p){
-      return '<div class="card" style="padding:9px">'+
-        '<div class="art" style="background:var('+p[4]+')">'+owl(p[1],54)+'</div>'+
-        '<b style="font-size:11.5px;display:block;margin-top:7px">'+p[2]+'</b>'+
-        '<div class="tiny">'+p[3]+'</div></div>';
+    '<div class="feat3">'+steps.map(function(s){
+      return '<div class="card" style="text-align:center;padding:20px 16px">'+
+        '<div style="display:flex;justify-content:center">'+owl(s[1],58,'floaty')+'</div>'+
+        '<div class="sec-title" style="margin-top:10px">قدم '+s[0]+'</div>'+
+        '<h3 style="font-size:15.5px;justify-content:center">'+s[2]+'</h3>'+
+        '<p class="tiny" style="margin-top:6px;line-height:2">'+s[3]+'</p></div>';
     }).join('')+'</div>'+
-    note('پین‌ها تزئینی‌اند نه ادعای قابلیت. هفت موردشان فعالیت واقعی کتابخانه‌اند؛ «نکتهٔ روز» به آموزش وصل می‌شود.')+
 
-    /* آرام */
-    '<div class="calm"><div class="card">'+
+    /* ۴ · کارها و حال — تفاوت اصلی، با نمونهٔ زنده */
+    '<div class="calm" style="margin-top:26px"><div class="card" style="padding:22px">'+
       '<div class="sec-title">فراتر از یک فهرست کار</div>'+
-      '<h2 class="sec-h">هم کارهایت مهم‌اند،<br>هم حالی که داری.</h2>'+
-      '<p class="tiny" style="margin-top:8px">خواب، انرژی، تمرکز و حال روزانه را در کنار فعالیت‌ها ببین؛ '+
-        'جوما کمک می‌کند تصویر روشن‌تری از روزهایت داشته باشی.</p>'+
-      '<a class="btn soft sm" style="margin-top:12px" href="#mood">تجربهٔ ثبت حال ←</a>'+
-    '</div><div class="card">'+
+      '<h2 class="sec-h" style="font-size:21px">هم کارهایت مهم‌اند،<br>هم حالی که داری.</h2>'+
+      '<p class="tiny" style="margin-top:10px;line-height:2.1;font-size:12px">'+
+        'خواب، انرژی، تمرکز و استرس را در کنار فعالیت‌ها ثبت می‌کنی. '+
+        'بعد می‌بینی کدام روزها بهتر بودی — با دادهٔ خودت، نه با حدس.</p>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">'+
+        ['😄 حال','🔋 انرژی','🎯 تمرکز','🌙 خواب','🎈 استرس'].map(function(c){
+          return '<span class="chip n">'+c+'</span>';}).join('')+'</div>'+
+    '</div><div class="card" style="padding:22px">'+
       '<div class="sec-title">یک لحظه برای خودت</div>'+
-      '<h3 style="margin-top:6px">امروز چه حسی داری؟</h3>'+
-      '<div class="moodq"><div class="faces" style="margin-top:10px">'+
+      '<h3 style="font-size:15px;margin-top:4px">امروز چه حسی داری؟</h3>'+
+      '<p class="tiny">همین حالا امتحان کن — یک انتخاب، تمام.</p>'+
+      '<div class="faces" id="landfaces" style="display:flex;gap:9px;margin-top:14px">'+
         ['😖','🙁','😐','🙂','😄'].map(function(f,i){
-          return '<button class="face" style="font-size:22px" data-demo-face="'+i+'">'+f+'</button>';}).join('')+
-      '</div></div>'+
-      '<p class="tiny" style="margin-top:12px">این نمونهٔ زندهٔ همان تجربه‌ای است که در صفحهٔ «حال من» کامل می‌شود.</p>'+
-      '<a class="btn soft sm" style="margin-top:10px" href="#mood">دیدن ثبت حال ←</a>'+
+          return '<button class="face" style="flex:1;aspect-ratio:1;border-radius:15px;background:var(--brand-softer);'+
+            'border:1.5px solid transparent;font-size:26px;display:grid;place-items:center" '+
+            'data-demo-face="'+i+'">'+f+'</button>';}).join('')+
+      '</div>'+
+      '<p class="tiny" style="margin-top:12px">در ۷B همین ثبت، پنج قدم کوتاه بود. '+
+        'در نسخهٔ ما هر گزینه <b>شکل خودش</b> را دارد و با انتخاب، خودش می‌رود قدم بعد.</p>'+
+      '<a class="btn soft sm" style="margin-top:12px" href="#mood">دیدن تجربهٔ کامل</a>'+
     '</div></div>'+
 
-    /* دعوت پایانی */
-    '<div class="cta-band">'+owl('owl-cheer',62,'floaty')+
-      '<h2 style="margin-top:8px">یک قدم کوچک، همین امروز.</h2>'+
-      '<p style="font-size:12.5px;opacity:.92;margin-top:6px">بدون فشار، بدون قضاوت — هر وقت خواستی شروع کن.</p>'+
+    /* ۵ · جوجه — قلابِ برگشتن */
+    '<div class="card" style="margin-top:26px;padding:24px;display:flex;gap:22px;align-items:center;flex-wrap:wrap">'+
+      '<div style="width:132px;height:140px;flex:none;border-radius:22px;display:grid;place-items:center;'+
+        'background:linear-gradient(160deg,var(--gold-soft),var(--brand-soft))">'+
+        '<span class="floaty">'+chickSVG(92,'chick','happy')+'</span></div>'+
+      '<div style="flex:1;min-width:240px">'+
+        '<div class="sec-title">جوجهٔ من</div>'+
+        '<h2 class="sec-h" style="font-size:21px">یک همراه که دلت نمی‌خواهد رهایش کنی.</h2>'+
+        '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">'+
+          [['با هر ثبت بزرگ‌تر می‌شود','🥚→🐣'],
+           ['هیچ‌وقت نمی‌میرد','🤍'],
+           ['با روز بد تنبیه نمی‌شود','🤍']].map(function(p){
+            return '<div><b style="font-size:12px">'+p[1]+' '+p[0]+'</b></div>';}).join('')+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+    note('سه قدم، به‌جای <b>سه کارت ویژگی + چهار قدم</b> که هر دو یک چیز می‌گفتند. '+
+      'نوار آمار و هشت پین «دنیای جوما» حذف شدند — عدد بی‌منبع خط سرخ است، و پین‌ها فهرست را شلوغ می‌کردند. '+
+      '«جوجه» اضافه شد چون دلیلِ <b>برگشتن</b> کاربر است، نه فقط ثبت‌نام‌کردنش.')+
+
+    /* ۶ · دعوت پایانی */
+    '<div class="cta-band" style="margin-top:26px">'+owl('owl-cheer',58,'floaty')+
+      '<h2 style="margin-top:8px;font-size:22px">یک قدم کوچک، همین امروز.</h2>'+
+      '<p style="font-size:13px;opacity:.92;margin-top:6px">بدون فشار، بدون قضاوت — هر وقت خواستی شروع کن.</p>'+
       '<a class="btn" href="#signup">شروع رایگان</a>'+
     '</div>'+
 
-    /* فوتر */
-    '<div class="lfoot"><div><span class="logo"><span class="logo-tile">'+owl('owl-hi',28)+'</span>'+
+    /* ۷ · فوتر */
+    '<div class="lfoot" style="grid-template-columns:1.6fr 1fr 1fr">'+
+      '<div><span class="logo"><span class="logo-tile">'+owl('owl-hi',28)+'</span>'+
         '<span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>'+
-        '<p class="tiny" style="margin-top:10px">جوما ابزار ثبت و مرور است؛ درمان، تشخیص یا جایگزین مشاور و پزشک نیست.</p></div>'+
-      '<div><h4>محصول</h4><a href="#home">خانه</a><a href="#today">کارهای امروز</a><a href="#mood">حال من</a>'+
-        '<a href="#reports">گزارش‌ها</a></div>'+
-      '<div><h4>جوما</h4><a href="#content">دربارهٔ جوما</a><a href="#edu">آموزش</a><a href="#content">پشتیبانی</a></div>'+
-      '<div><h4>قانونی</h4><a href="#content">حریم خصوصی</a><a href="#content">شرایط استفاده</a>'+
-        '<a href="#rights">دادهٔ من</a></div>'+
+        '<p class="tiny" style="margin-top:10px;max-width:330px">جوما ابزار ثبت و مرور است؛ '+
+        'درمان، تشخیص یا جایگزین مشاور و پزشک نیست.</p></div>'+
+      '<div><h4>جوما</h4><a href="#content">دربارهٔ جوما</a><a href="#content">پشتیبانی</a>'+
+        '<a href="#edu">آموزش</a><a href="#content">حریم خصوصی</a><a href="#content">شرایط استفاده</a></div>'+
+      '<div><h4>ورود</h4><a href="#login">ورود</a><a href="#signup">ساخت حساب</a><a href="#rights">دادهٔ من</a></div>'+
     '</div>'+
     '<div class="tiny" style="text-align:center;margin-top:14px">© ۱۴۰۵ جوما · این صفحه نمونهٔ بازبینی است</div>'+
   '</div>';
@@ -466,10 +464,14 @@ function R_mood(){
       '<div class="art">'+moodArt(s.k,ans===undefined?null:ans)+'</div>'+
       '<h2>'+s.q+'</h2><p class="sub">'+s.sub+'</p>'+
       '<div class="opts">'+s.opts.map(function(o,i){
-        return '<button class="opt'+(ans===i?' sel':'')+'" data-mood="'+i+'">'+o+'</button>';}).join('')+'</div>'+
+        return '<button class="opt'+(ans===i?' sel':'')+'" data-mood="'+i+'">'+
+          '<span class="oart">'+optArt(s.k,i)+'</span>'+
+          '<span class="olbl">'+o+'</span></button>';}).join('')+'</div>'+
     '</div>'+
     wnav('think', step, s, ans)+
-    note('«خواب دیشبت» عمداً <b>کیفیت</b> را می‌پرسد نه ساعت — و همین جمله در زیرنویس آمده تا کاربر اشتباه نکند.');
+    note('«خواب دیشبت» عمداً <b>کیفیت</b> را می‌پرسد نه ساعت — و همین جمله در زیرنویس آمده تا کاربر اشتباه نکند. '+
+      '<br>هر گزینه <b>نمایهٔ بصری خودش</b> را دارد (باتری · حلقه · ماه و ستاره · بادکنک) و با انتخاب، '+
+      'خودکار به قدم بعد می‌رود — کاربر لازم نیست «بعدی» بزند. «رد کن» برای وقتی است که نخواهد جواب بدهد.');
 }
 function wnav(mood){
   var step=Math.min(APP.moodStep,MOOD_STEPS.length-1);
@@ -477,8 +479,8 @@ function wnav(mood){
   var msg='پنج قدم کوتاه. هر پنج تا هم اختیاری‌اند — می‌توانی همین حالا بروی.';
   if(ans!==undefined && MOOD_MSG[s.k]) msg=MOOD_MSG[s.k][ans];
   return '<div class="wnav">'+owl(mood==='cheer'?'owl-cheer':(ans!==undefined?'owl-hi':'owl-think'),42)+
-    '<div class="bub">'+msg+'</div>'+
+    '<div class="bub">'+msg+(ans!==undefined?'':' <span class="tiny">— یا «رد کن» بزن.</span>')+'</div>'+
     '<button class="btn ghost sm" '+(step===0?'disabled':'')+' data-mood-prev>قبلی</button>'+
-    '<button class="btn primary sm" '+(ans===undefined?'disabled':'')+' data-mood-next>'+
-      (step===MOOD_STEPS.length-1?'پایان':'بعدی')+'</button></div>';
+    '<button class="btn soft sm" data-mood-skip>'+
+      (step===MOOD_STEPS.length-1?'پایان':'رد کن ›')+'</button></div>';
 }
