@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="classic">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>نمونهٔ زندهٔ جوما — بازبینی پیش از کدنویسی</title>
+<link rel="stylesheet" href="proto.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+  /* صفحهٔ شروع بازبینی */
+  .intro{max-width:880px;margin:0 auto;padding:30px 20px 40px}
+  .intro h1{font-size:26px;font-weight:900;margin-top:12px}
+  .intro .lead{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:2.1}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  .steps .card b{font-size:13px;display:block}
+  .screens{margin-top:8px}
+  .scr-row{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--card);
+    border:1px solid var(--card-brd);border-radius:var(--r);margin-bottom:8px;box-shadow:var(--shadow-sm);
+    transition:transform .15s}
+  .scr-row:hover{transform:translateX(-3px)}
+  .scr-row .no{width:30px;height:30px;border-radius:10px;background:var(--brand-soft);color:var(--brand-ink);
+    display:grid;place-items:center;font-weight:900;font-size:12px;flex:none}
+  .scr-row.soon .no{background:var(--ring-track);color:var(--ink-3)}
+  .scr-row b{font-size:13px}
+  .scr-row .t{flex:1;min-width:0}
+  .scr-row .sec{font-size:10.5px;color:var(--ink-3)}
+  .badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:99px}
+  .badge.ok{background:var(--brand-soft);color:var(--brand-ink)}
+  .badge.no{background:var(--ring-track);color:var(--ink-3)}
+  @media (max-width:700px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <span class="logo"><span class="logo-tile" id="itile"></span>
+    <span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>
+  <h1>نمونهٔ زنده — پیش از نوشتن کد</h1>
+  <p class="lead">
+    این همان چیزی است که خواستی: <b>کل فرانت، بصری و کلیک‌پذیر، قبل از شروع کدنویسی.</b>
+    هر صفحه یک شماره دارد و به بخشی از سند وصل است — پس می‌توانی بگویی «صفحهٔ ۵ را عوض کن» بدون اینکه سند بخوانی.
+  </p>
+
+  <div class="steps">
+    <div class="card"><b>۱ · نگاه کن</b><p class="tiny">هر صفحه را باز کن. نوار پایین صفحه (کادر سبز تیره) ابزار بازبینی است — در محصول واقعی نیست.</p></div>
+    <div class="card"><b>۲ · بازی کن</b><p class="tiny">لیوان‌ها را پر کن، حال را ثبت کن، رمز را وارد کن، نقش و داده را عوض کن. جغدها با لمس تکان می‌خورند.</p></div>
+    <div class="card"><b>۳ · بگو کدام</b><p class="tiny">شماره‌ی صفحه و اینکه چه عوض شود. من هم نمونه و هم سند را اصلاح می‌کنم.</p></div>
+  </div>
+
+  <div class="banner info" style="margin-bottom:16px">
+    ⚠ این نمونه <b>کد نهایی فرانت نیست</b> و تحویل داده نمی‌شود — مرجع بصری تأیید است. کد واقعی را ایجنت پیاده‌ساز از سند می‌نویسد.
+  </div>
+
+  <div class="screens" id="screens"></div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+    <a class="btn primary" href="app.html#landing">شروع از صفحهٔ ۱ — لندینگ</a>
+    <a class="btn soft" href="../board.html">تابلوی تصمیم‌ها (نسخهٔ ۷)</a>
+    <a class="btn ghost" href="../index.html">پیش‌نمایش قبلی (v0.2)</a>
+  </div>
+
+  <p class="tiny" style="margin-top:20px;line-height:2">
+    <b>سه دسته:</b> دستهٔ ۱ (صفحه‌های ۱ تا ۶) آماده است — لندینگ، ورود، ثبت‌نام، خانه، کارهای امروز با لیوان‌های آب، حال من.
+    دستهٔ ۲ (۷ تا ۱۲) و دستهٔ ۳ (۱۳ تا ۱۸) به‌ترتیب ساخته می‌شوند.
+  </p>
+</div>
+
+<script src="sprite.js"></script>
+<script src="proto.js"></script>
+<script>
+/* نقشهٔ صفحه‌ها روی همین صفحهٔ شروع */
+var MAP=[
+  {n:1,id:'landing',t:'لندینگ',s:'۱۰',gp:'landing.html'},
+  {n:2,id:'login',t:'ورود',s:'۲۲ §۲'},
+  {n:3,id:'signup',t:'ثبت‌نام',s:'۲۲ §۳'},
+  {n:4,id:'home',t:'خانهٔ من',s:'۱۱'},
+  {n:5,id:'today',t:'کارهای امروز',s:'۱۲'},
+  {n:6,id:'mood',t:'حال من',s:'۱۳'},
+  {n:7,t:'جوجهٔ من',s:'۱۴',b:2},
+  {n:8,t:'دفترچهٔ جوما',s:'۱۵',b:2},
+  {n:9,t:'گزارش‌ها',s:'۱۶',b:2},
+  {n:10,t:'برنامهٔ من',s:'۱۸',b:2},
+  {n:11,t:'کتابخانه',s:'۱۷',b:2},
+  {n:12,t:'آموزش',s:'۱۹',b:2},
+  {n:13,t:'هم‌مسیر',s:'۲۰',b:3},
+  {n:14,t:'تنظیمات',s:'۲۱',b:3},
+  {n:15,t:'نقش‌ها و سوییچ',s:'۲۴',b:3},
+  {n:16,t:'کنسول مدیر',s:'۲۳',b:3},
+  {n:17,t:'صفحه‌های محتوایی',s:'۲۵',b:3},
+  {n:18,t:'حقوق داده',s:'۲۶',b:3}
+];
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('itile').innerHTML='<svg width="30" height="30"><use href="#owl-hi"/></svg>';
+  document.getElementById('screens').innerHTML=MAP.map(function(m){
+    var ready=!m.b;
+    var href=ready?('app.html#'+m.id):'app.html#'+m.id;
+    return '<a class="scr-row'+(ready?'':' soon')+'" href="'+href+'">'+
+      '<span class="no">'+fa(m.n)+'</span>'+
+      '<span class="t"><b>'+m.t+'</b><span class="sec"> · بخش '+m.s+' سند</span></span>'+
+      (ready?'<span class="badge ok">آمادهٔ بازبینی</span>':'<span class="badge no">دستهٔ '+fa(m.b)+'</span>')+
+    '</a>';
+  }).join('');
+});
+</script>
+</body>
+</html>
