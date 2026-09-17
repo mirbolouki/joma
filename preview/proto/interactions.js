@@ -252,6 +252,7 @@ window.INNER_CLICK=function(e){
     toast('کد امنیتی فرستاده شد — ۱۵ دقیقه اعتبار دارد');
     return;
   }
+  if((t=e.target.closest('[data-density]'))){ APP.density=t.dataset.density; render(); toast(APP.density==='compact'?'نمایش فشرده شد — هیچ محتوایی پنهان نشد':'نمایش راحت شد'); return; }
   if((t=e.target.closest('[data-tglcb]'))){
     if(t.dataset.tglcb==='terms'){ APP.authTerms=!APP.authTerms; render(); }
     else { t.classList.toggle('on'); toast('روی همین دستگاه به خاطر می‌سپاریم'); }
@@ -349,6 +350,14 @@ window.INNER_CLICK=function(e){
 
   /* ---------- هم‌مسیر ---------- */
   if(e.target.closest('[data-hamcancel]')){ toast('درخواست لغو شد'); return; }
+  /* ---------- کارت دعوت یک‌بارهٔ هم‌مسیر ---------- */
+  if(e.target.closest('[data-complater]')){
+    APP.compInviteSeen=true; render();
+    toast('باشه — هر وقت خواستی از منو ← «هم‌مسیر» پیدایش می‌کنی');
+    return;
+  }
+  if(e.target.closest('[data-compopen]')){ APP.compInviteSeen=true; location.hash='#hammasir'; render(); return; }
+
   if(e.target.closest('[data-hamaccept]')){ APP.hamLink='ACTIVE'; render(); toast('ارتباط فعال شد — فقط مجوزهایی که روشن کردی'); return; }
   if(e.target.closest('[data-hamdecline]')){ APP.hamLink='DECLINED'; render(); toast('رد شد — بدون ارسال دلیل'); return; }
   if(e.target.closest('[data-hamcut]')){

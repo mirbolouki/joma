@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۱۰ — ثبت‌نام کامل · گزارش نموداری · کتابخانه · آموزش کامل · پشتیبانی و پرسش‌ها · خروجی خوانا · تمرین تنفس';
+var BUILD='نسخهٔ ۱۱ — کارت دعوت هم‌مسیر · چگالی نمایش · گزارش نموداری · آموزش ۷۲ راهنما · تمرین تنفس';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -27,11 +27,15 @@ var SCREENS = [
   {n:18, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:1, app:1, nav:'settings'}
 ];
 
+/* ---------- وضعیت‌های ارتباط هم‌مسیر (برچسب بازبینی) ---------- */
+var HAM_ST={NONE:'بدون همراه',PENDING_OUT:'منتظر پاسخ او',PENDING_IN:'درخواست از او',ACTIVE:'فعال',REVOKED:'قطع‌شده',DECLINED:'رد‌شده'};
+
 /* ---------- وضعیت برنامهٔ نمونه ---------- */
 var APP = {
   screen:'landing',
   data:'full',      /* full | empty — کلید بالای نوار بازبینی */
-  theme:'classic',  /* classic | glass */
+  theme:'classic',
+  density:'comfortable', /* comfortable | compact — ترجیح نمایش، ترجیح کاربر */  /* classic | glass */
   role:'client',    /* client | counselor | admin */
   sound:false,
   waterGoal:8,      /* از هدف فعالیت آب در برنامهٔ کاربر — نه عدد ثابت ۸ */
@@ -52,7 +56,8 @@ var APP = {
   eduTab:'map',
   eduPath:'all',
   hamRole:'client',
-  hamLink:'ACTIVE',
+  hamLink:'NONE',      /* NONE | PENDING_OUT | PENDING_IN | ACTIVE | REVOKED | DECLINED */
+  compInviteSeen:false, /* کارت دعوت یک‌باره — بعد از «بعداً» هرگز خودش نمی‌آید */
   setTab:'profile',
   roleView:'client',
   admSec:'overview',
@@ -181,6 +186,8 @@ function rvbar(){
     '<button data-plan>'+(APP.planStatus==='RUNNING'?'دوره: در اجرا':(APP.planStatus==='DRAFT'?'دوره: پیش‌نویس':(APP.planStatus==='PLANNING'?'دوره: آماده‌سازی':'دوره: بایگانی')))+'</button>'+
     '<button data-roleview>نقش: '+(APP.roleView==='coach'?'مشاور':(APP.roleView==='admin'?'مدیر':'کاربری'))+'</button>'+
     '<button data-hamlink>'+(APP.hamRole==='companion'?'حالت: مسیر همراه':'حالت: مسیر مراجع')+'</button>'+
+    '<button data-hamstate>ارتباط: '+(HAM_ST[APP.hamLink||'NONE']||HAM_ST.NONE)+'</button>'+
+    '<button data-invseen class="'+(APP.compInviteSeen?'on':'')+'">کارت دعوت: '+(APP.compInviteSeen?'دیده شد':'نیامده')+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
@@ -191,6 +198,7 @@ function render(){
   var s=SCREENS.filter(function(x){return x.id===APP.screen;})[0]||SCREENS[0];
   var theme=(APP.theme==='glass')?'glass':'classic';
   document.documentElement.setAttribute('data-theme',theme);
+  document.documentElement.setAttribute('data-density',APP.density||'comfortable');
 
   var body;
   if(s.batch>1){ body=soon(s); }
@@ -551,6 +559,11 @@ document.addEventListener('DOMContentLoaded',function(){
       else if(b.hasAttribute('data-hamlink')){
         APP.hamRole=(APP.hamRole==='companion')?'client':'companion'; render();
       }
+      else if(b.hasAttribute('data-hamstate')){
+        var hq=['NONE','PENDING_OUT','PENDING_IN','ACTIVE','REVOKED','DECLINED'];
+        APP.hamLink=hq[(hq.indexOf(APP.hamLink||'NONE')+1)%hq.length]; render();
+      }
+      else if(b.hasAttribute('data-invseen')){ APP.compInviteSeen=!APP.compInviteSeen; render(); }
       else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
       else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
       else if(b.hasAttribute('data-hidebar')){

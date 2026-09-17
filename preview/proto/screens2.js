@@ -520,12 +520,12 @@ function R_plan(){
 var LIB=[
   ['ACT001','پیاده‌روی','سلامت جسم','۲۰ دقیقه · روزانه','روزانه','۲۰ دقیقه','owl-fit','--brand-soft','self','sport',true],
   ['ACT002','نوشیدن آب','سلامت جسم','۸ لیوان · روزانه','روزانه','۸ لیوان','owl-water','--sky-soft','self','sport',true],
-  ['ACT003','خواب کافی','سلامت جسم','۸ ساعت · روزانه','روزانه','۸ ساعت','owl-moon','--indigo-soft','self','sport',true],
-  ['ACT004','خوراک سالم','سلامت جسم','۳ وعده · روزانه','روزانه','۳ وعده','owl-cheer','--rose-soft','self','food',false],
-  ['ACT005','مدیتیشن ۱۵ دقیقه‌ای','مراقبه','۱۵ دقیقه · روزانه','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self','calm',true],
-  ['ACT006','تمرین تنفس ۴-۷-۸','مراقبه','۳ دور · روزانه','روزانه','۳ دور','owl-lotus','--lav-soft','self','calm',true],
-  ['ACT007','مطالعهٔ آرام','ذهن','۱۰ صفحه · روزانه','روزانه','۱۰ صفحه','owl-read','--gold-soft','self','mind',false],
-  ['ACT008','نوشتن روزانه','ذهن','۱ صفحه · روزانه','روزانه','۱ صفحه','owl-read','--gold-soft','self','mind',true],
+  ['ACT005','خواب کافی','سلامت جسم','۸ ساعت · روزانه','روزانه','۸ ساعت','owl-moon','--indigo-soft','self','sport',true],
+  ['ACT003','خوراک سالم','سلامت جسم','۳ وعده · روزانه','روزانه','۳ وعده','owl-cheer','--rose-soft','self','food',false],
+  ['ACT007','مدیتیشن ۱۵ دقیقه‌ای','مراقبه','۱۵ دقیقه · روزانه','روزانه','۱۵ دقیقه','owl-lotus','--lav-soft','self','calm',true],
+  ['ACT008','تمرین تنفس ۴-۷-۸','مراقبه','۳ دور · روزانه','روزانه','۳ دور','owl-lotus','--lav-soft','self','calm',true],
+  ['ACT004','مطالعهٔ آرام','ذهن','۱۰ صفحه · روزانه','روزانه','۱۰ صفحه','owl-read','--gold-soft','self','mind',false],
+  ['ACT006','نوشتن روزانه','ذهن','۱ صفحه · روزانه','روزانه','۱ صفحه','owl-read','--gold-soft','self','mind',true],
   ['ACT009','گفت‌وگوی روزانه','ارتباط','۵ دقیقه · روزانه','روزانه','۵ دقیقه','owl-hi','--rose-soft','couple','talk',true],
   ['ACT046','بازسازی صمیمیت عاطفی','زوج درمانی','۱۵ دقیقه · روزانه','روزانه','۱ تمرین','owl-hi','--rose-soft','couple','talk',true],
   ['ACT047','تمرین گفت‌وگو بدون دعوا','زوج درمانی','۲۰ دقیقه · هفتگی','هفتگی','۱ جلسه','owl-hi','--rose-soft','couple','talk',true],
@@ -598,7 +598,7 @@ function R_library(){
               (a[10]? ic('i-checkc')+'راهنمای تمرین دارد — دکمهٔ «آموزش»':'راهنمای تمرین ندارد — «جزئیات»')+'</div>'+
             '<div class="acl-actions">'+
               '<button class="btn primary sm" data-addplan="'+a[1]+'">'+ic('i-plus')+'افزودن به برنامه</button>'+
-              (a[0]==='ACT006'? '<button class="btn soft sm" data-breathopen="library">'+ic('i-play')+'شروع تنفس</button>':'')+
+              (a[0]==='ACT008'? '<button class="btn soft sm" data-breathopen="library">'+ic('i-play')+'شروع تنفس</button>':'')+
               (a[10]? '<button class="btn ghost sm" data-actdetail="'+a[1]+'">'+ic('i-book')+'آموزش</button>'
                     : '<button class="btn ghost sm" data-actdetail="'+a[1]+'">جزئیات</button>')+
               '<button class="btn ghost sm" data-liblock>غیرفعال</button>'+

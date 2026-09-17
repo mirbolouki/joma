@@ -28,6 +28,33 @@ function hamGuide(){
     'همراه به هیچ داده‌ای دسترسی ندارد، مگر خودت اجازه بدهی.</p></div></div></div>';
 }
 
+/* ---------- کارت دعوت یک‌بارهٔ هم‌مسیر ----------
+   قانون مالک: «کاربری که هم‌مسیر ندارد، یک‌بار — و فقط یک‌بار — یک کارت
+   دعوت گوگولی و شیک ببیند. اگر «بعداً» زد، دیگر خودش نیاید؛ فقط از منو.»
+   پس: نه مودال، نه بَج، نه یادآور، نه تکرار. شرط نمایش از بک‌اند می‌آید. */
+function compInviteAllowed(){
+  if(APP.hamRole==='companion') return false;
+  if(APP.compInviteSeen) return false;
+  /* فقط کاربری که هرگز ارتباطی نداشته — نه بعد از «رد شد» و نه بعد از «قطع شد»:
+     آن لحظه‌ها لحظهٔ دعوت نیستند. در محصول، این از یک پرچم بک‌اند می‌آید. */
+  if((APP.hamLink||'NONE')!=='NONE') return false;
+  /* «لحظهٔ معنادار»: حساب تازه، روز اول دعوت نمی‌شود */
+  return (!empty() || APP.planStatus==='PLANNING' || APP.planStatus==='RUNNING');
+}
+function compInviteCard(){
+  return '<div class="inv-card" id="compInvite">'+
+    '<div class="inv-art"><span class="floaty">'+owl('owl-hi',66)+'</span>'+
+      '<i class="inv-dot d1"></i><i class="inv-dot d2"></i><i class="inv-dot d3"></i></div>'+
+    '<div class="inv-body">'+
+      '<span class="inv-tag">'+ic('i-users')+'یک پیشنهاد، فقط همین یک‌بار</span>'+
+      '<h3>یک نفر را کنارت بیاور؟</h3>'+
+      '<p class="tiny">هم‌مسیر می‌تواند خلاصهٔ مسیرت را ببیند و کنارت بماند — '+
+      'و <b>فقط چیزهایی که خودت روشن کنی</b>. تا خودش قبول نکند و تو تأیید نکنی، هیچ‌چیز رد و بدل نمی‌شود.</p>'+
+      '<div class="inv-acts"><button class="btn primary" data-compopen>انتخاب هم‌مسیر</button>'+
+      '<button class="btn ghost" data-complater>بعداً</button></div>'+
+      '<div class="inv-note tiny">این کارت دیگر خودش نمی‌آید. هر وقت خواستی، از منو ← «هم‌مسیر».</div>'+
+    '</div></div>';
+}
 function R_hammasir(){
   var role=APP.hamRole||'client';
   if(role==='companion') return R_hammasir_comp();
@@ -284,6 +311,10 @@ function R_settings(){
       '<div class="segs">'+['عادی','بزرگ','بزرگ‌تر'].map(function(s,i){
         return '<button class="'+(i===0?'on':'')+'">'+s+'</button>';}).join('')+'</div>'+
       '<div class="txt-sample">این یک نمونهٔ زنده است — همان متن، با اندازهٔ انتخابی تو.</div>'+
+      '<div class="lbl" style="margin-top:14px">چگالی نمایش</div>'+
+      '<div class="segs">'+[['comfortable','راحت'],['compact','فشرده']].map(function(x){
+        return '<button class="'+(APP.density===x[0]?'on':'')+'" data-density="'+x[0]+'">'+x[1]+'</button>';}).join('')+'</div>'+
+      '<div class="tiny" style="margin-top:6px">«راحت» برای خواندن روزمره؛ «فشرده» برای وقتی می‌خواهی در یک نگاه بیشتر ببینی (گزارش‌ها و موبایل کوچک). <b>هیچ محتوایی پنهان نمی‌شود</b> — فقط فاصله‌ها جمع‌تر می‌شود.</div>'+
       '<div class="kv"><span>کاهش حرکت</span><b>خودکار (سیستم)</b></div>'+
       '<div class="kv"><span>شفافیت</span><b>خودکار (سیستم)</b></div>'+
     '</div>'+
