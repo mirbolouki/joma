@@ -20,6 +20,7 @@
 
 - **سایت اصلی:** دست‌نخورده — تا «برو»ی تو.
 - **روی ساب‌دامین تست — کارهای بک‌اند:** `B1`–`B5` (بازیابی رمز دو مرحله‌ای · گیت حال فقط «کارهای امروز» · بستن ثبت آینده · یادداشت خصوصی · جوجه با سه سنجه و نامِ جوجه) و تازه: `B6` **آب پیش‌نویس/قطعی** و `B7` **دفترچهٔ جوما با بینش و شواهد**. تنها مورد باقی: `B8`.
+- **📋 چک‌لیست بازبینی v6 (برای ایجنت — خودش کمبودها را پیدا کند و گزارش بدهد):** [`docs/handoff/22-gap-audit-checklist.md`](docs/handoff/22-gap-audit-checklist.md)
 - **🏁 بستهٔ نهایی v6 رسید (دور ۲۶):** چهار فاز + ۹ ایراد + تقویم + `B6`/`B7`/`B8` در **یک بسته** — نوبت **تست یک‌جای مالک**: [`docs/handoff/21-owner-final-test-steps.md`](docs/handoff/21-owner-final-test-steps.md)
 - **ساخت فرانت:** بستهٔ نهایی **v6** تحویل شد (چهار فاز کامل) — چک‌لیست فازها: [`docs/handoff/17-frontend-phases-checklist.md`](docs/handoff/17-frontend-phases-checklist.md)
 - **گزارش این دور:** [`docs/handoff/18-round-24-backend-status.md`](docs/handoff/18-round-24-backend-status.md) · چک‌لیست تست: [`docs/handoff/12-test-deploy-status.md`](docs/handoff/12-test-deploy-status.md)
