@@ -150,32 +150,6 @@ function R_landing(){
 }
 
 /* ============================ ۲) ورود — سند ۲۲ §۲ ============================ */
-function R_login(){
-  return '<div class="auth">'+rvBare()+'<div class="box fadeup" id="authbox">'+
-    '<div class="hd">'+owl('owl-hi',58,'floaty')+
-      '<h1>خوش برگشتی.</h1><p>از همان‌جایی که بودی ادامه بده.</p></div>'+
-    '<div id="autherr"></div>'+
-    '<div class="fld"><label class="lbl" for="u">نام کاربری</label>'+
-      '<input class="inp" id="u" autocomplete="username" autofocus></div>'+
-    '<div class="fld"><label class="lbl" for="p">رمز عبور</label>'+
-      '<div class="pw-wrap"><input class="inp" id="p" type="password" autocomplete="current-password">'+
-      '<button class="eye" data-pw aria-label="نمایش رمز">'+ic('i-info')+'</button></div></div>'+
-    '<div class="banner info" style="margin-bottom:12px">'+ic('i-info')+
-      'رمزت را فراموش کردی؟ تا وقتی مسیر بازیابی امن نشده، با <a href="#content">پشتیبانی</a> تماس بگیر.</div>'+
-    '<button class="btn primary wide" data-login>ورود</button>'+
-    '<div class="alt">حساب نداری؟ <a href="#signup">ثبت‌نام کن</a> · <a href="#content">دربارهٔ جوما</a></div>'+
-  '</div></div>';
-}
-function rvBare(){
-  return note('دکمهٔ «رمزت را فراموش کردی؟» نمایش داده نمی‌شود تا <code>SEC-01</code> حل شود. '+
-    'جایش، راه تماس با پشتیبانی هست. خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد.');
-}
-
-/* ============================ ۳) ثبت‌نام — سند ۲۲ §۳ ============================
-   کامل: نام · نام خانوادگی · نام کاربری · موبایل · ایمیل · رمز و تکرارش · کد امنیتی · تیک قوانین
-   · شماره موبایل · ایمیل · رمز عبور و تکرارش · کد امنیتی با دکمهٔ «درخواست کد امنیتی»
-   · تیک قوانین و سیاست حریم خصوصی · دکمهٔ «ساخت حساب جدید».
-   ستون کنار: برند «جوجهٔ من» + توضیح + بازگشت به صفحهٔ معرفی.                    */
 function fx(id,label,ph,type,opts){
   opts=opts||{};
   var inner;
@@ -190,55 +164,100 @@ function fx(id,label,ph,type,opts){
     '<label class="fxl" for="'+id+'">'+label+'</label>'+inner+
     (opts.hint?'<span class="fxh tiny">'+opts.hint+'</span>':'')+'</div>';
 }
+
+/* =================== پوستهٔ مشترک ورود / ثبت‌نام / بازیابی رمز ===================
+   هر سه صفحه یک قالب دارند: ریل برند + تب‌های افقی + کارت فرم.
+   «خوشگل‌تر» یعنی: یکدست، آرام، با تصویر برند — نه شلوغ‌تر.            */
+function authTabs(active){
+  var items=[['login','ورود'],['signup','ثبت‌نام'],['forgot','بازیابی رمز']];
+  return '<div class="authtabs h">'+items.map(function(t){
+    return '<a href="#'+t[0]+'" class="'+(active===t[0]?'on':'')+'">'+t[1]+'</a>';}).join('')+'</div>';
+}
+function authHd(title,sub){
+  return '<div class="auth-hd"><h1>'+title+'</h1><p class="sub">'+sub+'</p></div><div id="autherr"></div>';
+}
+function authShell(active,title,sub,body){
+  return '<div class="auth2">'+authRail()+'<div class="auth-main">'+authTabs(active)+
+    '<section class="auth-card wide fadeup auth-pane">'+authHd(title,sub)+body+'</section></div></div>';
+}
+/* کارت پشتیبانی — همان مسیر کد دستی ثبت‌نام (۲۲ §۳.۱) */
+function supportCard(title,txt){
+  return '<div class="sup-card">'+
+    '<div class="sup-top"><span class="sup-ic">'+ic('i-chat')+'</span>'+
+      '<span><b>'+title+'</b><small class="tiny">'+txt+'</small></span></div>'+
+    '<div class="sup-row"><span class="sup-num" dir="ltr">۰۹۹۶۷۹۷۹۴۷۱</span>'+
+      '<button class="btn ghost sm" data-copy="09967979471">'+ic('i-file')+'کپی شماره</button>'+
+      '<button class="btn soft sm" data-authcode>'+ic('i-chat')+'پیام آماده</button></div>'+
+    '<div class="tiny muted">دو راه: پیامک به همین شماره، یا پیام در بله. کد را دستی برایت می‌فرستند.</div>'+
+  '</div>';
+}
+
+/* ============================ ۲) ورود — سند ۲۲ §۲ ============================ */
+function R_login(){
+  return authShell('login','خوش برگشتی 🌿','از همان‌جایی که بودی ادامه بده.',
+    '<div class="auth-grid">'+
+      fx('li','نام کاربری','مثلاً sara','text',{ac:'username',dir:'ltr'})+
+      fx('lp','رمز عبور','••••••••','password',{ac:'current-password',
+        tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>'})+
+    '</div>'+
+    '<label class="perm-row"><span class="cb" data-tglcb></span><span class="pbody"><b>مرا به خاطر بسپار</b>'+
+      '<em>فقط روی همین دستگاه — هر وقت خواستی در تنظیمات می‌بندی.</em></span></label>'+
+    '<button class="btn primary wide big" data-login>ورود</button>'+
+    '<div class="alt">حساب نداری؟ <a href="#signup">ثبت‌نام کن</a> · '+
+      '<a href="#forgot">رمزت را فراموش کردی؟</a></div>'+
+    note('خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد. مسیر بازیابی رمز ساخته شد: کد یک‌بارمصرف که '+
+      '<b>سرور صادر می‌کند</b> و <b>پشتیبانی تحویل می‌دهد</b> — چون ایمیل و پیامکِ محصولی وصل نیستند (۲۲ §۴).'));
+}
+
+/* ========================= ۴) بازیابی رمز — سند ۲۲ §۴ =========================
+   چهار گام. کد را سرور صادر می‌کند (یک‌بارمصرف، ۱۵ دقیقه) و پشتیبانی تحویل می‌دهد. */
+function R_forgot(){
+  var st=APP.forgotStep||0;
+  var dots='<div class="fg-dots">'+[0,1,2,3].map(function(k){
+    return '<i class="'+(k<st?'done':(k===st?'on':''))+'"></i>';}).join('')+'</div>';
+  var hd='<div class="fg-hd">'+ic('i-lock')+'<b>گام '+fa(st+1)+' از '+fa(4)+'</b>'+dots+'</div>';
+
+  if(st===0){
+    return authShell('forgot','بازیابی رمز','اول بگو کدام حساب را می‌خواهی برگردانی.', hd+
+      '<div class="auth-grid">'+fx('fgi','نام کاربری یا موبایل ثبت‌شده','مثلاً sara یا ۰۹۱۲۳۴۵۶۷۸۹','text',{wide:true,dir:'ltr'})+'</div>'+
+      '<button class="btn primary wide big" data-fg="id">ادامه</button>'+
+      '<div class="banner info tiny">'+ic('i-info')+
+        'پاسخ همیشه یکسان است: «اگر این شناسه حسابی داشته باشد، کد یک‌بارمصرف برایش صادر می‌شود.» '+
+        'این‌طور هیچ‌کس نمی‌فهمد چه حسابی وجود دارد.</div>'+
+      note('کد رمز نیست و رمز هم هیچ‌وقت فرستاده نمی‌شود — رمز در سرور به‌صورت هش نگه داشته می‌شود.'));
+  }
+  if(st===1){
+    return authShell('forgot','کد یک‌بارمصرف','کد را از پشتیبانی بگیر.', hd+
+      supportCard('کد بازیابی را از پشتیبانی بگیر','بگو حسابم را گم کرده‌ام؛ کد را دستی می‌فرستند.')+
+      '<div class="auth-grid" style="margin-top:14px">'+
+        fx('fgc','کد یک‌بارمصرف','۶ رقمی','text',{wide:true,dir:'ltr'})+'</div>'+
+      '<button class="btn primary wide big" data-fg="code">تأیید کد</button>'+
+      '<div class="alt"><a href="#" data-fg="back">شناسه را عوض کن</a></div>'+
+      note('کد ۱۵ دقیقه اعتبار دارد، یک‌بارمصرف است و ۵ بار می‌شود امتحانش کرد. '+
+        'پشتیبانی <b>هرگز</b> رمز نمی‌پرسد و رمز تازه را هم نمی‌سازد — فقط کد می‌دهد.'));
+  }
+  if(st===2){
+    return authShell('forgot','رمز تازه','حالا یک رمز تازه بساز.', hd+
+      '<div class="auth-grid">'+
+        fx('fp1','رمز تازه','حداقل ۸ نویسه','password',{wide:true,ac:'new-password',
+          tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>'})+
+        fx('fp2','تکرار رمز تازه','همان رمز','password',{wide:true,ac:'new-password'})+
+      '</div>'+
+      '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
+      '<button class="btn primary wide big" data-fg="save">ذخیرهٔ رمز تازه</button>'+
+      note('پس از ذخیره، <b>همهٔ نشست‌های دیگر باطل می‌شوند</b> و باید از نو وارد شوی. '+
+        'یک پیام هم به همان کانال می‌آید: «رمز حساب تو عوض شد؛ اگر این تو نبودی فوراً به پشتیبانی بگو.»'));
+  }
+  return authShell('forgot','رمزت عوض شد ✓','حالا با رمز تازه وارد شو.', hd+
+    '<div class="fg-done">'+owl('owl-cheer',96,'floaty')+
+      '<p class="sub">رمز تازه ذخیره شد. از دستگاه‌های دیگر خارج شدی و یکی‌یکی باید از نو وارد شوی.</p></div>'+
+    '<button class="btn primary wide big" data-fg="login">'+ic('i-checkc')+'ورود با رمز تازه</button>'+
+    '<div class="alt">اگر این کار تو نبود، همین حالا به <a href="#content">پشتیبانی</a> بگو.</div>');
+}
+
 function R_signup(){
-  var tab=APP.authTab||'signup';
-
-  var tabs='<div class="authtabs v">'+
-    [['login','ورود'],['signup','ثبت‌نام'],['forgot','فراموشی']].map(function(t2){
-      return '<button class="'+(tab===t2[0]?'on':'')+'" data-authtab="'+t2[0]+'">'+t2[1]+'</button>';}).join('')+
-    '</div>';
-
-  var hd='<div class="auth-top"><div>'+
-    '<h1>'+(tab==='login'?'ورود به جومای من':'ساخت حساب جومای من')+'</h1>'+
-    '<p class="sub">'+(tab==='login'?'خوش برگشتی؛ از همان‌جا که بودی ادامه بده.'
-      :'با پذیرش قوانین، حساب کاربری خود را می‌سازید.')+'</p></div>'+tabs+'</div>'+
-    '<div id="autherr"></div>';
-
-  if(tab==='forgot'){
-    return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
-      '<div class="forgot">'+ic('i-info')+
-        '<b>بازیابی رمز — با کد یک‌بارمصرف</b>'+
-        '<p class="tiny">رمز را نمی‌دانیم و هیچ‌وقت نمی‌پرسیم. کد را به کانال ثبت‌شدهٔ خودت می‌فرستیم؛ '+
-        '۱۵ دقیقه اعتبار دارد و ۵ بار می‌شود امتحانش کرد.</p></div>'+
-      '<div class="auth-grid">'+
-        fx('fg1','شماره موبایل یا ایمیل ثبت‌شده','۰۹۱۲۳۴۵۶۷۸۹','text',{wide:true,dir:'ltr'})+
-        fx('fg2','کد یک‌بارمصرف','۶ رقمی','text',{dir:'ltr',tail:'<button class="fxbtn" data-authcode>درخواست کد امنیتی</button>'})+
-        fx('fg3','رمز تازه','حداقل ۸ نویسه','password',{})+
-        fx('fg4','تکرار رمز تازه','همان رمز','password',{})+
-      '</div>'+
-      '<button class="btn primary wide big" data-auth="forgot">ساختن رمز تازه</button>'+
-      '<div class="alt">رمزت را به یاد آوردی؟ <a href="#" data-authtab="login">وارد شو</a></div>'+
-      note('این مسیر تا حل‌شدن <code>SEC-01</code> در محصول واقعی فعال نمی‌شود؛ تا آن تصمیم، کارت ورود مسیر «تماس با پشتیبانی» را نشان می‌دهد.')+
-    '</section></div>';
-  }
-
-  if(tab==='login'){
-    return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
-      '<div class="auth-grid">'+
-        fx('li','نام کاربری یا ایمیل','مثلاً sara','text',{ac:'username',dir:'ltr'})+
-        fx('lp','رمز عبور','••••••••','password',{ac:'current-password',tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>'})+
-      '</div>'+
-      '<label class="perm-row"><span class="cb" data-tglcb></span><span class="pbody"><b>مرا به خاطر بسپار</b>'+
-        '<em>فقط روی همین دستگاه — هر وقت خواستی در تنظیمات می‌توانی ببندی.</em></span></label>'+
-      '<button class="btn primary wide big" data-login>ورود</button>'+
-      '<div class="alt">حساب نداری؟ <a href="#" data-authtab="signup">ثبت‌نام کن</a> · '+
-        '<a href="#" data-authtab="forgot">فراموشی رمز</a></div>'+
-      note('دکمهٔ «رمزت را فراموش کردی؟» تا حل‌شدن <code>SEC-01</code> نمایش داده نمی‌شود. خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد.')+
-    '</section></div>';
-  }
-
   /* ---------- ثبت‌نام: همان فرم اسکرین‌شات، کامل ---------- */
-  return '<div class="auth2">'+authRail()+'<section class="auth-card wide fadeup">'+hd+
+  return authShell('signup','ساخت حساب جومای من','با پذیرش قوانین، حساب کاربری خودت را می‌سازی.',
   '<div class="auth-grid">'+
     fx('sn','نام','مثلاً سارا','text',{ac:'given-name'})+
     fx('sf','نام خانوادگی','مثلاً محمدی','text',{ac:'family-name'})+
@@ -249,8 +268,9 @@ function R_signup(){
     fx('sp2','تکرار رمز عبور','همان رمز','password',{ac:'new-password',hint:'هر دو رمز باید یکی باشند — همین‌جا چک می‌شود.'})+
   '</div>'+
   '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
+  supportCard('کد ثبت‌نام را از پشتیبانی بگیر','بگو می‌خواهم حساب بسازم؛ کد را دستی می‌فرستند.')+
   '<div class="auth-grid tight">'+
-    fx('sc','کد ثبت‌نام','کد را از پشتیبانی بگیر','text',{dir:'ltr',data:'authcode',hint:'پیامک سیستم وصل نیست؛ کد دستی داده می‌شود — به همین شماره پیام بده: ۰۹۹۶۷۹۷۹۴۷۱ (پیامک یا بله).',tail:'<button class="fxbtn" data-authcode>'+ic('i-chat')+'دریافت کد از پشتیبانی</button>'})+
+    fx('sc','کد ثبت‌نام','کد را از پشتیبانی بگیر','text',{dir:'ltr',data:'authcode',hint:'پیامک سیستم وصل نیست؛ کد دستی داده می‌شود.',tail:'<button class="fxbtn" data-authcode>'+ic('i-chat')+'دریافت کد از پشتیبانی</button>'})+
   '</div>'+
   '<label class="perm-row"><span class="cb'+(APP.authTerms?' on':'')+'" data-tglcb="terms"></span>'+
     '<span class="pbody"><b>قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم.</b>'+
@@ -263,12 +283,25 @@ function R_signup(){
   '<div class="alt">قبلاً حساب ساختی؟ <a href="#" data-authtab="login">وارد شو</a></div>'+
   note('این فرم <b>هیچ فیلد نقشی ندارد</b> — و نباید داشته باشد. حساب همیشه با نقش <b>کاربری</b> ساخته می‌شود و '+
     'ارتقای نقش <b>فقط از مسیر مدیریت</b> انجام می‌شود (سند ۲۴). انتخاب نقش در ثبت‌نام، همان لحظه یک '+
-    '<b>حفرهٔ دسترسی</b> می‌سازد — پس وجود ندارد، حتی به‌عنوان «درخواست».');
+    '<b>حفرهٔ دسترسی</b> می‌سازد — پس وجود ندارد، حتی به‌عنوان «درخواست».'));
 }
 function authRail(){
   return '<aside class="auth-rail">'+
     '<div class="rail-brand"><span class="brand-mark">'+owl('owl-logo',36)+'</span>'+
-      '<span><b>جوجهٔ من</b><small>همراه تو، قدم‌به‌قدم</small></span></div>'+
+      '<span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></div>'+
+    '<div class="rail-art">'+
+      '<svg width="100%" height="92" viewBox="0 0 220 92" aria-hidden="true">'+
+        '<path d="M0 78q38-28 76-9t60 3q40-15 84-26v46H0Z" fill="rgba(255,255,255,.55)"/>'+
+        '<circle cx="46" cy="18" r="7" fill="rgba(255,255,255,.75)"/>'+
+        '<circle cx="188" cy="27" r="4.5" fill="rgba(255,255,255,.6)"/>'+
+        '<circle cx="162" cy="12" r="3" fill="rgba(255,255,255,.5)"/>'+
+      '</svg>'+
+      '<span class="rail-owl">'+owl('owl-hi',62,'floaty')+'</span>'+
+    '</div>'+
+    '<div class="rail-chips">'+
+      ['۱۰۷ فعالیت آماده','جوجهٔ همراه','روزی چند دقیقه'].map(function(c){
+        return '<span class="rail-chip">'+c+'</span>';}).join('')+
+    '</div>'+
     '<p class="tiny rail-txt">جوما جایی برای چیدن کارها، ثبت روزانه و دیدن الگوهای خودت است. '+
       'هر چیزی که ثبت کنی مال خودت است و فقط با اجازهٔ خودت دیده می‌شود.</p>'+
     '<a class="rail-back" href="#landing">'+ic('i-chev-r')+'بازگشت به صفحهٔ معرفی</a>'+
@@ -535,8 +568,24 @@ function moodArt(k,l){
 }
 
 function R_mood(){
+  /* 🔴 حالت مشاور: صفحهٔ حال باز نمی‌شود (سند ۲۴ §۳.۳) */
+  if(APP.roleView==='coach'){
+    return head('حال من','این صفحه در حالت مشاور باز نمی‌شود',
+        'مشاور با حساب خودش حالی ثبت نمی‌کند؛ کارش پروندهٔ مراجع‌هاست.',
+        '<span class="chip go">حالت: مشاور</span>')+
+      '<div class="scene" style="background:linear-gradient(150deg,var(--lav-soft),var(--sky-soft))">'+
+        '<div class="art">'+owl('owl-think',84,'floaty')+'</div>'+
+        '<h2>حال من، برای حسابِ خودت است</h2>'+
+        '<p class="sub">وقتی در نقش مشاور وارد می‌شوی، جومای شخصی‌ات (حال، جوجه، برنامه) کنار می‌رود و '+
+        'داشبورد مراجع‌ها می‌آید. همان لحظه که به نقش کاربری برگردی، <b>دقیقاً مثل هر کاربر دیگری</b> با تو رفتار می‌شود.</p>'+
+        '<div class="bc-acts"><button class="btn primary" data-roleto="client">برگرد به نقش کاربری</button>'+
+          '<button class="btn ghost" data-go="hammasir">داشبورد مشاور</button></div></div>'+
+      note('قاعده یک‌طرفه نیست: مشاور <b>هم</b> یک کاربر است (نقش کاربری همیشه هست) — فقط تا وقتی در حالت مشاور است، '+
+        'صفحه‌های شخصی از ناوبری کنار می‌روند تا دادهٔ شخصی و پروندهٔ مراجع قاطی نشود.');
+  }
   var step=APP.moodStep;
-  var finished=(step>=MOOD_STEPS.length);
+  var NOTE_STEP=MOOD_STEPS.length;
+  var finished=(step>NOTE_STEP);
   var s=MOOD_STEPS[step]||MOOD_STEPS[MOOD_STEPS.length-1];
   var ans=APP.moodAnswers[s.k];
   var done=Object.keys(APP.moodAnswers).length;
@@ -544,7 +593,8 @@ function R_mood(){
   var wiz='<div class="wiz-top">'+MOOD_STEPS.map(function(x,i){
     var cls=i<step?'done':(i===step?'on':'');
     return '<span class="wdot '+cls+'"><span class="d">'+(i<step?'✓':fa(i+1))+'</span><span class="ln"></span></span>';
-  }).join('')+'</div>';
+  }).join('')+'<span class="wdot '+(step>NOTE_STEP?'done':(step===NOTE_STEP?'on':''))+
+    '"><span class="d">'+(step>NOTE_STEP?'✓':'✎')+'</span></span></div>';
 
   if(finished){
     return head('حال من','مرور امروز',D('پنج قدم را پاسخ دادی.','هنوز چیزی ثبت نشده.'))+
@@ -558,7 +608,10 @@ function R_mood(){
           return '<div class="st" style="display:flex;align-items:center;gap:10px;padding:9px 0;'+
             'border-bottom:1px dashed var(--card-brd)"><b style="font-size:12px;flex:1">'+x.q+'</b>'+
             '<span class="chip g">'+(l===undefined?'—':x.opts[l])+'</span></div>';}).join('')+
+        '<div class="note-show">'+ic('i-lock')+'<span>'+(APP.moodNote? esc(APP.moodNote)
+          : 'بدون جمله — هر وقت خواستی می‌توانی بنویسی.')+'</span></div>'+
         '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">'+
+        '<button class="btn soft sm" data-mood-note-edit>نوشتن / ویرایش جمله</button>'+
         '<button class="btn soft sm" data-mood-reset>اصلاح پاسخ‌ها</button>'+
         '<button class="btn primary sm" data-go="home">بازگشت به خانه</button>'+
         '<button class="btn ghost sm" data-go="reports">دیدن گزارش</button></div>'+
@@ -566,6 +619,23 @@ function R_mood(){
       (APP.stress>=3? breathCard('mood'):'')+
       note('پس از ثبت، پاسخ‌ها <b>قابل اصلاح‌اند</b> ولی نسخهٔ قبلی در تاریخچه می‌ماند — «اصلاح با دلیل»، نه پاک‌کردن بی‌رد.')+
       wnav('cheer');
+  }
+
+  if(step===NOTE_STEP){
+    return head('حال من','امروز را در یک جمله بنویس',D('اختیاری است — اگر دوست داشتی بنویس، اگر نه رد کن.',''),
+        '<span class="headacts"><span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شد</span></span>')+ wiz+
+      '<div class="scene" style="background:var(--lav-soft)">'+
+        '<div class="art">'+owl('owl-think',76,'floaty')+'</div>'+
+        '<h2>یک جمله برای خودت</h2>'+
+        '<p class="sub">نه برای گزارش، نه برای کسی — فقط برای اینکه فردا یادت بیاید امروز چه خبر بود.</p>'+
+        '<div class="note-box"><textarea data-moodnote rows="3" placeholder="مثلاً: امروز سخت بود، ولی پیاده‌روی حالم را بهتر کرد…">'+esc(APP.moodNote||'')+'</textarea>'+
+          '<div class="note-foot"><span class="chip go">'+ic('i-lock')+'فقط خودت</span>'+
+          '<span class="tiny muted">هم‌مسیر فقط <b>عددها و نمودارها</b> را می‌بیند. متن یادداشت مجوز جداگانه دارد '+
+          '(<code>VIEW_NOTES</code>) و <b>پیش‌فرض خاموش</b> است — تا خودت روشنش نکنی، هیچ‌کس نمی‌بیند.</span></div></div>'+
+        '<div class="bc-acts"><button class="btn primary" data-mood-note-save>ذخیره و پایان</button>'+
+          '<button class="btn ghost" data-mood-note-skip>بدون جمله</button></div></div>'+
+      note('این جمله <b>هیچ سنجه‌ای را عوض نمی‌کند</b> — نه جوجه، نه سطح، نه گزارش. '+
+        'در «دفترچه» کنار همان روز می‌نشیند و بعداً هم قابل ویرایش است.');
   }
 
   return head('حال من','حال من',D('پنج قدم کوتاه. هر پنج تا هم اختیاری‌اند — می‌توانی همین حالا بروی.',''),

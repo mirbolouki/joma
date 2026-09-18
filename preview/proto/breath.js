@@ -6,10 +6,14 @@
    ========================================================================== */
 var BR={open:false,running:false,phase:0,sec:4,round:1,rounds:3,sound:false,done:false,timer:null};
 var BR_PH=[
-  ['in','دم',4,'از بینی، آرام و بی‌صدا'],
-  ['hold','نگه دار',7,'نفس را نگه دار، شانه‌ها شل'],
-  ['out','بازدم',8,'از دهان، آهسته و بلند']
+  ['in','دم',4,'از بینی، آرام دم بگیر'],
+  ['hold','نگه دار',7,'نفس را حبس کن، شانه‌ها شل و رها'],
+  ['out','بازدم',8,'حالا آرام و بلند از دهان بازدم']
 ];
+/* صدای راهنمای انسانی — سه جملهٔ کوتاه، هرکدام سرِ فاز خودش.
+   فایل‌های صوتی همراه نمونه می‌آیند؛ اگر نبودند، تنِ نرم جایشان را می‌گیرد. */
+var BR_VOICE={in:'audio/br-in.mp3',hold:'audio/br-hold.mp3',out:'audio/br-out.mp3'};
+var _brEl={};
 function brPh(){ return BR_PH[BR.phase]; }
 function brTotal(){ return BR_PH[BR.phase][2]; }
 
@@ -26,8 +30,7 @@ function breathCard(where){
     '<div class="bc-meta tiny"><span>'+ic('i-clock')+'۴ ثانیه دم · ۷ ثانیه نگه‌دار · ۸ ثانیه بازدم</span>'+
       '<span>'+ic('i-checkc')+'۳ دور ≈ ۱ دقیقه</span></div>'+
     '<div class="bc-acts"><button class="btn primary sm" data-breathopen="today">'+ic('i-play')+'شروع تنفس</button>'+
-      '<button class="btn ghost sm" data-breathlater>بعداً</button>'+
-      '<button class="btn ghost sm" data-go="edu">راهنمای تمرین</button></div>'+
+      '<button class="btn ghost sm" data-breathlater>بعداً</button></div>'+
     '</div></div>';
 }
 
@@ -59,7 +62,7 @@ function R_breath(){
     '<div class="br-acts">'+
       '<button class="btn primary" id="brgo" data-brstart>'+ic('i-play')+(BR.done?'دوباره':(BR.running?'مکث':'شروع'))+'</button>'+
       '<button class="btn ghost" data-brstop>پایان</button>'+
-      '<button class="btn ghost" data-brsnd>'+(BR.sound?'صدای راهنما روشن':'بی‌صدا')+'</button>'+
+      '<button class="btn ghost" data-brsnd>'+(BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش')+'</button>'+
     '</div>'+
     '<div class="br-done'+(BR.done?' on':'')+'" id="brdone">'+
       owl('owl-cheer',54,'floaty')+
@@ -87,6 +90,8 @@ function brPaint(){
   var g=document.getElementById('brring'); if(g) g.setAttribute('stroke-dashoffset',_n(C*(1-BR.sec/brTotal())));
   var r=document.getElementById('brround'); if(r) r.textContent='دور '+fa(BR.round)+' از '+fa(BR.rounds);
   var go=document.getElementById('brgo'); if(go) go.innerHTML=ic('i-play')+(BR.done?'دوباره':(BR.running?'مکث':'شروع'));
+  var snd=document.querySelector('[data-brsnd]');
+  if(snd) snd.innerHTML=BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش';
   var dn=document.getElementById('brdone'); if(dn) dn.classList.toggle('on',!!BR.done);
   var dots=document.getElementById('brdots');
   if(dots){
@@ -136,8 +141,25 @@ function brFinish(){
   if(typeof toast==='function') toast('۳ دور تمام شد — حالا آرام‌تری');
 }
 /* صدای راهنما: بدون پاداش، فقط همراهیِ آرام — پیش‌فرض خاموش */
+function brVoice(){
+  /* جملهٔ همان فاز را پخش می‌کند. اگر فایل نبود، برمی‌گرداند false تا تن جایگزین شود. */
+  if(typeof Audio!=='function') return false;
+  var key=BR_PH[BR.phase][0], src=BR_VOICE[key];
+  if(!src) return false;
+  try{
+    var el=_brEl[key];
+    if(!el){ el=new Audio(src); el.preload='auto'; el.volume=.9; _brEl[key]=el; }
+    el.currentTime=0;
+    var pr=el.play();
+    if(pr&&pr.catch) pr.catch(function(){ _brVoiceFailed=true; });
+    return true;
+  }catch(e){ return false; }
+}
+var _brVoiceFailed=false;
 function brSound(){
-  if(!BR.sound||typeof ac!=='function'||BR.open!==true) return;
+  if(!BR.sound||BR.open!==true) return;
+  if(typeof brVoice==='function' && !_brVoiceFailed && brVoice()) return;
+  if(typeof ac!=='function') return;
   try{
     var c=ac(); if(!c) return;
     if(c.state==='suspended'&&c.resume) c.resume();

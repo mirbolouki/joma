@@ -4,27 +4,28 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۱۳ — اتحاد شاخه‌ها · کتابخانه و سقف طرح‌واره · ثبت‌نام با کد پشتیبانی · حریم یادداشت';
+var BUILD='نسخهٔ ۱۴ — ورود و ثبت‌نام و بازیابی خوشگل‌تر · حالت مشاور بدون صفحهٔ حال · صدای راهنمای تنفس · حالت موبایل';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
   {n:2,  id:'login',   name:'ورود',              sec:'۲۲ §۲',  batch:1, bare:1},
   {n:3,  id:'signup',  name:'ثبت‌نام',           sec:'۲۲ §۳',  batch:1, bare:1},
-  {n:4,  id:'home',    name:'خانهٔ من',          sec:'۱۱',     batch:1, app:1, nav:'home'},
-  {n:5,  id:'today',   name:'کارهای امروز',      sec:'۱۲',     batch:1, app:1, nav:'today'},
-  {n:6,  id:'mood',    name:'حال من',            sec:'۱۳',     batch:1, app:1, nav:'mood'},
-  {n:7,  id:'chick',   name:'جوجهٔ من',          sec:'۱۴',     batch:1, app:1, nav:'chick'},
-  {n:8,  id:'book',    name:'دفترچهٔ جوما',      sec:'۱۵',     batch:1, app:1, nav:'book'},
-  {n:9,  id:'reports', name:'گزارش‌ها',          sec:'۱۶',     batch:1, app:1, nav:'reports'},
-  {n:10, id:'plan',    name:'برنامهٔ من',        sec:'۱۸',     batch:1, app:1, nav:'plan'},
-  {n:11, id:'library', name:'کتابخانه',          sec:'۱۷',     batch:1, app:1, nav:'library'},
-  {n:12, id:'edu',     name:'آموزش',             sec:'۱۹',     batch:1, app:1, nav:'edu'},
-  {n:13, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:1, app:1, nav:'hammasir'},
-  {n:14, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:1, app:1, nav:'settings'},
-  {n:15, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:1, app:1},
-  {n:16, id:'admin',   name:'کنسول مدیر',        sec:'۲۴ §۵',     batch:1, app:1},
-  {n:17, id:'content', name:'صفحه‌های محتوایی',  sec:'۲۵',     batch:1},
-  {n:18, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:1, app:1, nav:'settings'}
+  {n:4,  id:'forgot',  name:'بازیابی رمز',       sec:'۲۲ §۴',  batch:1, bare:1},
+  {n:5,  id:'home',    name:'خانهٔ من',          sec:'۱۱',     batch:1, app:1, nav:'home'},
+  {n:6,  id:'today',   name:'کارهای امروز',      sec:'۱۲',     batch:1, app:1, nav:'today'},
+  {n:7,  id:'mood',    name:'حال من',            sec:'۱۳',     batch:1, app:1, nav:'mood'},
+  {n:8,  id:'chick',   name:'جوجهٔ من',          sec:'۱۴',     batch:1, app:1, nav:'chick'},
+  {n:9,  id:'book',    name:'دفترچهٔ جوما',      sec:'۱۵',     batch:1, app:1, nav:'book'},
+  {n:10,  id:'reports', name:'گزارش‌ها',          sec:'۱۶',     batch:1, app:1, nav:'reports'},
+  {n:11, id:'plan',    name:'برنامهٔ من',        sec:'۱۸',     batch:1, app:1, nav:'plan'},
+  {n:12, id:'library', name:'کتابخانه',          sec:'۱۷',     batch:1, app:1, nav:'library'},
+  {n:13, id:'edu',     name:'آموزش',             sec:'۱۹',     batch:1, app:1, nav:'edu'},
+  {n:14, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:1, app:1, nav:'hammasir'},
+  {n:15, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:1, app:1, nav:'settings'},
+  {n:16, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:1, app:1},
+  {n:17, id:'admin',   name:'کنسول مدیر',        sec:'۲۴ §۵',     batch:1, app:1},
+  {n:18, id:'content', name:'صفحه‌های محتوایی',  sec:'۲۵',     batch:1},
+  {n:19, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:1, app:1, nav:'settings'}
 ];
 
 /* ---------- وضعیت‌های ارتباط هم‌مسیر (برچسب بازبینی) ---------- */
@@ -58,6 +59,10 @@ var APP = {
   hamRole:'client',
   hamLink:'NONE',      /* NONE | PENDING_OUT | PENDING_IN | ACTIVE | REVOKED | DECLINED */
   compInviteSeen:false, /* کارت دعوت یک‌باره — بعد از «بعداً» هرگز خودش نمی‌آید */
+  mobile:false,       /* نمایش موبایل — نوار بازبینی، نه محصول */
+  moodNote:'',        /* جملهٔ شخصی کاربر در ثبت حال — مال خودش */
+  forgotStep:0,       /* ۰ شناسه · ۱ کد از پشتیبانی · ۲ رمز تازه · ۳ پایان */
+  forgotId:'', forgotCode:'' ,
   setTab:'profile',
   roleView:'client',
   admSec:'overview',
@@ -128,6 +133,8 @@ var NAV_MORE=[
 ];
 function navLink(it,cur){
   if(it.batch && it.batch>1) return '';
+  if(it.id==='mood' && APP.roleView==='coach')
+    return '<a href="#mood" class="off" title="در حالت مشاور باز نمی‌شود">'+ic(it.ic)+'<span>حال من</span></a>';
   var on=(cur===it.id)?' on':'';
   var c=it.cnt?'<span class="cnt">'+fa(it.cnt)+'</span>':'';
   var n=it.noti?'<span class="cnt" style="background:var(--gold)">'+fa(it.noti)+'</span>':'';
@@ -187,6 +194,7 @@ function rvbar(){
     '<button data-hamstate>ارتباط: '+(HAM_ST[APP.hamLink||'NONE']||HAM_ST.NONE)+'</button>'+
     '<button data-invseen class="'+(APP.compInviteSeen?'on':'')+'">کارت دعوت: '+(APP.compInviteSeen?'دیده شد':'نیامده')+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
+    '<button data-mobile class="'+(APP.mobile?'on':'')+'">نمایش: '+(APP.mobile?'موبایل':'دسکتاپ')+'</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
 }
@@ -197,6 +205,7 @@ function render(){
   var theme=(APP.theme==='glass')?'glass':'classic';
   document.documentElement.setAttribute('data-theme',theme);
   document.documentElement.setAttribute('data-density',APP.density||'comfortable');
+  document.documentElement.setAttribute('data-view',APP.mobile?'mobile':'desktop');
 
   var body;
   if(s.batch>1){ body=soon(s); }

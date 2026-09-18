@@ -1,6 +1,7 @@
 var _moodT=null;
 function moodNext(){
-  if(APP.moodStep<MOOD_STEPS.length-1) APP.moodStep++; else APP.moodStep=MOOD_STEPS.length;
+  /* پنج پرسش، بعد یک قدم اختیاری: جملهٔ خودت */
+  if(APP.moodStep<MOOD_STEPS.length) APP.moodStep++;
   render();
 }
 /* ==========================================================================
@@ -209,8 +210,42 @@ window.INNER_CLICK=function(e){
 
 
   /* ---------- ورود/ثبت‌نام/فراموشی ---------- */
-  if((t=e.target.closest('[data-authtab]'))){ e.preventDefault(); APP.authTab=t.dataset.authtab; render(); return; }
-  if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف فرستاده شد — ۱۵ دقیقه اعتبار'); return; }
+  if((t=e.target.closest('[data-authtab]'))){ e.preventDefault(); location.hash='#'+t.dataset.authtab; return; }
+  if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف صادر شد — ۱۵ دقیقه اعتبار'); return; }
+
+  /* --- بازیابی رمز: چهار گام (§۴ سند ۲۲) --- */
+  if((t=e.target.closest('[data-fg]'))){
+    var fg=t.dataset.fg;
+    if(fg==='id'){ var idv=document.getElementById('fgi'); APP.forgotId=idv?idv.value:''; APP.forgotStep=1; render();
+      toast('اگر این شناسه حسابی داشته باشد، کد برایش صادر می‌شود'); return; }
+    if(fg==='code'){ var cv=document.getElementById('fgc');
+      if(!cv||(cv.value||'').replace(/\D/g,'').length<6){ toast('کد ۶ رقمی را از پشتیبانی بگیر'); if(cv) cv.focus(); return; }
+      APP.forgotCode=cv.value; APP.forgotStep=2; render(); toast('کد درست است'); return; }
+    if(fg==='save'){ var p1=document.getElementById('fp1');
+      if(!p1||(p1.value||'').length<8){ toast('رمز تازه حداقل ۸ نویسه باشد'); if(p1) p1.focus(); return; }
+      APP.forgotStep=3; render(); toast('رمز عوض شد — همهٔ نشست‌ها باطل شد'); return; }
+    if(fg==='back'){ APP.forgotStep=0; render(); return; }
+    if(fg==='login'){ location.hash='#login'; return; }
+    return;
+  }
+  /* --- جملهٔ شخصی در ثبت حال --- */
+  if(e.target.closest('[data-mood-note-save]')){ APP.moodStep=MOOD_STEPS.length+1; render();
+    toast('ثبت شد — جمله‌ات فقط برای خودت است'); return; }
+  if(e.target.closest('[data-mood-note-skip]')){ APP.moodStep=MOOD_STEPS.length+1; render(); return; }
+  if(e.target.closest('[data-mood-note-edit]')){ APP.moodStep=MOOD_STEPS.length; render();
+    var nt=document.querySelector('[data-moodnote]'); if(nt) nt.focus(); return; }
+  /* --- جوجه: بخوابانش / بیدارش کن --- */
+  if(e.target.closest('[data-petsleep]')){
+    APP.petSleep=!APP.petSleep;
+    APP.petMood=APP.petSleep?'sleep':(APP._petMoodBefore||'ok');
+    if(!APP.petSleep) APP.petMood='ok'; else APP._petMoodBefore=APP.petMood;
+    render(); toast(APP.petSleep?'جوجه خوابید — شب بخیر 🌙':'جوجه بیدار شد — صبح بخیر ☀️'); return; }
+  /* --- نمایش موبایل (ابزار بازبینی) --- */
+  if(e.target.closest('[data-mobile]')){ APP.mobile=!APP.mobile; render();
+    toast(APP.mobile?'نمای موبایل — همان صفحه، قالب باریک':'نمای دسکتاپ'); return; }
+  /* --- سوییچ مستقیم نقش --- */
+  if((t=e.target.closest('[data-roleto]'))){ APP.roleView=t.dataset.roleto; render();
+    toast(APP.roleView==='client'?'به نقش کاربری برگشتی — همه‌چیز مثل هر کاربر دیگری':'حالت مشاور'); return; }
   if(e.target.closest('[data-auth]')){
     var a=e.target.closest('[data-auth]').dataset.auth;
     if(a==='signup'){
@@ -593,6 +628,7 @@ document.addEventListener('click',function(e){
 
 /* ---------- قدرت رمز ---------- */
 document.addEventListener('input',function(e){
+  if(e.target.matches('[data-moodnote]')){ APP.moodNote=e.target.value; return; }
   if(!e.target.matches('[data-strength],[data-authpw]')) return;
   var v=e.target.value, sc=0;
   if(v.length>=8) sc++;

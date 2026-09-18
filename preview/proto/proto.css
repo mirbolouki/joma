@@ -1217,3 +1217,104 @@ html[data-density="compact"] .tiny{line-height:1.85}
 .tline .tl{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed var(--card-brd)}
 .tline .tl:last-child{border-bottom:0}
 .tline .tl .em{font-size:16px}
+
+/* ==========================================================================
+   ۱۴) ورود / ثبت‌نام / بازیابی رمز — قالب تازه و یکدست
+   ========================================================================== */
+.auth-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.authtabs.h{display:flex;gap:5px;background:var(--brand-softer);border:1px solid var(--card-brd);
+  border-radius:99px;padding:5px;width:max-content;max-width:100%;overflow-x:auto}
+.authtabs.h a{font-size:12px;font-weight:900;color:var(--ink-2);padding:9px 16px;border-radius:99px;white-space:nowrap}
+.authtabs.h a.on{background:var(--card);color:var(--brand-ink);box-shadow:var(--shadow-sm)}
+.auth-pane{padding:26px;box-shadow:0 18px 46px -30px rgba(20,56,46,.42)}
+.auth-hd h1{font-size:22px;letter-spacing:-.2px}
+.auth-hd .sub{font-size:12px;color:var(--ink-2);margin-top:7px;line-height:2}
+.auth-rail{overflow:hidden;position:relative}
+.auth-rail::after{content:'';position:absolute;width:230px;height:230px;border-radius:50%;
+  inset-inline-end:-96px;bottom:-118px;pointer-events:none;
+  background:radial-gradient(circle at 32% 32%,rgba(255,255,255,.8),transparent 62%)}
+.rail-art{position:relative;margin-top:4px}
+.rail-art .rail-owl{position:absolute;inset-inline-start:16px;bottom:4px}
+.rail-chips{display:flex;flex-wrap:wrap;gap:6px}
+.rail-chip{font-size:10px;font-weight:900;background:rgba(255,255,255,.66);border-radius:99px;
+  padding:5px 10px;color:var(--brand-ink)}
+.auth-rail .rail-txt{position:relative;z-index:1}
+
+/* کارت پشتیبانی — کد دستی */
+.sup-card{background:linear-gradient(150deg,var(--sky-soft),var(--brand-softer));border:1px solid var(--card-brd);
+  border-radius:var(--r-lg);padding:14px;margin-bottom:14px}
+.sup-top{display:flex;gap:10px;align-items:center}
+.sup-ic{width:38px;height:38px;border-radius:12px;background:var(--card);display:grid;place-items:center;flex:none}
+.sup-ic svg{width:19px;height:19px;stroke:var(--brand-ink);fill:none;stroke-width:1.9}
+.sup-top b{font-size:13px;display:block}
+.sup-row{display:flex;gap:8px;align-items:center;margin:12px 0 8px;flex-wrap:wrap}
+.sup-num{font-weight:900;font-size:15px;letter-spacing:.6px;background:var(--card);border-radius:12px;
+  padding:9px 13px;border:1.5px dashed var(--brand)}
+.sup-card .muted{color:var(--ink-2)}
+
+/* گام‌های بازیابی رمز */
+.fg-hd{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:900;color:var(--brand-ink);margin-bottom:14px}
+.fg-hd svg{width:16px;height:16px}
+.fg-dots{display:flex;gap:5px;margin-inline-start:auto}
+.fg-dots i{width:16px;height:5px;border-radius:99px;background:var(--ring-track)}
+.fg-dots i.done{background:var(--brand)}
+.fg-dots i.on{background:var(--brand);width:26px}
+.fg-done{text-align:center;padding:12px 0 2px}
+.fg-done .sub{font-size:12px;color:var(--ink-2);line-height:2;margin-top:10px}
+
+/* جملهٔ شخصی در ثبت حال */
+.note-box{background:var(--card);border:1.5px solid var(--card-brd);border-radius:var(--r-lg);
+  padding:12px;margin-top:16px;text-align:start}
+.note-box:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.note-box textarea{width:100%;border:0;outline:0;background:transparent;font-family:inherit;font-size:13px;
+  line-height:2;color:var(--ink);resize:vertical;min-height:76px}
+.note-foot{display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px dashed var(--card-brd);
+  padding-top:9px;flex-wrap:wrap}
+.note-foot .chip{display:inline-flex;align-items:center;gap:5px}
+.note-show{display:flex;gap:9px;align-items:flex-start;background:var(--lav-soft);border-radius:var(--r-sm);
+  padding:11px 13px;margin-top:14px;font-size:12px;line-height:2;color:var(--lav-ink);font-weight:700}
+.note-show svg{width:16px;height:16px;flex:none;margin-top:4px}
+
+/* ناوبری: مورد بستهٔ حالت مشاور */
+.side .nav a.off{opacity:.42}
+.side .nav a.off:hover{opacity:.6}
+
+/* ==========================================================================
+   ۱۵) نمای موبایل — همان صفحه‌ها در قالب تلفن (ابزار بازبینی)
+   ========================================================================== */
+[data-view="mobile"] body{background:#dfe9e3}
+[data-view="mobile"] #app{max-width:412px;margin:14px auto 0;border:10px solid #14322b;border-radius:38px;
+  background:var(--bg);height:calc(100vh - 168px);overflow-y:auto;overflow-x:hidden;
+  box-shadow:0 28px 64px -30px rgba(11,42,34,.6)}
+[data-view="mobile"] .side{display:none!important}
+[data-view="mobile"] .wrap{display:block;max-width:none}
+[data-view="mobile"] .main{padding:14px 14px 96px}
+[data-view="mobile"] .desk-only{display:none!important}
+[data-view="mobile"] .mobile-only{display:flex!important}
+[data-view="mobile"] .grid2,[data-view="mobile"] .grid3,[data-view="mobile"] .stat4,
+[data-view="mobile"] .calm,[data-view="mobile"] .hero,[data-view="mobile"] .strip,
+[data-view="mobile"] .feat3,[data-view="mobile"] .how,[data-view="mobile"] .pins,
+[data-view="mobile"] .lfoot,[data-view="mobile"] .pet-grid,[data-view="mobile"] .edu-grid,
+[data-view="mobile"] .choose-grid,[data-view="mobile"] .auth-grid,[data-view="mobile"] .auth2{grid-template-columns:1fr}
+[data-view="mobile"] .todayline .btn{width:100%;margin-inline-start:0}
+[data-view="mobile"] .todayline{flex-wrap:wrap}
+[data-view="mobile"] .libgrid{columns:1}
+[data-view="mobile"] .opts{grid-template-columns:repeat(3,1fr)}
+[data-view="mobile"] .tabbar{display:flex;max-width:412px;margin-inline:auto}
+[data-view="mobile"] .auth2{padding:14px}
+[data-view="mobile"] .auth-rail{position:static}
+[data-view="mobile"] .auth-pane{padding:20px}
+[data-view="mobile"] .rvbar .dots{max-width:100%}
+
+@media (max-width:900px){
+  .auth2{grid-template-columns:1fr;padding:14px;gap:14px}
+  .auth-rail{position:static}
+  .auth-pane{padding:20px}
+  .authtabs.h{width:100%}
+  .authtabs.h a{flex:1;text-align:center;padding:9px 8px}
+}
+@media (max-width:560px){
+  .auth-hd h1{font-size:19px}
+  .auth-grid{grid-template-columns:1fr}
+  .sup-row .btn{flex:1}
+}
