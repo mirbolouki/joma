@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۱۴ — ورود و ثبت‌نام و بازیابی خوشگل‌تر · حالت مشاور بدون صفحهٔ حال · صدای راهنمای تنفس · حالت موبایل';
+var BUILD='نسخهٔ ۱۵ — ثبت‌نام گام‌به‌گام با شغل و جنسیت · فرم‌های باریک در نمایش بزرگ · صدای راهنمای تنفس (سینک با فاز) · احوال‌پرسی زمان‌دار';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -62,6 +62,9 @@ var APP = {
   mobile:false,       /* نمایش موبایل — نوار بازبینی، نه محصول */
   moodNote:'',        /* جملهٔ شخصی کاربر در ثبت حال — مال خودش */
   forgotStep:0,       /* ۰ شناسه · ۱ کد از پشتیبانی · ۲ رمز تازه · ۳ پایان */
+  signupStep:0,       /* ۰ معرفی · ۱ شغل · ۲ حساب · ۳ تماس · ۴ تأیید */
+  authGender:'', authJob:'', authName:'', authFamily:'', authUser:'', authPass:'',
+  clockSlot:'auto',   /* auto | صبح | ظهر | عصر | شب — کلید بازبینی ساعت */
   forgotId:'', forgotCode:'' ,
   setTab:'profile',
   roleView:'client',
@@ -85,6 +88,22 @@ var APP = {
 /* ---------- کمک‌کننده‌ها ---------- */
 var FA='۰۱۲۳۴۵۶۷۸۹';
 function fa(n){return String(n).replace(/[0-9]/g,function(d){return FA[+d];});}
+/* ---------- ساعت هوشمند: احوال‌پرسی متناسب با زمان ----------
+   مرزها از زمان مرجع بک‌اند می‌آید؛ در نمونه، ساعت دستگاه + کلید بازبینی. */
+var CLOCK_SLOTS=['صبح','ظهر','عصر','شب'];
+function clockHour(){
+  var map={'صبح':7,'ظهر':13,'عصر':17,'شب':21};
+  if(APP.clockSlot && APP.clockSlot!=='auto' && map[APP.clockSlot]!==undefined) return map[APP.clockSlot];
+  try{ return new Date().getHours(); }catch(e){ return 9; }
+}
+function dayWord(){
+  var h=clockHour();
+  if(h>=5 && h<11) return 'صبح';
+  if(h>=11 && h<14) return 'ظهر';
+  if(h>=14 && h<19) return 'عصر';
+  return 'شب';
+}
+function greet(first){ return 'سلام '+((first===undefined)?'سارا':first)+'، '+dayWord()+' بخیر'; }
 function owl(name,size,cls){
   return '<svg class="owl '+(cls||'')+'" width="'+size+'" height="'+size+
     '" viewBox="0 0 120 120" aria-hidden="true"><use href="#'+name+'"/></svg>';
@@ -194,6 +213,7 @@ function rvbar(){
     '<button data-hamstate>ارتباط: '+(HAM_ST[APP.hamLink||'NONE']||HAM_ST.NONE)+'</button>'+
     '<button data-invseen class="'+(APP.compInviteSeen?'on':'')+'">کارت دعوت: '+(APP.compInviteSeen?'دیده شد':'نیامده')+'</button>'+
     '<button data-tglnote class="'+(APP.notes!==false?'on':'')+'">یادداشت‌های سند</button>'+
+    '<button data-clock class="'+(APP.clockSlot!=='auto'?'on':'')+'">ساعت: '+(APP.clockSlot==='auto'?('خودکار — '+dayWord()):APP.clockSlot)+'</button>'+
     '<button data-mobile class="'+(APP.mobile?'on':'')+'">نمایش: '+(APP.mobile?'موبایل':'دسکتاپ')+'</button>'+
     '<button data-hidebar>پنهان کن — حالت کاربر واقعی</button>'+
   '</div><button class="rv-open" id="rvopen">⚙ بازبینی</button>';
@@ -536,7 +556,7 @@ document.addEventListener('DOMContentLoaded',function(){
   render();
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-go]'); if(t){go(t.dataset.go);return;}
-    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan],[data-roleview],[data-hamlink]');
+    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan],[data-roleview],[data-hamlink],[data-clock]');
     if(b){
       var idx=SCREENS.map(function(x){return x.id;}).indexOf(APP.screen);
       if(b.hasAttribute('data-prev')){ if(idx>0) go(SCREENS[idx-1].id); }
@@ -571,6 +591,11 @@ document.addEventListener('DOMContentLoaded',function(){
         APP.hamLink=hq[(hq.indexOf(APP.hamLink||'NONE')+1)%hq.length]; render();
       }
       else if(b.hasAttribute('data-invseen')){ APP.compInviteSeen=!APP.compInviteSeen; render(); }
+      else if(b.hasAttribute('data-clock')){
+        var q=['auto','صبح','ظهر','عصر','شب'];
+        APP.clockSlot=q[(q.indexOf(APP.clockSlot||'auto')+1)%q.length]; render();
+        toast(APP.clockSlot==='auto'?('ساعت دستگاه: '+dayWord()+' بخیر'):('نمایش ساعت: '+APP.clockSlot+' — احوال‌پرسی عوض شد'));
+      }
       else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
       else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
       else if(b.hasAttribute('data-hidebar')){

@@ -213,6 +213,17 @@ window.INNER_CLICK=function(e){
   if((t=e.target.closest('[data-authtab]'))){ e.preventDefault(); location.hash='#'+t.dataset.authtab; return; }
   if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف صادر شد — ۱۵ دقیقه اعتبار'); return; }
 
+  /* --- ثبت‌نام: پنج گام، بخش‌های مرتبط با هم (سند ۲۲ §۳.۷) --- */
+  if((t=e.target.closest('[data-gender]'))){ APP.authGender=t.dataset.gender; render(); return; }
+  if((t=e.target.closest('[data-sstep]'))){
+    var dir=t.dataset.sstep, cur=APP.signupStep||0;
+    if(dir==='prev'){ APP.signupStep=Math.max(0,cur-1); render(); return; }
+    if(!signupRead(cur)) return;
+    APP.signupStep=Math.min(4,cur+1); render();
+    toast(APP.signupStep===4?'خوب است — یک قدم مانده':'گام '+fa(APP.signupStep+1)+' از ۵');
+    return;
+  }
+
   /* --- بازیابی رمز: چهار گام (§۴ سند ۲۲) --- */
   if((t=e.target.closest('[data-fg]'))){
     var fg=t.dataset.fg;
@@ -279,8 +290,16 @@ window.INNER_CLICK=function(e){
   if((t=e.target.closest('[data-brsnd]'))){
     BR.sound=!BR.sound;
     t.textContent=(BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش');
-    if(BR.sound){ if(window.brPrime) brPrime(); brSound(); }
-    toast(BR.sound?'صدای راهنما روشن شد — فقط همراهیِ آرام، بی‌پاداش':'بی‌صدا شد');
+    if(BR.sound){
+      if(window.brPrime) brPrime();
+      var got=brSample();       /* همان لحظه یک نمونه می‌شنوی */
+      if(got==='tone' && brVoiceState()==='loading')
+        toast('صدای راهنما روشن شد — فایل صوتی در حال آماده‌شدن است');
+      else if(got==='tone')
+        toast('فایل صوتی در دسترس نیست — تُن آرام پخش می‌شود');
+      else
+        toast('صدای راهنما روشن شد — همین جمله در هر مرحله پخش می‌شود');
+    } else { if(window.brVoiceStop) brVoiceStop(); toast('بی‌صدا شد'); }
     return;
   }
 
@@ -585,9 +604,40 @@ window.INNER_CLICK=function(e){
   }
 };
 
+/* ---------- ثبت‌نام گام‌به‌گام: هر گام فقط بخش‌های مربوط به خودش را می‌خواند ---------- */
+function _v(id){ var el=document.getElementById(id); return el?String(el.value||'').trim():null; }
+function signupRead(step){
+  if(step===0){
+    var n=_v('sn'), f=_v('sf');
+    if(!n||n.length<2){ toast('اسم کوچکت را بنویس'); return false; }
+    if(!f){ toast('نام خانوادگی را بنویس — فقط در پروفایل می‌ماند'); return false; }
+    if(!APP.authGender){ toast('جنسیت را انتخاب کن (یا «ترجیح می‌دهم نگویم»)'); return false; }
+    APP.authName=n; APP.authFamily=f; return true;
+  }
+  if(step===1){
+    var j=_v('soc');
+    if(!j){ toast('شغلت را از فهرست انتخاب کن'); return false; }
+    APP.authJob=j; return true;
+  }
+  if(step===2){
+    var u=_v('su'), p1=_v('sp'), p2=_v('sp2');
+    if(!u||u.length<3){ toast('نام کاربری حداقل ۳ نویسه باشد'); return false; }
+    if(!p1||p1.length<8){ toast('رمز حداقل ۸ نویسه باشد'); return false; }
+    if(p1!==p2){ toast('دو رمز یکی نیستند'); return false; }
+    APP.authUser=u; APP.authPass=p1; return true;
+  }
+  if(step===3){
+    APP.mobilePhone=_v('sm')||APP.mobilePhone||'';
+    return true;   /* تماس اختیاری است — در گام بعد هم می‌پرسیم */
+  }
+  return true;
+}
+
 /* ---------- ورود ---------- */
 function doLogin(){
-  var u=document.getElementById('u'), p=document.getElementById('p');
+  var u=document.getElementById('li')||document.getElementById('u');
+  var p=document.getElementById('lp')||document.getElementById('p');
+  if(!u||!p){ toast('فیلدهای ورود پیدا نشد'); return; }
   var ebox=document.getElementById('autherr'), box=document.getElementById('authbox');
   var okU=u.value.trim().length>0, okP=p.value.length>0;
   u.classList.toggle('err',!okU); p.classList.toggle('err',!okP);
@@ -699,6 +749,7 @@ document.addEventListener('input',function(e){
 
 /* ---------- تغییر مقادیر کتابخانه با select ---------- */
 document.addEventListener('change',function(e){
+  if(e.target.id==='soc'){ APP.authJob=e.target.value; return; }
   if(e.target.matches('[data-libcat]')){ APP.libCat=e.target.value; render(); return; }
   if(e.target.matches('[data-libfreq]')){ APP.libFreq=e.target.value; render(); return; }
 });

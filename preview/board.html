@@ -50,6 +50,8 @@
        border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
   .sec-head{padding:20px 24px;border-bottom:1px solid var(--card-brd);
             display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .lockchip{font-size:10px;font-weight:900;background:rgba(20,56,46,.08);color:#14382e;border-radius:99px;padding:4px 10px}
+  .lockchip.open{background:rgba(232,182,74,.28);color:#6b4d00}
   .sec-n{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;
          background:var(--grad1);color:#fff;font-weight:900;font-size:15px}
   .sec-head h2{font-size:17px;font-weight:900;flex:1;min-width:200px}
@@ -402,9 +404,20 @@
   </div>
 
   <!-- ================= ۱ نقش‌ها ================= -->
-  <section class="sec">
+  <div style="margin:0 0 18px;padding:14px 16px;border:1.5px solid rgba(20,56,46,.18);border-radius:16px;background:#fff">
+    <b style="font-size:13px">🔒 قانون قفل — از این پس</b>
+    <p class="tiny" style="margin-top:6px;line-height:2">
+      فصل‌های <b>۱ تا ۱۵</b> قفل‌اند: هیچ تغییر، بازنویسی یا جابه‌جایی، بی‌درخواست صریح مالک. فقط فصل‌های
+      <b>پایینی (۱۶ و ۱۷)</b> باز می‌مانند تا تأییدت — بعد از تأیید، آن‌ها هم قفل می‌شوند.
+      <br>یک استثنا: اگر یافتهٔ بک‌اند با یک فصل قفل‌شده تضاد داشته باشد، فصل <b>عوض نمی‌شود</b>؛ یک بند
+      «🔴 یافتهٔ بازبینی بک‌اند» به آن اضافه می‌شود. — <code>docs/spec/00-principles.md</code>
+    </p>
+  </div>
+
+<section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>نقش‌ها و جابه‌جایی بین آن‌ها</h2>
       <span class="tag">تصمیم قطعی</span>
     </div>
@@ -486,6 +499,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۲</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>داشبورد مشاور — وضعیت مراجع با جوجه</h2>
       <span class="tag q">منتظر نظر تو</span>
     </div>
@@ -574,6 +588,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۳</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>«افزودن فعالیت به برنامه» — کِی بپرسیم، کِی نپرسیم</h2>
       <span class="tag">تصمیم قطعی</span>
     </div>
@@ -627,6 +642,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۴</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>حذف — چه کسی، کجا، چه زمانی</h2>
       <span class="tag q">یک تصحیح در تصمیم تو</span>
     </div>
@@ -683,6 +699,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۵</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>سؤالت: «ثبت دیروزی که قطعی شده چرا باید به‌روزرسانی شود؟»</h2>
       <span class="tag" style="background:var(--coral-soft);color:var(--coral-ink)">نباید — پاسخ کوتاه</span>
     </div>
@@ -722,6 +739,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۶</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>آموزش — بصری، و کاربر بفهمد چه می‌گیرد</h2>
       <span class="tag">تصمیم قطعی</span>
     </div>
@@ -849,6 +867,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۷</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>پهنای کارت‌ها در دسکتاپ</h2>
       <span class="tag">تصمیم قطعی</span>
     </div>
@@ -891,6 +910,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۸</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>مشاور — دراپ‌داون و سه مسیر انتساب</h2>
       <span class="tag">پاسخ‌های تو اعمال شد</span>
     </div>
@@ -994,6 +1014,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۹</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>کنسول مدیر — داشبورد مدیریتی کامل</h2>
       <span class="tag">پاسخ تو اعمال شد</span>
     </div>
@@ -1061,6 +1082,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۰</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>پیش از «شروع اجرا» — کاربر بداند چه می‌شود</h2>
       <span class="tag">پاسخ بک‌اند اعمال شد</span>
     </div>
@@ -1123,6 +1145,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۱</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>ایدهٔ تو: مدیر با درخواست کاربر برنامه را ویرایش کند</h2>
       <span class="tag">⏳ معوق به نسخهٔ بعد</span>
     </div>
@@ -1171,6 +1194,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۲</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>پاسخ بازبینی بک‌اند — سه تصمیم من رد شد</h2>
       <span class="tag q">قاعدهٔ مالک اعمال شد</span>
     </div>
@@ -1265,6 +1289,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۳</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>معوق به نسخهٔ بعد — «توقف فعالیت» و فهرست دلیل‌ها</h2>
       <span class="tag">⏳ ضبط شد، ساخته نمی‌شود</span>
     </div>
@@ -1314,6 +1339,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۴</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>صفحه‌های نانوشته — درباره · پشتیبانی · حریم خصوصی · شرایط</h2>
       <span class="tag q">۴ تصمیم از تو می‌خواهد</span>
     </div>
@@ -1421,6 +1447,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۵</span>
+      <span class="lockchip">🔒 قفل</span>
       <h2>جغد و آب — همان چیزی که سفارش دادی</h2>
       <span class="tag">تصمیم تو اعمال شد</span>
     </div>
@@ -1476,6 +1503,7 @@
   <section class="sec">
     <div class="sec-head">
       <span class="sec-n">۱۶</span>
+      <span class="lockchip open">🟡 در مرور</span>
       <h2>سه اصلاح تو — اعمال شد</h2>
       <span class="tag q">در نمونه ببین</span>
     </div>
@@ -1551,6 +1579,7 @@
   <section class="sec" id="s17">
     <div class="sec-head">
       <span class="sec-n">۱۷</span>
+      <span class="lockchip open">🟡 در مرور</span>
       <h2>نسخهٔ ۱۴ — هفت تغییر تو، اعمال شد</h2>
       <span class="tag q">در نمونه ببین</span>
     </div>
@@ -1628,9 +1657,71 @@
     </div>
   </section>
 
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۱۸</span>
+      <span class="lockchip open">🟡 در مرور</span>
+      <h2>نسخهٔ ۱۵ — قفل، گام‌های ثبت‌نام، صدای سینک‌شده</h2>
+      <span class="tag q">در نمونه ببین</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">نمونه: <code>preview/proto/index.html</code> — صفحه‌های ۲ · ۳ · ۵ (و کلید <b>ساعت</b> در نوار بازبینی).</p>
+      <div class="grid2">
+        <div class="card">
+          <b style="font-size:12.5px">۱ · قانون قفل</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            فصل‌های <b>۱ تا ۱۵ قفل شدند</b> (🔒). تغییر فقط با درخواست صریح تو. فصل‌های پایینی — همین فصل و
+            ۱۶ و ۱۷ — باز می‌مانند تا تأییدت. استثنا: تضاد با یافتهٔ بک‌اند، بند «🔴 یافته» اضافه می‌شود،
+            بخش قفل‌شده بازنویسی نمی‌شود. <code>00-principles.md</code>
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">۲ · ثبت‌نام گام‌به‌گام</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            پنج گام، هر گام <b>یک دستهٔ مربوط به هم</b>: ① نام + نام خانوادگی + جنسیت ② شغل ③ نام کاربری + رمز + تکرار
+            ④ موبایل + ایمیل ⑤ خلاصه + کد پشتیبانی + قوانین. «قبلی» داده را نگه می‌دارد.
+            <code>22-auth.md</code> §۳.۰.۱
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">۳ · شغل و جنسیت — مطابق فرم اصلی</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            شغل از <b>دراپ‌داون گروه‌بندی‌شده</b> (اداری · سلامت · آموزش · دانشجو · فنی · خانه · سایر) و جنسیت
+            سه قرص (زن · مرد · ترجیح می‌دهم نگویم). شغل هرگز متن آزاد نیست — وگرنه «۱۰۰ کارمند · ۱۰ پزشک ·
+            ۳۰ دانشجو» شمردنی نیست. فهرست از بک‌اند؛ پرسش <code>N7</code>.
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">۴ · احوال‌پرسی با اسم کوچک + ساعت هوشمند</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            «سلام سارا، صبح بخیر» — فامیلی هرگز. بازه‌ها: ۵–۱۱ صبح · ۱۱–۱۴ ظهر · ۱۴–۱۹ عصر · ۱۹–۵ شب، از
+            <b>زمان مرجع بک‌اند</b>. در نمونه، کلید <b>«ساعت»</b> در نوار بازبینی چهار حالت را نشان می‌دهد.
+            <code>11-home.md</code> §۰ · <code>04-copy-system.md</code> §۵.۱
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">۵ · فرم‌های احراز هویت — باریک در نمایش بزرگ</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            ریل برند `۲۸۰px` + کارت حداکثر `۶۴۰px`، وسط‌چین. دیگر روی مانیتور بزرگ، فیلدها عریض و کشیده
+            نمی‌شوند. <code>proto.css</code> §۱۶
+          </p>
+        </div>
+        <div class="card">
+          <b style="font-size:12.5px">۶ · صدای راهنمای تنفس — سینک و پخش‌شدنی</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">
+            «پخش نمی‌شد» یک علت فنی داشت: مرورگر داخل iframe اجازهٔ پخش به `<audio>` نمی‌داد. حالا فایل با
+            <code>fetch</code> گرفته می‌شود، در حافظه رمزگشایی می‌شود و با <b>Web Audio</b> <b>دقیقاً سرِ همان ثانیه</b>
+            که فاز عوض می‌شود پخش می‌شود؛ با روشن‌کردن دکمه، یک <b>نمونه</b> هم می‌شنوی. اگر فایل در دسترس نبود،
+            تُن آرام جایگزین می‌شود و پیام صادقانه می‌آید — بی‌صدا نمی‌ماند. صدای تازه هم با آزمون صدا انتخاب می‌شود.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۱۴ · ۱۷ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
+    <br>نسخهٔ ۱۵ · ۱۸ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
   </footer>
 </div>
 <script>

@@ -107,6 +107,7 @@ function brMount(){
   a.insertAdjacentHTML('beforeend',R_breath());
 }
 function brOpen(){
+  brPrime();              /* فایل‌ها همان لحظهٔ باز شدن بارگذاری می‌شوند */
   BR.open=true; BR.running=false; BR.phase=0; BR.sec=BR_PH[0][2]; BR.round=1; BR.done=false;
   brMount(); brPaint();
 }
@@ -142,40 +143,94 @@ function brFinish(){
   if(typeof toast==='function') toast('۳ دور تمام شد — حالا آرام‌تری');
 }
 /* صدای راهنما: بدون پاداش، فقط همراهیِ آرام — پیش‌فرض خاموش */
-/* آماده‌سازی: مرورگر تا اولین لمس کاربر اجازهٔ پخش نمی‌دهد،
-   پس سه فایل را همان‌جا می‌سازیم و بی‌صدا «باز می‌کنیم». */
-var _brPrimed=false;
+/* ---------- راه‌اندازی صدا ----------
+   دو مسیر داریم و هر دو را می‌آزماییم:
+   ① Web Audio: فایل را می‌گیریم و در حافظه رمزگشایی می‌کنیم. بعد از لمس کاربر
+      همیشه پخش می‌شود و به سیاست «پخش خودکار» مرورگر و iframe کاری ندارد.
+   ② عنصر <audio>: فقط اگر ① نشد.
+   حالت سوم جانشین: تُن نرم — تا تجربه هیچ‌وقت خالی نماند. */
+var _brLoad='idle';          /* idle | loading | ready | partial | failed */
+var _brBuf={};               /* بافرهای رمزگشایی‌شده — پخش بدون تأخیر */
+function brVoiceState(){ return _brLoad; }
 function brPrime(){
-  if(_brPrimed || typeof Audio!=='function') return;
-  _brPrimed=true;
-  Object.keys(BR_VOICE).forEach(function(k){
+  if(_brLoad==='loading'||_brLoad==='ready') return;
+  _brLoad='loading';
+  if(typeof fetch!=='function'||typeof ac!=='function'){ _brLoad='failed'; return; }
+  var c=ac(); if(!c){ _brLoad='failed'; return; }
+  var keys=Object.keys(BR_VOICE), done=0, ok=0;
+  keys.forEach(function(k){
+    var url=BR_VOICE[k];
     try{
-      var el=new Audio(BR_VOICE[k]); el.preload='auto'; el.volume=.9;
-      el.load(); _brEl[k]=el;
-    }catch(e){}
+      fetch(url,{cache:'force-cache'}).then(function(r){
+        if(!r.ok) throw new Error('http '+r.status);
+        return r.arrayBuffer();
+      }).then(function(b){
+        return new Promise(function(res,rej){ c.decodeAudioData(b,res,rej); });
+      }).then(function(buf){ _brBuf[k]=buf; ok++; })
+        .catch(function(){})
+        .then(function(){ done++; if(done===keys.length) _brLoad=(ok===keys.length)?'ready':(ok?'partial':'failed'); });
+    }catch(e){ done++; if(done===keys.length) _brLoad= ok? 'partial':'failed'; }
   });
 }
-function brVoiceStop(){
-  Object.keys(_brEl).forEach(function(k){ try{ _brEl[k].pause(); _brEl[k].currentTime=0; }catch(e){} });
+/* پخش از حافظه: دقیقاً سرِ فاز، بدون تأخیر فایل */
+function brPlayBuf(key){
+  var buf=_brBuf[key]; if(!buf) return false;
+  try{
+    var c=ac(); if(!c) return false;
+    if(c.state==='suspended'&&c.resume) c.resume();
+    var src=c.createBufferSource(); src.buffer=buf;
+    var g=c.createGain(); g.gain.value=.95;
+    src.connect(g);
+    if(typeof out==='function') out(g,c,.3); else g.connect(c.destination);
+    src.start((c.currentTime||0)+.01);
+    _brPlaying.push(src);
+    if(_brPlaying.length>4) _brPlaying.shift();
+    return true;
+  }catch(e){ return false; }
 }
-function brVoice(){
-  /* جملهٔ همان فاز را پخش می‌کند. اگر فایل نبود، برمی‌گرداند false تا تن جایگزین شود. */
+var _brPlaying=[];
+function brStopBuf(){
+  for(var i=0;i<_brPlaying.length;i++){ try{ _brPlaying[i].stop(); }catch(e){} }
+  _brPlaying=[];
+}
+/* مسیر دوم: عنصر صوتی */
+function brPlayEl(key){
   if(typeof Audio!=='function') return false;
-  var key=BR_PH[BR.phase][0], src=BR_VOICE[key];
-  if(!src) return false;
   try{
     var el=_brEl[key];
-    if(!el){ el=new Audio(src); el.preload='auto'; el.volume=.9; _brEl[key]=el; }
-    el.currentTime=0;
+    if(!el){ el=new Audio(BR_VOICE[key]); el.preload='auto'; el.volume=.9; _brEl[key]=el; }
+    try{ el.currentTime=0; }catch(e){}
     var pr=el.play();
     if(pr&&pr.catch) pr.catch(function(){ _brVoiceFailed=true; });
     return true;
   }catch(e){ return false; }
 }
+/* نمونهٔ صدا — وقتی کاربر دکمهٔ صدا را روشن می‌کند، همان جملهٔ «دم» را می‌شنود */
+function brSample(){
+  brPrime();
+  if(brPlayBuf('in')) return 'voice';
+  if(brPlayEl('in')) return 'element';
+  return 'tone';
+}
+function brVoiceStop(){
+  if(typeof brStopBuf==='function') brStopBuf();
+  Object.keys(_brEl).forEach(function(k){ try{ _brEl[k].pause(); _brEl[k].currentTime=0; }catch(e){} });
+}
+function brVoice(){
+  /* جملهٔ همان فاز — دقیقاً سرِ شروع همان فاز. ترتیب: بافر → عنصر → (تُن در brSound) */
+  var key=BR_PH[BR.phase][0];
+  if(!key) return false;
+  if(brPlayBuf(key)) return true;
+  if(!_brVoiceFailed && brPlayEl(key)) return true;
+  return false;
+}
 var _brVoiceFailed=false;
 function brSound(){
   if(!BR.sound||BR.open!==true||BR.running!==true) return;
-  if(typeof brVoice==='function' && !_brVoiceFailed && brVoice()) return;
+  if(typeof brVoice==='function' && brVoice()) return;
+  brTone();
+}
+function brTone(){
   if(typeof ac!=='function') return;
   try{
     var c=ac(); if(!c) return;

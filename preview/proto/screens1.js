@@ -48,7 +48,7 @@ function R_landing(){
       '<div class="tiny">شنبه، ۳ شهریور · نمایش نمونه</div>'+
       '<div class="scr" style="margin-top:9px">'+
         '<div style="display:flex;gap:10px;align-items:center">'+owl('owl-hi',40)+
-          '<b style="font-size:12.5px">سلام سارا، روزت چطور است؟</b></div>'+
+          '<b style="font-size:12.5px">'+greet()+' — روزت چطور است؟</b></div>'+
         '<div class="card" style="margin-top:11px;padding:11px;display:flex;gap:11px;align-items:center">'+
           '<span class="ring" style="width:56px;height:56px"><svg viewBox="0 0 78 78" width="56" height="56">'+
             '<circle class="track" cx="39" cy="39" r="33"></circle>'+
@@ -256,34 +256,120 @@ function R_forgot(){
 }
 
 function R_signup(){
-  /* ---------- ثبت‌نام: همان فرم اسکرین‌شات، کامل ---------- */
-  return authShell('signup','ساخت حساب جومای من','با پذیرش قوانین، حساب کاربری خودت را می‌سازی.',
-  '<div class="auth-grid">'+
-    fx('sn','نام','مثلاً سارا','text',{ac:'given-name'})+
-    fx('sf','نام خانوادگی','مثلاً محمدی','text',{ac:'family-name'})+
-    fx('su','نام کاربری','۳ تا ۲۰ کاراکتر — حرف و عدد','text',{ac:'username',dir:'ltr'})+
-    fx('sm','شماره موبایل','۰۹۱۲۳۴۵۶۷۸۹','tel',{dir:'ltr',ac:'tel',data:'authphone'})+
-    fx('se','ایمیل','you@example.com','email',{dir:'ltr',ac:'email'})+
-    fx('sp','رمز عبور','حداقل ۸ نویسه','password',{ac:'new-password',tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>',data:'authpw'})+
-    fx('sp2','تکرار رمز عبور','همان رمز','password',{ac:'new-password',hint:'هر دو رمز باید یکی باشند — همین‌جا چک می‌شود.'})+
-  '</div>'+
-  '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
-  supportCard('کد ثبت‌نام را از پشتیبانی بگیر','بگو می‌خواهم حساب بسازم؛ کد را دستی می‌فرستند.')+
-  '<div class="auth-grid tight">'+
-    fx('sc','کد ثبت‌نام','کد را از پشتیبانی بگیر','text',{dir:'ltr',data:'authcode',hint:'پیامک سیستم وصل نیست؛ کد دستی داده می‌شود.',tail:'<button class="fxbtn" data-authcode>'+ic('i-chat')+'دریافت کد از پشتیبانی</button>'})+
-  '</div>'+
-  '<label class="perm-row"><span class="cb'+(APP.authTerms?' on':'')+'" data-tglcb="terms"></span>'+
-    '<span class="pbody"><b>قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم.</b>'+
-    '<em>نسخهٔ متنی همین‌جا در دسترس است — پیش از انتشار تجاری، بررسی حقوقی می‌شود (۱۷٫۳). '+
-    '<a href="#content">خواندن قوانین و مقررات</a> · <a href="#content">حریم خصوصی</a></em></span></label>'+
-  '<div class="banner info tiny" style="margin:2px 0 12px">'+ic('i-info')+
-    'شمارهٔ موبایل و ایمیل برای «بازیابی حساب» و «پشتیبانی» است؛ هیچ‌وقت برای تبلیغ استفاده نمی‌شود '+
-    'و پشتیبانی هرگز رمز نمی‌پرسد.</div>'+
-  '<button class="btn primary wide big" data-auth="signup">'+ic('i-checkc')+'ساخت حساب جدید</button>'+
-  '<div class="alt">قبلاً حساب ساختی؟ <a href="#" data-authtab="login">وارد شو</a></div>'+
-  note('این فرم <b>هیچ فیلد نقشی ندارد</b> — و نباید داشته باشد. حساب همیشه با نقش <b>کاربری</b> ساخته می‌شود و '+
-    'ارتقای نقش <b>فقط از مسیر مدیریت</b> انجام می‌شود (سند ۲۴). انتخاب نقش در ثبت‌نام، همان لحظه یک '+
-    '<b>حفرهٔ دسترسی</b> می‌سازد — پس وجود ندارد، حتی به‌عنوان «درخواست».'));
+  var st=APP.signupStep||0;
+  var dots='<div class="fg-dots">'+[0,1,2,3,4].map(function(k){
+    return '<i class="'+(k<st?'done':(k===st?'on':''))+'"></i>';}).join('')+'</div>';
+  var hd='<div class="fg-hd">'+ic('i-checkc')+'<b>گام '+fa(st+1)+' از '+fa(5)+'</b>'+dots+'</div>';
+
+  /* ---------- گام ۱: معرفی — نام، نام خانوادگی، جنسیت ---------- */
+  if(st===0){
+    return authShell('signup','خودت را معرفی کن','با اسم کوچکت صدایت می‌زنیم — فامیلی فقط در پروفایل می‌ماند.', hd+
+      '<div class="auth-grid">'+
+        fx('sn','نام','مثلاً سارا','text',{ac:'given-name'})+
+        fx('sf','نام خانوادگی','مثلاً محمدی','text',{ac:'family-name'})+
+      '</div>'+
+      '<div class="fld-label">جنسیت</div>'+
+      '<div class="gpills">'+['زن','مرد','ترجیح می‌دهم نگویم'].map(function(g){
+        return '<button type="button" class="gpill'+(APP.authGender===g?' on':'')+'" data-gender="'+g+'">'+g+'</button>';}).join('')+'</div>'+
+      '<div class="banner info tiny">'+ic('i-info')+
+        'جنسیت و شغل برای <b>آمار تجمیعی</b> و تنظیم تجربه است (مثلاً تمرین‌های مناسب)، نه برای فروش داده. '+
+        'هیچ‌وقت در گزارش‌های عمومی به یک نفر وصل نمی‌شود.</div>'+
+      '<button class="btn primary wide big" data-sstep="next">ادامه</button>'+
+      '<div class="alt">قبلاً حساب ساختی؟ <a href="#login">وارد شو</a></div>');
+  }
+
+  /* ---------- گام ۲: شغل — از دراپ‌داون (مطابق فرم اصلی) ---------- */
+  if(st===1){
+    return authShell('signup','شغلت چیست؟','مطابق فرم اصلی جوما، شغل از فهرست انتخاب می‌شود — نه تایپ آزاد.', hd+
+      '<div class="auth-grid tight">'+
+        fx('soc','شغل','از فهرست انتخاب کن','select',{wide:true,body:jobOptions()})+
+      '</div>'+
+      '<div class="banner info tiny">'+ic('i-info')+
+        'چرا می‌پرسیم؟ چون جوما بعداً می‌خواهد بداند چند کارمند، چند پزشک و چند دانشجو دارد و '+
+        'تجربه و تمرین‌ها را بر همین پایه تنظیم کند. جمعیت‌ها فقط <b>تجمیعی</b> دیده می‌شوند.</div>'+
+      note('فهرست شغل از <b>بک‌اند</b> می‌آید (کد + عنوان). اگر بک‌اند فهرست را نداد، فرانت همین فهرست پیشنهادی سند را نشان می‌دهد '+
+        'ولی انتخاب را به کد نمی‌نگارد — «حدس نمی‌زنیم».')+
+      '<div class="sg-nav"><button class="btn ghost" data-sstep="prev">قبلی</button>'+
+        '<button class="btn primary" data-sstep="next">ادامه</button></div>');
+  }
+
+  /* ---------- گام ۳: حساب کاربری — نام کاربری + رمز + تکرار ---------- */
+  if(st===2){
+    return authShell('signup','حساب کاربری‌ات','نام کاربری و رمز. رمز را می‌شود دید و عوض کرد.', hd+
+      '<div class="auth-grid tight">'+
+        fx('su','نام کاربری','۳ تا ۲۰ کاراکتر — حرف و عدد','text',{ac:'username',dir:'ltr',data:'authuname',
+          hint:'همین‌جا زنده بررسی می‌شود که تکراری نباشد.'})+
+        fx('sp','رمز عبور','حداقل ۸ نویسه','password',{ac:'new-password',data:'authpw',
+          tail:'<button class="fxeye" data-pw aria-label="نمایش رمز">'+ic('i-eye')+'</button>'})+
+        fx('sp2','تکرار رمز عبور','همان رمز','password',{ac:'new-password-hint',
+          hint:'هر دو رمز باید یکی باشند — همین‌جا چک می‌شود.'})+
+      '</div>'+
+      '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
+      note('رمز در سرور به‌صورت <b>هش</b> ذخیره می‌شود؛ پشتیبانی هیچ‌وقت رمز نمی‌پرسد و رمز فعلی هیچ‌وقت فرستاده نمی‌شود.')+
+      '<div class="sg-nav"><button class="btn ghost" data-sstep="prev">قبلی</button>'+
+        '<button class="btn primary" data-sstep="next">ادامه</button></div>');
+  }
+
+  /* ---------- گام ۴: راه‌های تماس — موبایل + ایمیل ---------- */
+  if(st===3){
+    return authShell('signup','راه‌های تماس','برای بازیابی حساب و پشتیبانی — نه برای تبلیغ.', hd+
+      '<div class="auth-grid">'+
+        fx('sm','شماره موبایل','۰۹۱۲۳۴۵۶۷۸۹','tel',{dir:'ltr',ac:'tel',data:'authphone'})+
+        fx('se','ایمیل','you@example.com','email',{dir:'ltr',ac:'email'})+
+      '</div>'+
+      '<div class="banner info tiny">'+ic('i-info')+
+        'شماره و ایمیل فقط برای «بازیابی حساب» و «پشتیبانی» است؛ هیچ‌وقت برای تبلیغ استفاده نمی‌شود. '+
+        'اگر یکی را ندهی، در گام بعد می‌پرسیم و می‌شود بعداً در تنظیمات اضافه کرد.</div>'+
+      '<div class="sg-nav"><button class="btn ghost" data-sstep="prev">قبلی</button>'+
+        '<button class="btn primary" data-sstep="next">ادامه</button></div>');
+  }
+
+  /* ---------- گام ۵: تأیید — کد پشتیبانی + قوانین + ساخت حساب ---------- */
+  var sum=[['نام',(APP.authName||'سارا')+' '+(APP.authFamily||'محمدی')],
+           ['جنسیت',APP.authGender||'—'],
+           ['شغل',APP.authJob||'—'],
+           ['نام کاربری',APP.authUser||'sara'],
+           ['رمز',APP.authPass?'••••••••':'—'],
+           ['موبایل',APP.mobilePhone||'۰۹•••••••••'],
+           ['ایمیل','—']];
+  return authShell('signup','یک قدم مانده','اطلاعات را یک‌بار ببین، کد را بگیر و حساب را بساز.', hd+
+    '<div class="sum-box">'+sum.map(function(r){
+      return '<div class="sum-row"><span>'+r[0]+'</span><b dir="auto">'+r[1]+'</b></div>';}).join('')+'</div>'+
+    supportCard('کد ثبت‌نام را از پشتیبانی بگیر','بگو می‌خواهم حساب بسازم؛ کد را دستی می‌فرستند.')+
+    '<div class="auth-grid tight">'+
+      fx('sc','کد ثبت‌نام','کد را از پشتیبانی بگیر','text',{dir:'ltr',data:'authcode',
+        hint:'پیامک سیستم وصل نیست؛ کد دستی داده می‌شود.',
+        tail:'<button class="fxbtn" data-authcode>'+ic('i-chat')+'دریافت کد از پشتیبانی</button>'})+
+    '</div>'+
+    '<label class="perm-row"><span class="cb'+(APP.authTerms?' on':'')+'" data-tglcb="terms"></span>'+
+      '<span class="pbody"><b>قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم.</b>'+
+      '<em>نسخهٔ متنی همین‌جا در دسترس است — پیش از انتشار تجاری، بررسی حقوقی می‌شود (۱۷٫۳). '+
+      '<a href="#content">خواندن قوانین و مقررات</a> · <a href="#content">حریم خصوصی</a></em></span></label>'+
+    '<div class="banner info tiny" style="margin:2px 0 12px">'+ic('i-info')+
+      'شمارهٔ موبایل و ایمیل برای «بازیابی حساب» و «پشتیبانی» است؛ هیچ‌وقت برای تبلیغ استفاده نمی‌شود '+
+      'و پشتیبانی هرگز رمز نمی‌پرسد.</div>'+
+    '<button class="btn primary wide big" data-auth="signup">'+ic('i-checkc')+'ساخت حساب جدید</button>'+
+    '<div class="sg-nav" style="margin-top:10px"><button class="btn ghost" data-sstep="prev">قبلی</button></div>'+
+    note('این فرم <b>هیچ فیلد نقشی ندارد</b> — و نباید داشته باشد. حساب همیشه با نقش <b>کاربری</b> ساخته می‌شود و '+
+      'ارتقای نقش <b>فقط از مسیر مدیریت</b> انجام می‌شود (سند ۲۴). انتخاب نقش در ثبت‌نام، همان لحظه یک '+
+      '<b>حفرهٔ دسترسی</b> می‌سازد — پس وجود ندارد، حتی به‌عنوان «درخواست».'));
+}
+/* فهرست پیشنهادی شغل — کد و عنوان از بک‌اند می‌آید؛ این‌ها فقط عنوان‌های پیشنهادی سند ۲۲ §۳.۷ است. */
+var JOBS=[
+  ['اداری و مدیریت',['کارمند','مدیر یا سرپرست','کارآفرین و صاحب کسب‌وکار']],
+  ['سلامت',['پزشک','پرستار','روان‌شناس یا مشاور','سایر کادر درمان']],
+  ['آموزش',['معلم','استاد دانشگاه','مربی']],
+  ['دانشجو و دانش‌آموز',['دانشجو','دانش‌آموز','طلبه']],
+  ['فنی و آزاد',['مهندس','برنامه‌نویس','هنرمند یا طراح','فریلنسر']],
+  ['خانه و خانواده',['خانه‌دار','در مرخصی یا جویای کار','بازنشسته']],
+  ['سایر',['سایر']]
+];
+function jobOptions(){
+  return '<option value="" disabled'+(APP.authJob?'':' selected')+'>انتخاب کن…</option>'+
+    JOBS.map(function(grp){
+      return '<optgroup label="'+grp[0]+'">'+grp[1].map(function(j){
+        return '<option value="'+j+'"'+(APP.authJob===j?' selected':'')+'>'+j+'</option>';}).join('')+'</optgroup>';
+    }).join('');
 }
 function authRail(){
   return '<aside class="auth-rail">'+
@@ -310,7 +396,7 @@ function authRail(){
 
 /* ============================ ۴) خانه — سند ۱۱ ============================ */
 function R_home(){
-  var hello=D('سلام سارا، خوش برگشتی.','سلام سارا. از ساختن اولین برنامه شروع کنیم.');
+  var hello=(empty()?(greet()+'. از ساختن اولین برنامه شروع کنیم.'):(greet()+'. خوش برگشتی.'));
   var next=D('۳ از ۵ کار امروز ثبت شده.','اول برنامه‌ات را بسازیم.');
   var nextSub=D('قدم بعدی: پیاده‌روی ۲۰ دقیقه','بدون برنامه، ثبت روزانه معنی ندارد.');
   var pct=D(60,0);
