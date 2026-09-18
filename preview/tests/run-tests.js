@@ -224,6 +224,10 @@ if (!doc('docs/handoff/26-direct-fix-order-mood-water.md')) bad('۲۹: دستو�
 if (!doc('docs/compact-gallery.html')) bad('۲۹: گالری «چگالی نمایش» نیست');
 if (doc('docs/spec/21-settings.md').indexOf('چگالی نمایش') < 0) bad('۲۹: توضیح چگالی نمایش در تنظیمات نیست');
 say('دور ۲۹ — دو ایراد تکرارشده با مشخصات دقیق ثبت شد');
+/* نسخهٔ ۳۰ — بستهٔ v8 */
+if (!doc('docs/handoff/27-round-30-v8-status.md')) bad('۳۰: گزارش دور ۳۰ نیست');
+['00-principles.md','99-handoff.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۰') < 0) bad('۳۰: ثبت دور ۳۰ در ' + f + ' نیست'); });
+say('دور ۳۰ — v8 و دو مورد باز ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -237,4 +241,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۹');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۰');

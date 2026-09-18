@@ -2172,9 +2172,36 @@
     </div>
   </section>
 
+
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۳۲</span>
+      <span class="lockchip done">📦 v8 رسید — نوبت تست دو موردی مالک</span>
+      <h2>دور ۳۰ — دو ایراد تکرارشده بسته شد (ریشهٔ واقعی آب پیدا شد)</h2>
+      <span class="tag q">سایت اصلی دست‌نخورده</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گزارش + تست دو موردی + دو مورد باز: <code>docs/handoff/27-round-30-v8-status.md</code></p>
+      <div class="grid2">
+        <div class="card"><b style="font-size:12.5px">① حال من — هر گزینه تصویر خودش</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">در هر قدم <b>۵ تصویر یکتا</b> در DOM · تصویر بزرگ بالای صفحه حذف شد ·
+          باتری `6·12·18·24·30` · سیبل `6.6…19.8` · ستاره ۱–۵ · بادکنک `10…29.2`. شاهدها با `file:line`.</p></div>
+        <div class="card"><b style="font-size:12.5px">② آب — ریشهٔ واقعی (نه سه گمان ما)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">صفت‌های `data-*` در v7 روی `<span>` داخلی بودند ولی از خود کارت خوانده می‌شدند ⇒ `N` همیشه صفر ⇒ «خودش پر و خالی می‌شد».
+          اصلاح: `pages/today.php:205-208`.</p></div>
+        <div class="card"><b style="font-size:12.5px">آزمون‌ها (شاهد)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">دنبالهٔ `۱→۱ | ۱→۰ | ۳→۳ | ۱→۱ | ۵→۵ | ۵→۴` روی کد شلیپ‌شده و HTML واقعی ·
+          کلیک سریع = ۱ گذار · موبایل ۴۱۲px · <code>pass=34 fail=0</code> · سرور: ۱۴ لمس ⇒ <b>۱ رکورد</b> `draft`.</p></div>
+        <div class="card"><b style="font-size:12.5px">دو مورد باز (v8 نیامده)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">🔴 حلقهٔ پیشرفت (`.mring`) در «قدم بعدی» · 🟡 پوشش `aria-label` (۱۲ مورد) ·
+          + پیشنهاد: نمونهٔ زندهٔ «چگالی نمایش» در تنظیمات.</p></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۲۹ · ۳۱ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
+    <br>نسخهٔ ۳۰ · ۳۲ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
   </footer>
 </div>
 <script>
