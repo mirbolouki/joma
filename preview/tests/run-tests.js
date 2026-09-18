@@ -217,6 +217,11 @@ if (!doc('docs/handoff/18-round-24-backend-status.md')) bad('۲۴: گزارش د
 ['12-today.md', '14-companion.md', '15-journal.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۲۴') < 0) bad('۲۴: بند دور ۲۴ در ' + f + ' نیست'); });
 if (doc('docs/handoff/09-backend-gap-order.md').indexOf('به‌روزرسانی دور ۲۴') < 0) bad('۲۴: وضعیت تازهٔ B6/B7 در handoff/09 نیست');
 say('قوانین نسخه‌های ۱۴ تا ۲۴ بررسی شد');
+/* نسخهٔ ۲۹ — دو قفل تازه: تصویر پنج گزینهٔ حال + دستگاه وضعیت آب */
+if (doc('docs/spec/13-mood.md').indexOf('هر پنج گزینه، تصویر خودش را دارد') < 0) bad('۲۹: قفل «هر پنج گزینه تصویر خودش را دارد» در فصل ۱۳ نیست');
+if (doc('docs/spec/12-today.md').indexOf('دستگاه وضعیت آب') < 0) bad('۲۹: «دستگاه وضعیت آب» در فصل ۱۲ نیست');
+if (!doc('docs/handoff/26-direct-fix-order-mood-water.md')) bad('۲۹: دستور مستقیم دور ۲۹ نیست');
+say('دور ۲۹ — دو ایراد تکرارشده با مشخصات دقیق ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -230,4 +235,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۸');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۹');

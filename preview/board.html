@@ -2147,9 +2147,34 @@
     </div>
   </section>
 
+
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۳۱</span>
+      <span class="lockchip warn">⛔ دو ایراد تکرارشده — دستور دقیق صادر شد</span>
+      <h2>دور ۲۹ — «تصویر گزینه‌های حال» و «دستگاه وضعیت آب» با عدد و هندسه</h2>
+      <span class="tag q">اجرای کلی قبول نیست</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">دستور بدون تفسیر: <code>docs/handoff/26-direct-fix-order-mood-water.md</code></p>
+      <div class="grid2">
+        <div class="card"><b style="font-size:12.5px">① هر پنج گزینه تصویر خودش را دارد</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">پنج چهره · پنج <b>باتری</b> (پرشدگی `[6,12,18,24,30]`) · پنج <b>سیبل</b> (مرکز `1.5+l×1.5`) ·
+          ماه با ۱–۵ ستاره · پنج <b>بادکنک</b> (شعاع `5+(l−1)×2.4`). <b>آزمون:</b> بدون خواندن متن باید فهمید؛ تصویر دو گزینهٔ بغل‌هم یکسان نباشد.</p></div>
+        <div class="card"><b style="font-size:12.5px">② آب: هر لمس = دقیقاً یک گذار</b>
+          <p class="tiny" style="margin-top:6px;line-height:2"><code>N</code> یک عدد است · لمس `k` وقتی `N&lt;k` ⇒ `N=k` · لمس همان پر ⇒ `N=k−1` بی‌صدا ·
+          لمس عقب‌تر ⇒ `N=k` · بدون تغییر ⇒ هیچ انیمیشنی · یک رویداد (نه دو) · قفل <code>busy</code> ۴۶۰ms · انیمیشن از `N` قدیم نه از صفر.</p></div>
+        <div class="card"><b style="font-size:12.5px">سه علت محتمل (هر سه رفع شود)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">دو بار شلیک `pointerdown`+`click` · انیمیشن از صفر · شرط «لمس دوباره» روی هر کلیک.</p></div>
+        <div class="card"><b style="font-size:12.5px">آزمون اجباری</b>
+          <p class="tiny" style="margin-top:6px;line-height:2"><code>۱→۱ | ۱→۰ | ۳→۳ | ۱→۱ | ۵→۵ | ۵→۴</code> روی دسکتاپ، موبایل و کلیک سریع؛ و اثبات «یک لمس = یک رکورد».</p></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۲۸ · ۳۰ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
+    <br>نسخهٔ ۲۹ · ۳۱ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
   </footer>
 </div>
 <script>
