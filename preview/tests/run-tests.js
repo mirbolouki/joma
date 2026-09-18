@@ -71,7 +71,7 @@ const s1 = src('screens1.js'), s2 = src('screens2.js'), s3 = src('screens3.js'),
       art = src('art.js'), proto = src('proto.js'), idx = src('index.html');
 
 /* نسخهٔ ۱۴–۱۵ */
-['data-moodnote', 'VIEW_NOTES', 'data-roleto', 'sup-card', 'data-sstep', 'data-gender', 'jobOptions'].forEach(k => {
+['data-moodnote', 'VIEW_NOTES', 'data-roleto', 'sup-card', 'data-sstep', 'jobOptions'].forEach(k => {
   if (s1.indexOf(k) < 0) bad('۱۴: «' + k + '» در صفحه‌های احراز/حال نیست');
 });
 ['br-in.mp3', 'br-hold.mp3', 'br-out.mp3'].forEach(f => { if (br.indexOf(f) < 0) bad('۱۴: فایل صوتی ' + f + ' ارجاع نشده'); });
@@ -81,6 +81,13 @@ if (s2.indexOf('آبت') > -1) bad('۱۴: واژهٔ ممنوع «آبت» در 
 /* نسخهٔ ۱۶–۱۷: ثبت‌نام و جوجه */
 const steps = []; for (let k = 0; k < 5; k++) { run('APP.signupStep=' + k + ';'); steps.push(R.signup()); }
 const all = steps.join('\n');
+
+/* نسخهٔ ۲۱ — تصمیم‌های مالک */
+if (all.indexOf('data-gender') > -1 || all.indexOf('فقط برای جنسیت') > -1) bad('۲۱: گام جنسیت از ثبت‌نام برداشته نشده — تصمیم مالک');
+if (s1.indexOf('data-gender') > -1) bad('۲۱: هندلر/دکمهٔ جنسیت در کد مانده');
+if (all.indexOf('جنسیت') > -1) bad('۲۱: واژهٔ «جنسیت» در صفحهٔ ثبت‌نام (خروجی) مانده');
+if (run('METERS.length') !== 3) bad('۲۱: سنجه‌های جوجه ' + run('METERS.length') + ' (باید ۳ باشد — سنجهٔ چهارم منبع ندارد)');
+if (run('METER_TOTAL') !== 9) bad('۲۱: مخرج سنجه‌ها ' + run('METER_TOTAL') + ' (باید ۹ = ۳×۳)');
 if (all.indexOf('۰۹۹۶۷۹۷۹۴۷۱') < 0) bad('۱۶: شمارهٔ پشتیبانی نیست');
 if (/پیامک شد|ارسال دوباره|ارسال کد/.test(all)) bad('۱۶: وعدهٔ ارسال پیامک');
 ['data-authrole', 'name="role"', 'id="role"'].forEach(b => { if (all.indexOf(b) > -1) bad('۱۶: فیلد نقش در ثبت‌نام (' + b + ')'); });
@@ -147,10 +154,11 @@ for (const d of [17, 25, 30]) {
 run("window.__ev={target:{closest:function(s){return s.indexOf('[data-cald]')>-1?{dataset:{cald:'13'},classList:{add(){},remove(){}}}:null},matches:function(){return false}}};window.INNER_CLICK(window.__ev);");
 if (run('APP.calDay') !== 13) bad('۲۰: روز گذشته انتخاب نمی‌شود');
 run('APP.calDay=0;');
-say('قوانین نسخه‌های ۱۴ تا ۲۰ بررسی شد');
+say('قوانین نسخه‌های ۱۴ تا ۲۱ بررسی شد');
+say('تصمیم‌های دور ۲۱ — جنسیت برداشته شد · جوجه سه‌سنجه‌ای');
 say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس نزن» ثبت شده‌اند');
 
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۰');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۱');

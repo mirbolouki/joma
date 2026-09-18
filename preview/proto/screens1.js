@@ -278,19 +278,17 @@ function R_signup(){
     return '<i class="'+(k<st?'done':(k===st?'on':''))+'"></i>';}).join('')+'</div>';
   var hd='<div class="fg-hd">'+ic('i-checkc')+'<b>گام '+fa(st+1)+' از '+fa(5)+'</b>'+dots+'</div>';
 
-  /* ---------- گام ۱: معرفی — نام، نام خانوادگی، جنسیت ---------- */
+  /* ---------- گام ۱: معرفی — نام و نام خانوادگی ----------
+     🔴 تصمیم مالک (دور ۲۱): گام «جنسیت» از ثبت‌نام برداشته شد
+     (بک‌اند ستون جنسیت ندارد و مالک تصمیم گرفت پرسیده نشود). */
   if(st===0){
     return authShell('signup','خودت را معرفی کن','با اسم کوچکت صدایت می‌زنیم — فامیلی فقط در پروفایل می‌ماند.', hd+
       '<div class="auth-grid">'+
         fx('sn','نام','مثلاً سارا','text',{ac:'given-name'})+
         fx('sf','نام خانوادگی','مثلاً محمدی','text',{ac:'family-name'})+
       '</div>'+
-      '<div class="fld-label">جنسیت</div>'+
-      '<div class="gpills">'+['زن','مرد','ترجیح می‌دهم نگویم'].map(function(g){
-        return '<button type="button" class="gpill'+(APP.authGender===g?' on':'')+'" data-gender="'+g+'">'+g+'</button>';}).join('')+'</div>'+
       '<div class="banner info tiny">'+ic('i-info')+
-        'جنسیت و شغل برای <b>آمار تجمیعی</b> و تنظیم تجربه است (مثلاً تمرین‌های مناسب)، نه برای فروش داده. '+
-        'هیچ‌وقت در گزارش‌های عمومی به یک نفر وصل نمی‌شود.</div>'+
+        'فقط اسم کوچک و فامیلی — ثبت‌نام کوتاه است و هیچ سؤال اضافه‌ای نمی‌پرسد.</div>'+
       '<button class="btn primary wide big" data-sstep="next">ادامه</button>'+
       '<div class="alt">قبلاً حساب ساختی؟ <a href="#login">وارد شو</a></div>');
   }
@@ -343,7 +341,6 @@ function R_signup(){
 
   /* ---------- گام ۵: تأیید — کد پشتیبانی + قوانین + ساخت حساب ---------- */
   var sum=[['نام',(APP.authName||'سارا')+' '+(APP.authFamily||'محمدی')],
-           ['جنسیت',APP.authGender||'—'],
            ['شغل',APP.authJob||'—'],
            ['نام کاربری',APP.authUser||'sara'],
            ['رمز',APP.authPass?'••••••••':'—'],

@@ -1,9 +1,9 @@
 # 👈 از اینجا شروع کن — بستهٔ فرانت جوما (نسخهٔ ۲۰)
 
 **۱) بستهٔ کامل را دانلود کن (کلیک = دانلود مستقیم):**
-- **لینک اصلی:** https://codeload.github.com/mirbolouki/joma/zip/refs/tags/v20
-- **لینک پشتیبان:** https://github.com/mirbolouki/joma/raw/v20/joma-frontend-v20.zip
-- **صفحهٔ انتشار:** https://github.com/mirbolouki/joma/releases/tag/v20
+- **لینک اصلی:** https://codeload.github.com/mirbolouki/joma/zip/refs/tags/v21
+- **لینک پشتیبان:** https://github.com/mirbolouki/joma/raw/v21/joma-frontend-v21.zip
+- **صفحهٔ انتشار:** https://github.com/mirbolouki/joma/releases/tag/v21
 
 **۲) فایل زیپ را اکسترکت کن.** داخلش این‌ها هست:
 `START-HERE.md` (راهنمای گام‌به‌گام خودت) · `AGENT-PROMPT.md` (پرامپت کامل) · `SPEC/` (سند طراحی) · `FRONTEND/` (نمونهٔ زندهٔ ۱۹ صفحه) · `BOARD.html` (تابلوی تصمیم‌ها) · `HANDOFF/` (نامه‌های فنی).

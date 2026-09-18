@@ -268,7 +268,6 @@ window.INNER_CLICK=function(e){
   if(e.target.closest('[data-sendcode]')){ toast('کد یک‌بارمصرف صادر شد — ۱۵ دقیقه اعتبار'); return; }
 
   /* --- ثبت‌نام: پنج گام، بخش‌های مرتبط با هم (سند ۲۲ §۳.۷) --- */
-  if((t=e.target.closest('[data-gender]'))){ APP.authGender=t.dataset.gender; render(); return; }
   if((t=e.target.closest('[data-sstep]'))){
     var dir=t.dataset.sstep, cur=APP.signupStep||0;
     if(dir==='prev'){ APP.signupStep=Math.max(0,cur-1); render(); return; }

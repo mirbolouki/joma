@@ -2,15 +2,15 @@
 ### این را برای خودت نگه دار. هیچ‌جای این راهنما لازم نیست چیزی «حفظ» کنی — فقط گام‌ها را یکی‌یکی انجام بده.
 
 > **📥 لینک دانلود مستقیم بستهٔ کامل (کلیک کن، همان لحظه دانلود می‌شود):**
-> https://codeload.github.com/mirbolouki/joma/zip/refs/tags/v20
-> **نسخهٔ سبک بستهٔ آماده:** https://github.com/mirbolouki/joma/raw/v20/joma-frontend-v20.zip
+> https://codeload.github.com/mirbolouki/joma/zip/refs/tags/v21
+> **نسخهٔ سبک بستهٔ آماده:** https://github.com/mirbolouki/joma/raw/v21/joma-frontend-v21.zip
 >
 > اگر این لینک را گم کردی، همیشه می‌توانی از صفحهٔ Releases مخزن پیدا کنی:
 > https://github.com/mirbolouki/joma/releases
-> (فایل زیپ را که دانلود کردی، اکسترکت کن — پوشهٔ `joma-frontend-v20` ساخته می‌شود.)
+> (فایل زیپ را که دانلود کردی، اکسترکت کن — پوشهٔ `joma-frontend-v21` ساخته می‌شود.)
 >
-> **لینک پشتیبان (اگر لینک بالا باز نشد):** https://github.com/mirbolouki/joma/raw/v20/joma-frontend-v20.zip
-> **صفحهٔ انتشار (برای دیدن توضیح‌ها):** https://github.com/mirbolouki/joma/releases/tag/v20
+> **لینک پشتیبان (اگر لینک بالا باز نشد):** https://github.com/mirbolouki/joma/raw/v21/joma-frontend-v21.zip
+> **صفحهٔ انتشار (برای دیدن توضیح‌ها):** https://github.com/mirbolouki/joma/releases/tag/v21
 
 ---
 

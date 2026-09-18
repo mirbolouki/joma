@@ -16,9 +16,11 @@ var GROWTH=[
 var METERS=[
   {k:'seed', e:'🌾', n:'ظرف دونه',  s:'با ثبت کارهای روزانه پر می‌شود'},
   {k:'water',e:'💧', n:'ظرف آب',    s:'با لیوان‌های آبِ تو'},
-  {k:'home', e:'🏠', n:'خونهٔ تمیز',s:'با ثبت حال ۵ قدمی'},
-  {k:'bath', e:'🛁', n:'وقت حمام',  s:'با ذخیرهٔ ثبت‌ها و تمرین نفس'}
+  {k:'home', e:'🏠', n:'خونهٔ تمیز',s:'با ثبت حال ۵ قدمی'}
+  /* 🔴 تصمیم مالک (دور ۲۱): «وقت حمام» (تمرین تنفس) در بک‌اند منبع ندارد،
+     پس تا ساخته‌شدنش نمایش داده نمی‌شود — هیچ سنجهٔ جعلی ساخته نمی‌شود. */
 ];
+var METER_TOTAL=9;   /* ۳ سنجه × ۳ سطح — سنجهٔ چهارم که اضافه شد، این عدد از بک‌اند می‌آید */
 
 /* شش حالت جوجه — همه از بک‌اند، هیچ‌کدام از کلیک (سند ۱۴ §۳.۳) */
 var PET_STAGES=['جوجهٔ کوچک','نوپا','بالغ'];
@@ -35,9 +37,9 @@ function R_chick(){
   var g=GROWTH[st==='egg'?0:(st==='crack'?1:(APP.petGrowthFull?3:2))];
   var name=APP.petName||'جوجهٔ من';
   var ps=PET_STATES.filter(function(x){return x.k===(APP.petMood||'ok');})[0]||PET_STATES[0];
-  var levels=empty()?{seed:0,water:0,home:0,bath:0}:{seed:3,water:2,home:2,bath:1};
-  var total=levels.seed+levels.water+levels.home+levels.bath;
-  var pct=Math.round(total/12*100);
+  var levels=empty()?{seed:0,water:0,home:0}:{seed:3,water:2,home:2};
+  var total=levels.seed+levels.water+levels.home;
+  var pct=Math.round(total/METER_TOTAL*100);
 
   return head('جوجهٔ من', name+(st==='egg'?' — تخم':''), g.sub,
       '<span class="chip '+(st==='chick'?'g':'go')+'">'+(st==='egg'?'تخم':(st==='crack'?'در حال ترک':'جوجه'))+'</span>')+
@@ -59,7 +61,9 @@ function R_chick(){
           PET_STATES.map(function(s2){
             return '<button class="'+(ps.k===s2.k?'on':'')+'" data-petmode="'+s2.k+'" title="'+s2.cond+'">'+s2.t+'</button>';}).join('')+
         '</div>'+
-        note('همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
+        note('سنجهٔ چهارم («وقت حمام» — تمرین تنفس) تا ساخته‌شدن منبعش در بک‌اند نمایش داده نمی‌شود؛ '+
+          'هیچ سنجهٔ جعلی ساخته نمی‌شود. '+
+          'همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
           'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
       '</div>'+
     '<div class="grid2">'+
