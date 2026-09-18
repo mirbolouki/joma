@@ -7,6 +7,9 @@
 > اگر این لینک را گم کردی، همیشه می‌توانی از صفحهٔ Releases مخزن پیدا کنی:
 > https://github.com/mirbolouki/joma/releases
 > (فایل زیپ را که دانلود کردی، اکسترکت کن — پوشهٔ `joma-frontend-v19` ساخته می‌شود.)
+>
+> **لینک پشتیبان (اگر لینک بالا باز نشد):** https://github.com/mirbolouki/joma/raw/v19/joma-frontend-v19.zip
+> **صفحهٔ انتشار (برای دیدن توضیح‌ها):** https://github.com/mirbolouki/joma/releases/tag/v19
 
 ---
 
