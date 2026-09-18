@@ -1,0 +1,156 @@
+/* ==========================================================================
+   تست‌های خودکار نمونهٔ فرانت جوما
+   اجرا:  node preview/tests/run-tests.js
+   چه چیزی را می‌سنجد:
+     ① همهٔ صفحه‌ها در دو حالت «داده دارد» و «داده ندارد» بدون خطا ساخته شوند
+     ② هیچ undefined/NaN، هیچ آیکون گم‌شده، هیچ SVG بی‌اندازه در خروجی نباشد
+     ③ قوانین تصمیم‌های مالک (نسخه‌های ۱۴ تا ۲۰) نشکسته باشد
+     ④ کارهایی که «در بک‌اند نیست» قواعدشان رعایت شده باشد (بدون حدس و دادهٔ ساختگی)
+   ========================================================================== */
+const fs = require('fs'), vm = require('vm'), path = require('path');
+const P = path.join(__dirname, '..', 'proto') + '/';
+const ROOT = path.join(__dirname, '..', '..') + '/';
+
+function boot() {
+  const ctx = {
+    console,
+    document: {
+      addEventListener() {}, createElement() { return { style: {}, setAttribute() {}, appendChild() {}, classList: { add() {}, remove() {} }, querySelector() { return null; } }; },
+      body: { insertBefore() {} },
+      /* عنصر قلابی برای مودال/توست — تستِ رفتار را ممکن می‌کند */
+      getElementById() { return { innerHTML: '', textContent: '', value: '', style: {}, setAttribute() {}, classList: { add() {}, remove() {}, toggle() {} }, querySelector() { return null; }, appendChild() {}, focus() {}, remove() {} }; },
+      querySelector() { return { classList: { add() {}, remove() {} }, offsetWidth: 1, querySelector() { return null; } }; },
+      querySelectorAll() { return []; }, documentElement: { setAttribute() {} }
+    },
+    window: { addEventListener() {}, location: { hash: '' } },
+    location: { hash: '', replace() {} }, documentElement: { setAttribute() {} },
+    Math, Date, performance: { now: () => 0 },
+    setTimeout, clearTimeout, setInterval: () => 0, clearInterval() {}
+  };
+  vm.createContext(ctx);
+  ['sprite.js', 'proto.js', 'charts.js', 'breath.js', 'art.js', 'screens1.js', 'screens2.js', 'screens3.js', 'interactions.js']
+    .forEach(f => vm.runInContext(fs.readFileSync(P + f, 'utf8'), ctx, { filename: f }));
+  vm.runInContext("window.__toasts=[]; toast=function(m){window.__toasts.push(m)}; render=function(){};", ctx);
+  return ctx;
+}
+
+const problems = [];
+const notes = [];
+const say = (m) => notes.push('· ' + m);
+const bad = (m) => problems.push(m);
+const src = (f) => fs.readFileSync(P + f, 'utf8');
+const doc = (f) => fs.existsSync(ROOT + f) ? fs.readFileSync(ROOT + f, 'utf8') : '';
+
+const c = boot();
+const run = (x) => vm.runInContext(x, c);
+const symbols = new Set([...src('sprite.js').matchAll(/symbol id=\\?"([a-z0-9-]+)\\?"/g)].map(m => m[1]));
+const ids = run("SCREENS.map(function(x){return x.id;})");
+const R = {}; ids.forEach(id => { R[id] = vm.runInContext('R_' + id, c); });
+
+/* ---------------------------------------------- ① + ② صفحه‌ها × حالت‌ها */
+function check(name, html) {
+  if (html == null) return bad(name + ': خروجی خالی');
+  if (html.length < 600) bad(name + ': خروجی مشکوک کوتاه (' + html.length + ')');
+  const und = html.match(/undefined/g); if (und) bad(name + ': ' + und.length + ' × undefined');
+  const nan = html.match(/NaN/g); if (nan) bad(name + ': ' + nan.length + ' × NaN');
+  for (const m of html.matchAll(/<use href="#([a-z0-9-]+)"/g)) if (!symbols.has(m[1])) bad(name + ': آیکون گم‌شده #' + m[1]);
+  for (const s of (html.match(/<svg[^>]*>/g) || [])) if (!/\swidth="/.test(s) || !/\sheight="/.test(s)) bad(name + ': SVG بدون اندازهٔ صریح');
+  const o = (html.match(/<g[\s>]/g) || []).length, cl = (html.match(/<\/g>/g) || []).length;
+  if (o !== cl) bad(name + ': تگ <g> ' + o + '/' + cl);
+}
+['full', 'empty'].forEach(mode => {
+  run("APP.data=" + JSON.stringify(mode) + ";");
+  Object.keys(R).forEach(id => { try { check(mode + '/' + id, R[id]()); } catch (e) { bad(mode + '/' + id + ' خطا داد: ' + e.message); } });
+});
+run("APP.data='full';");
+say('۱۹ صفحه × دو حالت (داده دارد / ندارد) بدون خطا ساخته شد');
+
+/* ---------------------------------------------- ③ قوانین نسخه‌های ۱۴–۲۰ */
+const s1 = src('screens1.js'), s2 = src('screens2.js'), s3 = src('screens3.js'),
+      br = src('breath.js'), it = src('interactions.js'), css = src('proto.css'),
+      art = src('art.js'), proto = src('proto.js'), idx = src('index.html');
+
+/* نسخهٔ ۱۴–۱۵ */
+['data-moodnote', 'VIEW_NOTES', 'data-roleto', 'sup-card', 'data-sstep', 'data-gender', 'jobOptions'].forEach(k => {
+  if (s1.indexOf(k) < 0) bad('۱۴: «' + k + '» در صفحه‌های احراز/حال نیست');
+});
+['br-in.mp3', 'br-hold.mp3', 'br-out.mp3'].forEach(f => { if (br.indexOf(f) < 0) bad('۱۴: فایل صوتی ' + f + ' ارجاع نشده'); });
+['از بینی، آرام دم بگیر', 'شانه‌ها شل و رها', 'آرام و بلند از دهان بازدم'].forEach(t => { if (br.indexOf(t) < 0) bad('۱۹: جملهٔ «' + t + '» نیست'); });
+if (s2.indexOf('آبت') > -1) bad('۱۴: واژهٔ ممنوع «آبت» در نمونه مانده');
+
+/* نسخهٔ ۱۶–۱۷: ثبت‌نام و جوجه */
+const steps = []; for (let k = 0; k < 5; k++) { run('APP.signupStep=' + k + ';'); steps.push(R.signup()); }
+const all = steps.join('\n');
+if (all.indexOf('۰۹۹۶۷۹۷۹۴۷۱') < 0) bad('۱۶: شمارهٔ پشتیبانی نیست');
+if (/پیامک شد|ارسال دوباره|ارسال کد/.test(all)) bad('۱۶: وعدهٔ ارسال پیامک');
+['data-authrole', 'name="role"', 'id="role"'].forEach(b => { if (all.indexOf(b) > -1) bad('۱۶: فیلد نقش در ثبت‌نام (' + b + ')'); });
+const optc = (steps[1].match(/<option/g) || []).length;
+if (optc !== 19) bad('۱۶: تعداد گزینه‌های شغل ' + optc + ' (باید ۱۹)');
+if (steps[1].indexOf('<optgroup') > -1) bad('۱۶: شغل گروه‌بندی شده (مالک فهرست تخت داد)');
+['دانش‌آموز', 'وکیل', 'خانه‌دار', 'مشاغل آزاد', 'سایر'].forEach(j => { if (steps[1].indexOf(j) < 0) bad('۱۶: شغل «' + j + '» نیست'); });
+if (!/data-petstage|PET_STAGES/.test(s2)) bad('۱۷: سناریوی جوجه نیست');
+if (it.indexOf('[data-petsleep]') < 0) bad('۱۹: هندلر خواب جوجه نیست');
+if ((it.match(/\[data-petsleep\]/g) || []).length !== 1) bad('۱۹: هندلر خواب جوجه تکراری است');
+
+/* نسخهٔ ۱۸: تقویم «مسیر این ماه» */
+run("APP.data='full';");
+const cal = run('monthCal()');
+if (cal.indexOf('cal-grid') < 0 || cal.indexOf('cal-legend') < 0) bad('۱۸: ساختار تقویم ناقص');
+if ((cal.match(/class="cc /g) || []).length < 30) bad('۱۸: کاشی روزها کمتر از ۳۰');
+['کامل ثبت شده', 'ناقص', 'بدون ثبت', 'امروز', 'روزهای آینده'].forEach(k => { if (cal.indexOf(k) < 0) bad('۱۸: برچسب راهنما «' + k + '» نیست'); });
+['cc.full', 'cc.part', 'cc.miss', 'cc.today', '.tflag', 'box-shadow:0 3px 0'].forEach(k => { if (css.indexOf(k) < 0) bad('۱۸: CSS تقویم «' + k + '» نیست'); });
+if (cal.indexOf('class="dn"') < 0) bad('۱۸: عدد روز داخل کاشی نیست');
+if (R.home().indexOf('cal-legend') < 0) bad('۱۸: تقویم در خانه نیست');
+run("APP.planTab='cal';");
+if (R.plan().indexOf('cal-grid') < 0) bad('۱۸: تقویم در تب «مسیر این ماه» برنامه نیست');
+
+/* نسخهٔ ۱۹: جملهٔ شخصی، حالت مشاور، صدا، موبایل */
+run('APP.moodStep=5;'); const nt = R.mood();
+['data-moodnote', 'فقط خودت', 'VIEW_NOTES', 'ذخیره و پایان', 'بدون جمله'].forEach(k => { if (nt.indexOf(k) < 0) bad('۱۹: قدم جملهٔ شخصی — «' + k + '» نیست'); });
+run("APP.moodStep=6; APP.moodNote='نمونه';");
+if (R.mood().indexOf('جملهٔ امروت') < 0) bad('۱۹: کارت جمله در خلاصه نیست');
+run("APP.moodStep=0; APP.moodNote='';");
+run("APP.roleView='coach';");
+if (R.mood().indexOf('باز نمی‌شود') < 0) bad('۱۹: صفحهٔ حال در حالت مشاور بسته نیست');
+if (R.home().indexOf('coach-card') < 0) bad('۱۹: کارت مشاور در خانه نیست');
+if (R.today().indexOf('coach-card') < 0) bad('۱۹: کارت مشاور در کارهای امروز نیست');
+if (R.home().indexOf('class="faces"') > -1) bad('۱۹: چهره‌های حال در حالت مشاور مانده');
+run("APP.roleView='client';");
+['[data-view="mobile"]', '@media (max-width:640px)', 'env(safe-area-inset-bottom)', 'font-size:16px'].forEach(k => { if (css.indexOf(k) < 0) bad('۱۹: موبایل — «' + k + '» نیست'); });
+if (it.indexOf('data-mobile') < 0) bad('۱۹: کلید نمایش موبایل نیست');
+if (art.indexOf('coachCard') < 0) bad('۱۹: coachCard نیست');
+
+/* نسخهٔ ۲۰: کارهای «در بک‌اند نیست» — قاعدهٔ «حدس نزن» */
+const lock = doc('docs/handoff/09-backend-gap-order.md');
+if (!lock) bad('۲۰: فایل سفارش کار بک‌اند نیست');
+else ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9'].forEach(b => { if (lock.indexOf(b) < 0) bad('۲۰: مورد ' + b + ' در سفارش کار نیست'); });
+['۱۲', '۱۳', '۱۴', '۱۵', '۱۸', '۲۲', '۲۶'].forEach(n => {
+  const f = 'docs/spec/' + n + '-*.md';
+});
+['12-today.md', '13-mood.md', '14-companion.md', '15-journal.md', '18-plan.md', '22-auth.md', '26-data-rights.md'].forEach(f => {
+  if (doc('docs/spec/' + f).indexOf('یافتهٔ بازبینی بک‌اند — دور ۲۰') < 0) bad('۲۰: بند «یافتهٔ بازبینی بک‌اند» در ' + f + ' نیست');
+});
+const agent = doc('docs/handoff/07-agent-prompt-frontend.md');
+if (agent.indexOf('۶.۵') < 0 || agent.indexOf('ممنوع تا تأیید بک‌اند') < 0) bad('۲۰: فهرست ممنوع در پرامپت ایجنت نیست');
+['بک‌اند، دیتابیس و سرور دست‌نخورده', 'ساب‌دامین', 'حدس'].forEach(k => { if (agent.indexOf(k) < 0) bad('۲۰: پرامپت ایجنت — «' + k + '» نیست'); });
+const owner = doc('docs/handoff/08-owner-step-by-step.md');
+['لینک دانلود مستقیم', 'تأیید است', 'گام‌به‌گام'].forEach(k => { if (owner.indexOf(k) < 0) bad('۲۰: راهنمای مالک — «' + k + '» نیست'); });
+/* B3: روز آینده نه انتخاب می‌شود و نه درخواست می‌فرستد */
+const future = new Set([...cal.matchAll(/class="cc future[^"]*"[^>]*data-cald="(\d+)"/g)].map(m => +m[1]));
+if (future.size !== 14) bad('۲۰: شمار روزهای آیندهٔ غیرفعال ' + future.size + ' (باید ۱۴)');
+if (cal.indexOf('aria-disabled="true"') < 0) bad('۲۰: روز آینده aria-disabled ندارد — B3');
+run("APP.calDay=0;");
+for (const d of [17, 25, 30]) {
+  run("window.__ev={target:{closest:function(s){return s.indexOf('[data-cald]')>-1?{dataset:{cald:'" + d + "'},classList:{add(){},remove(){}}}:null},matches:function(){return false}}};window.INNER_CLICK(window.__ev);");
+  if (run('APP.calDay') !== 0) bad('۲۰: روز آینده (' + d + ') انتخاب شد — B3');
+}
+run("window.__ev={target:{closest:function(s){return s.indexOf('[data-cald]')>-1?{dataset:{cald:'13'},classList:{add(){},remove(){}}}:null},matches:function(){return false}}};window.INNER_CLICK(window.__ev);");
+if (run('APP.calDay') !== 13) bad('۲۰: روز گذشته انتخاب نمی‌شود');
+run('APP.calDay=0;');
+say('قوانین نسخه‌های ۱۴ تا ۲۰ بررسی شد');
+say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس نزن» ثبت شده‌اند');
+
+/* ---------------------------------------------- نتیجه */
+console.log(notes.join('\n'));
+if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۰');

@@ -426,8 +426,10 @@ window.INNER_CLICK=function(e){
   /* ---------- تقویم مسیر ماه ---------- */
   if((t=e.target.closest('[data-cald]'))){
     var d=t.dataset.cald, n=parseInt(d.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x);}),10);
-    APP.calDay=n; render();                 /* انتخاب، همان‌جا زیر تقویم نشان داده می‌شود */
     var isFuture=(typeof calStateOf==='function') && calStateOf(n)==='future';
+    /* 🔴 B3 (handoff/09): روز آینده انتخاب نمی‌شود — فقط پیام می‌دهد.
+       فرانت هم پیش‌دستی می‌کند تا درخواستی برای آینده ساخته نشود. */
+    if(!isFuture){ APP.calDay=n; render(); }   /* انتخاب، همان‌جا زیر تقویم نشان داده می‌شود */
     var isMiss=(typeof calStateOf==='function') && calStateOf(n)==='miss';
     var isPart=(typeof calStateOf==='function') && calStateOf(n)==='part';
     var det=(CAL.info[n]||[])[1]||'برای این روز جزئیاتی ثبت نشده.';
