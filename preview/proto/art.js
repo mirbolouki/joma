@@ -337,7 +337,7 @@ function calTile(d){
   var st=calStateOf(d), cls='cc '+st+(d===CAL.today?' today':'')+(d===APP.calDay?' sel':'');
   var label=fa(d)+' '+CAL.month.split(' ')[0];
   var txt={'full':'کامل ثبت شده','part':'ناقص — بعضی کارها ثبت شده','miss':'بدون ثبت',
-           'future':'روز آینده — ثبت برای آینده ممکن نیست','ok':'روز عادی'}[st];
+           'future':'روز آینده — ثبت عملکرد برای روزهای آینده ممکن نیست.','ok':'روز عادی'}[st];
   return '<button class="'+cls+'" data-cald="'+d+'" aria-label="'+label+' — '+txt+'"'+
     (st==='future'?' aria-disabled="true"':'')+'>'+
     '<span class="dn">'+fa(d)+'</span>'+

@@ -154,11 +154,18 @@ for (const d of [17, 25, 30]) {
 run("window.__ev={target:{closest:function(s){return s.indexOf('[data-cald]')>-1?{dataset:{cald:'13'},classList:{add(){},remove(){}}}:null},matches:function(){return false}}};window.INNER_CLICK(window.__ev);");
 if (run('APP.calDay') !== 13) bad('۲۰: روز گذشته انتخاب نمی‌شود');
 run('APP.calDay=0;');
-say('قوانین نسخه‌های ۱۴ تا ۲۱ بررسی شد');
+/* نسخهٔ ۲۲ — وضعیت واقعی تست: چهار مورد اجراشده */
+if (s1.indexOf('forgotStatus') < 0) bad('۲۲: بنر «مسیر بازیابی رمز بسته است» نیست');
+run('APP.forgotStep=0;'); const fg = R.forgot();
+['موقتاً بسته است', 'پیام به پشتیبانی', '۰۹۹۶۷۹۷۹۴۷۱', 'کد'].forEach(k => { if (fg.indexOf(k) < 0) bad('۲۲: صفحهٔ بازیابی — «' + k + '» نیست'); });
+const ERR = 'ثبت عملکرد برای روزهای آینده ممکن نیست.';
+if (it.indexOf(ERR) < 0) bad('۲۲: پیام دقیق بک‌اند برای روز آینده نیست');
+if (R.today().indexOf('بدون قفل') < 0) bad('۲۲: یادآوری «بدون قفل» در کارهای امروز نیست');
+say('قوانین نسخه‌های ۱۴ تا ۲۲ بررسی شد');
 say('تصمیم‌های دور ۲۱ — جنسیت برداشته شد · جوجه سه‌سنجه‌ای');
 say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس نزن» ثبت شده‌اند');
 
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۱');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۲');

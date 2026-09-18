@@ -434,7 +434,7 @@ window.INNER_CLICK=function(e){
     var det=(CAL.info[n]||[])[1]||'برای این روز جزئیاتی ثبت نشده.';
     modal('<h3>'+fa(n)+' شهریور ۱۴۰۵</h3>'+
       '<div class="tiny" style="line-height:2">'+det+'</div>'+
-      (isFuture?'<p class="tiny" style="margin-top:8px">این روز هنوز نیامده — ثبت برای آینده ممکن نیست.</p>'
+      (isFuture?'<p class="tiny" style="margin-top:8px">ثبت عملکرد برای روزهای آینده ممکن نیست.</p>'
         :isMiss?'<p class="tiny" style="margin-top:8px">اشکالی ندارد؛ روزهای بی‌ثبت هم بخشی از مسیرند و سرزنشی نیست.</p>':'')+
       '<div class="acts"><button class="btn ghost sm" data-close>بستن</button>'+
       (isFuture?'':'<span class="sp"></span><button class="btn soft sm" data-go="today">دیدن جزئیات روز</button>')+'</div>');
