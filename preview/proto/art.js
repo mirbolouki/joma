@@ -244,3 +244,62 @@ function optArt(k,l){
   }
   return '';
 }
+
+/* ==========================================================================
+   استیکر وقت — خورشید و ماه، همراهِ احوال‌پرسی (سند ۱۱ §۰.۱)
+   تصویر است، نه ایموجی؛ همیشه با اندازهٔ صریح. جغد نیست.
+   ========================================================================== */
+var TS_BG={'صبح':'#FFEFC7','ظهر':'#FFF6D6','عصر':'#FFE0C9','شب':'#E2E7F7'};
+var TS_SUN='#F4B740', TS_SUN2='#F0A63C', TS_RAYS='#EFC259', TS_MOON='#C9B7E8', TS_MOON2='#B7A2DE';
+function _tsFace(cx,cy,r,dark){
+  return '<circle cx="'+cx+'" cy="'+(cy-1.5)+'" r="'+(r*0.14)+'" fill="'+dark+'"/>'+
+    '<circle cx="'+(cx+r*0.55)+'" cy="'+(cy-1.5)+'" r="'+(r*0.14)+'" fill="'+dark+'"/>'+
+    '<path d="M'+(cx-r*0.42)+' '+(cy+r*0.3)+' q'+(r*0.42)+' '+(r*0.42)+' '+(r*0.84)+' 0" fill="none" '+
+    'stroke="'+dark+'" stroke-width="'+(r*0.16)+'" stroke-linecap="round"/>'+
+    '<circle cx="'+(cx-r*0.62)+'" cy="'+(cy+r*0.28)+'" r="'+(r*0.16)+'" fill="#F09BAE" opacity=".55"/>'+
+    '<circle cx="'+(cx+r*0.62)+'" cy="'+(cy+r*0.28)+'" r="'+(r*0.16)+'" fill="#F09BAE" opacity=".55"/>';
+}
+function _tsRays(cx,cy,len,n,w){
+  var out='';
+  for(var i=0;i<n;i++){
+    var a=(-Math.PI/2)+(i*(2*Math.PI/n));
+    var x1=cx+Math.cos(a)*(len), y1=cy+Math.sin(a)*(len);
+    var x2=cx+Math.cos(a)*(len+w), y2=cy+Math.sin(a)*(len+w);
+    out+='<path d="M'+x1.toFixed(1)+' '+y1.toFixed(1)+' L'+x2.toFixed(1)+' '+y2.toFixed(1)+
+      '" stroke="'+TS_RAYS+'" stroke-width="2.6" stroke-linecap="round"/>';
+  }
+  return out;
+}
+function timeSticker(size,slot){
+  var S=size||44, k=slot||(typeof dayWord==='function'?dayWord():'صبح');
+  var bg=TS_BG[k]||TS_BG['صبح'], art='', clip='';
+  if(k==='صبح'){
+    clip='<clipPath id="tsc-m"><rect x="0" y="30" width="64" height="34"/></clipPath>';
+    art=_tsRays(32,34,13,7,7)+
+      '<g clip-path="url(#tsc-m)"><circle cx="32" cy="34" r="13" fill="'+TS_SUN+'"/></g>'+
+      '<circle cx="32" cy="34" r="13" fill="'+TS_SUN+'"/>'+
+      _tsFace(32,34,13,'#8A5A14')+
+      '<path d="M6 50h52" stroke="#E7D3A0" stroke-width="2.6" stroke-linecap="round"/>';
+  } else if(k==='ظهر'){
+    art=_tsRays(32,30,18,10,8)+
+      '<circle cx="32" cy="30" r="14" fill="'+TS_SUN+'"/>'+
+      _tsFace(32,30,14,'#8A5A14')+
+      '<path d="M14 52q18-7 36 0" fill="none" stroke="#E7D3A0" stroke-width="2.4" stroke-linecap="round"/>';
+  } else if(k==='عصر'){
+    clip='<clipPath id="tsc-e"><rect x="0" y="40" width="64" height="24"/></clipPath>';
+    art='<circle cx="32" cy="44" r="20" fill="'+TS_SUN2+'" opacity=".22"/>'+
+      _tsRays(32,44,12,7,7)+
+      '<g clip-path="url(#tsc-e)"><circle cx="32" cy="44" r="12" fill="'+TS_SUN2+'"/></g>'+
+      _tsFace(32,44,12,'#8A4A14')+
+      '<path d="M6 50h52" stroke="#E9C39E" stroke-width="2.6" stroke-linecap="round"/>';
+  } else {
+    art='<path d="M40 14a17 17 0 1 0 12 26 20 20 0 0 1-12-26Z" fill="'+TS_MOON+'"/>'+
+      '<circle cx="22" cy="18" r="2.6" fill="'+TS_MOON2+'"/>'+
+      '<path d="M14 28l3 1.6 3-1.6-.6 3.4 2.4 2.4-3.4.5-1.4 3.1-1.5-3.1-3.4-.5 2.4-2.4Z" fill="#EFD06A"/>'+
+      '<path d="M50 40l2.4 1.3 2.4-1.3-.5 2.7 1.9 1.9-2.7.4-1.1 2.5-1.2-2.5-2.7-.4 1.9-1.9Z" fill="#EFD06A"/>'+
+      '<ellipse cx="24" cy="48" rx="12" ry="5.4" fill="#FFFFFF" opacity=".85"/>'+
+      '<ellipse cx="32" cy="46" rx="9" ry="5" fill="#FFFFFF" opacity=".85"/>';
+  }
+  return '<span class="tsticker tst-'+k+'"><svg width="'+S+'" height="'+S+'" viewBox="0 0 64 64" aria-hidden="true">'+
+    '<defs>'+clip+'</defs><rect x="1" y="1" width="62" height="62" rx="19" fill="'+bg+'"/>'+art+'</svg></span>';
+}

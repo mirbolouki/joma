@@ -48,7 +48,7 @@ function R_landing(){
       '<div class="tiny">شنبه، ۳ شهریور · نمایش نمونه</div>'+
       '<div class="scr" style="margin-top:9px">'+
         '<div style="display:flex;gap:10px;align-items:center">'+owl('owl-hi',40)+
-          '<b style="font-size:12.5px">'+greet()+' — روزت چطور است؟</b></div>'+
+          '<b style="font-size:12.5px">'+greet()+' — روزت چطور است؟</b>'+timeSticker(32)+'</div>'+
         '<div class="card" style="margin-top:11px;padding:11px;display:flex;gap:11px;align-items:center">'+
           '<span class="ring" style="width:56px;height:56px"><svg viewBox="0 0 78 78" width="56" height="56">'+
             '<circle class="track" cx="39" cy="39" r="33"></circle>'+
@@ -249,7 +249,7 @@ function R_forgot(){
         'یک پیام هم به همان کانال می‌آید: «رمز حساب تو عوض شد؛ اگر این تو نبودی فوراً به پشتیبانی بگو.»'));
   }
   return authShell('forgot','رمزت عوض شد ✓','حالا با رمز تازه وارد شو.', hd+
-    '<div class="fg-done">'+owl('owl-cheer',96,'floaty')+
+    '<div class="fg-done">'+timeSticker(56)+owl('owl-cheer',96,'floaty')+
       '<p class="sub">رمز تازه ذخیره شد. از دستگاه‌های دیگر خارج شدی و یکی‌یکی باید از نو وارد شوی.</p></div>'+
     '<button class="btn primary wide big" data-fg="login">'+ic('i-checkc')+'ورود با رمز تازه</button>'+
     '<div class="alt">اگر این کار تو نبود، همین حالا به <a href="#content">پشتیبانی</a> بگو.</div>');
@@ -354,22 +354,14 @@ function R_signup(){
       'ارتقای نقش <b>فقط از مسیر مدیریت</b> انجام می‌شود (سند ۲۴). انتخاب نقش در ثبت‌نام، همان لحظه یک '+
       '<b>حفرهٔ دسترسی</b> می‌سازد — پس وجود ندارد، حتی به‌عنوان «درخواست».'));
 }
-/* فهرست پیشنهادی شغل — کد و عنوان از بک‌اند می‌آید؛ این‌ها فقط عنوان‌های پیشنهادی سند ۲۲ §۳.۷ است. */
-var JOBS=[
-  ['اداری و مدیریت',['کارمند','مدیر یا سرپرست','کارآفرین و صاحب کسب‌وکار']],
-  ['سلامت',['پزشک','پرستار','روان‌شناس یا مشاور','سایر کادر درمان']],
-  ['آموزش',['معلم','استاد دانشگاه','مربی']],
-  ['دانشجو و دانش‌آموز',['دانشجو','دانش‌آموز','طلبه']],
-  ['فنی و آزاد',['مهندس','برنامه‌نویس','هنرمند یا طراح','فریلنسر']],
-  ['خانه و خانواده',['خانه‌دار','در مرخصی یا جویای کار','بازنشسته']],
-  ['سایر',['سایر']]
-];
+/* فهرست شغل — دقیقاً فهرست مالک، به همان ترتیب (سند ۲۲ §۳.۷).
+   ۱۸ گزینه، بدون گروه‌بندی و بدون متن آزاد. کد/عنوان نهایی از بک‌اند می‌آید (N7). */
+var JOBS=['دانش‌آموز','دانشجو','کارمند','مدیر','کارآفرین','پزشک','روان‌شناس','مهندس','معلم',
+  'وکیل','حسابدار','فروشنده','فریلنسر','خانه‌دار','بازنشسته','پژوهشگر','مشاغل آزاد','سایر'];
 function jobOptions(){
   return '<option value="" disabled'+(APP.authJob?'':' selected')+'>انتخاب کن…</option>'+
-    JOBS.map(function(grp){
-      return '<optgroup label="'+grp[0]+'">'+grp[1].map(function(j){
-        return '<option value="'+j+'"'+(APP.authJob===j?' selected':'')+'>'+j+'</option>';}).join('')+'</optgroup>';
-    }).join('');
+    JOBS.map(function(j){
+      return '<option value="'+j+'"'+(APP.authJob===j?' selected':'')+'>'+j+'</option>';}).join('');
 }
 function authRail(){
   return '<aside class="auth-rail">'+
@@ -396,7 +388,8 @@ function authRail(){
 
 /* ============================ ۴) خانه — سند ۱۱ ============================ */
 function R_home(){
-  var hello=(empty()?(greet()+'. از ساختن اولین برنامه شروع کنیم.'):(greet()+'. خوش برگشتی.'));
+  var hello='<span class="hello-row">'+timeSticker(44)+'<span>'+
+    (empty()?(greet()+'. از ساختن اولین برنامه شروع کنیم.'):(greet()+'. خوش برگشتی.'))+'</span></span>';
   var next=D('۳ از ۵ کار امروز ثبت شده.','اول برنامه‌ات را بسازیم.');
   var nextSub=D('قدم بعدی: پیاده‌روی ۲۰ دقیقه','بدون برنامه، ثبت روزانه معنی ندارد.');
   var pct=D(60,0);

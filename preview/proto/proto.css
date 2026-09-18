@@ -1343,3 +1343,19 @@ html[data-density="compact"] .tiny{line-height:1.85}
 .sum-row:last-child{border-bottom:0}
 .sum-row span{color:var(--ink-2);font-weight:700}
 .sum-row b{font-weight:900}
+
+/* ---------- استیکر وقت (سند ۱۱ §۰.۱) ---------- */
+.hello-row{display:inline-flex;align-items:center;gap:11px}
+.tsticker{display:inline-flex;flex:none;line-height:0;filter:drop-shadow(0 6px 12px -8px rgba(20,56,46,.5))}
+.tsticker svg{display:block}
+@media (max-width:560px){ .hello-row{gap:9px} .pagehead h1{font-size:17px} }
+
+/* ---------- جوجه: مرحلهٔ رشد و یادداشت حریم (سند ۱۴ §۰ پرده‌های ۹–۱۲) ---------- */
+.gstage{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.gstage .chip{display:inline-flex;align-items:center;gap:5px}
+.priv-note{display:flex;gap:9px;align-items:flex-start;background:var(--brand-softer);border-radius:var(--r-sm);
+  padding:10px 12px;margin-top:12px;font-size:11.5px;line-height:2;color:var(--brand-ink);font-weight:700}
+.priv-note svg{width:16px;height:16px;flex:none;margin-top:4px}
+.chsvg.chblink{animation:chblink .4s ease}
+@keyframes chblink{0%,100%{transform:none}50%{transform:scaleY(.985)}}
+@media (prefers-reduced-motion:reduce){ .chsvg.chblink{animation:none} }

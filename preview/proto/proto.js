@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۱۵ — ثبت‌نام گام‌به‌گام با شغل و جنسیت · فرم‌های باریک در نمایش بزرگ · صدای راهنمای تنفس (سینک با فاز) · احوال‌پرسی زمان‌دار';
+var BUILD='نسخهٔ ۱۷ — سند کامل قفل شد · سناریوی جوجه کامل (petGate، سه مرحلهٔ رشد، نام، حریم) · فهرست ۱۸ شغل · استیکر وقت';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -43,6 +43,9 @@ var APP = {
   petStage:'chick', /* egg | crack | chick — نمایش تخم/جوجه برای بازبینی */
   petName:'',
   petGrowthFull:false,
+  petStageIdx:0,      /* ۰ جوجهٔ کوچک · ۱ نوپا · ۲ بالغ — آستانه از بک‌اند */
+  petRenames:0,       /* چند بار اسم عوض شده — پس از دو بار، دکمهٔ تغییر می‌رود */
+  petTouches:[],      /* لمس‌های یک دقیقهٔ اخیر — برای petGate */
   petSleep:false,
   petMood:'ok',
   journalFilter:'all',
@@ -207,6 +210,7 @@ function rvbar(){
     '<button data-tgl="theme" class="'+(APP.theme==='glass'?'on':'')+'">تم '+(APP.theme==='classic'?'کلاسیک':'شیشه')+'</button>'+
     '<button data-goal>هدف آب: '+fa(APP.waterGoal)+'</button>'+
     '<button data-pet>'+(APP.petStage==='egg'?'جوجه: تخم':(APP.petStage==='crack'?'جوجه: ترک':'جوجه: متولد'))+'</button>'+
+    '<button data-petstage>رشد: '+PET_STAGES[APP.petStageIdx||0]+'</button>'+
     '<button data-plan>'+(APP.planStatus==='RUNNING'?'دوره: در اجرا':(APP.planStatus==='DRAFT'?'دوره: پیش‌نویس':(APP.planStatus==='PLANNING'?'دوره: آماده‌سازی':'دوره: بایگانی')))+'</button>'+
     '<button data-roleview>نقش: '+(APP.roleView==='coach'?'مشاور':(APP.roleView==='admin'?'مدیر':'کاربری'))+'</button>'+
     '<button data-hamlink>'+(APP.hamRole==='companion'?'حالت: مسیر همراه':'حالت: مسیر مراجع')+'</button>'+
@@ -556,7 +560,7 @@ document.addEventListener('DOMContentLoaded',function(){
   render();
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-go]'); if(t){go(t.dataset.go);return;}
-    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan],[data-roleview],[data-hamlink],[data-clock]');
+    var b=e.target.closest('[data-prev],[data-next],[data-tgl],[data-tglnote],[data-hidebar],[data-close],[data-snd],[data-goal],[data-wplus],[data-wminus],[data-pet],[data-plan],[data-roleview],[data-hamlink],[data-clock],[data-petstage]');
     if(b){
       var idx=SCREENS.map(function(x){return x.id;}).indexOf(APP.screen);
       if(b.hasAttribute('data-prev')){ if(idx>0) go(SCREENS[idx-1].id); }
@@ -591,6 +595,10 @@ document.addEventListener('DOMContentLoaded',function(){
         APP.hamLink=hq[(hq.indexOf(APP.hamLink||'NONE')+1)%hq.length]; render();
       }
       else if(b.hasAttribute('data-invseen')){ APP.compInviteSeen=!APP.compInviteSeen; render(); }
+      else if(b.hasAttribute('data-petstage')){
+        APP.petStageIdx=((APP.petStageIdx||0)+1)%3; APP.petGrowthFull=(APP.petStageIdx===2); render();
+        toast('مرحلهٔ رشد: '+PET_STAGES[APP.petStageIdx]+' — آستانه‌اش از بک‌اند می‌آید');
+      }
       else if(b.hasAttribute('data-clock')){
         var q=['auto','صبح','ظهر','عصر','شب'];
         APP.clockSlot=q[(q.indexOf(APP.clockSlot||'auto')+1)%q.length]; render();

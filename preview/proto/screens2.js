@@ -21,6 +21,7 @@ var METERS=[
 ];
 
 /* شش حالت جوجه — همه از بک‌اند، هیچ‌کدام از کلیک (سند ۱۴ §۳.۳) */
+var PET_STAGES=['جوجهٔ کوچک','نوپا','بالغ'];
 var PET_STATES=[
   {k:'ok',    t:'آرام',      cond:'پیش‌فرض — روز عادی',              stage:'chick', mood:'ok'},
   {k:'happy', t:'شاد',       cond:'بعد از یک ثبت معتبر',             stage:'chick', mood:'happy'},
@@ -82,6 +83,9 @@ function R_chick(){
           '<div style="height:9px;border-radius:99px;background:var(--ring-track);margin-top:10px;overflow:hidden">'+
             '<i style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,var(--grad1),var(--grad2))"></i></div>'+
           '<p class="tiny" style="margin-top:8px">'+g.msg+'</p>'+
+          '<div class="gstage"><span class="chip '+(APP.petStageIdx?'g':'go')+'">مرحله: '+PET_STAGES[APP.petStageIdx||0]+'</span>'+
+            '<span class="tiny muted">مرحلهٔ بعدی: '+(APP.petStageIdx>=2?'آخرین مرحله':'«'+PET_STAGES[(APP.petStageIdx||0)+1]+'»')+
+            ' — آستانه از <b>بک‌اند</b></span></div>'+
           (APP.petGrowthFull?'<p class="tiny" style="margin-top:4px">به مرحلهٔ بعد نزدیک است — همین‌طور ادامه بده 🤍</p>':'')+
         '</div>'+
 
@@ -105,6 +109,12 @@ function R_chick(){
             '</div>'+
             '<p class="tiny" style="margin-top:8px">این تاریخچه <b>هرگز پاک نمی‌شود</b>، حتی اگر سنجه‌ها خالی شوند — '+
             'تا همیشه ببینی چقدر مسیر آمده‌ای (<code>PD-008</code>).</p>'+
+            ((APP.petRenames>=2)?'':(st==='chick'?
+              '<button class="btn ghost sm" style="margin-top:8px" data-petrename>تغییر اسم — '+
+              (APP.petRenames===0?'یک بار دیگر می‌شود':'آخرین بار')+'</button>':''))+
+            '<div class="priv-note">'+ic('i-lock')+
+              '<span>این صفحه <b>با هم‌مسیر به اشتراک گذاشته نمی‌شود</b> — جوجه، اتاق شخصی توست. '+
+              'وضعیتش فقط با تصمیم صریح تو دیده می‌شود.</span></div>'+
           '</div>')+
 
         '<div class="card tip"><h3>'+ic('i-info')+'یک چیز را بدان</h3>'+

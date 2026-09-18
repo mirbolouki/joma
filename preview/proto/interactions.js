@@ -67,6 +67,7 @@ window.INNER_CLICK=function(e){
   if(e.target.closest('[data-petchick]')){
     /* لمس = واکنش، بدون پاداش: پرش کوتاه + جیک. حالت شاد فقط لحظه‌ای است. */
     var st=document.querySelector('.pet-stage');
+    if(!st) return;
     if(APP.petSleep){ chickSnd('snore'); return; }
     var art=st.querySelector('.chsvg');
     st.classList.remove('pop'); void st.offsetWidth; st.classList.add('pop');
@@ -90,13 +91,57 @@ window.INNER_CLICK=function(e){
   }
 
   if(e.target.closest('[data-petpet]')){
+    /* petGate: نوازش پاداش نمی‌دهد و پشت‌سرهم، واکنش را کم می‌کند (سند ۱۴ §۰ پردهٔ ۷)
+       ۴ لمس در دقیقه → فقط خرخر، بی‌حباب · ۸ لمس → فقط یک پلک */
+    var nowT=(typeof Date==='function')?Date.now():0;
+    if(!Array.isArray(APP.petTouches)) APP.petTouches=[];
+    APP.petTouches=APP.petTouches.filter(function(x){ return (nowT-x)<60000; });
+    APP.petTouches.push(nowT);
+    var nTouch=APP.petTouches.length;
+
     var a2=document.querySelector('.pet-stage .chsvg');
     var st2=document.querySelector('.pet-stage');
+    if(!st2) return;                     /* صحنهٔ جوجه در این صفحه نیست */
     st2.classList.remove('pop'); void st2.offsetWidth; st2.classList.add('pop');
+
+    if(nTouch>=8){
+      /* فقط یک پلک — بدون صدا، بدون حباب */
+      if(a2){ a2.classList.remove('chblink'); void a2.offsetWidth; a2.classList.add('chblink'); }
+      toast('یک پلک زد — بس است دیگر 😊  (۸ لمس در یک دقیقه)');
+      return;
+    }
     if(a2){ a2.classList.remove('chpet'); void a2.offsetWidth; a2.classList.add('chpet');
       setTimeout(function(){ a2.classList.remove('chpet'); },900); }
-    if(APP.petSleep) chickSnd('snore'); else chickSnd('purr');
-    toast('خرخر کرد 🤍 — نوازش، پاداش نمی‌دهد؛ فقط دلش را باز می‌کند');
+    if(APP.petSleep){ chickSnd('snore'); toast('خواب است؛ فقط خروپف نرم 😴'); return; }
+    chickSnd('purr');
+    if(nTouch>=4){
+      toast('خرخر کرد — حباب نمی‌سازد (۴ لمس در یک دقیقه)');
+      return;
+    }
+    var lines=['چی چی!','خوشحالم که هستی.','امروز هم منتظرت بودم.','یک قدم هم برایم عالمی دارد.','کنارتم 🤍'];
+    toast(lines[Math.floor(Math.random()*lines.length)]+' — نوازش، پاداش نمی‌دهد');
+    return;
+  }
+
+  /* --- تغییر اسم: فقط یک بار، با تأیید (سند ۱۴ §۰ پردهٔ ۹) --- */
+  if(e.target.closest('[data-petrename]')){
+    if((APP.petRenames||0)>=2){ toast('اسم دو بار عوض شد — دیگر نمی‌شود'); return; }
+    if((APP.petRenames||0)===1){
+      modal('<h3>مطمئنی؟</h3><p class="tiny">این <b>آخرین بار</b> است که می‌شود اسم را عوض کرد. '+
+        'بعد از این، اسم همین می‌ماند.</p>'+
+        '<div class="acts"><button class="btn ghost sm" data-close>نه، همین خوب است</button>'+
+        '<span class="sp"></span><button class="btn primary sm" data-petrename-yes>بله، مطمئنم</button></div>');
+      return;
+    }
+    APP.petRenames=(APP.petRenames||0)+1;
+    APP.petName='';
+    render(); toast('اسم تازه را بنویس — این تنها فرصت تغییر است');
+    return;
+  }
+  if(e.target.closest('[data-petrename-yes]')){
+    closeModal();
+    APP.petRenames=2; APP.petName=''; render();
+    toast('آخرین تغییر اسم — بنویس');
     return;
   }
   if(e.target.closest('[data-petsleep]')){
@@ -113,7 +158,8 @@ window.INNER_CLICK=function(e){
     var v=(document.getElementById('petname')||{}).value||'';
     v=v.trim();
     if(v.length<2||v.length>16){ toast('اسم باید بین ۲ تا ۱۶ حرف باشد'); return; }
-    APP.petName=v; render(); toast('اسمش شد «'+v+'» — خوش آمدی 🐣'); return;
+    APP.petName=v; APP.petRenames=Math.max(APP.petRenames||0,1); render();
+    toast('اسمش شد «'+v+'» — خوش آمدی 🐣'+(APP.petRenames>=2?' (دیگر عوض نمی‌شود)':'')); return;
   }
   if(e.target.closest('[data-petlater]')){ toast('باشه، بعداً — اسم پیش‌فرض «جوجهٔ من» می‌ماند'); return; }
 
