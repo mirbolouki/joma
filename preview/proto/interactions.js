@@ -9,6 +9,9 @@ function moodNext(){
    ========================================================================== */
 window.ON_SCREEN=function(id){
   if(id!=='mood'){ APP.moodStep=0; }
+  /* چرخه‌های چندگامی از صفحهٔ خودشان بیرون نمی‌روند */
+  if(id!=='forgot'){ APP.forgotStep=0; }
+  if(id!=='signup'){ APP.signupStep=0; }
   if(id==='today'){ /* آب از state مشترک می‌آید */ }
 };
 
@@ -23,6 +26,16 @@ window.INNER_CLICK=function(e){
     return;
   }
 
+  /* --- پرکردن نمونه (فقط برای بازبینی) --- */
+  if((t=e.target.closest('[data-demostep]'))){
+    var w=t.dataset.demostep;
+    function setv(id,v){ var el=document.getElementById(id); if(el) el.value=v; }
+    if(w==='login'){ setv('li','sara'); setv('lp','joma1234'); toast('نمونه پر شد — «ورود» را بزن'); }
+    if(w==='signup'){ setv('su','sara'); setv('sp','joma1234'); setv('sp2','joma1234'); setv('sm','09123456789');
+      setv('sfg','090123'); toast('نمونه پر شد — می‌توانی «ادامه» بزنی'); }
+    if(w==='forgot'){ setv('fgi','sara'); setv('fgc','090123'); toast('نمونه پر شد'); }
+    return;
+  }
   /* --- ورود: خطای مشترک --- */
   if(e.target.closest('[data-login]')) return doLogin();
   if(e.target.closest('[data-signup]')) return doSignup();
@@ -142,11 +155,6 @@ window.INNER_CLICK=function(e){
     closeModal();
     APP.petRenames=2; APP.petName=''; render();
     toast('آخرین تغییر اسم — بنویس');
-    return;
-  }
-  if(e.target.closest('[data-petsleep]')){
-    APP.petSleep=!APP.petSleep; render();
-    if(APP.petSleep) chickSnd('snore');
     return;
   }
   if(e.target.closest('[data-petsnd]')){
@@ -291,12 +299,22 @@ window.INNER_CLICK=function(e){
   if(e.target.closest('[data-mood-note-skip]')){ APP.moodStep=MOOD_STEPS.length+1; render(); return; }
   if(e.target.closest('[data-mood-note-edit]')){ APP.moodStep=MOOD_STEPS.length; render();
     var nt=document.querySelector('[data-moodnote]'); if(nt) nt.focus(); return; }
-  /* --- جوجه: بخوابانش / بیدارش کن --- */
+  /* --- جوجه: بخوابانش / بیدارش کن (سند ۱۴ §۰ پردهٔ ۶) --- */
   if(e.target.closest('[data-petsleep]')){
     APP.petSleep=!APP.petSleep;
-    APP.petMood=APP.petSleep?'sleep':(APP._petMoodBefore||'ok');
-    if(!APP.petSleep) APP.petMood='ok'; else APP._petMoodBefore=APP.petMood;
-    render(); toast(APP.petSleep?'جوجه خوابید — شب بخیر 🌙':'جوجه بیدار شد — صبح بخیر ☀️'); return; }
+    if(APP.petSleep){
+      APP._petMoodBefore=(APP.petMood&&APP.petMood!=='sleep')?APP.petMood:'ok';
+      APP.petMood='sleep'; chickSnd('snore');
+      toast('جوجه خوابید — شب بخیر 🌙 (بی‌پاداش، فقط واکنش)');
+    }else{
+      APP.petMood=(APP._petMoodBefore&&APP._petMoodBefore!=='sleep')?APP._petMoodBefore:'ok';
+      APP._petMoodBefore=null; if(APP.sound) chickSnd('chirp');
+      toast('جوجه بیدار شد — صبح بخیر ☀️');
+    }
+    render(); return; }
+  /* هر دو کنترل خواب با هم هم‌گام می‌مانند */
+  if(e.target.closest('[data-petwake]')){ APP.petSleep=false; APP.petMood='ok'; render();
+    toast('بیدار شد ☀️'); return; }
   /* --- نمایش موبایل (ابزار بازبینی) --- */
   if(e.target.closest('[data-mobile]')){ APP.mobile=!APP.mobile; render();
     toast(APP.mobile?'نمای موبایل — همان صفحه، قالب باریک':'نمای دسکتاپ'); return; }
@@ -335,17 +353,18 @@ window.INNER_CLICK=function(e){
   if(e.target.closest('[data-brmood]')){ brClose(); APP.moodStep=0; location.hash='#mood'; render(); return; }
   if((t=e.target.closest('[data-brsnd]'))){
     BR.sound=!BR.sound;
-    t.textContent=(BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش');
+    if(window.brPrimeEls) brPrimeEls();
     if(BR.sound){
       if(window.brPrime) brPrime();
-      var got=brSample();       /* همان لحظه یک نمونه می‌شنوی */
+      var got=brSample();       /* همان لحظه نمونهٔ «دم» را می‌شنوی */
       if(got==='tone' && brVoiceState()==='loading')
-        toast('صدای راهنما روشن شد — فایل صوتی در حال آماده‌شدن است');
+        toast('صدادار شد — فایل در حال آماده‌شدن است؛ همین حالا هم متن راهنما زیر دایره هست');
       else if(got==='tone')
-        toast('فایل صوتی در دسترس نیست — تُن آرام پخش می‌شود');
+        toast('این مرورگر صدا را پخش نکرد — متن هر مرحله زیر دایره نوشته می‌شود');
       else
-        toast('صدای راهنما روشن شد — همین جمله در هر مرحله پخش می‌شود');
-    } else { if(window.brVoiceStop) brVoiceStop(); toast('بی‌صدا شد'); }
+        toast('صدای راهنما روشن شد — «از بینی، آرام دم بگیر» سرِ هر مرحله');
+    } else { if(window.brVoiceStop) brVoiceStop(); toast('بی‌صدا شد — متن راهنما می‌ماند'); }
+    if(window.brPaint) brPaint();
     return;
   }
 

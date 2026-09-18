@@ -13,15 +13,33 @@ var BR_PH=[
 /* صدای راهنمای انسانی — سه جملهٔ کوتاه، هرکدام سرِ فاز خودش.
    فایل‌های صوتی همراه نمونه می‌آیند؛ اگر نبودند، تنِ نرم جایشان را می‌گیرد. */
 var BR_VOICE={in:'audio/br-in.mp3',hold:'audio/br-hold.mp3',out:'audio/br-out.mp3'};
+/* متن همان سه جمله — برای وقتی صدا خاموش است یا مرورگر پخش نمی‌کند */
+var BR_LINES={in:'از بینی، آرام دم بگیر',
+              hold:'نفس را نگه دار، شانه‌ها شل و رها',
+              out:'حالا آرام و بلند، از دهان بازدم'};
+/* یک خط وضعیت که همیشه دیده می‌شود: صدا روشن است؟ فایل آماده است؟ */
+function brVoiceLine(){
+  var ph=BR_PH[BR.phase], line=BR_LINES[ph[0]]||ph[3];
+  if(!BR.sound) return ic('i-vol',14)+'<span>صدای راهنما خاموش است — با دکمهٔ زیر روشنش کن. '+
+    'جملهٔ این مرحله: «'+line+'»</span>';
+  var st=(typeof brVoiceState==='function')?brVoiceState():'idle';
+  var w={ready:'آماده — سرِ هر مرحله همین جمله را می‌شنوی',
+         loading:'در حال آماده‌شدن فایل صوتی…',
+         partial:'بخشی از فایل‌ها آماده شد',
+         failed:'مرورگر صدا را پخش نکرد — متن راهنما را بخوان',
+         idle:'آماده‌سازی…'}[st]||'آماده';
+  return ic('i-vol',14)+'<b>صدای راهنما روشن</b><span class="bv-line">«'+line+'»</span><span class="tiny">'+w+'</span>';
+}
 var _brEl={};
 function brPh(){ return BR_PH[BR.phase]; }
 function brTotal(){ return BR_PH[BR.phase][2]; }
 
 /* ---------- کارت پیشنهاد (در «کارهای امروز» و پایان «حال من») ---------- */
 function breathCard(where){
-  var why=(where==='mood')
-    ? 'بادکنک استرست پف کرده. ۳ دور تنفس ۴-۷-۸ کمتر از ۳ دقیقه است و همین حالا حالت را نرم می‌کند.'
-    : 'امروز پرتنش بوده. ۳ دور تنفس ۴-۷-۸ کمتر از ۳ دقیقه است — نه امتیاز دارد، نه چیزی را قفل می‌کند.';
+  /* 🔴 تصمیم مالک (۱۴۰۵): متنِ راهنمایِ تمرین از کارت پیشنهاد نفس برداشته شد.
+     کارت کوتاه است: فقط پیشنهاد، زمان و دو دکمه — راهنما داخل خود تمرین است. */
+  var why=(where==='mood')?'بادکنک استرست پف کرده — سه دور، کمتر از یک دقیقه.'
+                          :'امروز پرتنش بوده — سه دور، کمتر از یک دقیقه.';
   return '<div class="card breath-card">'+
     '<div class="bc-art">'+owl('owl-lotus',54,'floaty')+'</div>'+
     '<div class="bc-body"><div class="bc-tag">'+ic('i-lotus')+'پیشنهاد امروز</div>'+
@@ -58,11 +76,12 @@ function R_breath(){
       '</div>'+
     '</div>'+
     '<p class="tiny br-hint" id="brhint">'+ph[3]+'</p>'+
+    '<div class="br-voice" id="brvoice">'+brVoiceLine()+'</div>'+
     '<div class="br-dots" id="brdots">'+dots+'</div>'+
     '<div class="br-acts">'+
       '<button class="btn primary" id="brgo" data-brstart>'+ic('i-play')+(BR.done?'دوباره':(BR.running?'مکث':'شروع'))+'</button>'+
       '<button class="btn ghost" data-brstop>پایان</button>'+
-      '<button class="btn ghost" data-brsnd>'+(BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش')+'</button>'+
+      '<button class="btn '+(BR.sound?'soft':'ghost')+'" id="brsndbtn" data-brsnd>'+(BR.sound?ic('i-vol')+'صدای راهنما: روشن':ic('i-vol')+'صدای راهنما: خاموش')+'</button>'+
     '</div>'+
     '<div class="br-done'+(BR.done?' on':'')+'" id="brdone">'+
       owl('owl-cheer',54,'floaty')+
@@ -91,7 +110,9 @@ function brPaint(){
   var r=document.getElementById('brround'); if(r) r.textContent='دور '+fa(BR.round)+' از '+fa(BR.rounds);
   var go=document.getElementById('brgo'); if(go) go.innerHTML=ic('i-play')+(BR.done?'دوباره':(BR.running?'مکث':'شروع'));
   var snd=document.querySelector('[data-brsnd]');
-  if(snd) snd.innerHTML=BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش';
+  if(snd) snd.innerHTML=BR.sound?ic('i-vol')+'صدای راهنما: روشن':ic('i-vol')+'صدای راهنما: خاموش';
+  var snd2=document.getElementById('brsndbtn'); if(snd2) snd2.className='btn '+(BR.sound?'soft':'ghost');
+  var vv=document.getElementById('brvoice'); if(vv){ vv.innerHTML=brVoiceLine(); vv.className='br-voice'+(BR.sound?' on':''); }
   var dn=document.getElementById('brdone'); if(dn) dn.classList.toggle('on',!!BR.done);
   var dots=document.getElementById('brdots');
   if(dots){
@@ -152,7 +173,17 @@ function brFinish(){
 var _brLoad='idle';          /* idle | loading | ready | partial | failed */
 var _brBuf={};               /* بافرهای رمزگشایی‌شده — پخش بدون تأخیر */
 function brVoiceState(){ return _brLoad; }
+/* مسیر دوم (عنصر صوتی) را از همان لحظهٔ باز شدن آماده می‌کنیم تا اولین جمله
+   بی‌تأخیر پخش شود — این مسیر در مرورگرهایی که Web Audio را می‌بندند کار می‌کند. */
+function brPrimeEls(){
+  if(typeof Audio!=='function') return;
+  Object.keys(BR_VOICE).forEach(function(k){
+    if(_brEl[k]) return;
+    try{ var el=new Audio(BR_VOICE[k]); el.preload='auto'; el.volume=.9; _brEl[k]=el; }catch(e){}
+  });
+}
 function brPrime(){
+  brPrimeEls();
   if(_brLoad==='loading'||_brLoad==='ready') return;
   _brLoad='loading';
   if(typeof fetch!=='function'||typeof ac!=='function'){ _brLoad='failed'; return; }
@@ -227,6 +258,7 @@ function brVoice(){
 var _brVoiceFailed=false;
 function brSound(){
   if(!BR.sound||BR.open!==true||BR.running!==true) return;
+  brVoiceStop();            /* جملهٔ مرحلهٔ قبل تمام می‌شود؛ صداها روی هم نمی‌افتند */
   if(typeof brVoice==='function' && brVoice()) return;
   brTone();
 }

@@ -178,7 +178,21 @@ function authHd(title,sub){
 }
 function authShell(active,title,sub,body){
   return '<div class="auth2">'+authRail()+'<div class="auth-main">'+authTabs(active)+
-    '<section class="auth-card wide fadeup auth-pane">'+authHd(title,sub)+body+'</section></div></div>';
+    '<section class="auth-card wide fadeup auth-pane">'+authHd(title,sub)+body+
+    authFoot(active)+'</section></div></div>';
+}
+/* فوتر هر سه صفحه: راهنمای نمونه + پاسخ روشن به «بازیابی رمز در بک‌اند هست؟» */
+function authFoot(active){
+  return '<div class="auth-promise">'+ic('i-info')+
+    '<span><b>در این نمونه:</b> '+({login:'برای دیدن خانهٔ ساخته‌شده، همین‌طور «ورود» را بزن.',
+        signup:'پنج گام، همه‌چیز قابل ویرایش — جز گام آخر که حساب را می‌سازد.',
+        forgot:'کد بازیابی ساخته شد؛ امروز فقط پشتیبانی آن را دستی می‌دهد (۲۲ §۴).'}[active]||'نمونه فقط برای بازبینی است.')+
+    '</span></div>'+
+    (active==='signup'?'<div class="demo-hint">'+owl('owl-think',26)+
+      '<span>برای تست عجله داری؟ <button class="btn ghost sm" data-demostep="signup">پرکردن نمونه</button></span></div>':'')+
+    (active==='forgot'?'<div class="demo-hint">'+owl('owl-think',26)+
+      '<span>کد نمونه: <b dir="ltr">۰۹۰۱۲۳</b> — هر کد ۶ رقمی در نمونه پذیرفته می‌شود. '+
+      '<button class="btn ghost sm" data-demostep="forgot">پرکردن نمونه</button></span></div>':'');
 }
 /* کارت پشتیبانی — همان مسیر کد دستی ثبت‌نام (۲۲ §۳.۱) */
 function supportCard(title,txt){
@@ -205,6 +219,9 @@ function R_login(){
     '<button class="btn primary wide big" data-login>ورود</button>'+
     '<div class="alt">حساب نداری؟ <a href="#signup">ثبت‌نام کن</a> · '+
       '<a href="#forgot">رمزت را فراموش کردی؟</a></div>'+
+    '<div class="demo-hint">'+owl('owl-think',26)+
+      '<span>نام کاربری و رمز نمونه: <b dir="ltr">sara / joma1234</b> '+
+      '<button class="btn ghost sm" data-demostep="login">پرکردن نمونه</button></span></div>'+
     note('خطای ورود <b>مشترک</b> است و حساب را لو نمی‌دهد. مسیر بازیابی رمز ساخته شد: کد یک‌بارمصرف که '+
       '<b>سرور صادر می‌کند</b> و <b>پشتیبانی تحویل می‌دهد</b> — چون ایمیل و پیامکِ محصولی وصل نیستند (۲۲ §۴).'));
 }
@@ -420,13 +437,7 @@ function R_home(){
           '" stroke-dashoffset="'+off.toFixed(0)+'"></circle></svg><b>'+fa(pct)+'٪</b></div>'+
       '</div>'+
 
-      '<div class="card moodq"><div class="kicker">حال امروز</div>'+
-        '<h3 style="font-size:14px;margin-top:4px">'+
-          D('امروز چه حسی داری؟','حال امروز را ثبت نکرده‌ای')+'</h3>'+
-        '<div class="tiny">'+(empty()?'حتی یک انتخاب، تصویر هفته را کامل می‌کند.':'در ۵ ثانیه ثبت می‌شود.')+'</div>'+
-        '<div class="faces">'+['😖','🙁','😐','🙂','😄'].map(function(f,i){
-          return '<button class="face" data-face="'+i+'" data-go="mood">'+f+'</button>';}).join('')+'</div>'+
-      '</div>'+
+      moodQuickCard()+
     '</div>'+
 
     '<div class="stat4">'+stats.map(function(s){
@@ -568,10 +579,7 @@ function R_today(){
       '<div class="card tip"><h3>'+ic('i-info')+'نکتهٔ جوما</h3>'+
         '<p class="tiny" style="margin-top:6px">'+(empty()?'وقتی چند روز ثبت شود، اینجا یک نکتهٔ کوچک می‌آید.'
         :'روزهایی که آب کامل بوده، تمرکزت بالاتر بوده.')+'</p></div>'+
-      '<div class="card"><h3>'+ic('i-heart')+'حال امروز</h3>'+
-        (empty()?'<div class="tiny" style="margin-top:6px">ثبت نشده.</div>':'<div class="tiny" style="margin-top:6px">ثبت شده ✓</div>')+
-        '<button class="btn soft sm wide" style="margin-top:10px" data-go="mood">ثبت حال</button>'+
-        '<button class="btn ghost sm wide" style="margin-top:8px" data-breathopen="today">'+ic('i-lotus')+'تمرین تنفس ۴-۷-۸</button></div>'+
+      moodSideCard()+
     '</div></div>'+
 
     /* جملهٔ امروز — پایانِ خوشامدِ مرجع: یک جملهٔ کوتاه برای خودت */
@@ -642,7 +650,8 @@ function moodArt(k,l){
 }
 
 function R_mood(){
-  /* 🔴 حالت مشاور: صفحهٔ حال باز نمی‌شود (سند ۲۴ §۳.۳) */
+  /* 🔴 قاعدهٔ مالک (۱۴۰۵): «مشاور در نقش مشاور → صفحهٔ حال برایش باز نشود؛
+     ولی در نقش کاربر معمولی، دقیقاً مثل بقیه با او رفتار شود.» (سند ۲۴ §۳.۳) */
   if(APP.roleView==='coach'){
     return head('حال من','این صفحه در حالت مشاور باز نمی‌شود',
         'مشاور با حساب خودش حالی ثبت نمی‌کند؛ کارش پروندهٔ مراجع‌هاست.',
@@ -658,7 +667,7 @@ function R_mood(){
         'صفحه‌های شخصی از ناوبری کنار می‌روند تا دادهٔ شخصی و پروندهٔ مراجع قاطی نشود.');
   }
   var step=APP.moodStep;
-  var NOTE_STEP=MOOD_STEPS.length;
+  var NOTE_STEP=MOOD_STEPS.length;          /* ۵ پرسش → قدم ۶: جملهٔ شخصی → ۷: خلاصه */
   var finished=(step>NOTE_STEP);
   var s=MOOD_STEPS[step]||MOOD_STEPS[MOOD_STEPS.length-1];
   var ans=APP.moodAnswers[s.k];
@@ -668,13 +677,15 @@ function R_mood(){
     var cls=i<step?'done':(i===step?'on':'');
     return '<span class="wdot '+cls+'"><span class="d">'+(i<step?'✓':fa(i+1))+'</span><span class="ln"></span></span>';
   }).join('')+'<span class="wdot '+(step>NOTE_STEP?'done':(step===NOTE_STEP?'on':''))+
-    '"><span class="d">'+(step>NOTE_STEP?'✓':'✎')+'</span></span></div>';
+    '" title="جملهٔ شخصی (اختیاری)"><span class="d">'+(step>NOTE_STEP?'✓':'✎')+'</span></span></div>';
 
+  /* ---------- خلاصهٔ پایانی ---------- */
   if(finished){
-    return head('حال من','مرور امروز',D('پنج قدم را پاسخ دادی.','هنوز چیزی ثبت نشده.'))+
+    return head('حال من','مرور امروز',D('پنج قدم را پاسخ دادی.','هنوز چیزی ثبت نشده.'),
+        '<span class="headacts"><span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شد</span></span>')+
       '<div class="scene" style="background:linear-gradient(150deg,var(--brand-soft),var(--gold-soft))">'+
         '<div class="art">'+owl('owl-cheer',96,'floaty')+'</div>'+
-        '<h2>ثبت شد ✓</h2><p class="sub">ممنون که به خودت وقت دادی. این پنج عدد، تصویر امروزت را کامل کردند.</p>'+
+        '<h2>ثبت شد ✓</h2><p class="sub">ممنون که به خودت وقت دادی. این پنج عدد، تصویر امروزت را کامل کردند — و آن جمله فقط مال خودت است.</p>'+
       '</div>'+
       '<div class="card"><h3>خلاصهٔ امروز</h3>'+
         MOOD_STEPS.map(function(x){
@@ -682,19 +693,29 @@ function R_mood(){
           return '<div class="st" style="display:flex;align-items:center;gap:10px;padding:9px 0;'+
             'border-bottom:1px dashed var(--card-brd)"><b style="font-size:12px;flex:1">'+x.q+'</b>'+
             '<span class="chip g">'+(l===undefined?'—':x.opts[l])+'</span></div>';}).join('')+
-        '<div class="note-show">'+ic('i-lock')+'<span>'+(APP.moodNote? esc(APP.moodNote)
-          : 'بدون جمله — هر وقت خواستی می‌توانی بنویسی.')+'</span></div>'+
-        '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">'+
-        '<button class="btn soft sm" data-mood-note-edit>نوشتن / ویرایش جمله</button>'+
+      '</div>'+
+      /* 🔴 جملهٔ شخصی کاربر — همان چیزی که «نمی‌گرفتی» به آن اشاره داشت */
+      '<div class="card"><h3>'+ic('i-lock')+'جملهٔ امروت</h3>'+
+        (APP.moodNote
+          ? '<div class="note-show">'+ic('i-lock')+'<span>'+esc(APP.moodNote)+'</span></div>'
+          : '<p class="tiny" style="margin-top:8px">امروز چیزی ننوشتی. هر وقت خواستی می‌توانی یک جمله اضافه کنی — اجباری نیست.</p>')+
+        '<div class="note-foot"><span class="chip go">'+ic('i-lock')+'فقط خودت</span>'+
+          '<span class="tiny muted">هم‌مسیر فقط <b>عددها و نمودارها</b> را می‌بیند؛ متن یادداشت مجوز جدا دارد '+
+          '(<code>VIEW_NOTES</code>) و <b>پیش‌فرض خاموش</b> است.</span></div>'+
+        '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">'+
+        '<button class="btn '+(APP.moodNote?'soft':'primary')+' sm" data-mood-note-edit>'+
+          (APP.moodNote?'ویرایش جمله':'نوشتن یک جمله')+'</button>'+
         '<button class="btn soft sm" data-mood-reset>اصلاح پاسخ‌ها</button>'+
         '<button class="btn primary sm" data-go="home">بازگشت به خانه</button>'+
         '<button class="btn ghost sm" data-go="reports">دیدن گزارش</button></div>'+
       '</div>'+
       (APP.stress>=3? breathCard('mood'):'')+
-      note('پس از ثبت، پاسخ‌ها <b>قابل اصلاح‌اند</b> ولی نسخهٔ قبلی در تاریخچه می‌ماند — «اصلاح با دلیل»، نه پاک‌کردن بی‌رد.')+
+      note('پس از ثبت، پاسخ‌ها <b>قابل اصلاح‌اند</b> ولی نسخهٔ قبلی در تاریخچه می‌ماند — «اصلاح با دلیل»، نه پاک‌کردن بی‌رد. '+
+        'این جمله <b>هیچ سنجه‌ای را عوض نمی‌کند</b> — نه جوجه، نه سطح، نه گزارش — و در «دفترچه» کنار همان روز می‌نشیند.')+
       wnav('cheer');
   }
 
+  /* ---------- قدم ۶: جملهٔ شخصی (اختیاری) ---------- */
   if(step===NOTE_STEP){
     return head('حال من','امروز را در یک جمله بنویس',D('اختیاری است — اگر دوست داشتی بنویس، اگر نه رد کن.',''),
         '<span class="headacts"><span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شد</span></span>')+ wiz+
@@ -712,7 +733,8 @@ function R_mood(){
         'در «دفترچه» کنار همان روز می‌نشیند و بعداً هم قابل ویرایش است.');
   }
 
-  return head('حال من','حال من',D('پنج قدم کوتاه. هر پنج تا هم اختیاری‌اند — می‌توانی همین حالا بروی.',''),
+  /* ---------- قدم‌های ۱ تا ۵: پرسش‌های حال ---------- */
+  return head('حال من','حال من',D('پنج قدم کوتاه و در پایان یک جملهٔ اختیاری برای خودت.',''),
       '<span class="headacts"><button class="btn ghost sm" data-breathopen="mood">'+ic('i-lotus')+'تمرین تنفس</button>'+
       '<span class="chip g">'+fa(done)+' از '+fa(5)+' ثبت شده</span></span>')+
     wiz+
@@ -727,7 +749,8 @@ function R_mood(){
     wnav('think', step, s, ans)+
     note('«خواب دیشبت» عمداً <b>کیفیت</b> را می‌پرسد نه ساعت — و همین جمله در زیرنویس آمده تا کاربر اشتباه نکند. '+
       '<br>هر گزینه <b>نمایهٔ بصری خودش</b> را دارد (باتری · حلقه · ماه و ستاره · بادکنک) و با انتخاب، '+
-      'خودکار به قدم بعد می‌رود — کاربر لازم نیست «بعدی» بزند. «رد کن» برای وقتی است که نخواهد جواب بدهد.');
+      'خودکار به قدم بعد می‌رود — کاربر لازم نیست «بعدی» بزند. «رد کن» برای وقتی است که نخواهد جواب بدهد. '+
+      '<br>پس از پنج پرسش، یک <b>جملهٔ اختیاری</b> برای خودت می‌نویسی.');
 }
 function wnav(mood){
   var step=Math.min(APP.moodStep,MOOD_STEPS.length-1);

@@ -1419,3 +1419,138 @@ html[data-density="compact"] .tiny{line-height:1.85}
   .cc .pip{bottom:4px}
 }
 @media (prefers-reduced-motion:reduce){ .cc{transition:none} .cc:hover{transform:none} }
+
+/* ==========================================================================
+   ۱۹) اجزای دور ۱۹ — یادداشت شخصی، صدای راهنمای تنفس، حالت مشاور، موبایل
+   ========================================================================== */
+
+/* ---------- یادداشت شخصی در ثبت حال (سند ۱۳ §۵) ---------- */
+.note-box{background:var(--card);border:1.5px solid var(--card-brd);border-radius:var(--r-lg);
+  padding:12px 13px;margin-top:16px;text-align:start;box-shadow:var(--shadow-sm)}
+.note-box textarea{width:100%;border:0;outline:0;background:transparent;font-family:inherit;font-size:13px;
+  line-height:2.1;color:var(--ink);resize:vertical;min-height:76px}
+.note-box textarea::placeholder{color:var(--ink-3)}
+.note-box:focus-within{border-color:var(--brand)}
+.note-foot{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  border-top:1px dashed var(--card-brd);padding-top:10px;margin-top:4px}
+.note-show{display:flex;gap:9px;align-items:flex-start;background:var(--lav-soft);border-radius:var(--r-sm);
+  padding:11px 12px;margin-top:10px;font-size:12.5px;line-height:2;color:var(--lav-ink);font-weight:700}
+.note-show svg{width:16px;height:16px;flex:none;margin-top:4px}
+.demo-hint{display:flex;gap:9px;align-items:center;background:var(--gold-soft);border-radius:var(--r-sm);
+  padding:9px 12px;margin-top:12px;font-size:11.5px;color:var(--gold-ink);font-weight:700;flex-wrap:wrap}
+.demo-hint .btn{flex:none}
+.auth-promise{display:flex;gap:9px;align-items:flex-start;border-top:1px dashed var(--card-brd);
+  margin-top:16px;padding-top:12px;font-size:11.5px;line-height:1.95;color:var(--ink-2)}
+.auth-promise svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--brand)}
+
+/* ---------- گام‌های بازیابی رمز ---------- */
+.fg-hd{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:900;color:var(--brand-ink);margin-bottom:14px}
+.fg-hd svg{width:16px;height:16px}
+.fg-dots{display:flex;gap:5px;margin-inline-start:auto}
+.fg-dots i{width:17px;height:5px;border-radius:99px;background:var(--ring-track)}
+.fg-dots i.done{background:var(--brand)}
+.fg-dots i.on{background:var(--brand);width:28px}
+.fg-done{text-align:center;padding:10px 0 2px}
+.sup-card{background:linear-gradient(150deg,var(--sky-soft),var(--brand-softer));border:1px solid var(--card-brd);
+  border-radius:var(--r-lg);padding:14px}
+.sup-top{display:flex;gap:10px;align-items:center}
+.sup-ic{width:38px;height:38px;border-radius:12px;background:var(--card);display:grid;place-items:center;flex:none}
+.sup-row{display:flex;gap:8px;align-items:center;margin:12px 0 8px;flex-wrap:wrap}
+.sup-num{font-weight:900;font-size:15px;letter-spacing:.5px;background:var(--card);border-radius:12px;
+  padding:9px 13px;border:1.5px dashed var(--brand)}
+
+/* ---------- صدای راهنمای تنفس ---------- */
+.br-voice{display:flex;align-items:center;gap:7px;justify-content:center;flex-wrap:wrap;
+  margin-top:10px;font-size:11.5px;color:var(--ink-2);background:var(--brand-softer);
+  border-radius:var(--r-sm);padding:9px 12px;line-height:1.9}
+.br-voice svg{width:15px;height:15px;flex:none;color:var(--brand)}
+.br-voice.on{background:linear-gradient(150deg,var(--brand-soft),var(--sky-soft));color:var(--brand-ink);font-weight:800}
+.br-voice b{font-weight:900}
+.br-voice .bv-line{font-weight:800;color:var(--ink)}
+.br-voice.on .bv-line{color:var(--brand-ink)}
+
+/* ---------- حالت مشاور ---------- */
+.coach-card{background:linear-gradient(150deg,var(--lav-soft),var(--sky-soft))}
+.cc-top{display:flex;align-items:center;gap:9px;font-size:13px}
+.cc-top svg{width:20px;height:20px;color:var(--lav-ink)}
+.coach-card b{font-weight:900}
+.cc-acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.nav a.off,.tabbar a.off{opacity:.45}
+
+/* ---------- جوجهٔ خوابیده ---------- */
+.pet-stage.sleep::after{content:'z  z  z';position:absolute;top:18px;inset-inline-end:26px;
+  font-size:15px;font-weight:900;color:var(--indigo);opacity:.75;letter-spacing:2px;
+  animation:zzz 2.6s ease-in-out infinite}
+@keyframes zzz{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:.85;transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.pet-stage.sleep::after{animation:none}}
+
+/* ---------- خط امروز در «کارهای امروز» ---------- */
+.todayline .btn{flex:none}
+
+/* ==========================================================================
+   ۲۰) نمای موبایل — سه حالته:
+   ① انتخاب «موبایل» در نوار بازبینی → قاب تلفن
+   ② گوشی واقعی (≤۶۴۰px) → همان قالب، بی‌قاب
+   ③ دسکتاپ → چیدمان تمام‌عرض
+   ========================================================================== */
+[data-view="mobile"] body{background:#dfe9e3}
+[data-view="mobile"] #app{max-width:412px;margin:14px auto 0;border:10px solid #14322b;border-radius:38px;
+  background:var(--bg);height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden;
+  box-shadow:0 28px 64px -30px rgba(11,42,34,.6)}
+[data-view="mobile"] .side{display:none!important}
+[data-view="mobile"] .wrap{display:block;max-width:none}
+[data-view="mobile"] .main{padding:14px 14px 92px}
+[data-view="mobile"] .desk-only{display:none!important}
+[data-view="mobile"] .mobile-only{display:flex!important}
+[data-view="mobile"] .grid2,[data-view="mobile"] .grid3,[data-view="mobile"] .stat4,
+[data-view="mobile"] .calm,[data-view="mobile"] .hero,[data-view="mobile"] .strip,
+[data-view="mobile"] .feat3,[data-view="mobile"] .how,[data-view="mobile"] .pins,
+[data-view="mobile"] .lfoot,[data-view="mobile"] .pet-grid,[data-view="mobile"] .edu-grid,
+[data-view="mobile"] .choose-grid,[data-view="mobile"] .auth-grid,[data-view="mobile"] .auth2{grid-template-columns:1fr}
+[data-view="mobile"] .tabbar{display:flex;max-width:412px;margin-inline:auto}
+[data-view="mobile"] .libgrid{columns:1}
+[data-view="mobile"] .br-hint{font-size:12.5px}
+[data-view="mobile"] .toast{bottom:96px}
+[data-view="mobile"] .rv-open{bottom:14px;inset-inline-end:14px}
+
+/* ② گوشی واقعی — قاب بازبینی نمی‌آید، ولی همان قالب باریک می‌آید */
+@media (max-width:640px){
+  body{background:var(--bg)}
+  body:not([data-view="mobile"]) #app{max-width:none;margin:0;border:0;border-radius:0;box-shadow:none}
+  .side{display:none!important}
+  .wrap{display:block;max-width:none}
+  .main{padding:12px 12px calc(86px + env(safe-area-inset-bottom))}
+  .desk-only{display:none!important}
+  .mobile-only{display:flex!important}
+  .grid2,.grid3,.stat4,.calm,.hero,.strip,.feat3,.how,.pins,.lfoot,.pet-grid,.edu-grid,
+  .choose-grid,.auth-grid,.auth2,.tbl-grid{grid-template-columns:1fr!important}
+  .libgrid{columns:1!important}
+  .tabbar{display:flex;padding-bottom:env(safe-area-inset-bottom)}
+  .opts{grid-template-columns:repeat(3,1fr)}
+  .todayline{flex-wrap:wrap}
+  .todayline .btn{width:100%}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .rvbar{inset-inline:8px}
+  .toast{bottom:92px}
+  /* ورودی‌ها زیر ۱۶px در iOS زوم می‌کنند — پس ورودی‌ها ۱۶px می‌شوند */
+  input,select,textarea{font-size:16px}
+  .fx input,.fx select,textarea[data-moodnote]{font-size:16px}
+  /* هدف لمسی ≥ ۴۴px */
+  .btn{padding:11px 15px}
+  .btn.sm{padding:9px 12px}
+  .cal-row,.cal-grid{gap:5px}
+  .cc{border-radius:11px;font-size:11.5px}
+  .cc .pip{bottom:4px}
+  .cc .tflag{top:-7px;font-size:8px;padding:1px 6px}
+  .card{padding:14px}
+  .auth-pane{padding:18px}
+  .auth-rail{padding:16px}
+  .rail-art svg{height:74px}
+  .br-card{width:min(94vw,420px)}
+  .breath-ov{padding:12px}
+  .chsvg,.pet-hold svg{max-width:100%;height:auto}
+}
+@media (hover:none){
+  .cc:hover{transform:none}
+  .pet-stage:hover{transform:none}
+}

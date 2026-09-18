@@ -371,3 +371,39 @@ function monthCal(){
         :'<div class="cal-sel hint">'+ic('i-info')+'<span class="tiny">روی هر روز بزن تا ببینی چه ثبت شده.</span></div>')+
   '</div>';
 }
+
+/* ==========================================================================
+   حالت مشاور — صفحه‌های شخصی باز نمی‌شوند (سند ۲۴ §۳.۳ / سند ۱۳)
+   قاعدهٔ مالک (۱۴۰۵): «مشاور در نقش مشاور وارد می‌شود → صفحهٔ حال برایش باز
+   نشود؛ ولی در نقش کاربرِ معمولی، دقیقاً مثل بقیه با او رفتار شود.»
+   ========================================================================== */
+function coachCard(where){
+  var t={home:'کارت حال',today:'این کارت',mood:'صفحهٔ حال'}[where]||'این بخش';
+  return '<div class="card coach-card">'+
+    '<div class="cc-top">'+ic('i-users',20)+'<b>حالت مشاور — '+t+' باز نمی‌شود</b></div>'+
+    '<p class="tiny">تا وقتی در نقش مشاور هستی، حال/جوجه/برنامهٔ شخصی نشان داده نمی‌شود؛ کارِ این نقش پروندهٔ مراجع‌هاست. '+
+    'همین که به <b>نقش کاربری</b> برگردی، دقیقاً مثل هر کاربر دیگری با تو رفتار می‌شود — بدون هیچ تفاوتی.</p>'+
+    '<div class="cc-acts"><button class="btn soft sm" data-roleto="client">برگرد به نقش کاربری</button>'+
+      '<a class="btn ghost sm" href="#hammasir">داشبورد مشاور</a></div></div>';
+}
+/* کارت کوچک حال در خانه — با حالت مشاور جایگزین می‌شود */
+function moodQuickCard(){
+  if(APP.roleView==='coach') return coachCard('home');
+  return '<div class="card moodq"><div class="kicker">حال امروز</div>'+
+    '<h3 style="font-size:14px;margin-top:4px">'+D('امروز چه حسی داری؟','حال امروز را ثبت نکرده‌ای')+'</h3>'+
+    '<div class="tiny">'+(empty()?'حتی یک انتخاب، تصویر هفته را کامل می‌کند.'
+      :'در ۵ ثانیه ثبت می‌شود — و در پایان، یک جملهٔ اختیاری برای خودت.')+'</div>'+
+    '<div class="faces">'+['😖','🙁','😐','🙂','😄'].map(function(f,i){
+      return '<button class="face" data-face="'+i+'" data-go="mood" aria-label="ثبت حال">'+f+'</button>';}).join('')+'</div>'+
+    '<div class="tiny muted" style="margin-top:8px">'+ic('i-lock',13)+' جمله‌ات فقط برای خودت است.</div>'+
+  '</div>';
+}
+/* کارت کناری حال در «کارهای امروز» */
+function moodSideCard(){
+  if(APP.roleView==='coach') return coachCard('today');
+  return '<div class="card"><h3>'+ic('i-heart')+'حال امروز</h3>'+
+    (empty()?'<div class="tiny" style="margin-top:6px">ثبت نشده.</div>':'<div class="tiny" style="margin-top:6px">ثبت شده ✓</div>')+
+    '<button class="btn soft sm wide" style="margin-top:10px" data-go="mood">ثبت حال</button>'+
+    '<div class="tiny muted" style="margin-top:6px">۵ پرسش کوتاه + یک جملهٔ اختیاری (فقط برای خودت)</div>'+
+    '<button class="btn ghost sm wide" style="margin-top:10px" data-breathopen="today">'+ic('i-lotus')+'تمرین تنفس ۴-۷-۸</button></div>';
+}
