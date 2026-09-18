@@ -407,12 +407,15 @@ window.INNER_CLICK=function(e){
   /* ---------- تقویم مسیر ماه ---------- */
   if((t=e.target.closest('[data-cald]'))){
     var d=t.dataset.cald, n=parseInt(d.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x);}),10);
-    var isFuture=n>16, isMiss=[7,14].includes(n), isPart=[4,11].includes(n);
+    APP.calDay=n; render();                 /* انتخاب، همان‌جا زیر تقویم نشان داده می‌شود */
+    var isFuture=(typeof calStateOf==='function') && calStateOf(n)==='future';
+    var isMiss=(typeof calStateOf==='function') && calStateOf(n)==='miss';
+    var isPart=(typeof calStateOf==='function') && calStateOf(n)==='part';
+    var det=(CAL.info[n]||[])[1]||'برای این روز جزئیاتی ثبت نشده.';
     modal('<h3>'+fa(n)+' شهریور ۱۴۰۵</h3>'+
-      (isFuture?'<p class="tiny">این روز هنوز نیامده — ثبت برای آینده ممکن نیست.</p>'
-        :isMiss?'<p class="tiny">این روز چیزی ثبت نشده. اشکالی ندارد — روزهای بی‌ثبت هم بخشی از مسیرند.</p>'
-        :isPart?'<p class="tiny">این روز ناقص ثبت شده: پیاده‌روی و آب ثبت شده، مدیتیشن نه.</p>'
-        :'<p class="tiny">همهٔ کارهای این روز ثبت شده — ۴ از ۴، و حال ثبت شده.</p>')+
+      '<div class="tiny" style="line-height:2">'+det+'</div>'+
+      (isFuture?'<p class="tiny" style="margin-top:8px">این روز هنوز نیامده — ثبت برای آینده ممکن نیست.</p>'
+        :isMiss?'<p class="tiny" style="margin-top:8px">اشکالی ندارد؛ روزهای بی‌ثبت هم بخشی از مسیرند و سرزنشی نیست.</p>':'')+
       '<div class="acts"><button class="btn ghost sm" data-close>بستن</button>'+
       (isFuture?'':'<span class="sp"></span><button class="btn soft sm" data-go="today">دیدن جزئیات روز</button>')+'</div>');
     return;

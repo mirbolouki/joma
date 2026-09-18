@@ -303,3 +303,71 @@ function timeSticker(size,slot){
   return '<span class="tsticker tst-'+k+'"><svg width="'+S+'" height="'+S+'" viewBox="0 0 64 64" aria-hidden="true">'+
     '<defs>'+clip+'</defs><rect x="1" y="1" width="62" height="62" rx="19" fill="'+bg+'"/>'+art+'</svg></span>';
 }
+
+/* ==========================================================================
+   تقویم «مسیر این ماه» — کاشی‌های سه‌بعدی پاستلی (سند ۱۱ §۷)
+   هر خانه یک روز است، ولی برخلاف نسخهٔ قبل: عدد دارد، رنگش معنا دارد،
+   و راهنمای رنگی زیر تقویم می‌گوید هر رنگ یعنی چه.
+   ========================================================================== */
+var CAL={
+  month:'شهریور ۱۴۰۵',
+  first:0,            /* ۱ شهریور ۱۴۰۵ — شنبه */
+  days:30,
+  today:16,
+  full:[1,2,3,5,6,8,9,10,12,13,15,16],
+  part:[4,11],
+  miss:[7,14],
+  info:{
+    1:['کامل','۴ از ۴ کار · آب ۸ از ۸ · حال ثبت شد'],
+    4:['ناقص','۲ از ۴ کار · آب ۵ از ۸ · حال ثبت شد'],
+    7:['بدون ثبت','روزی که چیزی ثبت نشد — بدون سرزنش'],
+    13:['کامل','۴ از ۴ کار · آب ۸ از ۸ · بهترین روز ماه'],
+    16:['امروز','۳ از ۴ کار · آب ۶ از ۸ · هنوز تا پایان روز فرصت هست']
+  }
+};
+var CAL_DOW=['ش','ی','د','س','چ','پ','ج'];
+function calStateOf(d){
+  if(d>CAL.today) return 'future';
+  if(CAL.full.indexOf(d)>-1) return 'full';
+  if(CAL.part.indexOf(d)>-1) return 'part';
+  if(CAL.miss.indexOf(d)>-1) return 'miss';
+  return 'ok';
+}
+function calTile(d){
+  var st=calStateOf(d), cls='cc '+st+(d===CAL.today?' today':'')+(d===APP.calDay?' sel':'');
+  var label=fa(d)+' '+CAL.month.split(' ')[0];
+  var txt={'full':'کامل ثبت شده','part':'ناقص — بعضی کارها ثبت شده','miss':'بدون ثبت',
+           'future':'روز آینده — ثبت برای آینده ممکن نیست','ok':'روز عادی'}[st];
+  return '<button class="'+cls+'" data-cald="'+d+'" aria-label="'+label+' — '+txt+'"'+
+    (st==='future'?' aria-disabled="true"':'')+'>'+
+    '<span class="dn">'+fa(d)+'</span>'+
+    (st==='full'?'<span class="pip p3"></span>':(st==='part'?'<span class="pip p2"></span>':''))+
+    (d===CAL.today?'<span class="tflag">امروز</span>':'')+
+  '</button>';
+}
+function monthCal(){
+  var emptyMode=(typeof empty==='function') && empty();
+  var cells='';
+  for(var b=0;b<CAL.first;b++) cells+='<span class="cc blank"></span>';
+  for(var d=1;d<=CAL.days;d++) cells+=calTile(d);
+  var marks=fa(CAL.full.length)+' روز کامل · '+fa(CAL.part.length)+' روز ناقص · '+fa(CAL.miss.length)+' روز بی‌ثبت';
+  var sel=(APP.calDay&&CAL.info[APP.calDay])?CAL.info[APP.calDay]:null;
+  return '<div class="calwrap">'+
+    '<div class="calhead">'+
+      '<span class="calmonth">'+ic('i-cal')+CAL.month+'</span>'+
+      '<span class="calmarks tiny">'+marks+'</span>'+
+    '</div>'+
+    '<div class="cal3'+(emptyMode?' empty-m':'')+'">'+
+      '<div class="cal-row">'+CAL_DOW.map(function(x){return '<span class="caldow">'+x+'</span>';}).join('')+'</div>'+
+      '<div class="cal-grid">'+cells+'</div>'+
+    '</div>'+
+    '<div class="cal-legend">'+
+      [['full','کامل ثبت شده — همهٔ کارهای آن روز'],['part','ناقص — بعضی کارها ثبت شده'],
+       ['miss','بدون ثبت — روزی که چیزی ثبت نشد'],['today','امروز'],
+       ['future','روزهای آینده — قابل ثبت نیستند']]
+        .map(function(x){return '<span class="lgrow"><i class="lg3 '+x[0]+'"></i>'+x[1]+'</span>';}).join('')+
+    '</div>'+
+    (sel?'<div class="cal-sel"><b>'+fa(APP.calDay)+' شهریور — '+sel[0]+'</b><span class="tiny">'+sel[1]+'</span></div>'
+        :'<div class="cal-sel hint">'+ic('i-info')+'<span class="tiny">روی هر روز بزن تا ببینی چه ثبت شده.</span></div>')+
+  '</div>';
+}

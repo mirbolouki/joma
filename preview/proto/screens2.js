@@ -449,30 +449,20 @@ function R_plan(){
         '<p class="tiny">از کتابخانه انتخاب کن. برای شروع دوره، حداقل یک فعالیت لازم است.</p>'+
         '<a class="btn primary sm" style="margin-top:10px" href="#library">رفتن به کتابخانه</a></div></div>';
   } else if(tab==='cal'){
-    /* تقویم ماه — «مسیر این ماه»: کاربر باید بفهمد هر نشانه یعنی چه */
-    var done={1:1,2:1,3:1,5:1,6:1,8:1,9:1,10:1,12:1,13:1,15:1,16:1};
-    var partial={4:1,11:1};
-    var miss={7:1,14:1};
-    var today=16;
-    var first=0;                 /* ۱ شهریور ۱۴۰۵ — شنبه */
-    var days=['ش','ی','د','س','چ','پ','ج'];
-    var cells='';
-    for(var b=0;b<first;b++) cells+='<span class="calcell blank"></span>';
-    for(var d=1;d<=30;d++){
-      var cls=done[d]?'full':(partial[d]?'part':(miss[d]?'miss':''));
-      cells+='<span class="calcell '+cls+(d===today?' today':'')+'" data-cald="'+d+'">'+fa(d)+'</span>';
-    }
-    body='<div class="card"><h3>'+ic('i-cal')+'مسیر شهریور ۱۴۰۵</h3>'+
-      '<p class="tiny" style="margin-top:5px">این تقویمِ دورهٔ توست: هر خانه یک روز. '+
-      'روی هر روز بزن تا ببینی چه ثبت شده — روزهای آینده خالی‌اند و قابل ثبت نیستند.</p>'+
-      '<div class="cal">'+days.map(function(x){return '<span class="caldow">'+x+'</span>';}).join('')+cells+'</div>'+
-      '<div class="cal-legend">'+
-        '<span><i class="lg full"></i> کامل ثبت شده — همهٔ کارهای آن روز</span>'+
-        '<span><i class="lg part"></i> ناقص — بعضی کارها ثبت شده</span>'+
-        '<span><i class="lg miss"></i> بدون ثبت — روزی که چیزی ثبت نشده</span>'+
-        '<span><i class="lg today"></i> امروز</span>'+
-      '</div>'+
-      '<div class="kv" style="margin-top:10px"><span>روزهای همراهی این ماه</span><b>۱۲ از ۳۰ — ۴۰٪</b></div>'+
+    /* تقویم ماه — همان کامپوننت خانه (سند ۱۱ §۷): سه‌بعدی، پاستلی، برچسب‌دار */
+    var CALSTAT=[[fa(CAL.full.length),'روز کامل','--cal-mint-ink'],
+                 [fa(CAL.part.length),'روز ناقص','--cal-gold-ink'],
+                 [fa(CAL.miss.length),'روز بی‌ثبت','--cal-sky-ink'],
+                 [fa(CAL.days),'روز ماه','--ink-2']];
+    body='<div class="card"><h3>'+ic('i-cal')+'مسیر این ماه</h3>'+
+      '<p class="tiny" style="margin-top:5px">این تقویمِ دورهٔ توست: هر خانه یک روز. روی هر روز بزن تا ببینی چه ثبت شده — '+
+      'روزهای آینده خالی‌اند و قابل ثبت نیستند.</p>'+
+      monthCal()+
+      '<div class="stat4" style="margin-top:14px;gap:10px">'+CALSTAT.map(function(x){
+        return '<div class="card" style="padding:12px"><div class="lb">'+x[1]+'</div>'+
+          '<div class="vl" style="color:var('+x[2]+')">'+x[0]+'</div></div>';}).join('')+'</div>'+
+      '<div class="kv" style="margin-top:12px"><span>روزهای همراهی این ماه</span><b>'+
+        fa(CAL.full.length+CAL.part.length)+' از '+fa(CAL.days)+'</b></div>'+
       '<div class="kv"><span>بهترین روز</span><b>۱۳ شهریور — همهٔ کارها</b></div>'+
       '<div class="kv"><span>روزهای بی‌ثبت پیوسته</span><b>۲ روز (۷ و ۱۴)</b></div>'+
     '</div>'+

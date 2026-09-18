@@ -474,14 +474,9 @@ function R_home(){
 
     '<div class="grid2">'+
       '<div class="card"><h3>'+ic('i-chart')+'مسیر این ماه</h3>'+
-        '<div class="tiny" style="margin-top:4px">هر خانه، یک روز. رنگ پررنگ‌تر، ثبت بیشتر.</div>'+
-        '<div style="display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:12px">'+
-          Array.from({length:30},function(_,i){
-            var lvl=(i*7)%4; var c=['var(--ring-track)','var(--brand-soft)','var(--brand)','var(--brand-ink)'][lvl];
-            return '<i style="aspect-ratio:1;border-radius:6px;background:'+(empty()?'var(--ring-track)':c)+'"></i>';
-          }).join('')+
-        '</div>'+
-        (empty()?'<div class="tiny" style="margin-top:10px">این ماه هنوز ثبتی نداری.</div>':'')+
+        '<div class="tiny" style="margin-top:4px">هر خانه، یک روز — با عدد و رنگِ معنادار. راهنمای زیرش می‌گوید هر رنگ یعنی چه.</div>'+
+        monthCal()+
+        (empty()?'<div class="tiny" style="margin-top:10px">این ماه هنوز ثبتی نداری — اولین ثبت، اولین خانهٔ رنگی.</div>':'')+
       '</div>'+
       '<div class="card"><h3>'+ic('i-book')+'بینش این هفته</h3>'+
         (empty()?'<div class="tiny" style="margin-top:8px">وقتی چند روز ثبت شود، اینجا یک نکتهٔ کوچک می‌آید.</div>'

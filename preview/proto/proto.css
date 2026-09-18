@@ -1359,3 +1359,63 @@ html[data-density="compact"] .tiny{line-height:1.85}
 .chsvg.chblink{animation:chblink .4s ease}
 @keyframes chblink{0%,100%{transform:none}50%{transform:scaleY(.985)}}
 @media (prefers-reduced-motion:reduce){ .chsvg.chblink{animation:none} }
+
+/* پالت تقویم — محلی همین کامپوننت (سند ۱۱ §۷)؛ چندرنگ، نه همه سبز */
+:root{--cal-mint-ink:#2E7D5B;--cal-gold-ink:#A9821C;--cal-sky-ink:#5A6E8C;--cal-peach-ink:#C4623A}
+/* ==========================================================================
+   ۱۷) تقویم «مسیر این ماه» — سه‌بعدی، پاستلی، برچسب‌دار (سند ۱۱ §۷)
+   پالت عمداً چندرنگ است: هر رنگ یعنی یک وضعیت، و راهنما آن را می‌گوید.
+   ========================================================================== */
+.calwrap{margin-top:12px}
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.calmonth{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:900}
+.calmonth svg{width:16px;height:16px}
+.calmarks{color:var(--ink-2)}
+.cal3{margin-top:12px}
+.cal-row{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:7px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.cc{position:relative;aspect-ratio:1;border:0;border-radius:14px;cursor:pointer;font-family:inherit;
+  display:grid;place-items:center;font-size:12.5px;font-weight:900;color:#2E4038;
+  background:linear-gradient(180deg,#F1F3F2,#E4E9E7);
+  box-shadow:0 3px 0 #CFD6D3, 0 7px 16px -10px rgba(20,56,46,.45), inset 0 1px 0 rgba(255,255,255,.85);
+  transition:transform .16s ease, box-shadow .16s ease}
+.cc:hover{transform:translateY(-2px)}
+.cc:active{transform:translateY(1px);box-shadow:0 1px 0 #CFD6D3, inset 0 1px 0 rgba(255,255,255,.7)}
+.cc.full{color:#1F5C43;background:linear-gradient(180deg,#D6F0E1,#A8DFC0);box-shadow:0 3px 0 #7FC6A4, 0 8px 18px -10px rgba(46,125,91,.5), inset 0 1px 0 rgba(255,255,255,.85)}
+.cc.part{color:#6B4D06;background:linear-gradient(180deg,#FDF0C4,#F7D887);box-shadow:0 3px 0 #E0BE62, 0 8px 18px -10px rgba(190,150,40,.45), inset 0 1px 0 rgba(255,255,255,.85)}
+.cc.miss{color:#4A5A72;background:linear-gradient(180deg,#EDF2FA,#D3DDEE);box-shadow:0 3px 0 #B4C4DC, 0 7px 16px -11px rgba(74,90,114,.45), inset 0 1px 0 rgba(255,255,255,.85)}
+.cc.ok{color:#3A4A55;background:linear-gradient(180deg,#F6F4EF,#E7E4DB);box-shadow:0 3px 0 #D2CFC5, inset 0 1px 0 rgba(255,255,255,.85)}
+.cc.future{color:var(--ink-3);background:rgba(255,255,255,.35);border:1.5px dashed var(--card-brd);
+  box-shadow:none;cursor:default}
+.cc.future:hover{transform:none}
+.cc.today{color:#7A3A1E;background:linear-gradient(180deg,#FFD9C4,#F9B593);
+  box-shadow:0 3px 0 #E39A76, 0 10px 22px -10px rgba(226,122,74,.55), inset 0 1px 0 rgba(255,255,255,.9);
+  outline:2.5px solid var(--rose);outline-offset:2px}
+.cc.sel{transform:translateY(-2px);box-shadow:0 5px 0 #A9B7C4, 0 12px 22px -10px rgba(20,56,46,.5), inset 0 1px 0 rgba(255,255,255,.9)}
+.cc.blank{background:transparent;box-shadow:none;cursor:default}
+.cc .dn{position:relative;z-index:1}
+.cc .pip{position:absolute;bottom:6px;width:5px;height:5px;border-radius:99px;background:currentColor;opacity:.55}
+.cc .pip.p3{width:14px;opacity:.6}
+.cc .pip.p2{width:8px;opacity:.55}
+.cc .tflag{position:absolute;top:-9px;inset-inline-start:50%;transform:translateX(-50%);background:var(--rose);
+  color:#fff;font-size:8.5px;font-weight:900;border-radius:99px;padding:2px 7px;white-space:nowrap;box-shadow:var(--shadow-sm)}
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px;font-size:11px;color:var(--ink-2)}
+.cal-legend .lgrow{display:inline-flex;align-items:center;gap:6px}
+.lg3{width:15px;height:15px;border-radius:6px;display:inline-block;flex:none;
+  box-shadow:0 2px 0 rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.8)}
+.lg3.full{background:linear-gradient(180deg,#D6F0E1,#A8DFC0)}
+.lg3.part{background:linear-gradient(180deg,#FDF0C4,#F7D887)}
+.lg3.miss{background:linear-gradient(180deg,#EDF2FA,#D3DDEE)}
+.lg3.today{background:linear-gradient(180deg,#FFD9C4,#F9B593)}
+.lg3.future{background:rgba(255,255,255,.5);border:1.5px dashed var(--card-brd);box-shadow:none}
+.cal-sel{display:flex;align-items:center;gap:9px;margin-top:12px;background:var(--brand-softer);
+  border-radius:var(--r-sm);padding:10px 12px;flex-wrap:wrap}
+.cal-sel.hint{background:transparent;border:1.5px dashed var(--card-brd)}
+.cal-sel svg{width:16px;height:16px;flex:none}
+.cal3.empty-m .cc{filter:grayscale(.55) opacity(.75)}
+@media (max-width:560px){
+  .cal-row,.cal-grid{gap:5px}
+  .cc{border-radius:11px;font-size:11.5px}
+  .cc .pip{bottom:4px}
+}
+@media (prefers-reduced-motion:reduce){ .cc{transition:none} .cc:hover{transform:none} }
