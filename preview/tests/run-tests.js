@@ -233,7 +233,10 @@ if (!doc('docs/handoff/28-lock-policy-and-round-31-order.md')) bad('۳۱: سند
 ['قفل مبنا','اِد اونلی','LOCK-v8.sha256'].forEach(k => { if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf(k) < 0) bad('۳۱: «' + k + '» در سند قفل نیست'); });
 ['C1 — تب‌های','C2 — جابه‌جایی نقش','C3 — داشبورد مشاور'].forEach(k => { if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf(k) < 0) bad('۳۱: ' + k + ' نیست'); });
 if (doc('docs/spec/00-principles.md').indexOf('اِد اونلی') < 0) bad('۳۱: سیاست اِد اونلی در اصول ثبت نشد');
-say('دور ۳۱ — قفل مبنا و سه ایراد تازه ثبت شد');
+if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf('C4 — کارت دعوت') < 0) bad('۳۱: C4 کارت دعوت در سفارش نیست');
+if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf('L32') < 0) bad('۳۱: L32 در قفل‌نامه نیست');
+if (doc('docs/spec/20-hammasir.md').indexOf('کارت دعوت یک‌باره ساخته نشده') < 0) bad('۳۱: ثبت وضعیت کارت دعوت در فصل ۲۰ نیست');
+say('دور ۳۱ — قفل مبنا و چهار ایراد تازه ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
