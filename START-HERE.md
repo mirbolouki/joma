@@ -20,6 +20,7 @@
 
 - **سایت اصلی:** دست‌نخورده — تا «برو»ی تو.
 - **روی ساب‌دامین تست — کارهای بک‌اند:** `B1`–`B5` (بازیابی رمز دو مرحله‌ای · گیت حال فقط «کارهای امروز» · بستن ثبت آینده · یادداشت خصوصی · جوجه با سه سنجه و نامِ جوجه) و تازه: `B6` **آب پیش‌نویس/قطعی** و `B7` **دفترچهٔ جوما با بینش و شواهد**. تنها مورد باقی: `B8`.
+- **🎨 دو تم (کلاسیک/شیشه) — مورد `A9` + گالری مرجع:** [`docs/theme-gallery.html`](docs/theme-gallery.html) · **🦉 گالری جغد:** [`docs/owl-gallery.html`](docs/owl-gallery.html)
 - **🦉 مکمل دور ۲۷ — جغدها و جاروب کامل جزئیات (`A8`):** [`docs/handoff/24-owl-and-asset-sweep.md`](docs/handoff/24-owl-and-asset-sweep.md)
 - **🛠 دستور اصلاح دور ۲۷ (دو الزام مالک + پاسخ ۱۲ سؤال):** [`docs/handoff/23-owner-revision-order-round-27.md`](docs/handoff/23-owner-revision-order-round-27.md)
 - **📋 چک‌لیست بازبینی v6 (برای ایجنت — خودش کمبودها را پیدا کند و گزارش بدهد):** [`docs/handoff/22-gap-audit-checklist.md`](docs/handoff/22-gap-audit-checklist.md)

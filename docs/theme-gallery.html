@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دو تم جوما — کلاسیک و شیشه (مرجع تصمیم مالک)</title>
+<link rel="stylesheet" href="../preview/proto/proto.css">
+<style>
+  body{padding:18px;background:#F4F7F6}
+  .gal{max-width:1180px;margin:0 auto}
+  h1{font-size:20px}
+  .lead{font-size:12.5px;line-height:2;color:#41524C;max-width:900px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:900px){.two{grid-template-columns:1fr}}
+  .panel{border-radius:20px;padding:16px;overflow:hidden}
+  .panel .plabel{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;margin-bottom:10px;
+    padding:4px 12px;border-radius:99px}
+  .mini{display:flex;flex-direction:column;gap:12px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .owlbox{display:flex;gap:14px;align-items:flex-end;justify-content:center;padding:8px 0}
+  .swatch{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .swatch i{width:26px;height:26px;border-radius:9px;display:inline-block;border:1px solid rgba(0,0,0,.08)}
+  .cap{font-size:10.5px;line-height:1.9;margin-top:6px;opacity:.85}
+</style>
+</head>
+<body>
+<div class="gal">
+  <h1>🎨 دو تم جوما — کنار هم</h1>
+  <p class="lead">
+    قرارِ ما همین بود: <b>دو تم</b> که <b>خودِ کاربر</b> از «تنظیمات → ظاهر» انتخاب می‌کند.
+    پیش‌فرض <b>کلاسیک</b> است (همان سبز آرام) و تم <b>شیشه</b> انتخاب کاربر (زمینهٔ رنگی ملایم + کارت‌های بلوری).
+    <br>این صفحه فقط برای تصمیم توست؛ هیچ‌کدام از این دو، «درست‌تر» از دیگری نیست — سلیقه است.
+  </p>
+
+  <div class="two">
+    <div class="panel" data-theme="classic" style="background:var(--bg-layer, none), var(--bg)">
+      <span class="plabel" style="background:var(--brand-soft);color:var(--brand-ink)">تم کلاسیک — پیش‌فرض</span>
+      <div class="mini" id="a"></div>
+    </div>
+    <div class="panel" data-theme="glass" style="background:var(--bg-layer), var(--bg)">
+      <span class="plabel" style="background:var(--brand-soft);color:var(--brand-ink)">تم شیشه — انتخاب کاربر</span>
+      <div class="mini" id="b"></div>
+    </div>
+  </div>
+
+  <p class="cap" id="colornote"></p>
+</div>
+
+<div id="spritemount" style="position:absolute;width:0;height:0;overflow:hidden"></div>
+<script src="../preview/proto/sprite.js"></script>
+<script>
+document.getElementById('spritemount').innerHTML = JOMA_SPRITE;
+function owl(id,size){ return '<svg width="'+size+'" height="'+size+'"><use href="#'+id+'"/></svg>'; }
+
+var PMARKUP =
+  '<div class="card"><h3>'+owl('owl-hi',26)+' ظرف دونه</h3>'+
+    '<p class="tiny" style="margin-top:6px">با ثبت کارهای امروز پر می‌شود. امروز: <b>۳ دونه</b></p>'+
+    '<div class="psegs" style="margin-top:10px"><i class="on"></i><i class="on"></i><i></i></div></div>'+
+
+  '<div class="row"><button class="btn primary sm">ثبت نهایی</button>'+
+    '<button class="btn soft sm">ذخیرهٔ پیش‌نویس</button>'+
+    '<button class="btn ghost sm">بعداً</button></div>'+
+
+  '<div class="row"><span class="chip g">قطعی ✓</span><span class="chip s">پیش‌نویس</span>'+
+    '<span class="chip go">در انتظار</span><span class="chip r">نیاز به توجه</span>'+
+    '<span class="chip n">بی‌ثبت</span></div>'+
+
+  '<div class="card"><div class="st"><span class="chip40" style="background:var(--sky-soft)"><svg width="18" height="18"><use href="#i-drop"/></svg></span>'+
+    '<span><b>نوشیدن آب</b><small>۵ از ۸ لیوان · پیش‌نویس</small></span>'+
+    '<span class="end"><span class="tst draft"><svg width="14" height="14"><use href="#i-clock"/></svg> پیش‌نویس</span></span></div>'+
+    '<div class="st" style="margin-top:8px"><span class="chip40" style="background:var(--brand-soft)"><svg width="18" height="18"><use href="#i-walk"/></svg></span>'+
+    '<span><b>پیاده‌روی</b><small>۲۰ دقیقه · روزانه</small></span>'+
+    '<span class="end"><span class="tst done"><svg width="14" height="14"><use href="#i-check"/></svg> ثبت قطعی</span></span></div></div>'+
+
+  '<div class="card tip"><h3><svg width="16" height="16"><use href="#i-info"/></svg> یک نکته</h3>'+
+    '<p class="tiny" style="margin-top:6px">این بخش در هر دو تم یکسان است — فقط رنگ و سطح عوض می‌شود، نه داده و نه معنا.</p></div>'+
+
+  '<div class="owlbox">'+owl('owl-hi',54)+owl('owl-cheer',54)+owl('owl-think',54)+owl('owl-moon',54)+'</div>'+
+  '<p class="cap">جغد در هر دو تم <b>همان جغد</b> است — فقط روشنایی‌اش با تم هم‌آهنگ می‌شود؛ هیچ‌وقت سبز نمی‌شود.</p>'+
+
+  '<div class="swatch" id="sw"></div>'+
+  '<p class="cap">رنگ‌های کلیدی این تم: برند · برند۲ · طلایی · آسمانی · کورال · رز · نعنایی</p>';
+
+document.getElementById('a').innerHTML = PMARKUP;
+document.getElementById('b').innerHTML = PMARKUP;
+
+['a','b'].forEach(function(id){
+  var panel=document.getElementById(id).closest('.panel');
+  var cs=getComputedStyle(panel);
+  var keys=['--brand','--brand2','--gold','--sky','--coral','--rose','--ok'];
+  var host=panel.querySelector('.swatch');
+  host.innerHTML = keys.map(function(k){
+    var v=cs.getPropertyValue(k).trim()||'transparent';
+    return '<i style="background:'+v+'" title="'+k+'"></i>';
+  }).join('');
+});
+
+document.getElementById('colornote').textContent =
+  'یادآوری فنی: انتخاب تم باید «قبل از نمایش صفحه» اعمال شود تا رنگ نپرد (بدون پرش)، و اگر بک‌اند فیلدی برای ترجیح تم نداشت، انتخاب روی همان دستگاه ذخیره می‌شود تا بعداً فیلد اضافه شود.';
+</script>
+</body>
+</html>
