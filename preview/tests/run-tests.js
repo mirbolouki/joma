@@ -228,6 +228,12 @@ say('دور ۲۹ — دو ایراد تکرارشده با مشخصات دقیق
 if (!doc('docs/handoff/27-round-30-v8-status.md')) bad('۳۰: گزارش دور ۳۰ نیست');
 ['00-principles.md','99-handoff.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۰') < 0) bad('۳۰: ثبت دور ۳۰ در ' + f + ' نیست'); });
 say('دور ۳۰ — v8 و دو مورد باز ثبت شد');
+/* نسخهٔ ۳۱ — سیاست قفل و سه ایراد تازه */
+if (!doc('docs/handoff/28-lock-policy-and-round-31-order.md')) bad('۳۱: سند سیاست قفل و سفارش دور ۳۱ نیست');
+['قفل مبنا','اِد اونلی','LOCK-v8.sha256'].forEach(k => { if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf(k) < 0) bad('۳۱: «' + k + '» در سند قفل نیست'); });
+['C1 — تب‌های','C2 — جابه‌جایی نقش','C3 — داشبورد مشاور'].forEach(k => { if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf(k) < 0) bad('۳۱: ' + k + ' نیست'); });
+if (doc('docs/spec/00-principles.md').indexOf('اِد اونلی') < 0) bad('۳۱: سیاست اِد اونلی در اصول ثبت نشد');
+say('دور ۳۱ — قفل مبنا و سه ایراد تازه ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -241,4 +247,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۰');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۱');
