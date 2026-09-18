@@ -22,5 +22,6 @@
 - **روی ساب‌دامین تست:** ① چهار مورد فوری (دور ۲۲): بازیابی رمز بسته · گیت حال فقط روی «کارهای امروز» · ثبت آینده رد می‌شود · یادداشت خصوصی از دید مشاور برداشته شد. ② دور ۲۳: **کد یک‌بارمصرف بازیابی رمز** ساخته شد و **جوجه** با سه سنجهٔ واقعی + **نام جوجه** + اعداد تأییدشده (ترک ۶ · تولد ۱۲ · رشد ۱۲/۴۰/۹۰).
 - **چک‌لیست تست تو:** [`docs/handoff/12-test-deploy-status.md`](docs/handoff/12-test-deploy-status.md) · **گزارش تازه:** [`docs/handoff/15-round-23-backend-status.md`](docs/handoff/15-round-23-backend-status.md)
 - **راهنمای آپلود روی ساب‌دامین (کلیک‌به‌کلیک):** [`docs/handoff/14-click-guide-test-subdomain.md`](docs/handoff/14-click-guide-test-subdomain.md)
+- **ساخت فرانت — فاز ۱ (اسکلت و زبان بصری):** ✅ تحویل شد و نصب کردی · فاز ۲ (ورود/ثبت‌نام/بازیابی رمز) در ساخت — چک‌لیست هر فاز: [`docs/handoff/17-frontend-phases-checklist.md`](docs/handoff/17-frontend-phases-checklist.md)
 - **تازه — روی ساب‌دامین تست چه ببینی و چرا ظاهر عوض نشده:** [`docs/handoff/16-what-you-see-on-test.md`](docs/handoff/16-what-you-see-on-test.md)
 - **از تو دو چیز:** ① تأیید اعداد جوجه ② انتخاب قدم بعدی (`B7` پیشنهاد ما).
