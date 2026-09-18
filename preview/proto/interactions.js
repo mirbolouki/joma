@@ -179,13 +179,23 @@ window.INNER_CLICK=function(e){
     modal('<h3>این برداشت از کجا آمده؟</h3>'+
       '<p class="tiny">جوما هر بینش را با دادهٔ خام پشتش نشان می‌دهد — تا خودت قضاوت کنی.</p>'+
       '<div class="evidence"><b>نمونهٔ داده:</b><table>'+
-      [['روز','خواب','پیاده‌روی'],['۱ مرداد','۴','۲۰ دقیقه'],['۲ مرداد','۵','۳۵ دقیقه'],['۳ مرداد','۳','۰ دقیقه'],['۴ مرداد','۵','۲۵ دقیقه']]
+      [['روز','خواب','موفقیت روزانه'],['۱۴ شهریور','۴','۶۲٪'],['۱۶ شهریور','۵','۷۸٪'],['۱۹ شهریور','۳','۵۵٪'],['۲۳ شهریور','۵','۸۱٪']]
       .map(function(r,i){return '<tr>'+r.map(function(c){return (i?'<td class="num">':'<th>')+c+(i?'</td>':'</th>');}).join('')+'</tr>';}).join('')+
       '</table>'+
-      '<p class="tiny" style="margin-top:8px">۲۱ جفت داده · بازهٔ ۱ تا ۳۱ مرداد · همبستگی، علت را نشان نمی‌دهد.</p></div>'+
+      '<div class="kv"><span>شاخص‌ها</span><b>کیفیت خواب · درصد موفقیت روزانه</b></div>'+
+      '<div class="kv"><span>بازه</span><b>۱۴ تا ۲۷ شهریور</b></div>'+
+      '<div class="kv"><span>شمار نمونه</span><b>۵ جفت داده</b></div>'+
+      '<div class="kv"><span>چه چیزی کنار گذاشته شد</span><b>روزهای بدون ثبت حال (۳ روز)</b></div>'+
+      '<div class="kv"><span>جهت رابطه</span><b>هم‌جهت</b></div>'+
+      '<div class="kv"><span>همان روز یا روز بعد</span><b>همان روز</b></div>'+
+      '<div class="kv"><span>قاعده و نسخه</span><b>بالاتر از میانهٔ خودت · <code>v1</code></b></div>'+
+      '<div class="kv"><span>زمان محاسبه</span><b>۱۴۰۵/۰۶/۲۷ — ۰۷:۱۰</b></div>'+
+      '<div class="kv"><span>اعتبار</span><b>تا ثبت بعدی تو؛ با دادهٔ تازه از نو حساب می‌شود</b></div></div>'+
+      '<p class="tiny" style="margin-top:8px"><b>همراهی، دلیل نیست.</b> جوما هیچ‌وقت نمی‌گوید «خواب خوب باعث شد…».</p>'+
       '<div class="acts"><button class="btn ghost sm" data-close>بستن</button></div>');
     return;
   }
+
   if(e.target.closest('[data-vocab]')){
     modal('<h3>این عددها یعنی چه؟</h3>'+
       '<div class="kv"><span>مقداری که ثبت کرده‌ای</span><b>«۷٫۵ ساعت»</b></div>'+
@@ -821,4 +831,24 @@ document.addEventListener('change',function(e){
   if(e.target.id==='soc'){ APP.authJob=e.target.value; return; }
   if(e.target.matches('[data-libcat]')){ APP.libCat=e.target.value; render(); return; }
   if(e.target.matches('[data-libfreq]')){ APP.libFreq=e.target.value; render(); return; }
+});
+
+/* ---------- دور ۲۴: ثبت نهایی آب (B6) و بخش‌های دفترچه (B7) ---------- */
+document.addEventListener('click',function(e){
+  var el=e.target;
+  if(el.closest('[data-wfinal]')){
+    if(APP.waterFinal){ toast('آب امروز قبلاً قطعی شده'); return; }
+    modal('<h3>آب امروز قطعی شود؟</h3><p class="tiny">بعد از ثبت نهایی، <b>دیگر قابل تغییر نیست</b> و '+
+      'در سنجهٔ آبِ جوجه شمرده می‌شود. اگر امروز باز هم آب می‌نوشی، پیش‌نویس را باز نگه دار.</p>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>نه، بعداً</button><span class="sp"></span>'+
+      '<button class="btn primary sm" data-wfinal-ok>بله، ثبت قطعی</button></div>');
+    return;
+  }
+  if(el.closest('[data-wfinal-ok]')){
+    APP.waterFinal=true; closeModal(); render(); toast('آب امروز قطعی شد — در سنجه‌ها شمرده شد');
+    return;
+  }
+  if((t2=el.closest('[data-booksec]'))){ APP.bookSec=t2.dataset.booksec; render(); return; }
+  if(el.closest('[data-noteedit]')){ toast('ویرایش جمله — همان متن ثبت حال، بدون دست‌زدن به عددها'); return; }
+  if(el.closest('[data-notedel]')){ toast('یادداشت پاک شد — رکورد حال دست‌نخورده ماند'); return; }
 });

@@ -462,12 +462,13 @@ function R_home(){
 
     '<div class="grid2">'+
       '<div class="card steps"><h3>'+ic('i-checkc')+'قدم‌های امروز</h3>'+
+        '<p class="tiny" style="margin-top:4px">آب اینجا فقط <b>خوانده</b> می‌شود؛ نوشتن و «ثبت نهایی» در «کارهای امروز» است.</p>'+
         (empty()?
           '<div class="tiny" style="margin-top:8px">برنامه‌ات هنوز فعالیتی ندارد.</div>'+
           '<button class="btn soft sm" style="margin-top:10px" data-go="library">افزودن از کتابخانه</button>'
           :
           [['i-walk','پیاده‌روی','۲۰ دقیقه · روزانه',1,'--brand-soft'],
-           ['i-drop','نوشیدن آب','۵ از ۸ لیوان · روزانه',1,'--sky-soft'],
+           ['i-drop','نوشیدن آب',fa(APP.water)+' از '+fa(APP.waterGoal||8)+' لیوان · '+(APP.waterFinal?'قطعی':'پیش‌نویس'),1,'--sky-soft'],
            ['i-lotus','مدیتیشن','۱۵ دقیقه · روزانه',0,'--lav-soft'],
            ['i-moon','خواب کافی','۸ ساعت · روزانه',0,'--indigo-soft'],
            ['i-heart','ثبت حال','پنج قدم کوتاه · اختیاری',0,'--rose-soft']]
@@ -556,7 +557,8 @@ function R_today(){
     }).join('')+'</div>'+
 
     waterCard()+
-    note('لیوان‌ها <b>فقط اینجا نوشته می‌شوند</b>؛ در خانه فقط خلاصه خوانده می‌شود. '+
+    note('لیوان‌ها <b>فقط اینجا نوشته می‌شوند</b>؛ در خانه فقط خلاصهٔ خواندنی با برچسب پیش‌نویس/قطعی هست. '+
+      'تا «ثبت نهایی آب امروز» را نزنی، در <b>هیچ سنجه‌ای</b> شمرده نمی‌شود (`WTR-10`). '+
       'هر شش وضعیت داده <b>متن</b> دارند، نه فقط رنگ.')+
 
     '<div class="grid2"><div class="card">'+

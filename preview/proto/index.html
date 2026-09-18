@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>نمونهٔ زندهٔ جوما — بازبینی نسخهٔ ۲۳</title>
-<link rel="stylesheet" href="proto.css?v=23">
+<title>نمونهٔ زندهٔ جوما — بازبینی نسخهٔ ۲۴</title>
+<link rel="stylesheet" href="proto.css?v=24">
 <style>
   .intro{max-width:940px;margin:0 auto;padding:28px 20px 48px}
   .intro h1{font-size:25px;font-weight:900;margin-top:12px;line-height:1.6}
@@ -37,11 +37,11 @@
   <span class="logo"><span class="logo-tile" id="itile"></span>
     <span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>
 
-  <h1>نمونهٔ زندهٔ فرانت — نسخهٔ ۲۳</h1>
-  <span class="build" id="build">نسخهٔ ۲۳</span>
+  <h1>نمونهٔ زندهٔ فرانت — نسخهٔ ۲۴</h1>
+  <span class="build" id="build">نسخهٔ ۲۴</span>
   <p class="tiny" style="margin-top:10px;line-height:2">
     این صفحه، <b>فهرست همه‌چیزی است که ساخته شده</b>: هشت کاری که خواستی + هر ۱۸ صفحه + شاهدهای بصری.
-    اگر بَج بالا «نسخهٔ ۲۳» نیست، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b>.
+    اگر بَج بالا «نسخهٔ ۲۴» نیست، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b>.
   </p>
 
   <h2>۱) هشت چیزی که در این دور خواستی</h2>
@@ -75,11 +75,12 @@
   </div>
 </div>
 
-<script src="sprite.js?v=23"></script>
-<script src="proto.js?v=23"></script>
-<script src="charts.js?v=23"></script>
+<script src="sprite.js?v=24"></script>
+<script src="proto.js?v=24"></script>
+<script src="charts.js?v=24"></script>
 <script>
 var WHAT=[
+['آب پیش‌نویس/قطعی + دفترچهٔ بینش','آب امروز پیش‌نویس است: هر چند بار بخواهی عوضش می‌کنی، ولی تا «ثبت نهایی آب امروز» را نزنی در هیچ سنجه‌ای شمرده نمی‌شود؛ گذشته خودکار قطعی است. «دفترچهٔ جوما» دو بخش دارد: «از ثبت‌های تو» با پنج بینش و شواهد اجباری («این برداشت از کجا آمده؟») و «نوشته‌های خودت» با ویرایش/پاک‌کردن/جست‌وجو.','book'],
 ['جوجهٔ من — سه سنجه و اسم‌گذاری','دونه از ثبت کارها · آب از ثبت ACTIV با هدف اسنپ‌شات برنامه · خونه از رکورد حال. «وقت حمام» تا ساخته‌شدن منبعش نمایش داده نمی‌شود. اعداد از بک‌اند (ترک ۶ · تولد ۱۲ · رشد ۴۰/۹۰) و اسم جوجه یک‌بار گذاشتن + یک‌بار عوض‌کردن.','chick'],
 ['وضعیت تست — چهار مورد روی ساب‌دامین اجرا شد','بک‌اند روی تست: مسیر «فراموشی رمز» بسته شد (راه: پشتیبانی) · گیت حال فقط روی «کارهای امروز» ماند و برنامه/گزارش آزاد شد · ثبت آینده رد می‌شود («ثبت عملکرد برای روزهای آینده ممکن نیست.») · متن یادداشت از پاسخ مشاور برداشته شد. رگرسیون ۱۱ از ۱۱ · سایت اصلی دست‌نخورده.','forgot'],
 
@@ -124,15 +125,15 @@ var MAP=[
 var NEW=['home','today','mood','chick'];
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('itile').innerHTML='<svg width="30" height="30"><use href="#owl-hi"/></svg>';
-  document.getElementById('build').textContent=(typeof BUILD!=='undefined'?BUILD:'نسخهٔ ۲۳');
+  document.getElementById('build').textContent=(typeof BUILD!=='undefined'?BUILD:'نسخهٔ ۲۴');
   document.getElementById('what').innerHTML=WHAT.map(function(w,i){
     return '<div class="wrow"><span class="n">'+fa(i+1)+'</span><div class="t"><b>'+w[0]+'</b><p>'+w[1]+'</p></div>'+
-      '<a class="go" href="app.html?v=23#'+w[2]+'">ببین</a></div>';
+      '<a class="go" href="app.html?v=24#'+w[2]+'">ببین</a></div>';
   }).join('');
   document.getElementById('screens').innerHTML=MAP.map(function(m,i){
-    return '<a class="scr-row" href="app.html?v=23#'+m[0]+'"><span class="no">'+fa(i+1)+'</span>'+
+    return '<a class="scr-row" href="app.html?v=24#'+m[0]+'"><span class="no">'+fa(i+1)+'</span>'+
       '<span class="t"><b>'+m[1]+'</b><span class="sec"> · بخش '+m[2]+' سند</span></span>'+
-      '<span class="badge'+(NEW.indexOf(m[0])>-1?' new':'')+'">'+(NEW.indexOf(m[0])>-1?'تازه در نسخهٔ ۲۳':'آماده')+'</span></a>';
+      '<span class="badge'+(NEW.indexOf(m[0])>-1?' new':'')+'">'+(NEW.indexOf(m[0])>-1?'تازه در نسخهٔ ۲۴':'آماده')+'</span></a>';
   }).join('');
 });
 </script>

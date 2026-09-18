@@ -4,7 +4,7 @@
    ========================================================================== */
 
 /* ---------- نقشهٔ کامل صفحه‌ها ---------- */
-var BUILD='نسخهٔ ۲۳ — جوجه با سه سنجه و نام‌گذاری، و کد یک‌بارمصرف بازیابی رمز — هر دو روی تست آزمایش شد'
+var BUILD='نسخهٔ ۲۴ — آب پیش‌نویس/قطعی و دفترچهٔ بینش با شواهد — هر دو روی تست آزمایش شد';
 
 var SCREENS = [
   {n:1,  id:'landing', name:'لندینگ',            sec:'۱۰',     batch:1},
@@ -23,7 +23,7 @@ var SCREENS = [
   {n:14, id:'hammasir',name:'هم‌مسیر',           sec:'۲۰',     batch:1, app:1, nav:'hammasir'},
   {n:15, id:'settings',name:'تنظیمات',           sec:'۲۱',     batch:1, app:1, nav:'settings'},
   {n:16, id:'roles',   name:'نقش‌ها و سوییچ',    sec:'۲۴',     batch:1, app:1},
-  {n:17, id:'admin',   name:'کنسول مدیر',        sec:'۲۴ §۵',     batch:1, app:1},
+  {n:17, id:'admin',   name:'کنسول مدیر',        sec:'۲۴ §۵',  batch:1, app:1},
   {n:18, id:'content', name:'صفحه‌های محتوایی',  sec:'۲۵',     batch:1},
   {n:19, id:'rights',  name:'حقوق داده',         sec:'۲۶',     batch:1, app:1, nav:'settings'}
 ];
@@ -40,6 +40,8 @@ var APP = {
   role:'client',    /* client | counselor | admin */
   sound:false,
   waterGoal:8,      /* از هدف فعالیت آب در برنامهٔ کاربر — نه عدد ثابت ۸ */
+  waterFinal:false, /* B6 — آب امروز قطعی شده؟ پیش‌نویس در هیچ سنجه‌ای شمرده نمی‌شود */
+  bookSec:'ins',     /* دفترچه: ins = از ثبت‌های تو · notes = نوشته‌های خودت */
   petStage:'chick', /* egg | crack | chick — نمایش تخم/جوجه برای بازبینی */
   petName:'',
   petGrowthFull:false,
@@ -465,10 +467,19 @@ function waterCard(){
   return '<div class="card wbox" id="wcard">'+
     '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">'+
       '<h3>'+ic('i-drop')+'آب امروز</h3>'+
+      '<span class="chip '+(APP.waterFinal?'g':'s')+'">'+(APP.waterFinal?'قطعی ✓':'پیش‌نویس')+'</span>'+
       '<button class="wsnd '+(APP.sound?'on':'')+'" data-snd aria-pressed="'+(APP.sound?'true':'false')+'">'+
         (APP.sound?'🔊 صدای آب روشن':'🔇 صدای آب خاموش')+'</button></div>'+
     '<div class="wcount num" id="wcount"></div>'+
     '<div class="wglasses" id="wglasses" role="group" aria-label="لیوان‌های آب امروز"></div>'+
+    (APP.waterFinal
+      ? '<p class="tiny" style="margin-top:10px"><b>آب امروز قطعی شد.</b> غیرقابل‌تغییر است و در سنجهٔ آبِ جوجه شمرده شد.</p>'
+      : '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center">'+
+        '<button class="btn primary sm" data-wfinal>ثبت نهایی آب امروز</button>'+
+        '<span class="tiny">تا این دکمه را نزنی، <b>در هیچ سنجه‌ای شمرده نمی‌شود</b>.</span></div>')+
+    '<p class="tiny" style="margin-top:8px">هر چند بار بخواهی عوضش می‌کنی، ولی همیشه <b>یک رکورد</b> برای امروز می‌ماند — '+
+      'رکورد دوم ساخته نمی‌شود. ثبت روزهای گذشته <b>خودکار قطعی</b> است و گذشته را بازنویسی نمی‌کنیم. '+
+      'رکوردهای قدیمی که وضعیتی برایشان ذخیره نشده، <b>قطعی</b> حساب می‌شوند.</p>'+
     '<p class="tiny" style="margin-top:10px">روی لیوان‌ها بزن — آب با <b>موج</b> بالا می‌آید و صدای <b>ریختن آب</b> دارد. '+
       'صدا پیش‌فرض خاموش است؛ بازگشت صدا ندارد.</p>'+
   '</div>';
@@ -517,7 +528,7 @@ function waterCount(){
   var c=document.getElementById('wcount'); if(!c) return;
   var g=APP.waterGoal||8;
   c.textContent=fa(APP.water)+' از '+fa(g)+' لیوان — هدف خودت: '+fa(g)+
-    (APP.water===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(APP.water>=g?' · ثبت قطعی شد ✓':' · ثبت شد ✓'));
+    (APP.water===0?' · امروز هنوز چیزی ثبت نکرده‌ای':(APP.waterFinal?' · ثبت قطعی شد ✓':' · پیش‌نویس — در سنجه‌ها نشمرده'));
 }
 /* پر کردن/خالی‌کردن **در جا** — تا انیمیشن آب از دست نرود */
 function setGlass(el,filled){
@@ -533,6 +544,7 @@ function splashAt(el){
   setTimeout(function(){ if(st)st.classList.remove('on'); if(dr)dr.classList.remove('on'); },600);
 }
 function waterTap(i){
+  if(APP.waterFinal){ toast('آب امروز قطعی شده — قابل تغییر نیست'); return; }
   var g=document.getElementById('wglasses'); if(!g) return;
   var p=waterPlan(); if(p.mode==='num') return;
   var step=p.per, target=(i+1)*step;
@@ -604,8 +616,8 @@ document.addEventListener('DOMContentLoaded',function(){
         APP.clockSlot=q[(q.indexOf(APP.clockSlot||'auto')+1)%q.length]; render();
         toast(APP.clockSlot==='auto'?('ساعت دستگاه: '+dayWord()+' بخیر'):('نمایش ساعت: '+APP.clockSlot+' — احوال‌پرسی عوض شد'));
       }
-      else if(b.hasAttribute('data-wplus')){ APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
-      else if(b.hasAttribute('data-wminus')){ APP.water=Math.max(APP.water-1,0); render(); }
+      else if(b.hasAttribute('data-wplus')){ if(APP.waterFinal){toast('آب امروز قطعی شده — قابل تغییر نیست');return;} APP.water=Math.min(APP.water+1,APP.waterGoal); pourSnd(); render(); }
+      else if(b.hasAttribute('data-wminus')){ if(APP.waterFinal){toast('آب امروز قطعی شده — قابل تغییر نیست');return;} APP.water=Math.max(APP.water-1,0); render(); }
       else if(b.hasAttribute('data-hidebar')){
         document.getElementById('shellbar').classList.add('hide');
         document.getElementById('rvopen').classList.add('show');

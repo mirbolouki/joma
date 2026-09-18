@@ -191,6 +191,32 @@ if (!doc('docs/handoff/15-round-23-backend-status.md')) bad('۲۳: گزارش د
 ['14-companion.md', '22-auth.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۲۳') < 0) bad('۲۳: بند دور ۲۳ در ' + f + ' نیست'); });
 if (doc('docs/handoff/09-backend-gap-order.md').indexOf('به‌روزرسانی دور ۲۳') < 0) bad('۲۳: وضعیت تازهٔ شکاف‌ها در handoff/09 نیست');
 say('قوانین نسخه‌های ۱۴ تا ۲۳ بررسی شد');
+/* نسخهٔ ۲۴ — آب پیش‌نویس/قطعی (B6) و دفترچهٔ بینش با شواهد (B7) */
+if (src('proto.js').indexOf('waterFinal:false') < 0) bad('۲۴: پرچم وضعیت آب (پیش‌نویس/قطعی) در نمونه نیست');
+run('APP.waterFinal=false;'); const wc24 = run('waterCard()');
+['ثبت نهایی آب امروز', 'پیش‌نویس', 'در هیچ سنجه‌ای شمرده نمی‌شود', 'یک رکورد', 'خودکار قطعی'].forEach(k => { if (wc24.indexOf(k) < 0) bad('۲۴: کارت آب — «' + k + '» نیست'); });
+if (src('proto.js').indexOf('قطعی شده — قابل تغییر نیست') < 0) bad('۲۴: قفل پس از قطعی‌شدن آب نیست');
+if (src('proto.js').indexOf('پیش‌نویس — در سنجه‌ها نشمرده') < 0) bad('۲۴: شمارندهٔ آب وضعیت پیش‌نویس را نمی‌گوید');
+if (R.today().indexOf('هیچ سنجه‌ای') < 0) bad('۲۴: یادداشت «کارهای امروز» دربارهٔ شمرده‌نشدن آب نیست');
+run('APP.petStage="chick"; APP.petMood="ok";'); const ch24 = R.chick();
+if (ch24.indexOf('پیش‌نویس، نشمرده') < 0) bad('۲۴: سنجهٔ آب جوجه — برچسب «پیش‌نویس، نشمرده» نیست');
+if (ch24.indexOf('در سنجه‌ها شمرده نمی‌شود') < 0 || ch24.indexOf('WTR-10') < 0) bad('۲۴: قاعدهٔ WTR-10 در صفحهٔ جوجه نیست');
+run('APP.bookSec="ins"; APP.data="full";'); const bk24 = R.book();
+['از ثبت‌های تو', 'نوشته‌های خودت', 'این برداشت از کجا آمده؟', 'همراهی، دلیل نیست'].forEach(k => { if (bk24.indexOf(k) < 0) bad('۲۴: دفترچه — «' + k + '» نیست'); });
+['بهترین روز هفته', 'حال × موفقیت روزانه', 'بلندترین رشتهٔ ثبت', 'پایدارترین فعالیت', 'آب قطعی‌شده'].forEach(k => { if (bk24.indexOf(k) < 0) bad('۲۴: بینش ساخته‌شدهٔ «' + k + '» در نمونه نیست'); });
+if (bk24.indexOf('درصد اطمینان') > -1 || bk24.indexOf('شمارش معکوس') > -1) bad('۲۴: دفترچه — عنصر ممنوع (درصد اطمینان / شمارش معکوس)');
+run('APP.bookSec="notes";'); const bn24 = R.book();
+['پاک‌کردن یادداشت', 'رکورد حال را دست نمی‌زند', 'هرگز به هم‌مسیر نمی‌رود', 'جست‌وجو'].forEach(k => { if (bn24.indexOf(k) < 0) bad('۲۴: نوشته‌های خودت — «' + k + '» نیست'); });
+run('APP.bookSec="ins"; APP.data="empty";'); const be24 = R.book();
+if (be24.indexOf('چیز تازه‌ای برای گفتن ندارد') < 0) bad('۲۴: حالت کم‌دادهٔ دفترچه — پیام صادقانه نیست');
+run('APP.data="full";');
+['شمار نمونه', 'چه چیزی کنار گذاشته شد', 'جهت رابطه', 'همان روز یا روز بعد', 'قاعده و نسخه', 'زمان محاسبه', 'اعتبار'].forEach(k => { if (it.indexOf(k) < 0) bad('۲۴: پنل شواهد — «' + k + '» نیست'); });
+if (it.indexOf('data-wfinal') < 0 || it.indexOf('data-wfinal-ok') < 0) bad('۲۴: هندلر ثبت نهایی آب نیست');
+if (it.indexOf('data-booksec') < 0) bad('۲۴: هندلر بخش‌های دفترچه نیست');
+if (!doc('docs/handoff/18-round-24-backend-status.md')) bad('۲۴: گزارش دور ۲۴ نیست');
+['12-today.md', '14-companion.md', '15-journal.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۲۴') < 0) bad('۲۴: بند دور ۲۴ در ' + f + ' نیست'); });
+if (doc('docs/handoff/09-backend-gap-order.md').indexOf('به‌روزرسانی دور ۲۴') < 0) bad('۲۴: وضعیت تازهٔ B6/B7 در handoff/09 نیست');
+say('قوانین نسخه‌های ۱۴ تا ۲۴ بررسی شد');
 
 say('تصمیم‌های دور ۲۱ — جنسیت برداشته شد · جوجه سه‌سنجه‌ای');
 say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس نزن» ثبت شده‌اند');
@@ -198,4 +224,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۳');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۴');
