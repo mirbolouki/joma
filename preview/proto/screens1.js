@@ -250,8 +250,7 @@ function R_signup(){
   '</div>'+
   '<div class="strength" id="str"><i></i><i></i><i></i><i></i><span class="tiny" id="strtxt">قدرت رمز</span></div>'+
   '<div class="auth-grid tight">'+
-    fx('sc','کد امنیتی','۶ رقمی','text',{dir:'ltr',data:'authcode',tail:'<button class="fxbtn" data-authcode'+(APP.authCodeAsked?' disabled':'')+'>'+
-      (APP.authCodeAsked?'ارسال دوباره':'درخواست کد امنیتی')+'</button>'})+
+    fx('sc','کد ثبت‌نام','کد را از پشتیبانی بگیر','text',{dir:'ltr',data:'authcode',hint:'پیامک سیستم وصل نیست؛ کد دستی داده می‌شود — به همین شماره پیام بده: ۰۹۹۶۷۹۷۹۴۷۱ (پیامک یا بله).',tail:'<button class="fxbtn" data-authcode>'+ic('i-chat')+'دریافت کد از پشتیبانی</button>'})+
   '</div>'+
   '<label class="perm-row"><span class="cb'+(APP.authTerms?' on':'')+'" data-tglcb="terms"></span>'+
     '<span class="pbody"><b>قوانین و مقررات و سیاست حفظ حریم خصوصی را خوانده‌ام و می‌پذیرم.</b>'+

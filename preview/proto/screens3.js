@@ -16,7 +16,7 @@ var PERMS=[
   ['VIEW_SUMMARY','خلاصهٔ وضعیت و پیشرفت کلی','شمار روزهای ثبت‌شده، وضعیت فعالیت‌ها'],
   ['VIEW_PROGRESS','پیشرفت و پوشش تجمیعی','درصدها و نمودارهای دوره'],
   ['VIEW_ACTIVITY_DETAILS','جزئیات فعالیت‌ها','کدام فعالیت‌ها را چقدر انجام داده‌ای'],
-  ['VIEW_MOOD','شاخص‌های حال من','شامل متن یادداشت‌های روزانه']
+  ['VIEW_MOOD','شاخص‌های حال من','عددها و نمودارهای حال — بدون متن یادداشت']
 ];
 
 function hamGuide(){
@@ -122,8 +122,11 @@ function R_hammasir(){
         '<div class="perm-list">'+
           PERMS.map(function(p){
             return '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>'+p[1]+'</b>'+
-              '<em>'+p[2]+(p[0]==='VIEW_MOOD'?' — <b>شامل متن یادداشت‌های روزانه</b>':'')+'</em></span></label>';
+              '<em>'+p[2]+'</em></span></label>';
           }).join('')+
+          '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>یادداشت‌های روزانهٔ من</b>'+
+            '<em>متن یادداشت‌ها — <b>جدا از عددهای حال</b> و پیش‌فرض <b>خاموش</b>. '+
+            'بدون این مجوز، هم‌مسیر فقط عددها و نمودارها را می‌بیند.</em></span></label>'+
           '<div class="sep"></div>'+
           '<div class="tiny" style="margin-bottom:4px"><b>گفت‌وگو</b> — هر دو گزینه لازم است:</div>'+
           '<label class="perm-row"><span class="cb"></span><span class="pbody"><b>من می‌توانم به او پیام بدهم</b><em>سقف روزانه از سرور</em></span></label>'+

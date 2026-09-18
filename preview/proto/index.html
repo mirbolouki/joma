@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>نمونهٔ زندهٔ جوما — بازبینی نسخهٔ ۱۰</title>
-<link rel="stylesheet" href="proto.css?v=12">
+<link rel="stylesheet" href="proto.css?v=13">
 <style>
   .intro{max-width:940px;margin:0 auto;padding:28px 20px 48px}
   .intro h1{font-size:25px;font-weight:900;margin-top:12px;line-height:1.6}
@@ -37,11 +37,11 @@
   <span class="logo"><span class="logo-tile" id="itile"></span>
     <span><b>جوما</b><small>برنامه. اجرا. فهم.</small></span></span>
 
-  <h1>نمونهٔ زندهٔ فرانت — نسخهٔ ۱۲</h1>
-  <span class="build" id="build">نسخهٔ ۱۲</span>
+  <h1>نمونهٔ زندهٔ فرانت — نسخهٔ ۱۳</h1>
+  <span class="build" id="build">نسخهٔ ۱۳</span>
   <p class="tiny" style="margin-top:10px;line-height:2">
     این صفحه، <b>فهرست همه‌چیزی است که ساخته شده</b>: هشت کاری که خواستی + هر ۱۸ صفحه + شاهدهای بصری.
-    اگر بَج بالا «نسخهٔ ۱۲» نیست، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b>.
+    اگر بَج بالا «نسخهٔ ۱۳» نیست، مرورگر نسخهٔ قدیمی را کش کرده — یک‌بار <b>Ctrl+Shift+R</b>.
   </p>
 
   <h2>۱) هشت چیزی که در این دور خواستی</h2>
@@ -72,12 +72,13 @@
   </div>
 </div>
 
-<script src="sprite.js?v=12"></script>
-<script src="proto.js?v=12"></script>
-<script src="charts.js?v=12"></script>
+<script src="sprite.js?v=13"></script>
+<script src="proto.js?v=13"></script>
+<script src="charts.js?v=13"></script>
 <script>
 var WHAT=[
- ['ثبت‌نام کامل — بدون فیلد نقش','نام · نام خانوادگی · نام کاربری · موبایل · ایمیل · رمز و تکرارش · کد امنیتی · تیک قوانین. 🔴 هیچ انتخاب نقشی وجود ندارد: حساب همیشه «کاربری» ساخته می‌شود و ارتقای نقش فقط از مسیر مدیریت است.','signup'],
+ ['اتحاد شاخه‌ها — کتابخانه و برنامه','۱۰۷ فعالیت با شناسهٔ واقعی (ACT001–045 پایه · 046–080 زوج · 081–107 طرح‌واره) · هیچ افزودن خودکاری · سقف ۱ تا ۳ طرح‌واره در برنامه · فیلتر دسته در پنل افزودن هم هست.','library'],
+['ثبت‌نام کامل — بدون فیلد نقش','نام · نام خانوادگی · نام کاربری · موبایل · ایمیل · رمز و تکرارش · کد امنیتی · تیک قوانین. 🔴 هیچ انتخاب نقشی وجود ندارد: حساب همیشه «کاربری» ساخته می‌شود و ارتقای نقش فقط از مسیر مدیریت است.','signup'],
  ['گزارش‌های نموداری','هر ده تب نمودار دارد — خطی · ستونی · دونات · نقشهٔ حرارتی · پراکندگی · میلهٔ افقی؛ با مقیاس روشن، برچسب عددی و یک جملهٔ «این نمودار چه می‌گوید».','reports'],
  ['کتابخانه — آموزش فقط برای آموزش‌دارها','کارتی که راهنمای تمرین دارد دکمهٔ «آموزش» می‌گیرد؛ کارتِ بی‌آموزش «جزئیات». زیر هر کارت نوشته می‌شود کدام است.','library'],
  ['آموزش — ۷۲ راهنما یک‌به‌یک','۱۰ عمومی و فردی · ۳۵ تمرین زوج‌درمانی (۶ فصل) · ۹ تکنیک طرح‌واره · ۱۸ طرح‌واره — با چیپ‌های «همه/فردی/زوج‌درمانی/طرح‌واره».','edu'],
@@ -97,13 +98,13 @@ var MAP=[
 var NEW=['signup','reports','library','edu','content','rights','today','mood'];
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('itile').innerHTML='<svg width="30" height="30"><use href="#owl-hi"/></svg>';
-  document.getElementById('build').textContent=(typeof BUILD!=='undefined'?BUILD:'نسخهٔ ۱۲');
+  document.getElementById('build').textContent=(typeof BUILD!=='undefined'?BUILD:'نسخهٔ ۱۳');
   document.getElementById('what').innerHTML=WHAT.map(function(w,i){
     return '<div class="wrow"><span class="n">'+fa(i+1)+'</span><div class="t"><b>'+w[0]+'</b><p>'+w[1]+'</p></div>'+
-      '<a class="go" href="app.html?v=12#'+w[2]+'">ببین</a></div>';
+      '<a class="go" href="app.html?v=13#'+w[2]+'">ببین</a></div>';
   }).join('');
   document.getElementById('screens').innerHTML=MAP.map(function(m,i){
-    return '<a class="scr-row" href="app.html?v=12#'+m[0]+'"><span class="no">'+fa(i+1)+'</span>'+
+    return '<a class="scr-row" href="app.html?v=13#'+m[0]+'"><span class="no">'+fa(i+1)+'</span>'+
       '<span class="t"><b>'+m[1]+'</b><span class="sec"> · بخش '+m[2]+' سند</span></span>'+
       '<span class="badge'+(NEW.indexOf(m[0])>-1?' new':'')+'">'+(NEW.indexOf(m[0])>-1?'تازه در نسخهٔ ۱۰':'آماده')+'</span></a>';
   }).join('');

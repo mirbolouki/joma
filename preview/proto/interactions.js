@@ -192,7 +192,7 @@ window.INNER_CLICK=function(e){
   if((t=e.target.closest('[data-libpath]'))){ APP.libPath=t.dataset.libpath; render(); return; }
   if(e.target.closest('[data-libclear]')){ APP.libQuery=''; render(); return; }
   if(e.target.closest('[data-libreset]')){ APP.libQuery=''; APP.libPath='all'; render(); return; }
-  if((t=e.target.closest('[data-addplan]'))){ addToPlan(t.dataset.addplan); return; }
+  if((t=e.target.closest('[data-addplan]'))){ APP._lastAddedSchema=/طرح‌واره/.test(t.dataset.addplan); addToPlan(t.dataset.addplan); return; }
   if((t=e.target.closest('[data-actdetail]'))){
     modal('<h3>'+t.dataset.actdetail+'</h3>'+
       '<p class="tiny">جزئیات فعالیت: توضیح کامل، تناوب، واحد، و اینکه هدفش در برنامه چطور ثبت می‌شود.</p>'+
@@ -251,8 +251,20 @@ window.INNER_CLICK=function(e){
 
   /* ---------- ثبت‌نام: نقش «سایر»، کد امنیتی، تیک قوانین ---------- */
   if(e.target.closest('[data-authcode]')){
+    /* پیامک سیستم وصل نیست — کد دستی از پشتیبانی (اتحاد شاخه‌ها) */
     APP.authCodeAsked=true; render();
-    toast('کد امنیتی فرستاده شد — ۱۵ دقیقه اعتبار دارد');
+    modal('<h3>کد ثبت‌نام را از پشتیبانی بگیر</h3>'+
+      '<p class="tiny">سیستم پیامک ما وصل نیست؛ کد را دستی می‌دهیم تا حسابت را بسازی.</p>'+
+      '<div class="sh-grid" style="margin-top:12px">'+
+        '<div class="sh-card"><span class="sh-ic">'+ic('i-help')+'</span><b>پیامک</b>'+
+          '<span class="sh-num num" dir="ltr">۰۹۹۶۷۹۷۹۴۷۱</span>'+
+          '<div class="sh-act"><button class="btn primary sm" data-copy="09967979471">'+ic('i-save')+'کپی شماره</button></div></div>'+
+        '<div class="sh-card"><span class="sh-ic ind">'+ic('i-chat')+'</span><b>پیام‌رسان بله</b>'+
+          '<span class="sh-num num" dir="ltr">۰۹۹۶۷۹۷۹۴۷۱</span>'+
+          '<div class="sh-act"><a class="btn primary sm" href="https://ble.ir" target="_blank" rel="noopener">'+ic('i-link')+'گفت‌وگو در بله</a></div></div>'+
+      '</div>'+
+      '<div class="tiny" style="margin-top:10px">متن آماده: «سلام، برای ثبت‌نام در جوما کد می‌خواهم.» — پاسخ معمول: کمتر از یک روز کاری (۹ تا ۲۱).</div>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>بستن</button></div>');
     return;
   }
   if((t=e.target.closest('[data-density]'))){ APP.density=t.dataset.density; render(); toast(APP.density==='compact'?'نمایش فشرده شد — هیچ محتوایی پنهان نشد':'نمایش راحت شد'); return; }
@@ -608,8 +620,20 @@ function addToPlan(name){
       '<span class="sp"></span><button class="btn primary sm" data-close>ساخت دورهٔ نو</button></div>');
     return;
   }
+  /* سقف طرح‌واره: حداکثر ۳ در یک برنامه (اتحاد شاخه‌ها) */
+  var isSchema=/طرح‌واره/.test(name);
+  if(isSchema && (APP.schemaInPlan||0)>=3){
+    modal('<h3>سقف طرح‌واره پر است</h3>'+
+      '<p class="tiny">در یک برنامه حداکثر <b>۳ طرح‌واره</b> می‌شود — «'+name+'» چهارمی است. '+
+      'سه‌تای فعلی را نگه دار، یا یکی را بردار و این را اضافه کن.</p>'+
+      '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
+      'سه طرح‌واره، بیشترین چیزی است که در یک دوره واقعاً می‌شود رویش کار کرد.</div>'+
+      '<div class="acts"><button class="btn ghost sm" data-close>باشه</button></div>');
+    return;
+  }
   modal('<h3>«'+name+'» را به برنامه اضافه کنیم؟</h3>'+
-    '<p class="tiny">'+(st==='DRAFT'?'برنامه پیش‌نویس است — هر وقت خواستی می‌توانی عوضش کنی.':'برنامه در حال آماده‌سازی است.')+'</p>'+
+    '<p class="tiny">'+(st==='DRAFT'?'برنامه پیش‌نویس است — هر وقت خواستی می‌توانی عوضش کنی.':'برنامه در حال آماده‌سازی است.')+
+    (isSchema?' <b>مسیر: طرح‌واره</b> — از ۳ جای این برنامه، این '+fa((APP.schemaInPlan||0)+1)+'ی است.':'')+'</p>'+
     '<div style="margin-top:10px"><label class="lbl">هدف این فعالیت در برنامه</label>'+
     '<input class="inp num" value="۸" inputmode="numeric"></div>'+
     '<div class="banner info" style="margin-top:10px">'+ic('i-info')+
@@ -618,7 +642,11 @@ function addToPlan(name){
     '<span class="sp"></span><button class="btn primary sm" data-addok>افزودن</button></div>');
 }
 document.addEventListener('click',function(e){
-  if(e.target.closest('[data-addok]')){ closeModal(); toast('به برنامه اضافه شد — هدفش هم ثبت شد'); }
+  if(e.target.closest('[data-addok]')){
+    closeModal();
+    if(APP._lastAddedSchema) APP.schemaInPlan=(APP.schemaInPlan||0)+1;
+    toast('به برنامه اضافه شد — هدفش هم ثبت شد');
+  }
 });
 
 
