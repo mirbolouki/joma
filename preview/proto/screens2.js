@@ -9,7 +9,7 @@ var GROWTH=[
   {stage:'crack',title:'تخم جوما 🥚', sub:'دارد ترک می‌خورد! نزدیک است…',
    msg:'تخم می‌لرزد! ادامه بده، دارم می‌آیم… 🐣'},
   {stage:'chick',title:'جوجهٔ من 🐣', sub:'هر روز از من مراقبت کن',
-   msg:'دونه، آب، خونهٔ تمیز و حمام؛ من با همین‌ها شادم!'},
+   msg:'دونه، آب و خونهٔ تمیز؛ من با همین‌ها شادم!'},
   {stage:'chick',title:'جوجهٔ من 🐣', sub:'هر روز از من مراقبت کن',
    msg:'چه مراقبتی! حسابی خوشحالم 🎉'}
 ];
@@ -24,6 +24,9 @@ var METER_TOTAL=9;   /* ۳ سنجه × ۳ سطح — سنجهٔ چهارم که 
 
 /* شش حالت جوجه — همه از بک‌اند، هیچ‌کدام از کلیک (سند ۱۴ §۳.۳) */
 var PET_STAGES=['جوجهٔ کوچک','نوپا','بالغ'];
+/* 🔢 اعداد تأییدشدهٔ دور ۲۳ — همه از `config/jooje_config.php` بک‌اند می‌آید؛
+   فرانت هیچ‌کدام را در خودش «تصمیم» نمی‌گیرد، فقط نشان می‌دهد. */
+var PET_NUM={crack:6,born:12,mid:40,full:90,pale:3,miss:6};
 var PET_STATES=[
   {k:'ok',    t:'آرام',      cond:'پیش‌فرض — روز عادی',              stage:'chick', mood:'ok'},
   {k:'happy', t:'شاد',       cond:'بعد از یک ثبت معتبر',             stage:'chick', mood:'happy'},
@@ -37,9 +40,14 @@ function R_chick(){
   var g=GROWTH[st==='egg'?0:(st==='crack'?1:(APP.petGrowthFull?3:2))];
   var name=APP.petName||'جوجهٔ من';
   var ps=PET_STATES.filter(function(x){return x.k===(APP.petMood||'ok');})[0]||PET_STATES[0];
-  var levels=empty()?{seed:0,water:0,home:0}:{seed:3,water:2,home:2};
+  /* فقط دادهٔ واقعی: هر عدد از بک‌اند می‌آید. */
+  var hasWater=!empty();
+  var levels=empty()?{seed:0,water:0,home:0}:{seed:3,water:3,home:1};
   var total=levels.seed+levels.water+levels.home;
-  var pct=Math.round(total/METER_TOTAL*100);
+  var seeds=empty()?0:(APP.petGrowthFull?PET_NUM.mid:(APP.petSeeds||PET_NUM.born));
+  var gIdx=APP.petStageIdx||0;
+  var nextN=(gIdx===0?PET_NUM.mid:(gIdx===1?PET_NUM.full:0));
+  var pct=nextN?Math.min(100,Math.floor(seeds/nextN*100)):100;   /* هیچ‌وقت به بالا گِرد نمی‌شود */
 
   return head('جوجهٔ من', name+(st==='egg'?' — تخم':''), g.sub,
       '<span class="chip '+(st==='chick'?'g':'go')+'">'+(st==='egg'?'تخم':(st==='crack'?'در حال ترک':'جوجه'))+'</span>')+
@@ -64,10 +72,10 @@ function R_chick(){
         note('سنجهٔ چهارم («وقت حمام» — تمرین تنفس) تا ساخته‌شدن منبعش در بک‌اند نمایش داده نمی‌شود؛ '+
           'هیچ سنجهٔ جعلی ساخته نمی‌شود. '+
           'همهٔ حرکت‌های این صحنه **بی‌پاداش**‌اند (`CAR-01`): لمس، فقط واکنش است. '+
-          'پاداش فقط از **ثبت معتبر** می‌آید — و آبِ **پیش‌نویس** هیچ پاداشی نمی‌سازد (`WTR-10`).')+
+          'پاداش فقط از **ثبت معتبر** می‌آید — و **هر ثبتِ آب «قطعی» حساب می‌شود** (پیش‌نویس/قطعی وجود ندارد — تصمیم دور ۲۱).')+
       '</div>'+
     '<div class="grid2">'+
-      '<div class="card"><h3>'+ic('i-heart')+'مراقبت امروز</h3>'+
+      '<div class="card"><h3>'+ic('i-heart')+'مراقبت امروز — سه عدد واقعی</h3>'+
         METERS.map(function(m){
           var lv=levels[m.k];
           return '<div class="pmeter"><span class="pe">'+m.e+'</span>'+
@@ -75,27 +83,33 @@ function R_chick(){
             '<span class="psegs">'+[0,1,2].map(function(i){
               return '<i class="'+(i<lv?'on':'')+'"></i>';}).join('')+'</span></div>';
         }).join('')+
-        (APP.water>0&&APP.water<APP.waterGoal?
-          '<p class="tiny" style="margin-top:10px">آب امروزت **پیش‌نویس** است؛ وقتی قطعی شد، اینجا حساب می‌شود.</p>':'')+
+        '<p class="tiny" style="margin-top:10px">امروز: <b>'+fa(levels.seed)+' دونه</b> · '+
+          (hasWater?'<b>'+fa(levels.water)+' از '+fa(APP.waterGoal||8)+' لیوان</b>':'<b>آب: در برنامه‌ات نیست — این صفر نیست</b>')+
+          ' · <b>'+(levels.home?'حال ثبت شد ✓':'حال ثبت نشده')+'</b></p>'+
+        '<p class="tiny muted" style="margin-top:6px">مخرج آب از <b>اسنپ‌شات برنامهٔ خودت</b> می‌آید و «خونه» ۰ یا ۱ است. '+
+          'برای «دونه» بک‌اند باید هدف روزانه بدهد (پیشنهاد دور ۲۳: شمار کارهای همان روز) — '+
+          '<b>تا آن وقت نوار دونه درصد نمی‌سازد</b>. هیچ نواری در این صفحه <b>به بالا گِرد نمی‌شود</b>.</p>'+
       '</div>'+
 
-      '<div style="display:flex;flex-direction:column;gap:14px">'+
+      
         '<div class="card"><h3>'+ic('i-trend')+'رشد</h3>'+
-          '<div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">'+
-            '<span class="bignum" style="font-size:24px;color:var(--brand-ink)">'+fa(pct)+'٪</span>'+
-            '<span class="tiny">از مراقبت کامل</span></div>'+
+          '<div class="gstage" style="margin-top:4px"><span class="chip '+(gIdx?'g':'go')+'">مرحله: '+PET_STAGES[gIdx]+'</span>'+
+            '<span class="tiny muted">آستانه از <b>بک‌اند</b>: ترک '+fa(PET_NUM.crack)+' دونه · تولد '+fa(PET_NUM.born)+
+            ' · نوپا '+fa(PET_NUM.mid)+' · بالغ '+fa(PET_NUM.full)+'</span></div>'+
+          '<div style="display:flex;align-items:baseline;gap:6px;margin-top:10px">'+
+            '<span class="bignum" style="font-size:24px;color:var(--brand-ink)">'+fa(seeds)+'</span>'+
+            '<span class="tiny">دونه تا این لحظه</span></div>'+
           '<div style="height:9px;border-radius:99px;background:var(--ring-track);margin-top:10px;overflow:hidden">'+
             '<i style="display:block;height:100%;width:'+pct+'%;border-radius:99px;background:linear-gradient(90deg,var(--grad1),var(--grad2))"></i></div>'+
-          '<p class="tiny" style="margin-top:8px">'+g.msg+'</p>'+
-          '<div class="gstage"><span class="chip '+(APP.petStageIdx?'g':'go')+'">مرحله: '+PET_STAGES[APP.petStageIdx||0]+'</span>'+
-            '<span class="tiny muted">مرحلهٔ بعدی: '+(APP.petStageIdx>=2?'آخرین مرحله':'«'+PET_STAGES[(APP.petStageIdx||0)+1]+'»')+
-            ' — آستانه از <b>بک‌اند</b></span></div>'+
-          (APP.petGrowthFull?'<p class="tiny" style="margin-top:4px">به مرحلهٔ بعد نزدیک است — همین‌طور ادامه بده 🤍</p>':'')+
+          (nextN>0?
+            '<p class="tiny" style="margin-top:8px"><b>'+fa(seeds)+' از '+fa(nextN)+' دونه</b> تا «'+PET_STAGES[gIdx+1]+'»</p>'
+            :'<p class="tiny" style="margin-top:8px">به آخرین مرحله رسیده — '+fa(seeds)+' دونه. همین‌طور ادامه بده 🤍</p>')+
+          '<p class="tiny" style="margin-top:6px">'+g.msg+'</p>'+
+          '<p class="tiny muted">عدد واقعی دونه‌ها از بک‌اند می‌آید؛ نوار <b>فقط</b> همان مقدار را نشان می‌دهد و از آن جلو نمی‌زند.</p>'+
         '</div>'+
 
-        (st==='chick'&&!APP.petName?
-          '<div class="card" style="border-color:var(--gold)"><h3>'+ic('i-heart')+'اسمش را چه بگذاریم؟</h3>'+
-            '<p class="tiny" style="margin-top:6px">حالا که به دنیا آمده. یک بار می‌شود اسم گذاشت — بعداً هم یک بار دیگر می‌شود عوضش کرد.</p>'+
+        (st==='chick'&&!APP.petName?'<div class="card" style="border-color:var(--gold)"><h3>'+ic('i-heart')+'اسمش را چه بگذاریم؟</h3>'+
+            '<p class="tiny" style="margin-top:6px">حالا که به دنیا آمده. <b>یک بار</b> می‌شود اسم گذاشت و <b>یک بار دیگر</b> عوضش کرد. اسم در <b>بک‌اند</b> ذخیره می‌شود (روی هر دستگاهی همان است) و <b>فقط در همین صفحه</b> دیده می‌شود — نه در کارت خانه، نه برای هم‌مسیر.</p>'+
             '<input class="inp" id="petname" placeholder="۲ تا ۱۶ حرف" style="margin-top:10px">'+
             '<div style="display:flex;gap:8px;margin-top:10px">'+
             '<button class="btn primary sm" data-petname>بله، همین باشد</button>'+
@@ -105,7 +119,9 @@ function R_chick(){
             '<p class="tiny" style="margin-top:6px">'+(st==='chick'
               ? 'اسمش «'+name+'» است. اگر چند روز نیایی، دلش تنگ می‌شود — ولی **هیچ‌وقت نمی‌میرد** و کم‌رنگ می‌شود، نه بیشتر.'
               : 'با هر ثبت معتبر، تخم به تولد نزدیک‌تر می‌شود.')+'</p>'+
-            '<div class="hist" style="margin-top:10px"><span>مراقبت امروز: '+fa(total)+' از ۱۲</span></div>'+
+            '<div class="hist" style="margin-top:10px"><span>امروز: '+fa(levels.seed)+' دونه · '+
+              (hasWater?fa(levels.water)+' از '+fa(APP.waterGoal||8)+' لیوان':'(آب در برنامه‌ات نیست)')+' · '+
+              (levels.home?'حال ثبت شد ✓':'حال ثبت نشده')+'</span></div>'+
             '<div class="tline">'+
               '<div class="tl"><span class="em">🥚</span><span><b>۳ شهریور</b> — تخم گذاشته شد</span></div>'+
               (st==='crack'||st==='chick'?'<div class="tl"><span class="em">🥚</span><span><b>۱۷ شهریور</b> — تخم ترک خورد</span></div>':'')+
@@ -126,7 +142,10 @@ function R_chick(){
           'جوجه فقط یادآوری می‌کند که برگردی — بدون فشار و بدون سرزنش.</p></div>'+
       '</div>'+
     '</div></div>'+
-    note('سه چیز اینجا **نیست** و هرگز نمی‌آید: مرگ/بیماری/فرار جوجه · شمارش معکوس غیبت · مقایسه با جوجهٔ دیگران. '+
+    note('🔢 اعداد تأییدشدهٔ دور ۲۳: ترک '+fa(PET_NUM.crack)+' دونه · تولد '+fa(PET_NUM.born)+' · '+
+      'کم‌رنگ '+fa(PET_NUM.pale)+' روز · خاکستری '+fa(PET_NUM.miss)+' روز · رشد '+fa(PET_NUM.mid)+'/'+fa(PET_NUM.full)+'. '+
+      'سنجهٔ چهارم («وقت حمام») تا ساخته‌شدن منبعش نمایش داده نمی‌شود. '+
+      'سه چیز اینجا **نیست** و هرگز نمی‌آید: مرگ/بیماری/فرار جوجه · شمارش معکوس غیبت · مقایسه با جوجهٔ دیگران. '+
       'و هیچ قابلیت اصلی، پشت رشد جوجه قفل نمی‌شود (`CAR-04`).');
 }
 

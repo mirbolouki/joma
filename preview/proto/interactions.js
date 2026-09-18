@@ -281,13 +281,13 @@ window.INNER_CLICK=function(e){
   if((t=e.target.closest('[data-fg]'))){
     var fg=t.dataset.fg;
     if(fg==='id'){ var idv=document.getElementById('fgi'); APP.forgotId=idv?idv.value:''; APP.forgotStep=1; render();
-      toast('اگر این شناسه حسابی داشته باشد، کد برایش صادر می‌شود'); return; }
+      toast('اگر این شناسه حسابی داشته باشد، کد یک‌بارمصرف برایش صادر می‌شود'); return; }
     if(fg==='code'){ var cv=document.getElementById('fgc');
       if(!cv||(cv.value||'').replace(/\D/g,'').length<6){ toast('کد ۶ رقمی را از پشتیبانی بگیر'); if(cv) cv.focus(); return; }
-      APP.forgotCode=cv.value; APP.forgotStep=2; render(); toast('کد درست است'); return; }
+      APP.forgotCode=cv.value; APP.forgotStep=2; render(); toast('کد تأیید شد — حالا رمز تازه بساز'); return; }
     if(fg==='save'){ var p1=document.getElementById('fp1');
       if(!p1||(p1.value||'').length<8){ toast('رمز تازه حداقل ۸ نویسه باشد'); if(p1) p1.focus(); return; }
-      APP.forgotStep=3; render(); toast('رمز عوض شد — همهٔ نشست‌ها باطل شد'); return; }
+      APP.forgotStep=3; render(); toast('رمز عوض شد — نشست‌های دیگر بسته شدند'); return; }
     if(fg==='back'){ APP.forgotStep=0; render(); return; }
     if(fg==='login'){ location.hash='#login'; return; }
     return;
