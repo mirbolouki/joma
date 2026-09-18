@@ -217,6 +217,12 @@ if (!doc('docs/handoff/18-round-24-backend-status.md')) bad('۲۴: گزارش د
 ['12-today.md', '14-companion.md', '15-journal.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۲۴') < 0) bad('۲۴: بند دور ۲۴ در ' + f + ' نیست'); });
 if (doc('docs/handoff/09-backend-gap-order.md').indexOf('به‌روزرسانی دور ۲۴') < 0) bad('۲۴: وضعیت تازهٔ B6/B7 در handoff/09 نیست');
 say('قوانین نسخه‌های ۱۴ تا ۲۴ بررسی شد');
+/* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
+if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
+if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
+if (doc('docs/spec/10-landing.md').indexOf('نمایش نمونه') < 0) bad('۲۸: الزام برچسب «نمایش نمونه» در فصل لندینگ نیست');
+['00-principles.md','99-handoff.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۲۸') < 0) bad('۲۸: ثبت دور ۲۸ در ' + f + ' نیست'); });
+say('دور ۲۸ — v7 و سه تصمیم ثبت شد');
 
 say('تصمیم‌های دور ۲۱ — جنسیت برداشته شد · جوجه سه‌سنجه‌ای');
 say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس نزن» ثبت شده‌اند');
@@ -224,4 +230,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۴');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۲۸');
