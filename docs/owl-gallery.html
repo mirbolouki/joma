@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گالری جغد جوما — مرجع تصمیم مالک</title>
+<link rel="stylesheet" href="../preview/proto/proto.css">
+<style>
+  body{background:var(--bg, #F7F9F8);padding:22px}
+  .gal{max-width:1080px;margin:0 auto}
+  .gal h1{font-size:20px}
+  .gal h2{font-size:15px;margin-top:26px}
+  .lead{font-size:12.5px;line-height:2;color:var(--ink-2)}
+  .box{background:#fff;border:1px solid #E3EAE6;border-radius:16px;padding:14px 16px;margin-top:12px}
+  .box.red{border-color:#F3C9C9;background:#FFF7F7}
+  .box.gold{border-color:#F0E0B0;background:#FFFDF4}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+  .cell{background:#fff;border:1px solid #E3EAE6;border-radius:16px;padding:12px;text-align:center}
+  .cell .art{display:flex;align-items:center;justify-content:center;height:132px}
+  .cell b{display:block;font-size:12px;margin-top:6px}
+  .cell small{display:block;font-size:10.5px;color:var(--ink-2,#4A5A55);line-height:1.9;margin-top:4px}
+  .sw{display:inline-flex;align-items:center;gap:7px;font-size:11px;margin:4px 8px 4px 0}
+  .sw i{width:22px;height:22px;border-radius:7px;display:inline-block;border:1px solid rgba(0,0,0,.08)}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;direction:ltr;display:inline-block}
+  .note{font-size:11px;color:var(--ink-2,#4A5A55);line-height:2}
+</style>
+</head>
+<body>
+<div class="gal">
+  <h1>🦉 گالری مرجع جغد جوما</h1>
+  <p class="lead">
+    این صفحه فقط برای <b>تصمیم تو</b> است، بخشی از محصول نیست.
+    جغد جوما <b>یک شخصیت</b> است با چند <b>حالت (پوز)</b> — همان جغدی که در لندینگ می‌بینی، در خانه و ویزارد حال و دفترچه هم همان است؛ فقط حالتش عوض می‌شود.
+    <br>قفل‌شده (دور ۱۴): جغد = <b>همان جغد مرجع، متحرک</b> · نه ایموجی · نه استیکر · نه جغد بازکشیده · رنگ از توکن‌های <span class="mono">--owl-*</span> (نه رنگ برند).
+  </p>
+
+  <h2>۱) حالت‌های جغد — یک شخصیت، نه چند شخصیت</h2>
+  <div class="grid" id="owlGrid"></div>
+
+  <h2>۲) رنگ‌های هویت جغد (جغد از این‌ها رنگ می‌گیرد)</h2>
+  <div class="box" id="tokens"></div>
+
+  <h2>۳) جوجهٔ من = «جوجهٔ جغد» (هم‌خانوادهٔ همین جغد)</h2>
+  <p class="note">جوجهٔ مرغ زرد <b>حذف شده</b> است. جوجه، جوجهٔ جغد است: بدن آبی، شکم کرم، و <b>حلقهٔ چشم طلایی</b> که امضای جغد جوماست.</p>
+  <div class="grid" id="chickGrid"></div>
+
+  <h2>۴) استیکر وقت — این <b>جغد نیست</b></h2>
+  <p class="note">«صبح بخیر / ظهر بخیر / عصر بخیر / شب بخیر» تصویر خودش را دارد: خورشید و ماه. (قاعدهٔ خودت: در وقت‌بخیر جغد نباشد.)</p>
+  <div class="grid" id="sunGrid"></div>
+
+  <h2>۵) سه چیزی که هرگز جای جغد نمی‌آید</h2>
+  <div class="box red">
+    <p class="note">
+      ① ایموجی <span style="font-size:20px">🦉</span> — شکل و رنگش را سیستم تعیین می‌کند، نه ما.<br>
+      ② جغد بازکشیده/استیکری — جغد، هویت است؛ جغد بازکشیده = جغد دیگری.<br>
+      ③ جغد تک‌رنگ/خطی/خاکستری یا رنگ‌شده با رنگ برند (سبز) — جغد آبی + کرم + طلایی است.
+    </p>
+  </div>
+
+  <h2>۶) یک نکتهٔ فنی که مالک باید بداند</h2>
+  <div class="box gold">
+    <p class="note">
+      اگر کاربر در سیستمش «کاهش حرکت» را روشن کرده باشد، جغد <b>تکان نمی‌خورد ولی می‌ماند</b> —
+      حذف نمی‌شود، فقط ثابت می‌شود. (این یکی از جاهایی است که ممکن است «جغد حذف شده» به نظر برسد.)
+    </p>
+  </div>
+
+  <p class="note" style="margin-top:18px">
+    منبع: <span class="mono">preview/proto/sprite.js</span> (استخراج‌شدهٔ مستقیم از مرجع ۷B — دستی بازکشیده نشده).
+  </p>
+</div>
+
+<div id="spritemount" style="position:absolute;width:0;height:0;overflow:hidden"></div>
+<script src="../preview/proto/sprite.js"></script>
+<script src="../preview/proto/art.js"></script>
+<script>
+document.getElementById('spritemount').innerHTML = JOMA_SPRITE;
+
+var POSES = [
+  ['owl-hi',    'سلام (hi)',      'خانه: احوال‌پرسی · لندینگ: گام دوم · سرصفحه'],
+  ['owl-cheer', 'شادی (cheer)',   'تکمیل همهٔ کارها · مرور پایانی حال · دفترچه'],
+  ['owl-think', 'فکر (think)',    'حالت بی‌داده · قدم بی‌پاسخ ویزارد حال'],
+  ['owl-read',  'خواندن (read)',  'دفترچه · آموزش'],
+  ['owl-moon',  'خواب (moon)',    'شب · حالت آرام'],
+  ['owl-lotus', 'آرامش (lotus)',  'کتابخانه: کارت‌های آرامش'],
+  ['owl-water', 'آب (water)',     'کارت آب'],
+  ['owl-fit',   'تحرک (fit)',     'کتابخانه: فعالیت‌های بدنی'],
+  ['owl',       'پایه (owl)',     'جای عمومی'],
+  ['owl-core',  'بدنه (core)',    'اسکلت جغد — برای ساخت حالت‌ها'],
+  ['owl-logo',  'لوگو',           'کاشی لوگو در نوار بالا']
+];
+document.getElementById('owlGrid').innerHTML = POSES.map(function(p){
+  return '<div class="cell"><div class="art"><svg width="120" height="120"><use href="#'+p[0]+'"/></svg></div>'+
+    '<b>'+p[1]+'</b><small>'+p[2]+'</small></div>';
+}).join('');
+
+var TK = [['--owl-a','بدن، آبی #5E93C8'],['--owl-b','بال و گوش #3F6FA0'],['--owl-cream','شکم کرم #F6EBD9'],
+          ['--owl-gold','عینک طلایی #E8B64A'],['--owl-beak','منقار و پا #F0A63C'],['--owl-ink','مردمک #2E3A48'],
+          ['--owl-rose','صورتی (لپ) #E07898']];
+document.getElementById('tokens').innerHTML = TK.map(function(t){
+  return '<span class="sw"><i id="sw'+t[0].replace(/[^a-z]/g,'')+'"></i>'+t[1]+'</span>';
+}).join('');
+TK.forEach(function(t,i){
+  var el=document.querySelectorAll('.sw i')[i];
+  if(el) el.style.background='var('+t[0]+')';
+});
+
+var CH = [['chick','happy','جوجه — شاد'],['chick','ok','جوجه — آرام'],['chick','sleep','جوجه — خواب'],
+          ['egg','ok','تخم'],['crack','ok','تخم ترک‌خورده'],['miss','tired','کم‌رنگ/خاکستری (بی‌سرزنش)']];
+try{
+  document.getElementById('chickGrid').innerHTML = CH.map(function(c){
+    return '<div class="cell"><div class="art">'+chickSVG(112, c[0], c[1])+'</div><b>'+c[2]+'</b></div>';
+  }).join('');
+}catch(e){
+  document.getElementById('chickGrid').innerHTML = '<div class="cell">(نمایش جوجه در این صفحه ممکن نشد)</div>';
+}
+
+var SUN = [['i-sun','صبح — خورشید'],['i-sun','ظهر — خورشید کامل'],['i-sun','عصر — نزدیک افق'],['i-moon','شب — ماه و ستاره']];
+document.getElementById('sunGrid').innerHTML = SUN.map(function(s,i){
+  return '<div class="cell"><div class="art"><svg width="72" height="72" style="color:#E8B64A" ><use href="#'+s[0]+'"/></svg></div><b>'+s[1]+'</b>'+
+    '<small>'+(i===3?'هلال ماه + سه ستاره + ابر کوچک':'خورشید با پرتوها'+((i===0)?' کوتاه':(i===1?' بلند':' و هالهٔ نارنجی')))+'</small></div>';
+}).join('');
+</script>
+</body>
+</html>
