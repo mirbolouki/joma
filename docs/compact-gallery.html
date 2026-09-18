@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>چگالی نمایش — «راحت» و «فشرده» (توضیح تصویری برای مالک)</title>
+<link rel="stylesheet" href="../preview/proto/proto.css">
+<style>
+  body{background:#F4F7F6;padding:18px}
+  .gal{max-width:1180px;margin:0 auto}
+  h1{font-size:20px}
+  .lead{font-size:12.5px;line-height:2;color:#41524C;max-width:940px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;align-items:start}
+  @media(max-width:900px){.two{grid-template-columns:1fr}}
+  .panel{border-radius:20px;padding:14px;background:#fff;border:1px solid #E3EAE6}
+  .plabel{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;margin-bottom:10px;padding:4px 12px;border-radius:99px;background:var(--brand-soft);color:var(--brand-ink)}
+  .plabel.alt{background:#FDF0C4;color:#7A5B10}
+  .stack{display:flex;flex-direction:column}
+  .mini{background:#FBFDFC;border:1px solid #E8EFEB;border-radius:14px}
+  .mini h4{margin:0;font-size:12.5px}
+  .mini p{margin:4px 0 0;font-size:11px;color:#5A6B65}
+  .mini .num{font-size:19px;font-weight:900;color:var(--brand-ink)}
+  .rowl{display:flex;align-items:center;gap:9px;background:#FBFDFC;border:1px solid #E8EFEB;border-radius:12px}
+  .rowl .ci{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--brand-soft);flex:none}
+  .rowl b{font-size:12px;font-weight:800}
+  .rowl small{display:block;font-size:10px;color:#6B7C76;margin-top:2px}
+  .rowl .end{margin-inline-start:auto}
+  /* ── راحت (پیش‌فرض) ── */
+  .comfort .stack{gap:14px}
+  .comfort .mini{padding:20px}
+  .comfort .rowl{padding:14px}
+  .comfort .rowl+.rowl{margin-top:12px}
+  .comfort .mini p{line-height:1.9}
+  /* ── فشرده ── */
+  .compact{padding:12px}
+  .compact .stack{gap:9px}
+  .compact .mini{padding:13px}
+  .compact .rowl{padding:9px 12px}
+  .compact .rowl+.rowl{margin-top:7px}
+  .compact .mini p{line-height:1.65}
+  .caps{font-size:10.5px;color:#5A6B65;line-height:1.9;margin-top:8px}
+  .grid2b{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .box{background:#fff;border:1px solid #E3EAE6;border-radius:16px;padding:14px 16px;margin-top:14px}
+  .box.no{border-color:#F3C9C9;background:#FFF8F8}
+  .box.yes{border-color:#CDEBDC;background:#F6FDF9}
+  .box h3{font-size:13px;margin:0 0 6px}
+  .box ul{margin:0;padding-inline-start:18px;font-size:11.5px;line-height:2;color:#41524C}
+</style>
+</head>
+<body>
+<div class="gal">
+  <h1>📐 «چگالی نمایش» یعنی چه؟ — تصویری، با همان محتوای واقعی</h1>
+  <p class="lead">
+    این یک <b>تنظیم نمایشی</b> است، نه یک قابلیت تازه: در «تنظیمات → ظاهر» می‌توانی انتخاب کنی
+    کارت‌ها <b>راحت</b> (پیش‌فرض) باشند یا <b>فشرده</b>. هر دو یک محتوا را نشان می‌دهند؛ فقط فاصله‌ها جمع‌تر می‌شود
+    تا در یک صفحه <b>چیز بیشتری بدون اسکرول</b> جا شود.
+    <br>مثال زیر: با «راحت» ۳ کارت در ارتفاع دیده می‌شود؛ با «فشرده» همان ۳ کارت <b>جمع‌تر</b> می‌نشیند و کارت چهارم هم بالا می‌آید.
+  </p>
+
+  <div class="two">
+    <div class="panel comfort">
+      <span class="plabel">راحت — پیش‌فرض</span>
+      <div class="stack">
+        <div class="mini"><h4>قدم بعدی</h4><p>پیاده‌روی ۲۰ دقیقه · ثبت امروز</p></div>
+        <div class="mini"><h4>دونه</h4><span class="num">۳</span><p>با ثبت کارهای امروز پر می‌شود</p></div>
+        <div class="mini"><h4>آب امروز</h4><p>۵ از ۸ لیوان — پیش‌نویس</p></div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-walk"/></svg></span><span><b>پیاده‌روی</b><small>۲۰ دقیقه · روزانه</small></span><span class="end"><span class="tst done"><svg width="13" height="13"><use href="#i-check"/></svg> ثبت شد</span></span></div>
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-drop"/></svg></span><span><b>آب</b><small>۵ از ۸ لیوان</small></span><span class="end"><span class="tst draft"><svg width="13" height="13"><use href="#i-clock"/></svg> پیش‌نویس</span></span></div>
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-book"/></svg></span><span><b>مطالعه</b><small>۱۵ دقیقه · روزانه</small></span><span class="end"><span class="tst wait">بی‌ثبت</span></span></div>
+      </div>
+      <p class="caps">فاصله‌های استاندارد: کارت‌ها `20px` فاصلهٔ داخلی، بین کارت‌ها `14px`، سطر جدول جمع‌تر نیست.</p>
+    </div>
+
+    <div class="panel compact">
+      <span class="plabel alt">فشرده — انتخاب خودت</span>
+      <div class="stack">
+        <div class="mini"><h4>قدم بعدی</h4><p>پیاده‌روی ۲۰ دقیقه · ثبت امروز</p></div>
+        <div class="mini"><h4>دونه</h4><span class="num">۳</span><p>با ثبت کارهای امروز پر می‌شود</p></div>
+        <div class="mini"><h4>آب امروز</h4><p>۵ از ۸ لیوان — پیش‌نویس</p></div>
+        <div class="mini"><h4>جوجهٔ من</h4><p>امروز وضعیتش «آرام» است</p></div>
+      </div>
+      <div style="margin-top:10px">
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-walk"/></svg></span><span><b>پیاده‌روی</b><small>۲۰ دقیقه · روزانه</small></span><span class="end"><span class="tst done"><svg width="13" height="13"><use href="#i-check"/></svg> ثبت شد</span></span></div>
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-drop"/></svg></span><span><b>آب</b><small>۵ از ۸ لیوان</small></span><span class="end"><span class="tst draft"><svg width="13" height="13"><use href="#i-clock"/></svg> پیش‌نویس</span></span></div>
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-book"/></svg></span><span><b>مطالعه</b><small>۱۵ دقیقه · روزانه</small></span><span class="end"><span class="tst wait">بی‌ثبت</span></span></div>
+        <div class="rowl"><span class="ci"><svg width="17" height="17"><use href="#i-heart"/></svg></span><span><b>حال امروز</b><small>ثبت شد</small></span><span class="end"><span class="tst done">ثبت شد</span></span></div>
+      </div>
+      <p class="caps">فاصله‌های جمع‌تر: کارت `14px` فاصلهٔ داخلی، بین کارت‌ها `10px`، ارتفاع خط کمی کم‌تر — و همان ۳ کارت بالایی <b>کوچک‌تر</b> نشده‌اند، فقط نزدیک‌تر.</p>
+    </div>
+  </div>
+
+  <div class="grid2b">
+    <div class="box yes">
+      <h3>✅ «فشرده» چه می‌کند</h3>
+      <ul>
+        <li>فاصلهٔ داخلی کارت‌ها جمع‌تر: `20px` ⇒ `14px`</li>
+        <li>فاصلهٔ بین کارت‌ها کمتر: `14px` ⇒ `10px`</li>
+        <li>سطرهای جدول فعالیت‌ها کوتاه‌تر</li>
+        <li>ارتفاع خط متن کمی کم‌تر</li>
+        <li>هدف: در یک صفحه <b>چیز بیشتری بدون اسکرول</b> ببینی</li>
+      </ul>
+    </div>
+    <div class="box no">
+      <h3>⛔ «فشرده» هرگز چه کاری نمی‌کند</h3>
+      <ul>
+        <li>هیچ متنی <b>پنهان یا بریده</b> نمی‌شود</li>
+        <li>هیچ دکمه‌ای زیر `44px` نمی‌رود (لمس سخت نمی‌شود)</li>
+        <li>فرم ثبت و «حال من» <b>تغییر نمی‌کند</b></li>
+        <li>اعداد، داده و گزارش‌ها دست‌نخورده می‌مانند</li>
+        <li>مقدارِ ثبت‌شده‌ها هیچ ربطی به این تنظیم ندارد</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box">
+    <h3>کجاست و چطور عوض می‌شود؟</h3>
+    <ul>
+      <li><b>تنظیمات → ظاهر → چگالی نمایش</b> — دو گزینه: «راحت» (پیش‌فرض) و «فشرده».</li>
+      <li>هر وقت خواستی برمی‌گردانی؛ روی دستگاه خودت ذخیره می‌شود و صفحه هنگام باز شدن <b>نمی‌پرد</b>.</li>
+      <li>پیشنهاد ما: <b>همان «راحت» بماند</b> — فقط اگر روی گوشی‌ات حس می‌کنی صفحه شلوغ است یا اسکرول زیاد داری، «فشرده» را امتحان کن.</li>
+    </ul>
+  </div>
+</div>
+
+<div id="spritemount" style="position:absolute;width:0;height:0;overflow:hidden"></div>
+<script src="../preview/proto/sprite.js"></script>
+<script>document.getElementById('spritemount').innerHTML = JOMA_SPRITE;</script>
+</body>
+</html>
