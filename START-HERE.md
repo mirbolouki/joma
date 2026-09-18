@@ -23,4 +23,5 @@
 - **ساخت فرانت:** فاز ۱ (اسکلت) تحویل و نصب شد · فاز ۲ (ورود/ثبت‌نام/بازیابی) در ساخت — چک‌لیست هر فاز: [`docs/handoff/17-frontend-phases-checklist.md`](docs/handoff/17-frontend-phases-checklist.md)
 - **گزارش این دور:** [`docs/handoff/18-round-24-backend-status.md`](docs/handoff/18-round-24-backend-status.md) · چک‌لیست تست: [`docs/handoff/12-test-deploy-status.md`](docs/handoff/12-test-deploy-status.md)
 - **راهنمای آپلود روی ساب‌دامین:** [`docs/handoff/14-click-guide-test-subdomain.md`](docs/handoff/14-click-guide-test-subdomain.md)
+- **سفارش نهایی مالک (دور ۲۵):** «همهٔ مراحل + همهٔ ایرادها در **یک بسته**؛ من یک‌بار تست می‌کنم» → متن آماده: [`docs/handoff/20-final-package-order.md`](docs/handoff/20-final-package-order.md)
 - **از تو یک چیز:** یک خط تأیید برای «قاعدهٔ آب» (پیش‌نویس تا «ثبت نهایی» شمرده نشود) + انتخاب قدم بعدیِ بک‌اند (`B8` پیشنهاد ما).
