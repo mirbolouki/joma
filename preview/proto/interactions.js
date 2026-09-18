@@ -272,14 +272,14 @@ window.INNER_CLICK=function(e){
   /* ---------- تمرین تنفس ۴-۷-۸ ---------- */
   if(e.target.closest('[data-breathopen]')){ clearTimeout(_moodT); brOpen(); return; }
   if(e.target.closest('[data-breathlater]')){ toast('باشه — هر وقت خواستی، از «کارهای امروز» شروع کن'); return; }
-  if(e.target.closest('[data-brstart]')){ brStart(); return; }
+  if(e.target.closest('[data-brstart]')){ if(window.brPrime) brPrime(); brStart(); return; }
   if(e.target.closest('[data-brstop]')){ brStop(); toast('مکث کرد — هر وقت خواستی «شروع» را بزن'); return; }
   if(e.target.closest('[data-brx]')){ brClose(); return; }
   if(e.target.closest('[data-brmood]')){ brClose(); APP.moodStep=0; location.hash='#mood'; render(); return; }
   if((t=e.target.closest('[data-brsnd]'))){
     BR.sound=!BR.sound;
-    t.textContent=(BR.sound?'صدای راهنما روشن':'بی‌صدا');
-    if(BR.sound) brSound();
+    t.textContent=(BR.sound?'🔊 صدای راهنما روشن':'🔈 صدای راهنما خاموش');
+    if(BR.sound){ if(window.brPrime) brPrime(); brSound(); }
     toast(BR.sound?'صدای راهنما روشن شد — فقط همراهیِ آرام، بی‌پاداش':'بی‌صدا شد');
     return;
   }

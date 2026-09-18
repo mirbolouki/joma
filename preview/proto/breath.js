@@ -112,10 +112,11 @@ function brOpen(){
 }
 function brStop(){
   BR.running=false;
+  if(typeof brVoiceStop==='function') brVoiceStop();
   if(BR.timer && typeof clearInterval==='function'){ clearInterval(BR.timer); BR.timer=null; }
   brPaint();
 }
-function brClose(){ brStop(); BR.open=false; var e=document.getElementById('breathOv'); if(e) e.remove(); }
+function brClose(){ brStop(); brVoiceStop(); BR.open=false; var e=document.getElementById('breathOv'); if(e) e.remove(); }
 function brStart(){
   if(BR.done){ BR.done=false; BR.phase=0; BR.round=1; BR.sec=BR_PH[0][2]; }
   if(BR.running){ brStop(); return; }
@@ -141,6 +142,22 @@ function brFinish(){
   if(typeof toast==='function') toast('۳ دور تمام شد — حالا آرام‌تری');
 }
 /* صدای راهنما: بدون پاداش، فقط همراهیِ آرام — پیش‌فرض خاموش */
+/* آماده‌سازی: مرورگر تا اولین لمس کاربر اجازهٔ پخش نمی‌دهد،
+   پس سه فایل را همان‌جا می‌سازیم و بی‌صدا «باز می‌کنیم». */
+var _brPrimed=false;
+function brPrime(){
+  if(_brPrimed || typeof Audio!=='function') return;
+  _brPrimed=true;
+  Object.keys(BR_VOICE).forEach(function(k){
+    try{
+      var el=new Audio(BR_VOICE[k]); el.preload='auto'; el.volume=.9;
+      el.load(); _brEl[k]=el;
+    }catch(e){}
+  });
+}
+function brVoiceStop(){
+  Object.keys(_brEl).forEach(function(k){ try{ _brEl[k].pause(); _brEl[k].currentTime=0; }catch(e){} });
+}
 function brVoice(){
   /* جملهٔ همان فاز را پخش می‌کند. اگر فایل نبود، برمی‌گرداند false تا تن جایگزین شود. */
   if(typeof Audio!=='function') return false;
@@ -157,7 +174,7 @@ function brVoice(){
 }
 var _brVoiceFailed=false;
 function brSound(){
-  if(!BR.sound||BR.open!==true) return;
+  if(!BR.sound||BR.open!==true||BR.running!==true) return;
   if(typeof brVoice==='function' && !_brVoiceFailed && brVoice()) return;
   if(typeof ac!=='function') return;
   try{
