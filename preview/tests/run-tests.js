@@ -251,7 +251,7 @@ if (!doc('docs/handoff/30-agent-prompt-v10.md')) bad('۳۳: پرامپت یک‌
 say('دور ۳۳ — پرامپت یک‌تکهٔ v10 ثبت شد');
 /* نسخهٔ ۳۴ — روش مقایسهٔ دو ساب‌دامین */
 if (!doc('docs/handoff/31-two-subdomain-comparison-method.md')) bad('۳۴: سند روش مقایسهٔ دو ساب‌دامین نیست');
-['MYT-001','Structure only','کد دعوت','پنج قلم اثبات','دیتابیس مشترک'].forEach(k => { if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf(k) < 0) bad('۳۴: «' + k + '» در سند مقایسه نیست'); });
+['MYT-001','Structure only','🟢','پنج قلم اثبات','دیتابیس مشترک'].forEach(k => { if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf(k) < 0) bad('۳۴: «' + k + '» در سند مقایسه نیست'); });
 say('دور ۳۴ — روش مقایسهٔ دو ساب‌دامین ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
