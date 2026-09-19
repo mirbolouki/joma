@@ -263,6 +263,11 @@ if (doc('docs/handoff/32-round-35-v10-status.md').indexOf('تجمعی از v8') 
 ['20-hammasir.md','24-roles.md','11-home.md','00-principles.md','99-handoff.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۵') < 0) bad('۳۵: ثبت دور ۳۵ در ' + f + ' نیست'); });
 if (doc('docs/spec/11-home.md').indexOf('دو حالت حلقه') < 0) bad('۳۵: «دو حالت حلقه» در فصل ۱۱ نیست');
 say('دور ۳۵ — v10 و چهار پاسخ ثبت شد');
+/* نسخهٔ ۳۶ — گزارش مقایسه و برگهٔ تصمیم */
+if (!doc('docs/handoff/33-comparison-decision-sheet.md')) bad('۳۶: برگهٔ تصمیم دور ۳۶ نیست');
+['۶۲ ردیف','بازنشسته','_archive','گرفتم','نشتی یادداشت'].forEach(k => { if (doc('docs/handoff/33-comparison-decision-sheet.md').indexOf(k) < 0) bad('۳۶: «' + k + '» در برگهٔ تصمیم نیست'); });
+['00-principles.md','99-handoff.md','20-hammasir.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۶') < 0) bad('۳۶: ثبت دور ۳۶ در ' + f + ' نیست'); });
+say('دور ۳۶ — گزارش مقایسه و برگهٔ تصمیم ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -276,4 +281,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۵');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۶');
