@@ -249,6 +249,10 @@ say('دور ۳۲ — v9 + C5 «وضعیت در یک نگاه» ثبت شد');
 if (!doc('docs/handoff/30-agent-prompt-v10.md')) bad('۳۳: پرامپت یک‌تکهٔ v10 نیست');
 ['v9 نصب نشده','تجمعی از v8','C5','F1','F2','F3','F4','LOCK-v8.sha256'].forEach(k => { if (doc('docs/handoff/30-agent-prompt-v10.md').indexOf(k) < 0) bad('۳۳: «' + k + '» در پرامپت نیست'); });
 say('دور ۳۳ — پرامپت یک‌تکهٔ v10 ثبت شد');
+/* نسخهٔ ۳۴ — روش مقایسهٔ دو ساب‌دامین */
+if (!doc('docs/handoff/31-two-subdomain-comparison-method.md')) bad('۳۴: سند روش مقایسهٔ دو ساب‌دامین نیست');
+['MYT-001','Structure only','کد دعوت','پنج قلم اثبات','دیتابیس مشترک'].forEach(k => { if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf(k) < 0) bad('۳۴: «' + k + '» در سند مقایسه نیست'); });
+say('دور ۳۴ — روش مقایسهٔ دو ساب‌دامین ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -262,4 +266,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۳');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۴');
