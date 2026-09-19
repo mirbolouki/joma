@@ -257,6 +257,12 @@ if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf('تبدی�
 if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf('DATA-MAP') < 0) bad('۳۴م: DATA-MAP در پرامپت نیست');
 if (doc('docs/handoff/31-two-subdomain-comparison-method.md').indexOf('DB-my.sql') < 0) bad('۳۴م: تصمیم «دیتابیس را می‌دهم» در پرامپت نیست');
 say('دور ۳۴ — روش مقایسهٔ دو ساب‌دامین ثبت شد');
+/* نسخهٔ ۳۵ — v10 تجمعی و چهار پاسخ */
+if (!doc('docs/handoff/32-round-35-v10-status.md')) bad('۳۵: گزارش دور ۳۵ نیست');
+if (doc('docs/handoff/32-round-35-v10-status.md').indexOf('تجمعی از v8') < 0) bad('۳۵: «تجمعی از v8» در گزارش نیست');
+['20-hammasir.md','24-roles.md','11-home.md','00-principles.md','99-handoff.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۵') < 0) bad('۳۵: ثبت دور ۳۵ در ' + f + ' نیست'); });
+if (doc('docs/spec/11-home.md').indexOf('دو حالت حلقه') < 0) bad('۳۵: «دو حالت حلقه» در فصل ۱۱ نیست');
+say('دور ۳۵ — v10 و چهار پاسخ ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -270,4 +276,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۴');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۵');
