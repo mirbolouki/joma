@@ -237,6 +237,11 @@ if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf('C4 — ک�
 if (doc('docs/handoff/28-lock-policy-and-round-31-order.md').indexOf('L32') < 0) bad('۳۱: L32 در قفل‌نامه نیست');
 if (doc('docs/spec/20-hammasir.md').indexOf('کارت دعوت یک‌باره ساخته نشده') < 0) bad('۳۱: ثبت وضعیت کارت دعوت در فصل ۲۰ نیست');
 say('دور ۳۱ — قفل مبنا و چهار ایراد تازه ثبت شد');
+/* نسخهٔ ۳۲ — v9 و اجرای قفل */
+if (!doc('docs/handoff/29-round-32-v9-status.md')) bad('۳۲: گزارش دور ۳۲ نیست');
+if (doc('docs/handoff/29-round-32-v9-status.md').indexOf('۱۱۷') < 0) bad('۳۲: نتیجهٔ قفل در گزارش نیست');
+['00-principles.md','99-handoff.md','24-roles.md','20-hammasir.md'].forEach(f => { if (doc('docs/spec/' + f).indexOf('دور ۳۲') < 0) bad('۳۲: ثبت دور ۳۲ در ' + f + ' نیست'); });
+say('دور ۳۲ — v9، اجرای قفل و چهار بند ثبت شد');
 /* نسخهٔ ۲۸ — بستهٔ اصلاحی v7 (گزارش، تصمیم‌ها و اصلاح سند) */
 if (!doc('docs/handoff/25-round-28-v7-status.md')) bad('۲۸: گزارش دور ۲۸ نیست');
 if (doc('docs/spec/11-home.md').indexOf('آیکون همان فعالیت') < 0) bad('۲۸: اصلاح چیپ «قدم‌های امروز» (آیکون فعالیت) در سند نیست');
@@ -250,4 +255,4 @@ say('کارهای «در بک‌اند نیست» با قاعدهٔ «حدس ن�
 /* ---------------------------------------------- نتیجه */
 console.log(notes.join('\n'));
 if (problems.length) { console.log('\nمشکل (' + problems.length + '):\n - ' + problems.join('\n - ')); process.exit(1); }
-console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۱');
+console.log('\n✔ همه سالم — ۱۹ صفحه · دو حالت · قوانین ۱۴–۳۲');

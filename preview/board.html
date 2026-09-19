@@ -2230,9 +2230,39 @@
     </div>
   </section>
 
+
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-n">۳۴</span>
+      <span class="lockchip done">📦 v9 رسید — قفل اجرا شد (۱۱۷ سالم / ۹ اعلام‌شده)</span>
+      <h2>دور ۳۲ — C1 تب‌ها · C2 نقش‌ها · C3 داشبورد مشاور · C4 کارت دعوت</h2>
+      <span class="tag q">سایت اصلی دست‌نخورده</span>
+    </div>
+    <div class="sec-body">
+      <p class="note">گزارش + تست ۷ موردی + پاسخ سه سؤال: <code>docs/handoff/29-round-32-v9-status.md</code></p>
+      <div class="grid2">
+        <div class="card"><b style="font-size:12.5px">🔒 قفل عملاً اجرا شد</b>
+          <p class="tiny" style="margin-top:6px;line-height:2"><code>LOCK-v8.sha256</code> (۱۲۶ فایل) · <code>sha256sum -c</code> ⇒ <b>۱۱۷ OK</b> و <b>۹ FAILED = دقیقاً همان ۹ فایل اعلام‌شده</b> · صفر حذف · <code>L01…L31 ✅</code>.
+          ⇒ از این پس اثبات قفل، <b>شرط پذیرش</b> هر بسته است.</p></div>
+        <div class="card"><b style="font-size:12.5px">ساخته‌شده (شاهد file:line)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">C1 <code>today.php:124-152,190-210,253</code> · C2 <code>layout.php:156-157,189</code> + <code>v2_roles.php:70-103</code> + <code>index.php:54</code> ·
+          C3 <code>hammasir_provider.php:448-531</code> + <code>companion_provider.php:19-53,126-200</code> · C4 <code>companion_invite.php:93-104</code> + <code>dashboard.php:279-296</code> + <code>hammasir_client.php:75-220</code></p></div>
+        <div class="card"><b style="font-size:12.5px">آزمون‌ها</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">C1–C4 <b>۱۰۰/۱۰۰</b> روی PHP 7.4/8.0/8.3 · آب <b>۳۴/۳۴</b> · B6/B7 <b>۳۵/۳۵</b> · B8 <b>۲۹/۲۹</b> ·
+          جاروب <b>۱۳۵ صفحه × ۵ حساب، صفر خطا</b>.</p></div>
+        <div class="card"><b style="font-size:12.5px">پاسخ سه سؤال ایجنت</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">① «کد دعوت دارم» ⇒ <b>بسازد</b> (جدول کد یک‌بارمصرف) ② حذف «حال‌وهوای کلینیک» و «روند نزولی» از داشبورد ⇒ <b>درست بود</b> (طبق <code>24 §۴٫۵</code>) ③ کادر نشانگر پیش‌فرض <b>خالی بماند</b> (قرارداد: هیچ تیک پیش‌فرض).</p></div>
+        <div class="card"><b style="font-size:12.5px">قاعدهٔ تازه ثبت‌شده</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">هر جا اجرا با سند فرق داشت، <b>سند برنده است</b> و تغییر باید <b>در همان فصل با دلیل نوشته شود</b> — نه بی‌صدا.</p></div>
+        <div class="card"><b style="font-size:12.5px">بستهٔ بعدی (چهار مورد)</b>
+          <p class="tiny" style="margin-top:6px;line-height:2">① کد دعوت یک‌بارمصرف ② 🔴 حلقهٔ پیشرفت <code>.mring</code> ③ 🟡 <code>aria-label</code> ④ نمونهٔ زندهٔ «چگالی نمایش» — همه با پنج قلم اثبات و قاعدهٔ اِد اونلی.</p></div>
+      </div>
+    </div>
+  </section>
+
   <footer class="board-foot">
     همهٔ این تصمیم‌ها در <b>docs/spec/</b> نوشته شده‌اند — این تابلو فقط برای تأیید سریع است.
-    <br>نسخهٔ ۳۱ · ۳۳ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
+    <br>نسخهٔ ۳۲ · ۳۴ بخش · لیوان تامبلر (مطابق تصویر مالک) + هدف‌محور بودن تعداد · صدای واقعی آب
   </footer>
 </div>
 <script>
